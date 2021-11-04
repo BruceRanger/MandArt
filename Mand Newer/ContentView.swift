@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var showingAlert = false
     @State private var tapX: CGFloat = 0
     @State private var tapY: CGFloat = 0
-
+    
     @State private var tapLocations: [CGPoint] = []
     @State private var moved: CGFloat = 0
     @State private var startTime: Date?
@@ -292,7 +292,7 @@ struct ContentView: View {
                     .gesture(self.tapGesture)
                     .alert(isPresented: $showingAlert) {
                         return Alert(title: Text("It works! You clicked on"), message: Text("X: \(tapX),Y: \(tapY)"), dismissButton: .default(Text("Got it!")))
-                            }
+                    }
             }
         }
     }
