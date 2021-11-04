@@ -3,7 +3,7 @@
 > Mandelbrot set running in SwiftUI 
 
 - Applied Physics Engineering
-- Bruce Johnson
+- [Bruce Johnson](https://github.com/bruceranger)
 
 ## Development
 
