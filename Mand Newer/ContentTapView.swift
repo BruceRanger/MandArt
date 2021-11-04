@@ -16,6 +16,7 @@ extension CGPoint : Hashable {
 }
 
 struct ContentTapView: View {
+    
     @State private var tapLocations: [CGPoint] = []
     @State private var moved: CGFloat = 0
     @State private var startTime: Date?
@@ -79,6 +80,7 @@ struct TapAnnotation: View {
             //.foregroundColor(Color(self.tintColor.withAlphaComponent(0.25)))
             .foregroundColor( Color.red)
             .frame(width: self.radius, height: self.radius)
+        
     }
 }
 
