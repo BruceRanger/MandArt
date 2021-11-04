@@ -326,23 +326,6 @@ struct ContentView: View {
     
 }
 
-struct SceneTapAnnotation: View {
-    var tintColor: Color
-    var radius: CGFloat = 10
-    var strokeWidth: CGFloat = 1
-    var body: some View {
-        Circle()
-            .overlay(
-                Circle()
-                    .stroke(Color.red, lineWidth: self.strokeWidth)
-                    .frame(width: self.radius, height: self.radius)
-            )
-            .foregroundColor( Color.red)
-            .frame(width: self.radius, height: self.radius)
-        
-    }
-}
-
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
