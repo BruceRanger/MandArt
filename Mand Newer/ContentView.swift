@@ -70,7 +70,7 @@ struct ContentView: View {
     }
     
 
-     // A reusuable function to build & return the ContextImage
+     // A reusable function to build & return the ContextImage
 
     func getContextImage(xC: CGFloat,yC: CGFloat) -> CGImage {
 
