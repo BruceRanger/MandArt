@@ -7,6 +7,7 @@
 
 import SwiftUI
 // Try to commit. And again
+// Crash course in XCode & Git!
 
  // By default each SwiftUI file declares two structures - this first one
  // defines the content and layout of the app.
