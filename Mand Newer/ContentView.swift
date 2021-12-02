@@ -27,7 +27,7 @@ struct ContentView: View {
     @State private var scale: CGFloat = 1.0
     @State private var dragOffset = CGSize.zero
     
-    // set up initial view size - TODO: try to set dynamically based on screen size
+    // set up initial view size - TODO: make resolution dynamic, user-specified
     
     @State private var imageWidth: Int = 1000
     @State private var imageHeight: Int = 1000
