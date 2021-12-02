@@ -7,9 +7,14 @@
 
 import SwiftUI
 
+
+ // By default each SwiftUI file declares two structures - this first one
+ // defines the content and layout of the app.
+
 struct ContentView: View {
     
-    // for gestures
+    // set up gesture attributes
+    
     @State private var showingAlert = false
     @State private var tapX: CGFloat = 0
     @State private var tapY: CGFloat = 0
@@ -22,18 +27,62 @@ struct ContentView: View {
     @State private var scale: CGFloat = 1.0
     @State private var dragOffset = CGSize.zero
     
-    var body: some View {
+    // set up initial view size - TODO: try to set dynamically based on screen size
+    
+    @State private var imageWidth: Int = 1000
+    @State private var imageHeight: Int = 1000
+    
+    // temporary starting center X and Y - TODO: read this from a file
+    
+    @State private var xCStart: CGFloat = -0.148238
+    @State private var yCStart: CGFloat =  0.651878
+    
+    // define a reusable function to convert tap X to new center X
+    // tapped X is between 0 and imageHeight
+    // tapped X Min = 0 = top of view
+    // tapped X Max = imageHeight = bottom of view
+    // tapped X Fraction = tapped X/tapped X Max =  fraction of the view to the bottom
+    // TODO: Implement the correct logic rather than calling it at the same start
+    
+    func getCenterXFromTapX(tappedX: CGFloat, imageHeight:Int) -> CGFloat {
+        let tappedXMax: CGFloat = CGFloat(imageHeight)
+        let tappedXFraction = tappedX / tappedXMax
+        // update the calcultion to return the new mandelbrot x center
+        var newCenterX: CGFloat = tappedXFraction *    1.0 // needs work
+        newCenterX = xCStart // temporarily set to the initially chosen X center
+        return newCenterX
+    }
+    
+    // define a reusable function to convert tap Y to new center Y
+    // tapped Y is between 0 and imageWidth
+    // tapped Y Min = 0 = far left of view
+    // tapped Y Max = imageWidth = far right of view
+    // tapped Y Fraction =  Y / YMax =  fraction of the view to the right
+    // TODO: Implement the correct logic rather than calling it at the same start
+    
+    func getCenterYFromTapY(tappedY: CGFloat, imageWidth:Int) -> CGFloat {
+        let tappedYMax: CGFloat = CGFloat(imageWidth)
+        let tappedYFraction = tappedY / tappedYMax
+        // update the calcultion to return the new mandelbrot y center
+        var newCenterY: CGFloat = tappedYFraction *    1.0 // needs work
+        newCenterY = yCStart // temporarily set to the initially chosen Y center
+        return newCenterY
+    }
+    
+
+     // A reusuable function to build & return the ContextImage
+
+    func getContextImage(xC: CGFloat,yC: CGFloat) -> CGImage {
+
+        var contextImage: CGImage
         
-        let imageWidth: Int = 1000
-        let imageHeight: Int = 1000
         let iMax: Float = 10_000.0
         var rSq: CGFloat = 0.0
         var rSqLimit: CGFloat = 0.0
         var rSqMax: CGFloat = 0.0
         var x0: CGFloat = 0.0
         var y0: CGFloat = 0.0
-        var xC: CGFloat = 0.0
-        var yC: CGFloat = 0.0
+        
         var xx: CGFloat = 0.0
         var yy: CGFloat = 0.0
         var xTemp: CGFloat = 0.0
@@ -57,8 +106,6 @@ struct ContentView: View {
         
         rSqLimit = 400.0
         
-        xC = -0.148238
-        yC = 0.651878
         scale = 33_320_000
         
         rSqMax = 162_000.0
@@ -130,7 +177,6 @@ struct ContentView: View {
         
         // Now we need to generate a bitmap image.
         
-        var contextImage: CGImage
         var nBlocks: Int = 0
         var nColors: Int = 0
         var color: Float = 0.0
@@ -276,12 +322,31 @@ struct ContentView: View {
             
         }    //end for v
         
-        // convert the context into an image
+        // convert the context into an image - this is what the function will return
         contextImage = context.makeImage()!
         
         // no automatic deallocation for the raster data
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
+        
+        return contextImage
+    }
+    
+    
+    // Required view body. It defines the content and behavior of the view.
+    
+    var body: some View {
+        
+        // Set up inputs to the reusable function - start with center x & y
+        
+        let xC: CGFloat = xCStart
+        let yC: CGFloat = yCStart
+        
+        // Call function that builds and returns a new context image
+        
+        let contextImage: CGImage = getContextImage(xC:xC,yC:yC)
+        
+        // update the UI
         
         let img = Image(contextImage, scale: 1.0, label: Text("Test"))
         return  GeometryReader {
@@ -291,13 +356,22 @@ struct ContentView: View {
                 img
                     .gesture(self.tapGesture)
                     .alert(isPresented: $showingAlert) {
-                        return Alert(title: Text("It works! You clicked on"), message: Text("X: \(tapX),Y: \(tapY)"), dismissButton: .default(Text("Got it!")))
+                        let newCX = getCenterXFromTapX(tappedX:tapX,imageHeight:imageHeight)
+                        let newCY = getCenterYFromTapY(tappedY:tapY,imageWidth:imageWidth)
+                        return Alert(
+                            title: Text("It works! You clicked on"),
+                            message: Text("X: \(tapX),Y: \(tapY), so the new center will be \(newCX), \(newCY)"),
+                            dismissButton: .default(Text("Got it!")))
                     }
             }
         }
-    }
+        
+    } // end view body
     
-    private var tapGesture: some Gesture {
+
+    // Tap gesture added to enable user interaction
+    
+    var tapGesture: some Gesture {
         DragGesture(minimumDistance: 0, coordinateSpace: .local)
             .onChanged { value in
                 // store distance the touch has moved as a sum of all movements
@@ -322,9 +396,9 @@ struct ContentView: View {
                 self.moved = 0
                 self.startTime = nil
             }
-    }
+    } // end tapGesture
     
-}
+} // end view struct
 
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
