@@ -25,7 +25,7 @@ struct ContentView: View {
     @State private var startTime: Date?
     
     @State private var dragCompleted = false
-    @State private var scale: CGFloat = 1.0
+ //   @State private var scale: CGFloat = 1.0   Doesn't seem necessary
     @State private var dragOffset = CGSize.zero
     
     // set up initial view size - TODO: make resolution dynamic, user-specified
@@ -37,6 +37,7 @@ struct ContentView: View {
     
     @State private var xCStart: CGFloat = -0.148238
     @State private var yCStart: CGFloat =  0.651878
+    @State private var scaleStart: CGFloat =  33_320_000
     
     // define a reusable function to convert tap X to new center X
     // tapped X is between 0 and imageHeight
@@ -45,13 +46,16 @@ struct ContentView: View {
     // tapped X Fraction = tapped X/tapped X Max =  fraction of the view to the bottom
     // TODO: Implement the correct logic rather than calling it at the same start
     
-    func getCenterXFromTapX(tappedX: CGFloat, imageHeight:Int) -> CGFloat {
-        let tappedXMax: CGFloat = CGFloat(imageHeight)
-        let tappedXFraction = tappedX / tappedXMax
+    // X should use imageWidth
+    func getCenterXFromTapX(tapX: CGFloat, imageWidth:Int) -> CGFloat {
+    //    let tapXMax: CGFloat = CGFloat(imageWidth)
+        let tapXDifference = (tapX - CGFloat(imageWidth)/2.0)/scaleStart
+        print (tapXDifference)
         // update the calcultion to return the new mandelbrot x center
-        var newCenterX: CGFloat = tappedXFraction *    1.0 // needs work
-        newCenterX = xCStart // temporarily set to the initially chosen X center
-        return newCenterX
+        let newXC: CGFloat = xCStart + tapXDifference // needs work
+        print (newXC)
+    //    newCenterX = xCStart // temporarily set to the initially chosen X center
+        return newXC
     }
     
     // define a reusable function to convert tap Y to new center Y
@@ -61,13 +65,16 @@ struct ContentView: View {
     // tapped Y Fraction =  Y / YMax =  fraction of the view to the right
     // TODO: Implement the correct logic rather than calling it at the same start
     
-    func getCenterYFromTapY(tappedY: CGFloat, imageWidth:Int) -> CGFloat {
-        let tappedYMax: CGFloat = CGFloat(imageWidth)
-        let tappedYFraction = tappedY / tappedYMax
+    //  Y should use imageHeight
+    func getCenterYFromTapY(tapY: CGFloat, imageHeight:Int) -> CGFloat {
+    //    let tapYMax: CGFloat = CGFloat(imageHeight)
+        let tapYDifference = ((CGFloat(imageHeight) - tapY) - CGFloat(imageHeight)/2.0)/scaleStart
+        print (tapYDifference)
         // update the calcultion to return the new mandelbrot y center
-        var newCenterY: CGFloat = tappedYFraction *    1.0 // needs work
-        newCenterY = yCStart // temporarily set to the initially chosen Y center
-        return newCenterY
+        let newYC: CGFloat = (yCStart + tapYDifference) // needs work
+        print (newYC)
+    //    newCenterY = yCStart // temporarily set to the initially chosen Y center
+        return newYC
     }
     
 
@@ -357,11 +364,14 @@ struct ContentView: View {
                 img
                     .gesture(self.tapGesture)
                     .alert(isPresented: $showingAlert) {
-                        let newCX = getCenterXFromTapX(tappedX:tapX,imageHeight:imageHeight)
-                        let newCY = getCenterYFromTapY(tappedY:tapY,imageWidth:imageWidth)
+                        // fixed imageWidth & imageHeight
+                        let newXC = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
+                        print (newXC)
+                        let newYC = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
+                        print (newYC)
                         return Alert(
                             title: Text("It works! You clicked on"),
-                            message: Text("X: \(tapX),Y: \(tapY), so the new center will be \(newCX), \(newCY)"),
+                            message: Text("X: \(tapX),Y: \(CGFloat(imageHeight) - tapY), so the new center will be \(newXC), \(newYC)"),
                             dismissButton: .default(Text("Got it!")))
                     }
             }
