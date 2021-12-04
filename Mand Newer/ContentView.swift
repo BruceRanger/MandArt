@@ -380,8 +380,8 @@ struct ContentView: View {
                         .padding()
                 }
                 VStack { // each input has a vertical container with a Text label & TextField for data
-                    Text("Enter center Y")
-                    Text("Between -4 and 4")
+                    Text("Enter center Y\n between -4 and 4:")
+                    Text("Enter center Y\n between -4 and 4:")
                     TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
                     //   .textFieldStyle(.roundedBorder)
                         .padding()
@@ -457,7 +457,7 @@ struct ContentView: View {
                 if self.moved < 10 && self.moved > -10 {
                     tapX = tap.startLocation.x
                     tapY = tap.startLocation.y
-                    showingAlert = true
+                    showingAlert = false // we don't need it any more but hard to remove
                     print(tap.startLocation)
                     self.tapLocations.append(tap.startLocation)
                     // the right place to update
