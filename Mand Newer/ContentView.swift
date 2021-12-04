@@ -15,6 +15,9 @@ struct Config {
 
 struct ContentView: View {
     
+    let instructionBackgroundColor = Color.green
+    let inputWidth: CGFloat = 150.0
+    
     @State private var showingAlert = false
     @State private var tapX: CGFloat = 0
     @State private var tapY: CGFloat = 0
@@ -327,24 +330,52 @@ struct ContentView: View {
         return contextImage
     }
     
+    static var cgFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 8
+        return formatter
+    }
+    
+    // ........................................................................
+    
     var body: some View {
         let xC: CGFloat = xCStart
         let yC: CGFloat = yCStart
         let contextImage: CGImage = getContextImage(xC:xC,yC:yC)
         let img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
-        VStack(
-            alignment: .leading,
-            spacing: 10
-        ){
-            let s = "Click here to zoom in, double-click here to zoom out, or click image to choose new center. Be patient.\n"
-            Text(s+"Center is \(xC), \(yC)\nScale is \(self.scaleStart)")
-                .onTapGesture(count:2){
-                    zoomOut()
-                }
-                .onTapGesture(count:1){
-                    zoomIn()
-                }
+        HStack(spacing: 0){ // instructions + scene side by side
+            VStack(
+                alignment: .leading, spacing: 10.0)
+            {
+                Text("")
+                Text("Click here to zoom in.")
+                Text("Double-click here to zoom out.")
+                Text("Click image to choose new center.")
+                Text("Be patient.")
+                Text("Center is \(xC), \(yC)\nScale is \(self.scaleStart)")
+                Text("")
+                TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
+                TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
+                TextField("Scale",value: $scaleStart, formatter: ContentView.cgFormatter)
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
+                   
+            } // end vstack for user instructions
+            .onTapGesture(count:2){
+                zoomOut()
+            }
+            .onTapGesture(count:1){
+                zoomIn()
+            }
+            .background(instructionBackgroundColor)
+            .frame(width:inputWidth)
+            .padding(5)
             
             GeometryReader {
                 geometry in
@@ -366,7 +397,7 @@ struct ContentView: View {
                 }
                 
             } // end GeoReader
-        } // end VStack
+        } // end HStack
         
         
     } // end view body
