@@ -350,9 +350,7 @@ struct ContentView: View {
     // ........................................................................
     
     var body: some View {
-        let xC: CGFloat = xCStart
-        let yC: CGFloat = xCStart
-        let contextImage: CGImage = getContextImage(xC:xC,yC:yC)
+        let contextImage: CGImage = getContextImage(xC:xCStart,yC:yCStart)
         let img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
         HStack(spacing: 0){ // instructions + scene side by side
@@ -368,19 +366,19 @@ struct ContentView: View {
                 HStack {
                     Text("X:")
                     TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
-                        .textFieldStyle(.roundedBorder)
+                      //  .textFieldStyle(.roundedBorder)
                         .padding()
                 }
                 HStack {
                     Text("Y:")
                     TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
-                        .textFieldStyle(.roundedBorder)
+                     //   .textFieldStyle(.roundedBorder)
                         .padding()
                 }
                 HStack {
                     Text("Scale:")
                     TextField("Scale",value: $scaleStart, formatter: ContentView.cgFormatter)
-                        .textFieldStyle(.roundedBorder)
+                    //    .textFieldStyle(.roundedBorder)
                         .padding()
                 }
                 
@@ -389,6 +387,7 @@ struct ContentView: View {
                     ForEach(self.configs, id: \.id) { item in
                         Text(item.tag).tag(item as Config?)
                     }
+                    
                 }
                 
                 
@@ -411,13 +410,13 @@ struct ContentView: View {
                         .gesture(self.tapGesture)
                         .alert(isPresented: $showingAlert) {
                             // fixed imageWidth & imageHeight
-                            let newXC = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
-                            print (newXC)
-                            let newYC = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
-                            print (newYC)
+                            xCStart = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
+                            print (xCStart)
+                            yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
+                            print (yCStart)
                             return Alert(
                                 title: Text("It works! You clicked on"),
-                                message: Text("X: \(tapX),Y: \(CGFloat(imageHeight) - tapY), so the new center is \(newXC), \(newYC). Scale is \(self.scaleStart)."),
+                                message: Text("X: \(tapX),Y: \(CGFloat(imageHeight) - tapY), so the new center is \(xCStart), \(yCStart). Scale is \(self.scaleStart)."),
                                 dismissButton: .default(Text("Got it!")))
                         }
                 }
