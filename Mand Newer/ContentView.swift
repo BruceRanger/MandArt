@@ -6,15 +6,14 @@
 //
 
 import SwiftUI
-// Try to commit. And again
-// Crash course in XCode & Git!
 
- // By default each SwiftUI file declares two structures - this first one
- // defines the content and layout of the app.
+struct Config {
+    var xCStart: CGFloat
+    var yCStart: CGFloat
+    var scaleStart: CGFloat
+}
 
 struct ContentView: View {
-    
-    // set up gesture attributes
     
     @State private var showingAlert = false
     @State private var tapX: CGFloat = 0
@@ -25,7 +24,6 @@ struct ContentView: View {
     @State private var startTime: Date?
     
     @State private var dragCompleted = false
- //   @State private var scale: CGFloat = 1.0   Doesn't seem necessary
     @State private var dragOffset = CGSize.zero
     
     // set up initial view size - TODO: make resolution dynamic, user-specified
@@ -38,48 +36,23 @@ struct ContentView: View {
     @State private var xCStart: CGFloat = -0.148238
     @State private var yCStart: CGFloat =  0.651878
     @State private var scaleStart: CGFloat =  33_320_000
-    
-    // define a reusable function to convert tap X to new center X
-    // tapped X is between 0 and imageHeight
-    // tapped X Min = 0 = top of view
-    // tapped X Max = imageHeight = bottom of view
-    // tapped X Fraction = tapped X/tapped X Max =  fraction of the view to the bottom
-    // TODO: Implement the correct logic rather than calling it at the same start
-    
-    // X should use imageWidth
+        
     func getCenterXFromTapX(tapX: CGFloat, imageWidth:Int) -> CGFloat {
-    //    let tapXMax: CGFloat = CGFloat(imageWidth)
         let tapXDifference = (tapX - CGFloat(imageWidth)/2.0)/scaleStart
         print (tapXDifference)
-        // update the calcultion to return the new mandelbrot x center
         let newXC: CGFloat = xCStart + tapXDifference // needs work
         print (newXC)
-    //    newCenterX = xCStart // temporarily set to the initially chosen X center
         return newXC
     }
     
-    // define a reusable function to convert tap Y to new center Y
-    // tapped Y is between 0 and imageWidth
-    // tapped Y Min = 0 = far left of view
-    // tapped Y Max = imageWidth = far right of view
-    // tapped Y Fraction =  Y / YMax =  fraction of the view to the right
-    // TODO: Implement the correct logic rather than calling it at the same start
-    
-    //  Y should use imageHeight
     func getCenterYFromTapY(tapY: CGFloat, imageHeight:Int) -> CGFloat {
-    //    let tapYMax: CGFloat = CGFloat(imageHeight)
         let tapYDifference = ((CGFloat(imageHeight) - tapY) - CGFloat(imageHeight)/2.0)/scaleStart
         print (tapYDifference)
-        // update the calcultion to return the new mandelbrot y center
         let newYC: CGFloat = (yCStart + tapYDifference) // needs work
         print (newYC)
-    //    newCenterY = yCStart // temporarily set to the initially chosen Y center
         return newYC
     }
     
-
-     // A reusable function to build & return the ContextImage
-
     func getContextImage(xC: CGFloat,yC: CGFloat) -> CGImage {
 
         var contextImage: CGImage
@@ -340,24 +313,13 @@ struct ContentView: View {
         return contextImage
     }
     
-    
-    // Required view body. It defines the content and behavior of the view.
-    
     var body: some View {
-        
-        // Set up inputs to the reusable function - start with center x & y
-        
         let xC: CGFloat = xCStart
         let yC: CGFloat = yCStart
-        
-        // Call function that builds and returns a new context image
-        
         let contextImage: CGImage = getContextImage(xC:xC,yC:yC)
-        
-        // update the UI
-        
         let img = Image(contextImage, scale: 1.0, label: Text("Test"))
-        return  GeometryReader {
+        
+        GeometryReader {
             geometry in
             ZStack(alignment: .topLeading) {
                 Text("Scene")
@@ -371,17 +333,15 @@ struct ContentView: View {
                         print (newYC)
                         return Alert(
                             title: Text("It works! You clicked on"),
-                            message: Text("X: \(tapX),Y: \(CGFloat(imageHeight) - tapY), so the new center will be \(newXC), \(newYC)"),
+                            message: Text("X: \(tapX),Y: \(CGFloat(imageHeight) - tapY), so the new center is \(newXC), \(newYC)"),
                             dismissButton: .default(Text("Got it!")))
                     }
             }
-        }
+            
+        } // end GeoReader
         
     } // end view body
-    
-
-    // Tap gesture added to enable user interaction
-    
+        
     var tapGesture: some Gesture {
         DragGesture(minimumDistance: 0, coordinateSpace: .local)
             .onChanged { value in
@@ -401,6 +361,13 @@ struct ContentView: View {
                     showingAlert = true
                     print(tap.startLocation)
                     self.tapLocations.append(tap.startLocation)
+                    let newXC = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
+                    print (newXC)
+                    let newYC = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
+                    print (newYC)
+                    // update state variables from the tap gesture
+                    xCStart = newXC
+                    yCStart = newYC
                 }
                 
                 // reset tap event states
