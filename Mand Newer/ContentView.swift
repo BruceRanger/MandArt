@@ -353,8 +353,8 @@ struct ContentView: View {
         let contextImage: CGImage = getContextImage(xC:xCStart,yC:yCStart)
         let img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
-        HStack(spacing: 0){ // instructions + scene side by side
-            VStack(
+        HStack(spacing: 0){ // this container shows instructions on left / dwg on right
+            VStack( // the left side is a vertical container with user stuff
                 alignment: .leading, spacing: 10.0)
             {
                 Group{
@@ -363,26 +363,29 @@ struct ContentView: View {
                     Text("Click image to choose new center.\n")
                     
                 }
-                HStack {
+                HStack { // each input has a horizontal container with a Text label & TextField for data
                     Text("X:")
                     TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
-                      //  .textFieldStyle(.roundedBorder)
+                    //  .textFieldStyle(.roundedBorder)
                         .padding()
                 }
-                HStack {
+                HStack { // each input has a horizontal container with a Text label & TextField for data
                     Text("Y:")
                     TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
-                     //   .textFieldStyle(.roundedBorder)
+                    //   .textFieldStyle(.roundedBorder)
                         .padding()
                 }
-                HStack {
+                HStack { // each input has a horizontal container with a Text label & TextField for data
                     Text("Scale:")
                     TextField("Scale",value: $scaleStart, formatter: ContentView.cgFormatter)
                     //    .textFieldStyle(.roundedBorder)
                         .padding()
                 }
-                
-                Picker(selection:$selectedConfig, label: Text ("Optional: Choose scene")){
+                // Then, there is a Picker to list the pre-selected scenes
+                Picker(
+                    selection:$selectedConfig,
+                    label: Text ("Optional: Choose scene"))
+                {
                     Text("No scene selected").tag(nil as Config?)
                     ForEach(self.configs, id: \.id) { item in
                         Text(item.tag).tag(item as Config?)
@@ -447,9 +450,9 @@ struct ContentView: View {
                     print(tap.startLocation)
                     self.tapLocations.append(tap.startLocation)
                     // the right place to update
-                     xCStart = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
+                    xCStart = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
                     print (xCStart)
-                     yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
+                    yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
                     print (yCStart)
                 }
                 
