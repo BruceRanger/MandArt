@@ -446,13 +446,11 @@ struct ContentView: View {
                     showingAlert = true
                     print(tap.startLocation)
                     self.tapLocations.append(tap.startLocation)
-                    let newXC = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
-                    print (newXC)
-                    let newYC = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
-                    print (newYC)
-                    // update state variables from the tap gesture
-                    xCStart = newXC
-                    yCStart = newYC
+                    // the right place to update
+                     xCStart = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
+                    print (xCStart)
+                     yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
+                    print (yCStart)
                 }
                 
                 // reset tap event states
