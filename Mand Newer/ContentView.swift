@@ -33,10 +33,10 @@ struct ContentView: View {
     
     // temporary starting center X and Y - TODO: read this from a file
     
-    @State private var xCStart: CGFloat = -0.148238
-    @State private var yCStart: CGFloat =  0.651878
-    @State private var scaleStart: CGFloat =  33_320_000
-    @State private var scaleOld: CGFloat =  33_320_000
+    @State private var xCStart: CGFloat = 0.0
+    @State private var yCStart: CGFloat =  0.0
+    @State private var scaleStart: CGFloat =  160.0
+    @State private var scaleOld: CGFloat =  160.0
     
     func getCenterXFromTapX(tapX: CGFloat, imageWidth:Int) -> CGFloat {
         let tapXDifference = (tapX - CGFloat(imageWidth)/2.0)/scaleStart
