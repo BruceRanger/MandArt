@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-struct Config {
-    var xCStart: CGFloat
-    var yCStart: CGFloat
-    var scaleStart: CGFloat
-}
-
 struct ContentView: View {
+    
+    struct Config: Codable, Hashable, Identifiable {
+        let id: UUID
+        let tag: String
+        let xC: CGFloat
+        let yC: CGFloat
+        let scale: CGFloat
+    }
     
     let instructionBackgroundColor = Color.green
     let inputWidth: CGFloat = 150.0
@@ -40,6 +42,8 @@ struct ContentView: View {
     @State private var yCStart: CGFloat =  0.0
     @State private var scaleStart: CGFloat =  160.0
     @State private var scaleOld: CGFloat =  160.0
+    
+    @State private var selectedConfig: Config?
     
     func getCenterXFromTapX(tapX: CGFloat, imageWidth:Int) -> CGFloat {
         let tapXDifference = (tapX - CGFloat(imageWidth)/2.0)/scaleStart
@@ -337,11 +341,17 @@ struct ContentView: View {
         return formatter
     }
     
+    static var intFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .ordinal
+        return formatter
+    }
+    
     // ........................................................................
     
     var body: some View {
         let xC: CGFloat = xCStart
-        let yC: CGFloat = yCStart
+        let yC: CGFloat = xCStart
         let contextImage: CGImage = getContextImage(xC:xC,yC:yC)
         let img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
@@ -349,23 +359,39 @@ struct ContentView: View {
             VStack(
                 alignment: .leading, spacing: 10.0)
             {
-                Text("")
-                Text("Click here to zoom in.")
-                Text("Double-click here to zoom out.")
-                Text("Click image to choose new center.")
-                Text("Be patient.")
-                Text("Center is \(xC), \(yC)\nScale is \(self.scaleStart)")
-                Text("")
-                TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
-                    .textFieldStyle(.roundedBorder)
-                    .padding()
-                TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
-                    .textFieldStyle(.roundedBorder)
-                    .padding()
-                TextField("Scale",value: $scaleStart, formatter: ContentView.cgFormatter)
-                    .textFieldStyle(.roundedBorder)
-                    .padding()
-                   
+                Group{
+                    Text("Click here to zoom in.")
+                    Text("Double-click here to zoom out.")
+                    Text("Click image to choose new center.\n")
+                    
+                }
+                HStack {
+                    Text("X:")
+                    TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
+                        .textFieldStyle(.roundedBorder)
+                        .padding()
+                }
+                HStack {
+                    Text("Y:")
+                    TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
+                        .textFieldStyle(.roundedBorder)
+                        .padding()
+                }
+                HStack {
+                    Text("Scale:")
+                    TextField("Scale",value: $scaleStart, formatter: ContentView.cgFormatter)
+                        .textFieldStyle(.roundedBorder)
+                        .padding()
+                }
+                
+                Picker(selection:$selectedConfig, label: Text ("Optional: Choose scene")){
+                    Text("No scene selected").tag(nil as Config?)
+                    ForEach(self.configs, id: \.id) { item in
+                        Text(item.tag).tag(item as Config?)
+                    }
+                }
+                
+                
             } // end vstack for user instructions
             .onTapGesture(count:2){
                 zoomOut()
@@ -436,6 +462,85 @@ struct ContentView: View {
             }
     } // end tapGesture
     
+    
+    let configs = [
+        Config( id: UUID(), tag: "Overview",
+                xC : 0.0,
+                yC : 0.0,
+                scale :160.0
+              ),
+        Config( id: UUID(), tag: "M15 = N1",
+                xC : -0.7649211,
+                yC : 0.1018886,
+                scale :2_839_040.0
+              ),
+        Config( id: UUID(), tag: "M1",
+                xC : -0.2985836511290,     // M1
+                yC : 0.6580148156626,
+                scale : 1.9e12
+              ),
+        Config(id: UUID(), tag: "M2",
+               xC : -0.5489774042572,     // M2
+               yC : 0.6513448574304,
+               scale : 6_008_327_554_320.0
+              ),
+        Config(id: UUID(), tag: "M3",
+               xC : -0.1913046694  ,   // M3
+               yC : 0.6502983463,
+               scale : 1.9e9
+              ),
+        Config(id: UUID(), tag: "M4",
+               xC : -0.1690435583 ,   // M4
+               yC : 0.6505206291,
+               scale : 1.8e9
+              ),
+        Config(id: UUID(), tag: "M5",
+               xC : -0.183111455812451001,    // M5
+               yC : 0.651073847461314001,
+               scale : 1.0e13
+              ),
+        Config(id: UUID(), tag: "N2",
+               xC : 0.345679 ,   // N2
+               yC : 0.38838,
+               scale : 320_000.0
+              ),
+        Config(id: UUID(), tag: "N3",
+               xC : -1.250385042 ,  // N3
+               yC : 0.007717842,
+               scale : 48.0e6
+              ),
+        Config(id: UUID(), tag: "N4",
+               xC :-0.74344 ,  // N4
+               yC : 0.12493,
+               scale : 576_000.0
+              ),
+        Config(id: UUID(), tag: "N6",
+               xC : -0.74725 ,  // N6
+               yC : 0.08442,
+               scale :  2_880_000.0
+              ),
+        Config(id: UUID(), tag: "N8",
+               xC : -1.250377295  , // N8
+               yC : 0.007719842,
+               scale : 928.0e6
+              ),
+        Config(id: UUID(), tag: "N9",
+               xC : -0.111925 , // N9
+               yC : 0.6502587,
+               scale : 38.4e6
+              ),
+        Config(id: UUID(),  tag: "N10",
+               xC : -0.111715 , // N10
+               yC : 0.6495112,
+               scale : 2.0e7
+              ),
+        Config( id: UUID(), tag: "N11",
+                xC : -0.148238 , // N11
+                yC : 0.651878,
+                scale : 26_656_000.0
+              )
+    ]
+    
 } // end view struct
 
 #if DEBUG
@@ -446,61 +551,6 @@ struct ContentView_Previews: PreviewProvider {
 }
 #endif
 
-//      xC = -0.7649211   // M15 = N1
-//      yC = 0.1018886
-//      scale = 2_839_040.0
-
-//      xC = -0.2985836511290     // M1
-//      yC = 0.6580148156626
-//      scale = 1.9e12
-
-//      xC = -0.5489774042572     // M2
-//      yC = 0.6513448574304
-//      scale = 6_008_327_554_320.0
-
-//      xC = -0.1913046694     // M3
-//      yC = 0.6502983463
-//      scale = 1.9e9
-
-//      xC = -0.1690435583    // M4
-//      yC = 0.6505206291
-//      scale = 1.8e9
-
-//      xC = -0.183111455812451001    // M5
-//      yC = 0.651073847461314001
-//      scale = 1.0e13
-
-//      xC = 0.345679    // N2
-//      yC = 0.38838
-//      scale = 320_000.0
-
-//      xC = -1.250385042   // N3
-//      yC = 0.007717842
-//      scale = 48.0e6
-
-//      xC = -0.74344   // N4
-//      yC = 0.12493
-//      scale = 576_000.0
-
-//      xC = -0.74725   // N6
-//      yC = 0.08442
-//      scale = 2_880_000.0
-
-//      xC = -1.250377295   // N8
-//      yC = 0.007719842
-//      scale = 928.0e6
-
-//      xC = -0.111925  // N9
-//      yC = 0.6502587
-//      scale = 38.4e6
-
-//      xC = -0.111715  // N10
-//      yC = 0.6495112
-//      scale = 2.0e7
-
-//      xC = -0.148238  // N11
-//      yC = 0.651878
-//      scale = 26_656_000.0
 
 //  let colors: [[Float]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
 
