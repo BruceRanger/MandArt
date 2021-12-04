@@ -338,6 +338,15 @@ struct ContentView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 8
+        formatter.maximum = 4.0
+        formatter.minimum = -4.0
+        return formatter
+    }
+    
+    static var cgUnboundFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 8
         return formatter
     }
     
@@ -363,21 +372,23 @@ struct ContentView: View {
                     Text("Click image to choose new center.\n")
                     
                 }
-                HStack { // each input has a horizontal container with a Text label & TextField for data
-                    Text("X:")
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter center X")
+                    Text("Between -4 and 4")
                     TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
                     //  .textFieldStyle(.roundedBorder)
                         .padding()
                 }
-                HStack { // each input has a horizontal container with a Text label & TextField for data
-                    Text("Y:")
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter center Y")
+                    Text("Between -4 and 4")
                     TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
                     //   .textFieldStyle(.roundedBorder)
                         .padding()
                 }
-                HStack { // each input has a horizontal container with a Text label & TextField for data
-                    Text("Scale:")
-                    TextField("Scale",value: $scaleStart, formatter: ContentView.cgFormatter)
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter scale:")
+                    TextField("Scale",value: $scaleStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
                         .padding()
                 }
