@@ -36,6 +36,7 @@ struct ContentView: View {
     @State private var xCStart: CGFloat = -0.148238
     @State private var yCStart: CGFloat =  0.651878
     @State private var scaleStart: CGFloat =  33_320_000
+    @State private var scaleOld: CGFloat =  33_320_000
     
     func getCenterXFromTapX(tapX: CGFloat, imageWidth:Int) -> CGFloat {
         let tapXDifference = (tapX - CGFloat(imageWidth)/2.0)/scaleStart
@@ -51,6 +52,18 @@ struct ContentView: View {
         let newYC: CGFloat = (yCStart + tapYDifference) // needs work
         print (newYC)
         return newYC
+    }
+    
+    func zoomOut(){
+        self.scaleOld = self.scaleStart
+        self.scaleStart = self.scaleOld / 2.0
+        print("Double-click detected: Zoom out from\n \(self.scaleOld) to\n \(self.scaleStart)\n")
+    }
+    
+    func zoomIn(){
+        self.scaleOld = self.scaleStart
+        self.scaleStart = self.scaleOld * 2.0
+        print("Single-click detected: Zoom in from\n \(self.scaleOld) to\n \(self.scaleStart)\n")
     }
     
     func getContextImage(xC: CGFloat,yC: CGFloat) -> CGImage {
@@ -87,7 +100,8 @@ struct ContentView: View {
         
         rSqLimit = 400.0
         
-        scale = 33_320_000
+        //scale = 33_320_000
+        scale = self.scaleStart
         
         rSqMax = 162_000.0
         gGML = log( log(rSqMax) ) - log(log(rSqLimit) )
@@ -319,26 +333,41 @@ struct ContentView: View {
         let contextImage: CGImage = getContextImage(xC:xC,yC:yC)
         let img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
-        GeometryReader {
-            geometry in
-            ZStack(alignment: .topLeading) {
-                Text("Scene")
-                img
-                    .gesture(self.tapGesture)
-                    .alert(isPresented: $showingAlert) {
-                        // fixed imageWidth & imageHeight
-                        let newXC = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
-                        print (newXC)
-                        let newYC = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
-                        print (newYC)
-                        return Alert(
-                            title: Text("It works! You clicked on"),
-                            message: Text("X: \(tapX),Y: \(CGFloat(imageHeight) - tapY), so the new center is \(newXC), \(newYC)"),
-                            dismissButton: .default(Text("Got it!")))
-                    }
-            }
+        VStack(
+            alignment: .leading,
+            spacing: 10
+        ){
+            let s = "Click here to zoom in, double-click here to zoom out, or click image to choose new center. Be patient.\n"
+            Text(s+"Center is \(xC), \(yC)\nScale is \(self.scaleStart)")
+                .onTapGesture(count:2){
+                    zoomOut()
+                }
+                .onTapGesture(count:1){
+                    zoomIn()
+                }
             
-        } // end GeoReader
+            GeometryReader {
+                geometry in
+                ZStack(alignment: .topLeading) {
+                    Text("Scene")
+                    img
+                        .gesture(self.tapGesture)
+                        .alert(isPresented: $showingAlert) {
+                            // fixed imageWidth & imageHeight
+                            let newXC = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
+                            print (newXC)
+                            let newYC = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
+                            print (newYC)
+                            return Alert(
+                                title: Text("It works! You clicked on"),
+                                message: Text("X: \(tapX),Y: \(CGFloat(imageHeight) - tapY), so the new center is \(newXC), \(newYC). Scale is \(self.scaleStart)."),
+                                dismissButton: .default(Text("Got it!")))
+                        }
+                }
+                
+            } // end GeoReader
+        } // end VStack
+        
         
     } // end view body
     
