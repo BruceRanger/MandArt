@@ -184,15 +184,12 @@ struct ContentView: View {
         var color: Float = 0.0
         var b0: Int = 0
         var b1: Int = 0
-        var block1: Float = 0.0
         
-        nBlocks = 60
-        
-        block1 = 1.0
+        nBlocks = 40
         
         var blockBound = [Float](repeating: 0.0, count: nBlocks + 1)
         
-        let colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
+        let colors: [[Float]] = [[255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0], [0.0, 255.0, 0.0], [255.0, 255.0, 0.0]]
         
         nColors = colors.count
         
@@ -202,11 +199,11 @@ struct ContentView: View {
         
         var B: Float = 0.0
         
-        B = (log10((iMax + 1.0)/block1))/Float((nBlocks - 1))
+        B = (log10((iMax + 1.0)))/Float((nBlocks - 1))
         k = pow(10.0, B)
         
         for i in 1...nBlocks {
-            blockBound[i] = block1*pow(k, Float(i - 1))
+            blockBound[i] = pow(k, Float(i - 1))
         }
         
         // set up CG parameters
