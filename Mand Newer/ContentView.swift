@@ -77,7 +77,7 @@ struct ContentView: View {
         
         var contextImage: CGImage
         
-        let iMax: Float = 10_000.0
+        let iMax: CGFloat = 10_000.0
         var rSq: CGFloat = 0.0
         var rSqLimit: CGFloat = 0.0
         var rSqMax: CGFloat = 0.0
@@ -87,19 +87,19 @@ struct ContentView: View {
         var xx: CGFloat = 0.0
         var yy: CGFloat = 0.0
         var xTemp: CGFloat = 0.0
-        var iter: Float = 0.0
-        var dIter: Float = 0.0
+        var iter: CGFloat = 0.0
+        var dIter: CGFloat = 0.0
         var gGML: CGFloat = 0.0
         var gGL: CGFloat = 0.0
-        var fIter = [[Float]](repeating: [Float](repeating: 0.0, count: imageHeight), count: imageWidth)
-        var fIterMinLeft: Float = 0.0
-        var fIterMinRight: Float = 0.0
-        var fIterBottom = [Float](repeating: 0.0, count: imageWidth)
-        var fIterTop = [Float](repeating: 0.0, count: imageWidth)
-        var fIterMinBottom: Float = 0.0
-        var fIterMinTop: Float = 0.0
-        var fIterMins = [Float](repeating: 0.0, count: 4)
-        var fIterMin: Float = 0.0
+        var fIter = [[CGFloat]](repeating: [CGFloat](repeating: 0.0, count: imageHeight), count: imageWidth)
+        var fIterMinLeft: CGFloat = 0.0
+        var fIterMinRight: CGFloat = 0.0
+        var fIterBottom = [CGFloat](repeating: 0.0, count: imageWidth)
+        var fIterTop = [CGFloat](repeating: 0.0, count: imageWidth)
+        var fIterMinBottom: CGFloat = 0.0
+        var fIterMinTop: CGFloat = 0.0
+        var fIterMins = [CGFloat](repeating: 0.0, count: 4)
+        var fIterMin: CGFloat = 0.0
         var scale: CGFloat = 0.0
         var p: CGFloat = 0.0
         var test1: CGFloat = 0.0
@@ -144,13 +144,13 @@ struct ContentView: View {
                         yy = 2*xx*yy + y0
                         xx = xTemp
                         rSq = xx*xx + yy*yy
-                        iter = Float(i)
+                        iter = CGFloat(i)
                     }
                 }   //end else
                 
                 if iter < iMax {
                     
-                    dIter = Float(-(  log( log(rSq) ) - gGL  )/gGML)
+                    dIter = CGFloat(-(  log( log(rSq) ) - gGL  )/gGML)
                     
                     fIter[u][v] = iter + dIter
                 }   //end if
@@ -181,29 +181,29 @@ struct ContentView: View {
         
         var nBlocks: Int = 0
         var nColors: Int = 0
-        var color: Float = 0.0
+        var color: CGFloat = 0.0
         var b0: Int = 0
         var b1: Int = 0
         
         nBlocks = 40
         
-        var blockBound = [Float](repeating: 0.0, count: nBlocks + 1)
+        var blockBound = [CGFloat](repeating: 0.0, count: nBlocks + 1)
         
-        let colors: [[Float]] = [[255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0], [0.0, 255.0, 0.0], [255.0, 255.0, 0.0]]
+        let colors: [[CGFloat]] = [[255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0], [0.0, 255.0, 0.0], [255.0, 255.0, 0.0]]
         
         nColors = colors.count
         
-        var h: Float = 0.0
-        var xX: Float = 0.0
-        var k: Float = 0.0
+        var h: CGFloat = 0.0
+        var xX: CGFloat = 0.0
+        var k: CGFloat = 0.0
         
-        var B: Float = 0.0
+        var B: CGFloat = 0.0
         
-        B = (log10((iMax + 1.0)))/Float((nBlocks - 1))
+        B = (log10((iMax + 1.0)))/CGFloat((nBlocks - 1))
         k = pow(10.0, B)
         
         for i in 1...nBlocks {
-            blockBound[i] = pow(k, Float(i - 1))
+            blockBound[i] = pow(k, CGFloat(i - 1))
         }
         
         // set up CG parameters
@@ -560,21 +560,21 @@ struct ContentView_Previews: PreviewProvider {
 #endif
 
 
-//  let colors: [[Float]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
+//  let colors: [[CGFloat]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
 
-//  let colors: [[Float]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
+//  let colors: [[CGFloat]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
 
-//let colors: [[Float]] = [[255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0],[0.0, 255.0, 255.0], [0.0, 255.0, 0.0], [255.0, 255.0, 0.0]]
+//let colors: [[CGFloat]] = [[255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0],[0.0, 255.0, 255.0], [0.0, 255.0, 0.0], [255.0, 255.0, 0.0]]
 
-//let colors: [[Float]] = [[255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, //0.0, 255.0], [0.0, 255.0, 255.0], [0.0, 255.0, 0.0]]
+//let colors: [[CGFloat]] = [[255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, //0.0, 255.0], [0.0, 255.0, 255.0], [0.0, 255.0, 0.0]]
 
-//let colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
+//let colors: [[CGFloat]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
 
-//let colors: [[Float]] = [[255.0, 127.0, 0.0], [255.0, 0.0, 127.0], [127.0, 0.0, 255.0],[0.0, 127.0, 255.0], [0.0, 255.0, 127.0], [127.0, 255.0, 0.0]]
+//let colors: [[CGFloat]] = [[255.0, 127.0, 0.0], [255.0, 0.0, 127.0], [127.0, 0.0, 255.0],[0.0, 127.0, 255.0], [0.0, 255.0, 127.0], [127.0, 255.0, 0.0]]
 
-//let colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 0.0, 0.0], [0.0, 0.0, 255.0]]
+//let colors: [[CGFloat]] = [[0.0, 255.0, 0.0], [255.0, 0.0, 0.0], [0.0, 0.0, 255.0]]
 
-//let colors: [[Float]] = [[255.0, 0.0, 255.0], [30,144,255], [61.0, 145.0, 64.0], [255.0, 255.0, 0.0], [255.0, 165.0, 0.0], [255.0, 0.0, 0.0]]
+//let colors: [[CGFloat]] = [[255.0, 0.0, 255.0], [30,144,255], [61.0, 145.0, 64.0], [255.0, 255.0, 0.0], [255.0, 165.0, 0.0], [255.0, 0.0, 0.0]]
 
 
 
