@@ -14,4 +14,7 @@
 - MacOS
 - iOS
 - iPadOS
-- watchOS
+
+## Preview
+
+![N5Xmas](images/N5Xmas.PNG)
