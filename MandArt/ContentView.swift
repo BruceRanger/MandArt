@@ -3,7 +3,7 @@
 //  MandArt
 //
 //  Created by Bruce Johnson on 9/20/21.
-//
+//  Edited by Bruce Johnson on 8/7/22.
 
 import SwiftUI
 
