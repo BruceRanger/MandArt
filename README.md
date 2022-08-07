@@ -1,20 +1,16 @@
-# ape-mandelbrot
+# MandArt
 
-> Mandelbrot set running in SwiftUI 
+> Mandelbrot set running in SwiftUI - create custom art
 
 - Applied Physics Engineering
 - [Bruce Johnson](https://github.com/bruceranger)
 
 ## Development
 
-- Xcode 12.5
+- Xcode 13.4
 
 ## For
 
 - MacOS
 - iOS
 - iPadOS
-
-## Preview
-
-![N5Xmas](images/N5Xmas.PNG)
