@@ -18,7 +18,7 @@ struct ContentView: View {
     }
     
     let instructionBackgroundColor = Color.green
-    let inputWidth: CGFloat = 100.0
+    let inputWidth: CGFloat = 200.0
 //    let inputWidth: CGFloat = 450.0
     
     @State private var showingAlert = false
