@@ -364,6 +364,8 @@ struct ContentView: View {
     
     // ........................................................................
     
+//    https://www.hackingwithswift.com/quick-start/swiftui/how-to-format-a-textfield-for-numbers
+    
     var body: some View {
         var contextImage: CGImage = getContextImage(xC:xCStart,yC:yCStart)
         var img = Image(contextImage, scale: 1.0, label: Text("Test"))
