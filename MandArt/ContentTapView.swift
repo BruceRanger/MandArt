@@ -18,7 +18,7 @@ extension CGPoint : Hashable {
 struct ContentTapView: View {
     
     @State private var tapLocations: [CGPoint] = []
-    @State private var moved: CGFloat = 0
+    @State private var moved: Double = 0
     @State private var startTime: Date?
     var body: some View {
         GeometryReader { geometry in
@@ -67,8 +67,8 @@ struct ContentTapView: View {
 struct TapAnnotation: View {
     //var tintColor: UIColor
     var tintColor: Color
-    var radius: CGFloat = 10
-    var strokeWidth: CGFloat = 1
+    var radius: Double = 10
+    var strokeWidth: Double = 1
     var body: some View {
         Circle()
             .overlay(
@@ -84,10 +84,10 @@ struct TapAnnotation: View {
     }
 }
 
-#if DEBUG
+/* #if DEBUG
 struct ContentTapView_Previews: PreviewProvider {
     static var previews: some View {
         ContentTapView()
     }
 }
-#endif
+#endif */

@@ -12,21 +12,21 @@ struct ContentView: View {
     struct Config: Codable, Hashable, Identifiable {
         let id: UUID
         let tag: String
-        let xC: CGFloat
-        let yC: CGFloat
-        let scale: CGFloat
+        var xC: Double
+        var yC: Double
+        var scale: Double
     }
     
     let instructionBackgroundColor = Color.green
-    let inputWidth: CGFloat = 200.0
-//    let inputWidth: CGFloat = 450.0
+    let inputWidth: Double = 200.0
+//    let inputWidth: Double = 450.0
     
     @State private var showingAlert = false
-    @State private var tapX: CGFloat = 0
-    @State private var tapY: CGFloat = 0
+    @State private var tapX: Double = 0
+    @State private var tapY: Double = 0
     
     @State private var tapLocations: [CGPoint] = []
-    @State private var moved: CGFloat = 0
+    @State private var moved: Double = 0
     @State private var startTime: Date?
     
     @State private var dragCompleted = false
@@ -39,30 +39,30 @@ struct ContentView: View {
     
     // temporary starting center X and Y - TODO: read this from a file
     
- //   @State private var xCStart: CGFloat = 0.0
- //   @State private var yCStart: CGFloat =  0.0
- //   @State private var scaleStart: CGFloat =  160.0
+ //   @State private var xCStart: Double = 0.0
+ //   @State private var yCStart: Double =  0.0
+ //   @State private var scaleStart: Double =  160.0
     
-    @State private var xCStart: CGFloat = -0.74725
-    @State private var yCStart: CGFloat =  0.08442
-    @State private var scaleStart: CGFloat =  2_880_000.0
+    @State private var xCStart: Double = -0.74725
+    @State private var yCStart: Double =  0.08442
+    @State private var scaleStart: Double =  2_880_000.0
     
-    @State private var scaleOld: CGFloat =  160.0
+    @State private var scaleOld: Double =  160.0
     
     @State private var selectedConfig: Config?
     
-    func getCenterXFromTapX(tapX: CGFloat, imageWidth:Int) -> CGFloat {
-        let tapXDifference = (tapX - CGFloat(imageWidth)/2.0)/scaleStart
+    func getCenterXFromTapX(tapX: Double, imageWidth:Int) -> Double {
+        var tapXDifference = (tapX - Double(imageWidth)/2.0)/scaleStart
         print (tapXDifference)
-        let newXC: CGFloat = xCStart + tapXDifference // needs work
+        var newXC: Double = xCStart + tapXDifference // needs work
         print (newXC)
         return newXC
     }
     
-    func getCenterYFromTapY(tapY: CGFloat, imageHeight:Int) -> CGFloat {
-        let tapYDifference = ((CGFloat(imageHeight) - tapY) - CGFloat(imageHeight)/2.0)/scaleStart
+    func getCenterYFromTapY(tapY: Double, imageHeight:Int) -> Double {
+        var tapYDifference = ((Double(imageHeight) - tapY) - Double(imageHeight)/2.0)/scaleStart
         print (tapYDifference)
-        let newYC: CGFloat = (yCStart + tapYDifference) // needs work
+        var newYC: Double = (yCStart + tapYDifference) // needs work
         print (newYC)
         return newYC
     }
@@ -79,24 +79,24 @@ struct ContentView: View {
         print("Single-click detected: Zoom in from\n \(self.scaleOld) to\n \(self.scaleStart)\n")
     }
     
-    func getContextImage(xC: CGFloat,yC: CGFloat) -> CGImage {
+    func getContextImage(xC: Double,yC: Double) -> CGImage {
         
         var contextImage: CGImage
         
-        let iMax: Float = 10_000.0
-        var rSq: CGFloat = 0.0
-        var rSqLimit: CGFloat = 0.0
-        var rSqMax: CGFloat = 0.0
-        var x0: CGFloat = 0.0
-        var y0: CGFloat = 0.0
+        var iMax: Float = 10_000.0
+        var rSq: Double = 0.0
+        var rSqLimit: Double = 0.0
+        var rSqMax: Double = 0.0
+        var x0: Double = 0.0
+        var y0: Double = 0.0
         
-        var xx: CGFloat = 0.0
-        var yy: CGFloat = 0.0
-        var xTemp: CGFloat = 0.0
+        var xx: Double = 0.0
+        var yy: Double = 0.0
+        var xTemp: Double = 0.0
         var iter: Float = 0.0
         var dIter: Float = 0.0
-        var gGML: CGFloat = 0.0
-        var gGL: CGFloat = 0.0
+        var gGML: Double = 0.0
+        var gGL: Double = 0.0
         var fIter = [[Float]](repeating: [Float](repeating: 0.0, count: imageHeight), count: imageWidth)
         var fIterMinLeft: Float = 0.0
         var fIterMinRight: Float = 0.0
@@ -106,10 +106,10 @@ struct ContentView: View {
         var fIterMinTop: Float = 0.0
         var fIterMins = [Float](repeating: 0.0, count: 4)
         var fIterMin: Float = 0.0
-        var scale: CGFloat = 0.0
-        var p: CGFloat = 0.0
-        var test1: CGFloat = 0.0
-        var test2: CGFloat = 0.0
+        var scale: Double = 0.0
+        var p: Double = 0.0
+        var test1: Double = 0.0
+        var test2: Double = 0.0
         
         rSqLimit = 400.0
         
@@ -124,8 +124,8 @@ struct ContentView: View {
             
             for v in 0...imageHeight - 1 {
                 
-                x0 = xC + (CGFloat(u) - CGFloat(imageWidth/2))/scale
-                y0 = yC + (CGFloat(v) - CGFloat(imageHeight/2))/scale
+                x0 = xC + (Double(u) - Double(imageWidth/2))/scale
+                y0 = yC + (Double(v) - Double(imageHeight/2))/scale
                 xx = x0
                 yy = y0
                 rSq = xx*xx + yy*yy
@@ -198,7 +198,7 @@ struct ContentView: View {
         
         var blockBound = [Float](repeating: 0.0, count: nBlocks + 1)
         
-        let colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
+        var colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
         
         nColors = colors.count
         
@@ -219,15 +219,15 @@ struct ContentView: View {
         let bitsPerComponent: Int = 8   // for UInt8
         let componentsPerPixel: Int = 4  // RGBA = 4 components
         let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
-        let bytesPerRow: Int = imageWidth * bytesPerPixel
-        let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
+        var bytesPerRow: Int = imageWidth * bytesPerPixel
+        var rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
         
         // Allocate data for the raster buffer.  I'm using UInt8 so that I can
         // address individual RGBA components easily.
-        let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
+        var rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
         
         // Create a CGBitmapContext for drawing and converting into an image for display
-        let context: CGContext = CGContext(data: rasterBufferPtr,
+        var context: CGContext = CGContext(data: rasterBufferPtr,
                                            width: imageWidth,
                                            height: imageHeight,
                                            bitsPerComponent: bitsPerComponent,
@@ -240,16 +240,16 @@ struct ContentView: View {
         // here we will just erase the contents of the CGBitmapContext as the
         // raster buffer just contains random uninitialized data at this point.
         context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
-        context.addRect(CGRect(x: 0.0, y: 0.0, width: CGFloat(imageWidth), height: CGFloat(imageHeight)))
+        context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
         context.fillPath()
         
         // in addition to using any of the CG drawing routines, you can draw yourself
         // by accessing individual pixels in the raster image.
         // here we'll draw a square one pixel at a time.
-        let xS: Int = 0
-        let yS: Int = 0
-        let width: Int = imageWidth
-        let height: Int = imageHeight
+        var xS: Int = 0
+        var yS: Int = 0
+        var width: Int = imageWidth
+        var height: Int = imageHeight
         
         // iterate over all of the rows for the entire height of the square
         for v in 0...(height - 1) {
@@ -263,19 +263,19 @@ struct ContentView: View {
             // note, you could do this calculation all together inside of the xoffset
             // loop, but it's a small optimization to pull this part out and do it here
             // instead of every time through.
-            let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yS)+v+1))
+            var pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yS)+v+1))
             
             // iterate over all of the pixels in this row
             for u in 0...(width - 1) {
                 
                 // calculate the horizontal offset to the pixel in the row
-                let pixel_horizontal_offset: Int = ((Int(xS) + u) * bytesPerPixel)
+                var pixel_horizontal_offset: Int = ((Int(xS) + u) * bytesPerPixel)
                 
                 // sum the horixontal and vertical offsets to get the pixel offset
-                let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
+                var pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
                 
                 // calculate the offset of the pixel
-                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+                var pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
                 
                 if fIter[u][v] >= iMax  {               //black
                     pixelAddress.pointee = UInt8(0)         //red
@@ -365,8 +365,8 @@ struct ContentView: View {
     // ........................................................................
     
     var body: some View {
-        let contextImage: CGImage = getContextImage(xC:xCStart,yC:yCStart)
-        let img = Image(contextImage, scale: 1.0, label: Text("Test"))
+        var contextImage: CGImage = getContextImage(xC:xCStart,yC:yCStart)
+        var img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
         HStack(spacing: 0){ // this container shows instructions on left / dwg on right
         
@@ -399,6 +399,7 @@ struct ContentView: View {
                     //    .textFieldStyle(.roundedBorder)
                         .padding()
                 }
+                
                 // Then, there is a Picker to list the pre-selected scenes
                 Picker(
                     selection:$selectedConfig,
@@ -437,7 +438,7 @@ struct ContentView: View {
                             print (yCStart)
                             return Alert(
                                 title: Text("It works! You clicked on"),
-                                message: Text("X: \(tapX),Y: \(CGFloat(imageHeight) - tapY), so the new center is \(xCStart), \(yCStart). Scale is \(self.scaleStart)."),
+                                message: Text("X: \(tapX),Y: \(Double(imageHeight) - tapY), so the new center is \(xCStart), \(yCStart). Scale is \(self.scaleStart)."),
                                 dismissButton: .default(Text("Got it!")))
                         }
                 }
@@ -481,7 +482,7 @@ struct ContentView: View {
     } // end tapGesture
     
     
-    let configs = [
+    var configs = [
         Config( id: UUID(), tag: "Overview",
                 xC : 0.0,
                 yC : 0.0,
@@ -570,21 +571,21 @@ struct ContentView: View {
 //#endif
 
 
-//  let colors: [[Float]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
+//  var colors: [[Float]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
 
-//  let colors: [[Float]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
+//  var colors: [[Float]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
 
-//let colors: [[Float]] = [[255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0],[0.0, 255.0, 255.0], [0.0, 255.0, 0.0], [255.0, 255.0, 0.0]]
+//var colors: [[Float]] = [[255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0],[0.0, 255.0, 255.0], [0.0, 255.0, 0.0], [255.0, 255.0, 0.0]]
 
-//let colors: [[Float]] = [[255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, //0.0, 255.0], [0.0, 255.0, 255.0], [0.0, 255.0, 0.0]]
+//var colors: [[Float]] = [[255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, //0.0, 255.0], [0.0, 255.0, 255.0], [0.0, 255.0, 0.0]]
 
-//let colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
+//var colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
 
-//let colors: [[Float]] = [[255.0, 127.0, 0.0], [255.0, 0.0, 127.0], [127.0, 0.0, 255.0],[0.0, 127.0, 255.0], [0.0, 255.0, 127.0], [127.0, 255.0, 0.0]]
+//var colors: [[Float]] = [[255.0, 127.0, 0.0], [255.0, 0.0, 127.0], [127.0, 0.0, 255.0],[0.0, 127.0, 255.0], [0.0, 255.0, 127.0], [127.0, 255.0, 0.0]]
 
-//let colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 0.0, 0.0], [0.0, 0.0, 255.0]]
+//var colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 0.0, 0.0], [0.0, 0.0, 255.0]]
 
-//let colors: [[Float]] = [[255.0, 0.0, 255.0], [30,144,255], [61.0, 145.0, 64.0], [255.0, 255.0, 0.0], [255.0, 165.0, 0.0], [255.0, 0.0, 0.0]]
+//var colors: [[Float]] = [[255.0, 0.0, 255.0], [30,144,255], [61.0, 145.0, 64.0], [255.0, 255.0, 0.0], [255.0, 165.0, 0.0], [255.0, 0.0, 0.0]]
 
 
 
