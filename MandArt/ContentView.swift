@@ -42,6 +42,8 @@ struct ContentView: View {
  //   @State private var xCStart: Double = 0.0
  //   @State private var yCStart: Double =  0.0
  //   @State private var scaleStart: Double =  160.0
+ 
+    @State private var yCStartPending: String =  "0.08442"
     
     @State private var xCStart: Double = -0.74725
     @State private var yCStart: Double =  0.08442
@@ -381,6 +383,7 @@ struct ContentView: View {
                     Text("Click image to choose new center.\n")
                     
                 }
+                
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter center X")
                     Text("Between -4 and 4")
@@ -388,18 +391,42 @@ struct ContentView: View {
                     //  .textFieldStyle(.roundedBorder)
                         .padding()
                 }
+                
                 VStack { // each input has a vertical container with a Text label & TextField for data
-                    Text("Enter center Y\n between -4 and 4:")
-                    Text("Enter center Y\n between -4 and 4:")
+                    Text("Enter center Y")
+                    Text("Between -4 and 4")
                     TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
-                    //   .textFieldStyle(.roundedBorder)
+                    //  .textFieldStyle(.roundedBorder)
+                        .onSubmit{}
                         .padding()
                 }
+                
+       /*         VStack { // each input has a vertical container with a Text label & Text for data
+                    Text("Enter center Y\n between -4 and 4:")
+                    Text("Enter center Y\n between -4 and 4:")
+                    TextField("Y",text: $yCStartPending)
+                    //   .textFieldStyle(.roundedBorder)
+                        .padding()
+                } */
+                
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter scale:")
                     TextField("Scale",value: $scaleStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
                         .padding()
+                }
+                
+                VStack { // use a button to enter the values
+                
+                    Button(action: {
+     //                   $yCStart = $yCStartPending
+                       print($yCStartPending)
+                    
+                    }) {
+                
+                    Text("Click to enter the values")
+                        .padding()
+                }
                 }
                 
                 // Then, there is a Picker to list the pre-selected scenes
