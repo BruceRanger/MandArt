@@ -24,13 +24,13 @@ struct ContentTapView: View {
         GeometryReader { geometry in
             ZStack(alignment: .topLeading) {
                 Rectangle()
-                    .fill(Color.yellow)
+                    .fill(Color.yellow) // doesn't color anything
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .gesture(self.tapGesture)
                 ForEach(self.tapLocations, id: \.self) {
                     location in
                     //TapAnnotation(tintColor: .systemTeal)
-                    TapAnnotation(tintColor: .blue)
+                    TapAnnotation(tintColor: .blue) // doesn't color anything
                         .offset(CGSize(width: location.x, height: location.y))
                 }
             }

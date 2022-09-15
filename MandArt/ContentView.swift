@@ -15,6 +15,7 @@ struct ContentView: View {
         var xC: Double
         var yC: Double
         var scale: Double
+        var drawIt: Bool
     }
     
     let instructionBackgroundColor = Color.green
@@ -37,17 +38,19 @@ struct ContentView: View {
     @State private var imageWidth: Int = 1000
     @State private var imageHeight: Int = 1000
     
+    var drawItPlain = true
+    
     // temporary starting center X and Y - TODO: read this from a file
     
  //   @State private var xCStart: Double = 0.0
  //   @State private var yCStart: Double =  0.0
  //   @State private var scaleStart: Double =  160.0
- 
-    @State private var yCStartPending: String =  "0.08442"
     
     @State private var xCStart: Double = -0.74725
     @State private var yCStart: Double =  0.08442
     @State private var scaleStart: Double =  2_880_000.0
+    
+    @State private var drawItStart = true
     
     @State private var scaleOld: Double =  160.0
     
@@ -80,8 +83,10 @@ struct ContentView: View {
         self.scaleStart = self.scaleOld * 2.0
         print("Single-click detected: Zoom in from\n \(self.scaleOld) to\n \(self.scaleStart)\n")
     }
-    
-    func getContextImage(xC: Double,yC: Double) -> CGImage {
+
+    func getContextImage(xC:Double, yC:Double, drawIt:Bool) -> CGImage { 
+   
+        if drawIt == true {
         
         var contextImage: CGImage
         
@@ -114,8 +119,6 @@ struct ContentView: View {
         var test2: Double = 0.0
         
         rSqLimit = 400.0
-        
-        //scale = 33_320_000
         scale = self.scaleStart
         
         rSqMax = 162_000.0
@@ -341,6 +344,96 @@ struct ContentView: View {
         
         return contextImage
     }
+
+        else {
+        var contextImageBlank: CGImage
+   
+        // set up CG parameters
+        let bitsPerComponent: Int = 8   // for UInt8
+        let componentsPerPixel: Int = 4  // RGBA = 4 components
+        let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
+        var bytesPerRow: Int = imageWidth * bytesPerPixel
+        var rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
+        
+        // Allocate data for the raster buffer.  I'm using UInt8 so that I can
+        // address individual RGBA components easily.
+        var rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
+        
+        // Create a CGBitmapContext for drawing and converting into an image for display
+        var context: CGContext = CGContext(data: rasterBufferPtr,
+                                           width: imageWidth,
+                                           height: imageHeight,
+                                           bitsPerComponent: bitsPerComponent,
+                                           bytesPerRow: bytesPerRow,
+                                           space: CGColorSpace(name:CGColorSpace.sRGB)!,
+                                           bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        
+        // use CG to draw into the context
+        // you can use any of the CG drawing routines for drawing into this context
+        // here we will just erase the contents of the CGBitmapContext as the
+        // raster buffer just contains random uninitialized data at this point.
+        context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
+        context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(100), height: Double(100)))
+        context.fillPath()
+        
+        // in addition to using any of the CG drawing routines, you can draw yourself
+        // by accessing individual pixels in the raster image.
+        // here we'll draw a square one pixel at a time.
+        var xS: Int = 0
+        var yS: Int = 0
+        var width: Int = imageWidth
+        var height: Int = imageHeight
+        
+        // iterate over all of the rows for the entire height of the square
+        for v in 0...(height - 1) {
+            
+            // calculate the offset to the row of pixels in the raster buffer
+            // assume the origin is at the bottom left corner of the raster image.
+            // note, you could also use the top left, but GC uses the bottom left
+            // so this method keeps your drawing and CG in sync in case you wanted
+            // to use the CG methods for drawing too.
+            //
+            // note, you could do this calculation all together inside of the xoffset
+            // loop, but it's a small optimization to pull this part out and do it here
+            // instead of every time through.
+            var pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yS)+v+1))
+            
+            // iterate over all of the pixels in this row
+            for u in 0...(width - 1) {
+                
+                // calculate the horizontal offset to the pixel in the row
+                var pixel_horizontal_offset: Int = ((Int(xS) + u) * bytesPerPixel)
+                
+                // sum the horixontal and vertical offsets to get the pixel offset
+                var pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
+                
+                // calculate the offset of the pixel
+                var pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+                
+                // light blue for contexrImageBlank
+                    pixelAddress.pointee = UInt8(135)         //red
+                    (pixelAddress + 1).pointee = UInt8(206)   //green
+                    (pixelAddress + 2).pointee = UInt8(255)   //blue
+                    (pixelAddress + 3).pointee = UInt8(255) //alpha
+                    
+                    // IMPORTANT:
+                    // there is no type checking here and it is up to you to make sure that the
+                    // address indexes do not go beyond the memory allocated for the buffer
+                
+            }    //end for u
+            
+        }    //end for v
+        
+        // convert the context into an image - this is what the function will return
+        contextImageBlank = context.makeImage()!
+        
+        // no automatic deallocation for the raster data
+        // you need to manage that yourself
+        rasterBufferPtr.deallocate()
+        
+        return contextImageBlank
+    }   // end else
+    }   //  end func
     
     static var cgFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -369,7 +462,8 @@ struct ContentView: View {
 //    https://www.hackingwithswift.com/quick-start/swiftui/how-to-format-a-textfield-for-numbers
     
     var body: some View {
-        var contextImage: CGImage = getContextImage(xC:xCStart,yC:yCStart)
+
+        var contextImage: CGImage = getContextImage(xC:xCStart, yC:yCStart, drawIt:drawItStart)
         var img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
         HStack(spacing: 0){ // this container shows instructions on left / dwg on right
@@ -381,12 +475,11 @@ struct ContentView: View {
                     Text("Click here to zoom in.")
                     Text("Double-click here to zoom out.")
                     Text("Click image to choose new center.\n")
-                    
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter center X")
-                    Text("Between -4 and 4")
+                    Text("Between -2 and 2")
                     TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
                     //  .textFieldStyle(.roundedBorder)
                         .padding()
@@ -394,20 +487,11 @@ struct ContentView: View {
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter center Y")
-                    Text("Between -4 and 4")
+                    Text("Between -2 and 2")
                     TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
                     //  .textFieldStyle(.roundedBorder)
-                        .onSubmit{}
                         .padding()
                 }
-                
-       /*         VStack { // each input has a vertical container with a Text label & Text for data
-                    Text("Enter center Y\n between -4 and 4:")
-                    Text("Enter center Y\n between -4 and 4:")
-                    TextField("Y",text: $yCStartPending)
-                    //   .textFieldStyle(.roundedBorder)
-                        .padding()
-                } */
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter scale:")
@@ -419,12 +503,12 @@ struct ContentView: View {
                 VStack { // use a button to enter the values
                 
                     Button(action: {
-     //                   $yCStart = $yCStartPending
-                       print($yCStartPending)
-                    
+
+                        drawItStart = !drawItStart
+
                     }) {
                 
-                    Text("Click to enter the values")
+                    Text("Enter Values")
                         .padding()
                 }
                 }
@@ -474,8 +558,6 @@ struct ContentView: View {
                 
             } // end GeoReader
         } // end HStack
-        
-        
     } // end view body
     
     var tapGesture: some Gesture {
@@ -515,77 +597,77 @@ struct ContentView: View {
         Config( id: UUID(), tag: "Overview",
                 xC : 0.0,
                 yC : 0.0,
-                scale :160.0
+                scale :160.0, drawIt: true
               ),
         Config( id: UUID(), tag: "M15 = N1",
                 xC : -0.7649211,
                 yC : 0.1018886,
-                scale :2_839_040.0
+                scale :2_839_040.0, drawIt: true
               ),
         Config( id: UUID(), tag: "M1",
                 xC : -0.2985836511290,     // M1
                 yC : 0.6580148156626,
-                scale : 1.9e12
+                scale : 1.9e12, drawIt: true
               ),
         Config(id: UUID(), tag: "M2",
                xC : -0.5489774042572,     // M2
                yC : 0.6513448574304,
-               scale : 6_008_327_554_320.0
+               scale : 6_008_327_554_320.0, drawIt: true
               ),
         Config(id: UUID(), tag: "M3",
                xC : -0.1913046694  ,   // M3
                yC : 0.6502983463,
-               scale : 1.9e9
+               scale : 1.9e9, drawIt: true
               ),
         Config(id: UUID(), tag: "M4",
                xC : -0.1690435583 ,   // M4
                yC : 0.6505206291,
-               scale : 1.8e9
+               scale : 1.8e9, drawIt: true
               ),
         Config(id: UUID(), tag: "M5",
                xC : -0.183111455812451001,    // M5
                yC : 0.651073847461314001,
-               scale : 1.0e13
+               scale : 1.0e13, drawIt: true
               ),
         Config(id: UUID(), tag: "N2",
                xC : 0.345679 ,   // N2
                yC : 0.38838,
-               scale : 320_000.0
+               scale : 320_000.0, drawIt: true
               ),
         Config(id: UUID(), tag: "N3",
                xC : -1.250385042 ,  // N3
                yC : 0.007717842,
-               scale : 48.0e6
+               scale : 48.0e6, drawIt: true
               ),
         Config(id: UUID(), tag: "N4",
                xC :-0.74344 ,  // N4
                yC : 0.12493,
-               scale : 576_000.0
+               scale : 576_000.0, drawIt: true
               ),
         Config(id: UUID(), tag: "N6",
                xC : -0.74725 ,  // N6
                yC : 0.08442,
-               scale :  2_880_000.0
+               scale :  2_880_000.0, drawIt: true
               ),
         Config(id: UUID(), tag: "N8",
                xC : -1.250377295  , // N8
                yC : 0.007719842,
-               scale : 928.0e6
+               scale : 928.0e6, drawIt: true
               ),
         Config(id: UUID(), tag: "N9",
                xC : -0.111925 , // N9
                yC : 0.6502587,
-               scale : 38.4e6
+               scale : 38.4e6, drawIt: true
               ),
         Config(id: UUID(),  tag: "N10",
                xC : -0.111715 , // N10
                yC : 0.6495112,
-               scale : 2.0e7
+               scale : 2.0e7, drawIt: true
               ),
         Config( id: UUID(), tag: "N11",
                 xC : -0.148238 , // N11
                 yC : 0.651878,
-                scale : 26_656_000.0
+                scale : 26_656_000.0, drawIt: true
               )
     ]
     
