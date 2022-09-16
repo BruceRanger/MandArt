@@ -251,8 +251,8 @@ struct ContentView: View {
         // in addition to using any of the CG drawing routines, you can draw yourself
         // by accessing individual pixels in the raster image.
         // here we'll draw a square one pixel at a time.
-        var xS: Int = 0
-        var yS: Int = 0
+        var xStart: Int = 0
+        var yStart: Int = 0
         var width: Int = imageWidth
         var height: Int = imageHeight
         
@@ -268,13 +268,13 @@ struct ContentView: View {
             // note, you could do this calculation all together inside of the xoffset
             // loop, but it's a small optimization to pull this part out and do it here
             // instead of every time through.
-            var pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yS)+v+1))
+            var pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStart)+v+1))
             
             // iterate over all of the pixels in this row
             for u in 0...(width - 1) {
                 
                 // calculate the horizontal offset to the pixel in the row
-                var pixel_horizontal_offset: Int = ((Int(xS) + u) * bytesPerPixel)
+                var pixel_horizontal_offset: Int = ((Int(xStart) + u) * bytesPerPixel)
                 
                 // sum the horixontal and vertical offsets to get the pixel offset
                 var pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
@@ -379,8 +379,8 @@ struct ContentView: View {
         // in addition to using any of the CG drawing routines, you can draw yourself
         // by accessing individual pixels in the raster image.
         // here we'll draw a square one pixel at a time.
-        var xS: Int = 0
-        var yS: Int = 0
+        var xStart: Int = 0
+        var yStart: Int = 0
         var width: Int = imageWidth
         var height: Int = imageHeight
         
@@ -396,13 +396,13 @@ struct ContentView: View {
             // note, you could do this calculation all together inside of the xoffset
             // loop, but it's a small optimization to pull this part out and do it here
             // instead of every time through.
-            var pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yS)+v+1))
+            var pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStart)+v+1))
             
             // iterate over all of the pixels in this row
             for u in 0...(width - 1) {
                 
                 // calculate the horizontal offset to the pixel in the row
-                var pixel_horizontal_offset: Int = ((Int(xS) + u) * bytesPerPixel)
+                var pixel_horizontal_offset: Int = ((Int(xStart) + u) * bytesPerPixel)
                 
                 // sum the horixontal and vertical offsets to get the pixel offset
                 var pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
