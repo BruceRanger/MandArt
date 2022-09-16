@@ -90,7 +90,7 @@ struct ContentView: View {
         
         var contextImage: CGImage
         
-        var iMax: Float = 10_000.0
+        var iMax: Double = 10_000.0
         var rSq: Double = 0.0
         var rSqLimit: Double = 0.0
         var rSqMax: Double = 0.0
@@ -100,19 +100,19 @@ struct ContentView: View {
         var xx: Double = 0.0
         var yy: Double = 0.0
         var xTemp: Double = 0.0
-        var iter: Float = 0.0
-        var dIter: Float = 0.0
+        var iter: Double = 0.0
+        var dIter: Double = 0.0
         var gGML: Double = 0.0
         var gGL: Double = 0.0
-        var fIter = [[Float]](repeating: [Float](repeating: 0.0, count: imageHeight), count: imageWidth)
-        var fIterMinLeft: Float = 0.0
-        var fIterMinRight: Float = 0.0
-        var fIterBottom = [Float](repeating: 0.0, count: imageWidth)
-        var fIterTop = [Float](repeating: 0.0, count: imageWidth)
-        var fIterMinBottom: Float = 0.0
-        var fIterMinTop: Float = 0.0
-        var fIterMins = [Float](repeating: 0.0, count: 4)
-        var fIterMin: Float = 0.0
+        var fIter = [[Double]](repeating: [Double](repeating: 0.0, count: imageHeight), count: imageWidth)
+        var fIterMinLeft: Double = 0.0
+        var fIterMinRight: Double = 0.0
+        var fIterBottom = [Double](repeating: 0.0, count: imageWidth)
+        var fIterTop = [Double](repeating: 0.0, count: imageWidth)
+        var fIterMinBottom: Double = 0.0
+        var fIterMinTop: Double = 0.0
+        var fIterMins = [Double](repeating: 0.0, count: 4)
+        var fIterMin: Double = 0.0
         var scale: Double = 0.0
         var p: Double = 0.0
         var test1: Double = 0.0
@@ -155,13 +155,13 @@ struct ContentView: View {
                         yy = 2*xx*yy + y0
                         xx = xTemp
                         rSq = xx*xx + yy*yy
-                        iter = Float(i)
+                        iter = Double(i)
                     }
                 }   //end else
                 
                 if iter < iMax {
                     
-                    dIter = Float(-(  log( log(rSq) ) - gGL  )/gGML)
+                    dIter = Double(-(  log( log(rSq) ) - gGL  )/gGML)
                     
                     fIter[u][v] = iter + dIter
                 }   //end if
@@ -191,33 +191,35 @@ struct ContentView: View {
         // Now we need to generate a bitmap image.
         
         var nBlocks: Int = 0
+        var fNBlocks: Double = 0.0
         var nColors: Int = 0
-        var color: Float = 0.0
+        var color: Double = 0.0
         var b0: Int = 0
         var b1: Int = 0
-        var block1: Float = 0.0
+        
+        var bE: Double = 0.0
+        var eE: Double = 0.0
+        var dE: Double = 0.0
         
         nBlocks = 60
+        bE = 5.0
+        eE = 15.0
         
-        block1 = 1.0
+        fNBlocks = Double(nBlocks)
         
-        var blockBound = [Float](repeating: 0.0, count: nBlocks + 1)
+        dE = (iMax - fIterMin - fNBlocks*bE)/pow(fNBlocks, eE)
         
-        var colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
+        var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
+        
+        var colors: [[Double]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
         
         nColors = colors.count
         
-        var h: Float = 0.0
-        var xX: Float = 0.0
-        var k: Float = 0.0
+        var h: Double = 0.0
+        var xX: Double = 0.0
         
-        var B: Float = 0.0
-        
-        B = (log10((iMax + 1.0)/block1))/Float((nBlocks - 1))
-        k = pow(10.0, B)
-        
-        for i in 1...nBlocks {
-            blockBound[i] = block1*pow(k, Float(i - 1))
+        for i in 0...nBlocks {   
+            blockBound[i] = bE*Double(i) + dE*pow(Double(i), eE)
         }
         
         // set up CG parameters
@@ -673,30 +675,21 @@ struct ContentView: View {
     
 } // end view struct
 
-//#if DEBUG
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
-//#endif
+//  var colors: [[Double]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
 
+//  var colors: [[Double]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
 
-//  var colors: [[Float]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
+//var colors: [[Double]] = [[255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0],[0.0, 255.0, 255.0], [0.0, 255.0, 0.0], [255.0, 255.0, 0.0]]
 
-//  var colors: [[Float]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
+//var colors: [[Double]] = [[255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, //0.0, 255.0], [0.0, 255.0, 255.0], [0.0, 255.0, 0.0]]
 
-//var colors: [[Float]] = [[255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0],[0.0, 255.0, 255.0], [0.0, 255.0, 0.0], [255.0, 255.0, 0.0]]
+//var colors: [[Double]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
 
-//var colors: [[Float]] = [[255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, //0.0, 255.0], [0.0, 255.0, 255.0], [0.0, 255.0, 0.0]]
+//var colors: [[Double]] = [[255.0, 127.0, 0.0], [255.0, 0.0, 127.0], [127.0, 0.0, 255.0],[0.0, 127.0, 255.0], [0.0, 255.0, 127.0], [127.0, 255.0, 0.0]]
 
-//var colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
+//var colors: [[Double]] = [[0.0, 255.0, 0.0], [255.0, 0.0, 0.0], [0.0, 0.0, 255.0]]
 
-//var colors: [[Float]] = [[255.0, 127.0, 0.0], [255.0, 0.0, 127.0], [127.0, 0.0, 255.0],[0.0, 127.0, 255.0], [0.0, 255.0, 127.0], [127.0, 255.0, 0.0]]
-
-//var colors: [[Float]] = [[0.0, 255.0, 0.0], [255.0, 0.0, 0.0], [0.0, 0.0, 255.0]]
-
-//var colors: [[Float]] = [[255.0, 0.0, 255.0], [30,144,255], [61.0, 145.0, 64.0], [255.0, 255.0, 0.0], [255.0, 165.0, 0.0], [255.0, 0.0, 0.0]]
+//var colors: [[Double]] = [[255.0, 0.0, 255.0], [30,144,255], [61.0, 145.0, 64.0], [255.0, 255.0, 0.0], [255.0, 165.0, 0.0], [255.0, 0.0, 0.0]]
 
 
 
