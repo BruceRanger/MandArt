@@ -19,8 +19,7 @@ struct ContentView: View {
     }
     
     let instructionBackgroundColor = Color.green
-    let inputWidth: Double = 200.0
-//    let inputWidth: Double = 450.0
+    let inputWidth: Double = 250
     
     @State private var showingAlert = false
     @State private var tapX: Double = 0
@@ -468,15 +467,31 @@ struct ContentView: View {
         var contextImage: CGImage = getContextImage(xC:xCStart, yC:yCStart, drawIt:drawItStart)
         var img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
-        HStack(spacing: 0){ // this container shows instructions on left / dwg on right
+        HStack{ // this container shows instructions on left / dwg on right
         
             VStack( // the left side is a vertical container with user stuff
-                alignment: .leading, spacing: 10.0)
+                alignment: .center, spacing: 5) // spacing is between VStacks
             {
                 Group{
                     Text("Click here to zoom in.")
                     Text("Double-click here to zoom out.")
                     Text("Click image to choose new center.\n")
+                }
+                
+                VStack { // use a button to zoom in
+                    Button(action: {
+                        zoomIn()
+                    }) {
+                    Text("Zoom In")
+                }
+                }
+
+                VStack { // use a button to zoom out
+                    Button(action: {
+                        zoomOut()
+                    }) {
+                    Text("Zoom Out")
+                }
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
@@ -551,10 +566,19 @@ struct ContentView: View {
                             print (xCStart)
                             yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
                             print (yCStart)
-                            return Alert(
+                            
+            /*                return Alert(
                                 title: Text("It works! You clicked on"),
                                 message: Text("X: \(tapX),Y: \(Double(imageHeight) - tapY), so the new center is \(xCStart), \(yCStart). Scale is \(self.scaleStart)."),
-                                dismissButton: .default(Text("Got it!")))
+                                dismissButton: .default(Text("Got it!")))*/
+                                
+                        // Alert text doesn't do anything
+                                
+                            return Alert(
+                                title: Text("  "),
+                                message: Text("  "),
+                                dismissButton: .default(Text("  ")))
+                                
                         }
                 }
                 
@@ -673,7 +697,8 @@ struct ContentView: View {
               )
     ]
     
-} // end view struct
+} // end view structbutton
+
 
 //  var colors: [[Double]] = [[255.0, 128.0, 0.0], [255.0, 255.0, 0.0], [0.0, 255.0, 0.0], [0.0, 128.0, 255.0], [255.0, 0.0, 255.0], [255.0, 0.0, 128.0]]
 
