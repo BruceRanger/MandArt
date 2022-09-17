@@ -469,8 +469,9 @@ struct ContentView: View {
         
         HStack{ // this container shows instructions on left / dwg on right
         
+            ScrollView(showsIndicators: true) {
             VStack( // the left side is a vertical container with user stuff
-                alignment: .center, spacing: 5) // spacing is between VStacks
+                alignment: .center, spacing: 100) // spacing is between VStacks
             {
                 Group{
                     Text("Click here to define values.")
@@ -517,7 +518,7 @@ struct ContentView: View {
                         .padding()
                 }
                 
-                VStack { // use a button to enter the values
+     /*           VStack { // use a button to enter the values
                 
                     Button(action: {
 
@@ -528,7 +529,7 @@ struct ContentView: View {
                     Text("Enter Values")
                         .padding()
                 }
-                }
+                }   */
                 
                 // Then, there is a Picker to list the pre-selected scenes
                 Picker(
@@ -557,6 +558,7 @@ struct ContentView: View {
             .background(instructionBackgroundColor)
             .frame(width:inputWidth)
             .padding(10)
+        }
             
             GeometryReader {
                 geometry in
