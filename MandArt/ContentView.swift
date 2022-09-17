@@ -473,8 +473,8 @@ struct ContentView: View {
                 alignment: .center, spacing: 5) // spacing is between VStacks
             {
                 Group{
-                    Text("Click here to zoom in.")
-                    Text("Double-click here to zoom out.")
+                    Text("Click here to define values.")
+                    Text("Double-click here to enter the values.")
                     Text("Click image to choose new center.\n")
                 }
                 
@@ -543,16 +543,20 @@ struct ContentView: View {
                 }
                 
                 
-            } // end vstack for user instructions
+            } // end VStack for user instructions
+            .contentShape(Rectangle())
             .onTapGesture(count:2){
-                zoomOut()
+      //          zoomOut()
+                drawItStart = true
             }
+            .contentShape(Rectangle())
             .onTapGesture(count:1){
-                zoomIn()
+      //          zoomIn()
+                drawItStart = false
             }
             .background(instructionBackgroundColor)
             .frame(width:inputWidth)
-            .padding(50)
+            .padding(10)
             
             GeometryReader {
                 geometry in
