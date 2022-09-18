@@ -9,14 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     
-    struct Config: Codable, Hashable, Identifiable {
+/*    struct Config: Codable, Hashable, Identifiable {
         let id: UUID
         let tag: String
         var xC: Double
         var yC: Double
         var scale: Double
+  //      var imageWidth: Int
         var drawIt: Bool
-    }
+    }*/
     
     let instructionBackgroundColor = Color.green
     let inputWidth: Double = 250
@@ -34,8 +35,11 @@ struct ContentView: View {
     
     // set up initial view size - TODO: make resolution dynamic, user-specified
     
-    @State private var imageWidth: Int = 1000
-    @State private var imageHeight: Int = 1000
+//    @State private var imageWidth: Int = 1000
+//    @State private var imageHeight: Int = 1000
+    
+    var imageWidth: Int = 1
+    var imageHeight: Int = 1
     
     var drawItPlain = true
     
@@ -48,16 +52,24 @@ struct ContentView: View {
     @State private var xCStart: Double = -0.74725
     @State private var yCStart: Double =  0.08442
     @State private var scaleStart: Double =  2_880_000.0
+    @State private var iMaxStart: Double =  10_000.0
+    @State private var rSqLimitStart: Double =  400.0
+    @State private var rSqMaxStart: Double =  162_000.0
+    @State private var nBlocksStart: Int =  60
+    @State private var bEStart: Double =  5.0
+    @State private var eEStart: Double =  15.0
+//    @State private var imageWidthStart: Int = 1200
     
     @State private var drawItStart = true
     
-    @State private var scaleOld: Double =  160.0
+    @State private var scaleOld: Double =  1.0
     
-    @State private var selectedConfig: Config?
+//    @State private var selectedConfig: Config?
     
     func getCenterXFromTapX(tapX: Double, imageWidth:Int) -> Double {
         var tapXDifference = (tapX - Double(imageWidth)/2.0)/scaleStart
         print (tapXDifference)
+        print(imageWidth)
         var newXC: Double = xCStart + tapXDifference // needs work
         print (newXC)
         return newXC
@@ -89,13 +101,15 @@ struct ContentView: View {
         
         var contextImage: CGImage
         
+        var imageWidth: Int = 1200
+        var imageHeight: Int = 1000
         var iMax: Double = 10_000.0
         var rSq: Double = 0.0
         var rSqLimit: Double = 0.0
         var rSqMax: Double = 0.0
         var x0: Double = 0.0
         var y0: Double = 0.0
-        
+//        imageWidth = self.imageWidthStart
         var xx: Double = 0.0
         var yy: Double = 0.0
         var xTemp: Double = 0.0
@@ -119,6 +133,13 @@ struct ContentView: View {
         
         rSqLimit = 400.0
         scale = self.scaleStart
+        iMax = self.iMaxStart
+        rSqLimit = self.rSqLimitStart
+        rSqMax = self.rSqMaxStart
+    //    nBlocks = self.nBlocksStart
+   //     bE = self.bEStart
+    //    eE = self.eEStart
+ //       imageWidth = self.imageWidthStart
         
         rSqMax = 162_000.0
         gGML = log( log(rSqMax) ) - log(log(rSqLimit) )
@@ -190,6 +211,7 @@ struct ContentView: View {
         // Now we need to generate a bitmap image.
         
         var nBlocks: Int = 0
+        nBlocks = self.nBlocksStart
         var fNBlocks: Double = 0.0
         var nColors: Int = 0
         var color: Double = 0.0
@@ -199,6 +221,9 @@ struct ContentView: View {
         var bE: Double = 0.0
         var eE: Double = 0.0
         var dE: Double = 0.0
+        
+        bE = self.bEStart
+        eE = self.eEStart
         
         nBlocks = 60
         bE = 5.0
@@ -348,6 +373,9 @@ struct ContentView: View {
 
         else {
         var contextImageBlank: CGImage
+        
+        var imageWidth: Int = 1200
+        var imageHeight: Int = 1000
    
         // set up CG parameters
         let bitsPerComponent: Int = 8   // for UInt8
@@ -471,13 +499,15 @@ struct ContentView: View {
         
             ScrollView(showsIndicators: true) {
             VStack( // the left side is a vertical container with user stuff
-                alignment: .center, spacing: 100) // spacing is between VStacks
+                alignment: .center, spacing: 10) // spacing is between VStacks
             {
                 Group{
                     Text("Click here to define values.")
                     Text("Double-click here to enter the values.")
                     Text("Click image to choose new center.\n")
                 }
+                
+                Group{
                 
                 VStack { // use a button to zoom in
                     Button(action: {
@@ -500,7 +530,7 @@ struct ContentView: View {
                     Text("Between -2 and 2")
                     TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
                     //  .textFieldStyle(.roundedBorder)
-                        .padding()
+                    //    .padding()
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
@@ -508,30 +538,65 @@ struct ContentView: View {
                     Text("Between -2 and 2")
                     TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
                     //  .textFieldStyle(.roundedBorder)
-                        .padding()
+                    //    .padding()
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter scale:")
                     TextField("Scale",value: $scaleStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
-                        .padding()
+                    //    .padding()
                 }
                 
-     /*           VStack { // use a button to enter the values
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter iMax:")
+                    TextField("iMax",value: $iMaxStart, formatter: ContentView.cgUnboundFormatter)
+                    //    .textFieldStyle(.roundedBorder)
+                    //    .padding()
+                }   
                 
-                    Button(action: {
-
-                        drawItStart = !drawItStart
-
-                    }) {
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter rSqLimit:")
+                    TextField("rSqLimit",value: $rSqLimitStart, formatter: ContentView.cgUnboundFormatter)
+                    //    .textFieldStyle(.roundedBorder)
+                    //    .padding()
+                } 
                 
-                    Text("Enter Values")
-                        .padding()
-                }
-                }   */
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter rSqMax:")
+                    TextField("rSqMax",value: $rSqMaxStart, formatter: ContentView.cgUnboundFormatter)
+                    //    .textFieldStyle(.roundedBorder)
+                    //    .padding()
+                } 
                 
-                // Then, there is a Picker to list the pre-selected scenes
+                } // end of group
+                
+                Group{
+                
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter nBlocks:")
+                    TextField("nBlocks",value: $nBlocksStart, formatter: ContentView.cgUnboundFormatter)
+                    //    .textFieldStyle(.roundedBorder)
+                    //    .padding()
+                } 
+                
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter bE:")
+                    TextField("bE",value: $bEStart, formatter: ContentView.cgUnboundFormatter)
+                    //    .textFieldStyle(.roundedBorder)
+                    //    .padding()
+                } 
+                
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter eE:")
+                    TextField("eE",value: $eEStart, formatter: ContentView.cgUnboundFormatter)
+                    //    .textFieldStyle(.roundedBorder)
+                    //    .padding()
+                } 
+                
+                } // end of group
+                
+      /*          // Then, there is a Picker to list the pre-selected scenes
                 Picker(
                     selection:$selectedConfig,
                     label: Text ("Optional: Choose scene"))
@@ -541,7 +606,7 @@ struct ContentView: View {
                         Text(item.tag).tag(item as Config?)
                     }
                     
-                }
+                }   */
                 
                 
             } // end VStack for user instructions
@@ -568,9 +633,9 @@ struct ContentView: View {
                         .gesture(self.tapGesture)
                         .alert(isPresented: $showingAlert) {
                             // fixed imageWidth & imageHeight
-                            xCStart = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
+                            xCStart = getCenterXFromTapX(tapX:tapX,imageWidth:imageWidth)
                             print (xCStart)
-                            yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
+                            yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageHeight)
                             print (yCStart)
                             
             /*                return Alert(
@@ -612,9 +677,9 @@ struct ContentView: View {
                     print(tap.startLocation)
                     self.tapLocations.append(tap.startLocation)
                     // the right place to update
-                    xCStart = getCenterXFromTapX(tapX:tapX,imageWidth:imageHeight)
+                    xCStart = getCenterXFromTapX(tapX:tapX,imageWidth:imageWidth)
                     print (xCStart)
-                    yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageWidth)
+                    yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageHeight)
                     print (yCStart)
                 }
                 
@@ -625,7 +690,7 @@ struct ContentView: View {
     } // end tapGesture
     
     
-    var configs = [
+ /*   var configs = [
         Config( id: UUID(), tag: "Overview",
                 xC : 0.0,
                 yC : 0.0,
@@ -700,8 +765,8 @@ struct ContentView: View {
                 xC : -0.148238 , // N11
                 yC : 0.651878,
                 scale : 26_656_000.0, drawIt: true
-              )
-    ]
+              ) 
+    ]*/
     
 } // end view structbutton
 
