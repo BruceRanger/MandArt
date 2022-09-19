@@ -95,7 +95,7 @@ struct ContentView: View {
         print("Single-click detected: Zoom in from\n \(self.scaleOld) to\n \(self.scaleStart)\n")
     }
 
-    func getContextImage(xC:Double, yC:Double, drawIt:Bool) -> CGImage { 
+    func getContextImage(/*xC:Double, yC:Double, */drawIt:Bool) -> CGImage { 
    
         if drawIt == true {
         
@@ -127,12 +127,16 @@ struct ContentView: View {
         var fIterMins = [Double](repeating: 0.0, count: 4)
         var fIterMin: Double = 0.0
         var scale: Double = 0.0
+        var xC: Double = 0.0
+        var yC: Double = 0.0
         var p: Double = 0.0
         var test1: Double = 0.0
         var test2: Double = 0.0
         
         rSqLimit = 400.0
         scale = self.scaleStart
+        xC = self.xCStart
+        yC = self.yCStart
         iMax = self.iMaxStart
         rSqLimit = self.rSqLimitStart
    //     rSqMax = self.rSqMaxStart
@@ -497,7 +501,7 @@ struct ContentView: View {
     
     var body: some View {
 
-        var contextImage: CGImage = getContextImage(xC:xCStart, yC:yCStart, drawIt:drawItStart)
+        var contextImage: CGImage = getContextImage(/*xC:xCStart, yC:yCStart, */drawIt:drawItStart)
         var img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
         HStack{ // this container shows instructions on left / dwg on right
