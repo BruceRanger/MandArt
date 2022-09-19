@@ -54,7 +54,7 @@ struct ContentView: View {
     @State private var scaleStart: Double =  2_880_000.0
     @State private var iMaxStart: Double =  10_000.0
     @State private var rSqLimitStart: Double =  400.0
-    @State private var rSqMaxStart: Double =  162_000.0
+//    @State private var rSqMaxStart: Double =  162_000.0
     @State private var nBlocksStart: Int =  60
     @State private var bEStart: Double =  5.0
     @State private var eEStart: Double =  15.0
@@ -135,13 +135,14 @@ struct ContentView: View {
         scale = self.scaleStart
         iMax = self.iMaxStart
         rSqLimit = self.rSqLimitStart
-        rSqMax = self.rSqMaxStart
-    //    nBlocks = self.nBlocksStart
-   //     bE = self.bEStart
-    //    eE = self.eEStart
+   //     rSqMax = self.rSqMaxStart
+  //      nBlocks = self.nBlocksStart
+  //      bE = self.bEStart
+  //      eE = self.eEStart
  //       imageWidth = self.imageWidthStart
         
-        rSqMax = 162_000.0
+  //      rSqMax = 162_000.0
+        rSqMax = 1.01*(rSqLimit + 2)*(rSqLimit + 2)
         gGML = log( log(rSqMax) ) - log(log(rSqLimit) )
         gGL = log(log(rSqLimit) )
         
@@ -228,6 +229,10 @@ struct ContentView: View {
         nBlocks = 60
         bE = 5.0
         eE = 15.0
+        
+        nBlocks = self.nBlocksStart
+        bE = self.bEStart
+        eE = self.eEStart
         
         fNBlocks = Double(nBlocks)
         
@@ -562,12 +567,12 @@ struct ContentView: View {
                     //    .padding()
                 } 
                 
-                VStack { // each input has a vertical container with a Text label & TextField for data
+     /*           VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter rSqMax:")
                     TextField("rSqMax",value: $rSqMaxStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
                     //    .padding()
-                } 
+                } */
                 
                 } // end of group
                 
