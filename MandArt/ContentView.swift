@@ -33,83 +33,62 @@ struct ContentView: View {
     @State private var dragCompleted = false
     @State private var dragOffset = CGSize.zero
     
-    // set up initial view size - TODO: make resolution dynamic, user-specified
-    
-//    @State private var imageWidth: Int = 1000
-//    @State private var imageHeight: Int = 1000
-    
-    var imageWidth: Int = 1
-    var imageHeight: Int = 1
-    
-    var drawItPlain = true
-    
-    // temporary starting center X and Y - TODO: read this from a file
-    
- //   @State private var xCStart: Double = 0.0
- //   @State private var yCStart: Double =  0.0
- //   @State private var scaleStart: Double =  160.0
-    
     @State private var xCStart: Double = -0.74725
     @State private var yCStart: Double =  0.08442
     @State private var scaleStart: Double =  2_880_000.0
     @State private var iMaxStart: Double =  10_000.0
     @State private var rSqLimitStart: Double =  400.0
-//    @State private var rSqMaxStart: Double =  162_000.0
     @State private var nBlocksStart: Int =  60
     @State private var bEStart: Double =  5.0
     @State private var eEStart: Double =  15.0
-//    @State private var imageWidthStart: Int = 1200
+    @State private var imageWidthStart: Int = 1_200
+    @State private var imageHeightStart: Int = 1_000
     
     @State private var drawItStart = true
+    @State private var drawItPlainStart = true
     
     @State private var scaleOld: Double =  1.0
     
 //    @State private var selectedConfig: Config?
     
-    func getCenterXFromTapX(tapX: Double, imageWidth:Int) -> Double {
-        var tapXDifference = (tapX - Double(imageWidth)/2.0)/scaleStart
-        print (tapXDifference)
-        print(imageWidth)
-        var newXC: Double = xCStart + tapXDifference // needs work
-        print (newXC)
+    func getCenterXFromTapX(tapX: Double, imageWidthStart:Int) -> Double {
+        let tapXDifference = (tapX - Double(imageWidthStart)/2.0)/scaleStart
+        let newXC: Double = xCStart + tapXDifference // needs work
         return newXC
     }
     
-    func getCenterYFromTapY(tapY: Double, imageHeight:Int) -> Double {
-        var tapYDifference = ((Double(imageHeight) - tapY) - Double(imageHeight)/2.0)/scaleStart
-        print (tapYDifference)
-        var newYC: Double = (yCStart + tapYDifference) // needs work
-        print (newYC)
+    func getCenterYFromTapY(tapY: Double, imageHeightStart:Int) -> Double {
+        let tapYDifference = ((Double(imageHeightStart) - tapY) - Double(imageHeightStart)/2.0)/scaleStart
+        let newYC: Double = (yCStart + tapYDifference) // needs work
         return newYC
     }
     
     func zoomOut(){
         self.scaleOld = self.scaleStart
         self.scaleStart = self.scaleOld / 2.0
-        print("Double-click detected: Zoom out from\n \(self.scaleOld) to\n \(self.scaleStart)\n")
     }
     
     func zoomIn(){
         self.scaleOld = self.scaleStart
         self.scaleStart = self.scaleOld * 2.0
-        print("Single-click detected: Zoom in from\n \(self.scaleOld) to\n \(self.scaleStart)\n")
     }
 
-    func getContextImage(/*xC:Double, yC:Double, */drawIt:Bool) -> CGImage { 
+    func getContextImage(drawIt:Bool) -> CGImage { 
    
         if drawIt == true {
         
         var contextImage: CGImage
         
-        var imageWidth: Int = 1200
-        var imageHeight: Int = 1000
+        var imageWidth: Int = 0
+        var imageHeight: Int = 0
         var iMax: Double = 10_000.0
         var rSq: Double = 0.0
         var rSqLimit: Double = 0.0
         var rSqMax: Double = 0.0
         var x0: Double = 0.0
         var y0: Double = 0.0
-//        imageWidth = self.imageWidthStart
+        imageWidth = self.imageWidthStart
+        imageHeight = self.imageHeightStart
         var xx: Double = 0.0
         var yy: Double = 0.0
         var xTemp: Double = 0.0
@@ -135,17 +114,11 @@ struct ContentView: View {
         
         rSqLimit = 400.0
         scale = self.scaleStart
+        imageWidth = self.imageWidthStart
         xC = self.xCStart
         yC = self.yCStart
         iMax = self.iMaxStart
         rSqLimit = self.rSqLimitStart
-   //     rSqMax = self.rSqMaxStart
-  //      nBlocks = self.nBlocksStart
-  //      bE = self.bEStart
-  //      eE = self.eEStart
- //       imageWidth = self.imageWidthStart
-        
-  //      rSqMax = 162_000.0
         rSqMax = 1.01*(rSqLimit + 2)*(rSqLimit + 2)
         gGML = log( log(rSqMax) ) - log(log(rSqLimit) )
         gGL = log(log(rSqLimit) )
@@ -259,15 +232,15 @@ struct ContentView: View {
         let bitsPerComponent: Int = 8   // for UInt8
         let componentsPerPixel: Int = 4  // RGBA = 4 components
         let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
-        var bytesPerRow: Int = imageWidth * bytesPerPixel
-        var rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
+            let bytesPerRow: Int = imageWidth * bytesPerPixel
+            let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
         
         // Allocate data for the raster buffer.  I'm using UInt8 so that I can
         // address individual RGBA components easily.
-        var rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
+            let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
         
         // Create a CGBitmapContext for drawing and converting into an image for display
-        var context: CGContext = CGContext(data: rasterBufferPtr,
+            let context: CGContext = CGContext(data: rasterBufferPtr,
                                            width: imageWidth,
                                            height: imageHeight,
                                            bitsPerComponent: bitsPerComponent,
@@ -286,10 +259,10 @@ struct ContentView: View {
         // in addition to using any of the CG drawing routines, you can draw yourself
         // by accessing individual pixels in the raster image.
         // here we'll draw a square one pixel at a time.
-        var xStart: Int = 0
-        var yStart: Int = 0
-        var width: Int = imageWidth
-        var height: Int = imageHeight
+            let xStarting: Int = 0
+            let yStarting: Int = 0
+            let width: Int = imageWidth
+            let height: Int = imageHeight
         
         // iterate over all of the rows for the entire height of the square
         for v in 0...(height - 1) {
@@ -303,19 +276,19 @@ struct ContentView: View {
             // note, you could do this calculation all together inside of the xoffset
             // loop, but it's a small optimization to pull this part out and do it here
             // instead of every time through.
-            var pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStart)+v+1))
+            let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
             
             // iterate over all of the pixels in this row
             for u in 0...(width - 1) {
                 
                 // calculate the horizontal offset to the pixel in the row
-                var pixel_horizontal_offset: Int = ((Int(xStart) + u) * bytesPerPixel)
+                let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
                 
                 // sum the horixontal and vertical offsets to get the pixel offset
-                var pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
+                let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
                 
                 // calculate the offset of the pixel
-                var pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
                 
                 if fIter[u][v] >= iMax  {               //black
                     pixelAddress.pointee = UInt8(0)         //red
@@ -378,27 +351,29 @@ struct ContentView: View {
         rasterBufferPtr.deallocate()
         
         return contextImage
-    }
+    }   //end if == true
 
         else {
         var contextImageBlank: CGImage
         
-        var imageWidth: Int = 1200
-        var imageHeight: Int = 1000
+        var imageWidth: Int = 0
+        var imageHeight: Int = 0
+        imageWidth = self.imageWidthStart
+        imageHeight = self.imageHeightStart
    
         // set up CG parameters
         let bitsPerComponent: Int = 8   // for UInt8
         let componentsPerPixel: Int = 4  // RGBA = 4 components
         let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
-        var bytesPerRow: Int = imageWidth * bytesPerPixel
-        var rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
+            let bytesPerRow: Int = imageWidth * bytesPerPixel
+            let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
         
         // Allocate data for the raster buffer.  I'm using UInt8 so that I can
         // address individual RGBA components easily.
-        var rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
+            let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
         
         // Create a CGBitmapContext for drawing and converting into an image for display
-        var context: CGContext = CGContext(data: rasterBufferPtr,
+            let context: CGContext = CGContext(data: rasterBufferPtr,
                                            width: imageWidth,
                                            height: imageHeight,
                                            bitsPerComponent: bitsPerComponent,
@@ -417,10 +392,10 @@ struct ContentView: View {
         // in addition to using any of the CG drawing routines, you can draw yourself
         // by accessing individual pixels in the raster image.
         // here we'll draw a square one pixel at a time.
-        var xStart: Int = 0
-        var yStart: Int = 0
-        var width: Int = imageWidth
-        var height: Int = imageHeight
+            let xStarting: Int = 0
+            let yStarting: Int = 0
+            let width: Int = imageWidth
+            let height: Int = imageHeight
         
         // iterate over all of the rows for the entire height of the square
         for v in 0...(height - 1) {
@@ -434,25 +409,26 @@ struct ContentView: View {
             // note, you could do this calculation all together inside of the xoffset
             // loop, but it's a small optimization to pull this part out and do it here
             // instead of every time through.
-            var pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStart)+v+1))
+            let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
             
             // iterate over all of the pixels in this row
             for u in 0...(width - 1) {
                 
                 // calculate the horizontal offset to the pixel in the row
-                var pixel_horizontal_offset: Int = ((Int(xStart) + u) * bytesPerPixel)
+                let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
                 
                 // sum the horixontal and vertical offsets to get the pixel offset
-                var pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
+                let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
                 
                 // calculate the offset of the pixel
-                var pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
                 
-                // light blue for contexrImageBlank
+            //     light blue for contexrImageBlank
                     pixelAddress.pointee = UInt8(135)         //red
                     (pixelAddress + 1).pointee = UInt8(206)   //green
                     (pixelAddress + 2).pointee = UInt8(255)   //blue
                     (pixelAddress + 3).pointee = UInt8(255) //alpha
+                    
                     
                     // IMPORTANT:
                     // there is no type checking here and it is up to you to make sure that the
@@ -501,8 +477,8 @@ struct ContentView: View {
     
     var body: some View {
 
-        var contextImage: CGImage = getContextImage(/*xC:xCStart, yC:yCStart, */drawIt:drawItStart)
-        var img = Image(contextImage, scale: 1.0, label: Text("Test"))
+        let contextImage: CGImage = getContextImage(/*xC:xCStart, yC:yCStart, */drawIt:drawItStart)
+        let img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
         HStack{ // this container shows instructions on left / dwg on right
         
@@ -571,12 +547,19 @@ struct ContentView: View {
                     //    .padding()
                 } 
                 
-     /*           VStack { // each input has a vertical container with a Text label & TextField for data
-                    Text("Enter rSqMax:")
-                    TextField("rSqMax",value: $rSqMaxStart, formatter: ContentView.cgUnboundFormatter)
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter imageWidth:")
+                    TextField("imageWidth",value: $imageWidthStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
                     //    .padding()
-                } */
+                } 
+                
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter imageHeight:")
+                    TextField("imageHeightStart",value: $imageHeightStart, formatter: ContentView.cgUnboundFormatter)
+                    //    .textFieldStyle(.roundedBorder)
+                    //    .padding()
+                } 
                 
                 } // end of group
                 
@@ -621,13 +604,13 @@ struct ContentView: View {
             } // end VStack for user instructions
             .contentShape(Rectangle())
             .onTapGesture(count:2){
-      //          zoomOut()
                 drawItStart = true
+                drawItPlainStart = true
             }
             .contentShape(Rectangle())
             .onTapGesture(count:1){
-      //          zoomIn()
                 drawItStart = false
+                drawItPlainStart = true
             }
             .background(instructionBackgroundColor)
             .frame(width:inputWidth)
@@ -642,17 +625,8 @@ struct ContentView: View {
                         .gesture(self.tapGesture)
                         .alert(isPresented: $showingAlert) {
                             // fixed imageWidth & imageHeight
-                            xCStart = getCenterXFromTapX(tapX:tapX,imageWidth:imageWidth)
-                            print (xCStart)
-                            yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageHeight)
-                            print (yCStart)
-                            
-            /*                return Alert(
-                                title: Text("It works! You clicked on"),
-                                message: Text("X: \(tapX),Y: \(Double(imageHeight) - tapY), so the new center is \(xCStart), \(yCStart). Scale is \(self.scaleStart)."),
-                                dismissButton: .default(Text("Got it!")))*/
-                                
-                        // Alert text doesn't do anything
+                            xCStart = getCenterXFromTapX(tapX:tapX,imageWidthStart:imageWidthStart)
+                            yCStart = getCenterYFromTapY(tapY:tapY,imageHeightStart:imageHeightStart)
                                 
                             return Alert(
                                 title: Text("  "),
@@ -683,13 +657,10 @@ struct ContentView: View {
                     tapX = tap.startLocation.x
                     tapY = tap.startLocation.y
                     showingAlert = false // we don't need it any more but hard to remove
-                    print(tap.startLocation)
                     self.tapLocations.append(tap.startLocation)
                     // the right place to update
-                    xCStart = getCenterXFromTapX(tapX:tapX,imageWidth:imageWidth)
-                    print (xCStart)
-                    yCStart = getCenterYFromTapY(tapY:tapY,imageHeight:imageHeight)
-                    print (yCStart)
+                    xCStart = getCenterXFromTapX(tapX:tapX,imageWidthStart:imageWidthStart)
+                    yCStart = getCenterYFromTapY(tapY:tapY,imageHeightStart:imageHeightStart)
                 }
                 
                 // reset tap event states
