@@ -43,6 +43,15 @@ struct ContentView: View {
     @State private var eEStart: Double =  15.0
     @State private var imageWidthStart: Int = 1_200
     @State private var imageHeightStart: Int = 1_000
+    @State private var rR1Start: Double =  255.0
+    @State private var gG1Start: Double =  255.0
+    @State private var bB1Start: Double =  0.0
+    @State private var rR2Start: Double =  255.0
+    @State private var gG2Start: Double =  0.0
+    @State private var bB2Start: Double =  0.0
+    @State private var rR3Start: Double =  400.0
+    @State private var gG3Start: Double =  0.0
+    @State private var bB3Start: Double =  0.0
     
     @State private var drawItStart = true
     @State private var drawItPlainStart = true
@@ -200,8 +209,28 @@ struct ContentView: View {
         var eE: Double = 0.0
         var dE: Double = 0.0
         
+        var rR1: Double = 0.0
+        var gG1: Double = 0.0
+        var bB1: Double = 0.0
+        var rR2: Double = 0.0
+        var gG2: Double = 0.0
+        var bB2: Double = 0.0    
+        var rR3: Double = 0.0
+        var gG3: Double = 0.0
+        var bB3: Double = 0.0    
+        
         bE = self.bEStart
         eE = self.eEStart
+        
+        rR1 = self.rR1Start
+        gG1 = self.gG1Start
+        bB1 = self.bB1Start
+        rR2 = self.rR2Start
+        gG2 = self.gG2Start
+        bB2 = self.bB2Start
+        rR3 = self.rR3Start
+        gG3 = self.gG3Start
+        bB3 = self.bB3Start
         
         nBlocks = 60
         bE = 5.0
@@ -217,10 +246,15 @@ struct ContentView: View {
         
         var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
         
-        var colors: [[Double]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
+  //      var colors: [[Double]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
+  
+        let colors: [[Double]] = [[rR1, gG1, bB1], [rR2, gG2, bB2], [rR3, gG3, bB3]]
         
-        nColors = colors.count
-        
+        let colorsR: [Double] = [rR1, rR2, rR3]
+    
+        nColors = colorsR.filter{$0 < 300}.count
+ //       print(nColors)
+          
         var h: Double = 0.0
         var xX: Double = 0.0
         
@@ -449,6 +483,100 @@ struct ContentView: View {
     }   // end else
     }   //  end func
     
+/*    func getColortImage(COLORS) -> CGImage { 
+   
+        var colorImage: CGImage
+        
+        var colorWidth: Int = 0
+        var colorHeight: Int = 40
+   
+        // set up CG parameters
+        let bitsPerComponent: Int = 8   // for UInt8
+        let componentsPerPixel: Int = 4  // RGBA = 4 components
+        let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
+            let bytesPerRow: Int = colorWidth * bytesPerPixel
+            let rasterBufferSize: Int = colorWidth * colorHeight * bytesPerPixel
+        
+        // Allocate data for the raster buffer.  I'm using UInt8 so that I can
+        // address individual RGBA components easily.
+            let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
+        
+        // Create a CGBitmapContext for drawing and converting into an image for display
+            let context: CGContext = CGContext(data: rasterBufferPtr,
+                                           width: colorWidth,
+                                           height: colorHeight,
+                                           bitsPerComponent: bitsPerComponent,
+                                           bytesPerRow: bytesPerRow,
+                                           space: CGColorSpace(name:CGColorSpace.sRGB)!,
+                                           bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        
+        // use CG to draw into the context
+        // you can use any of the CG drawing routines for drawing into this context
+        // here we will just erase the contents of the CGBitmapContext as the
+        // raster buffer just contains random uninitialized data at this point.
+        context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
+        context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(100), height: Double(100)))
+        context.fillPath()
+        
+        // in addition to using any of the CG drawing routines, you can draw yourself
+        // by accessing individual pixels in the raster image.
+        // here we'll draw a square one pixel at a time.
+            let xStarting: Int = 0
+            let yStarting: Int = 0
+            let width: Int = colorWidth
+            let height: Int = colorHeight
+        
+        // iterate over all of the rows for the entire height of the square
+        for v in 0...(height - 1) {
+            
+            // calculate the offset to the row of pixels in the raster buffer
+            // assume the origin is at the bottom left corner of the raster image.
+            // note, you could also use the top left, but GC uses the bottom left
+            // so this method keeps your drawing and CG in sync in case you wanted
+            // to use the CG methods for drawing too.
+            //
+            // note, you could do this calculation all together inside of the xoffset
+            // loop, but it's a small optimization to pull this part out and do it here
+            // instead of every time through.
+            let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
+            
+            // iterate over all of the pixels in this row
+            for u in 0...(width - 1) {
+                
+                // calculate the horizontal offset to the pixel in the row
+                let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
+                
+                // sum the horixontal and vertical offsets to get the pixel offset
+                let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
+                
+                // calculate the offset of the pixel
+                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+                
+            //     light blue for contexrImageBlank
+                    pixelAddress.pointee = UInt8(135)         //red
+                    (pixelAddress + 1).pointee = UInt8(206)   //green
+                    (pixelAddress + 2).pointee = UInt8(255)   //blue
+                    (pixelAddress + 3).pointee = UInt8(255) //alpha
+                    
+                    
+                    // IMPORTANT:
+                    // there is no type checking here and it is up to you to make sure that the
+                    // address indexes do not go beyond the memory allocated for the buffer
+                
+            }    //end for u
+            
+        }    //end for v
+        
+        // convert the context into an image - this is what the function will return
+        colorImage = context.makeImage()!
+        
+        // no automatic deallocation for the raster data
+        // you need to manage that yourself
+        rasterBufferPtr.deallocate()
+        
+        return colorImage
+    }   //  end func*/
+    
     static var cgFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -477,7 +605,7 @@ struct ContentView: View {
     
     var body: some View {
 
-        let contextImage: CGImage = getContextImage(/*xC:xCStart, yC:yCStart, */drawIt:drawItStart)
+        let contextImage: CGImage = getContextImage(drawIt:drawItStart)
         let img = Image(contextImage, scale: 1.0, label: Text("Test"))
         
         HStack{ // this container shows instructions on left / dwg on right
@@ -487,8 +615,9 @@ struct ContentView: View {
                 alignment: .center, spacing: 10) // spacing is between VStacks
             {
                 Group{
-                    Text("Click here to define values.")
-                    Text("Double-click here to enter the values.")
+                    Text("")
+                    Text("Click in green area to define values.")
+                    Text("Double-click in green area to enter the values.")
                     Text("Click image to choose new center.\n")
                 }
                 
@@ -585,6 +714,93 @@ struct ContentView: View {
                     //    .textFieldStyle(.roundedBorder)
                     //    .padding()
                 } 
+            
+                VStack{
+                    Text("Enter R1 component:")
+                    TextField("rR1",value: $rR1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G1 component:")
+                    TextField("gG1",value: $gG1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B1 component:")
+                    TextField("bB1",value: $bB1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter R2 component:")
+                    TextField("rR2",value: $rR2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G2 component:")
+                    TextField("gG2",value: $gG2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B2 component:")
+                    TextField("bB2",value: $bB2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+      /*          VStack{
+                    let colorImage: getColorImage(Colors)
+                }*/
+                                
+    //            Text("")
+                
+                } // end of group
+                
+                Group{
+                
+                VStack{
+                    Text("Enter R3 component:")
+                    TextField("rR3",value: $rR3Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G3 component:")
+                    TextField("gG3",value: $gG3Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B3 component:")
+                    TextField("bB3",value: $bB3Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+     /*           VStack{
+                    Text("Enter R4 component:")
+                    TextField("rR4",value: $rR4Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G4 component:")
+                    TextField("gG4",value: $gG4Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B4 component:")
+                    TextField("bB4",value: $bB4Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter R5 component:")
+                    TextField("rR5",value: $rR5Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G5 component:")
+                    TextField("gG5",value: $gG5Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B5 component:")
+                    TextField("bB5",value: $bB5Start, formatter: ContentView.cgUnboundFormatter)
+                }*/
+                                
+                Text("")
                 
                 } // end of group
                 
