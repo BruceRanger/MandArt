@@ -43,13 +43,17 @@ struct ContentView: View {
     @State private var eEStart: Double =  15.0
     @State private var imageWidthStart: Int = 1_200
     @State private var imageHeightStart: Int = 1_000
+    @State private var nColorsStart: Int = 2
+    
     @State private var rR1Start: Double =  255.0
     @State private var gG1Start: Double =  255.0
     @State private var bB1Start: Double =  0.0
+    
     @State private var rR2Start: Double =  255.0
     @State private var gG2Start: Double =  0.0
     @State private var bB2Start: Double =  0.0
-    @State private var rR3Start: Double =  400.0
+    
+    @State private var rR3Start: Double =  0.0
     @State private var gG3Start: Double =  0.0
     @State private var bB3Start: Double =  0.0
     
@@ -222,6 +226,7 @@ struct ContentView: View {
         bE = self.bEStart
         eE = self.eEStart
         
+        nColors = self.nColorsStart
         rR1 = self.rR1Start
         gG1 = self.gG1Start
         bB1 = self.bB1Start
@@ -252,8 +257,9 @@ struct ContentView: View {
         
         let colorsR: [Double] = [rR1, rR2, rR3]
     
-        nColors = colorsR.filter{$0 < 300}.count
- //       print(nColors)
+   //     nColors = colorsR.filter{$0 < 300}.count
+   //     nColors = 2
+        print(nColors)
           
         var h: Double = 0.0
         var xX: Double = 0.0
@@ -714,6 +720,15 @@ struct ContentView: View {
                     //    .textFieldStyle(.roundedBorder)
                     //    .padding()
                 } 
+                
+                }
+                
+                Group{
+                
+                VStack{
+                    Text("Enter number of colors")
+                    TextField("nColors",value: $nColorsStart, formatter: ContentView.cgUnboundFormatter)
+                }
             
                 VStack{
                     Text("Enter R1 component:")
