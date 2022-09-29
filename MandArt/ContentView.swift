@@ -206,6 +206,7 @@ struct ContentView: View {
         var fNBlocks: Double = 0.0
         var nColors: Int = 0
         var color: Double = 0.0
+   //     var colorGradient: Double = 0.0
         var b0: Int = 0
         var b1: Int = 0
         
@@ -263,6 +264,7 @@ struct ContentView: View {
           
         var h: Double = 0.0
         var xX: Double = 0.0
+        
         
         for i in 0...nBlocks {   
             blockBound[i] = bE*Double(i) + dE*pow(Double(i), eE)
@@ -463,11 +465,13 @@ struct ContentView: View {
                 // calculate the offset of the pixel
                 let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
                 
-            //     light blue for contexrImageBlank
+       //         light blue for contexrImageBlank
                     pixelAddress.pointee = UInt8(135)         //red
                     (pixelAddress + 1).pointee = UInt8(206)   //green
                     (pixelAddress + 2).pointee = UInt8(255)   //blue
                     (pixelAddress + 3).pointee = UInt8(255) //alpha
+                
+                 
                     
                     
                     // IMPORTANT:
@@ -489,12 +493,15 @@ struct ContentView: View {
     }   // end else
     }   //  end func
     
-/*    func getColortImage(COLORS) -> CGImage { 
+    func getColorImage(rRLeft:Double, gGLeft:Double, bBLeft:Double, rRRight:Double, gGRight:Double, bBRight:Double) -> CGImage { 
    
         var colorImage: CGImage
         
         var colorWidth: Int = 0
         var colorHeight: Int = 40
+        var xGradient: Double = 0.0
+        var colorGradient: Double = 0.0
+        colorWidth = Int(inputWidth - 20)
    
         // set up CG parameters
         let bitsPerComponent: Int = 8   // for UInt8
@@ -558,11 +565,18 @@ struct ContentView: View {
                 // calculate the offset of the pixel
                 let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
                 
-            //     light blue for contexrImageBlank
-                    pixelAddress.pointee = UInt8(135)         //red
-                    (pixelAddress + 1).pointee = UInt8(206)   //green
-                    (pixelAddress + 2).pointee = UInt8(255)   //blue
-                    (pixelAddress + 3).pointee = UInt8(255) //alpha
+                xGradient = Double(u/colorWidth)
+
+                colorGradient = rRLeft + xGradient*(rRRight - rRLeft)
+                pixelAddress.pointee = UInt8(colorGradient)         // R
+                
+                colorGradient = gGLeft + xGradient*(gGRight - gGLeft)
+                (pixelAddress + 1).pointee = UInt8(colorGradient)   // G
+                
+                colorGradient = bBLeft + xGradient*(bBRight - bBLeft)
+                (pixelAddress + 2).pointee = UInt8(colorGradient)   // B
+                
+                (pixelAddress + 3).pointee = UInt8(255)     //alpha
                     
                     
                     // IMPORTANT:
@@ -581,7 +595,7 @@ struct ContentView: View {
         rasterBufferPtr.deallocate()
         
         return colorImage
-    }   //  end func*/
+    }   //  end func    
     
     static var cgFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -698,7 +712,7 @@ struct ContentView: View {
                 
                 } // end of group
                 
-                Group{
+     /*           Group{
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter nBlocks:")
@@ -721,7 +735,7 @@ struct ContentView: View {
                     //    .padding()
                 } 
                 
-                }
+                }   // end of group */
                 
                 Group{
                 
@@ -760,12 +774,15 @@ struct ContentView: View {
                     TextField("bB2",value: $bB2Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
-      /*          VStack{
-                    let colorImage: getColorImage(Colors)
-                }*/
-                                
-    //            Text("")
+                } // end of group
                 
+                Group{
+                
+                VStack{
+                    let colorImage:CGImage = getColorImage(rR1Start, gG1Start, bB1Start, rR2Start, gG2Start, bB2Start)
+        //            print("hello")
+                }   
+                                                
                 } // end of group
                 
                 Group{
