@@ -210,8 +210,8 @@ struct ContentView: View {
         var nColors: Int = 0
         var color: Double = 0.0
    //     var colorGradient: Double = 0.0
-        var b0: Int = 0
-        var b1: Int = 0
+        var block0: Int = 0
+        var block1: Int = 0
         
         var bE: Double = 0.0
         var eE: Double = 0.0
@@ -342,31 +342,31 @@ struct ContentView: View {
                 else    {
                     h = fIter[u][v] - fIterMin
                     
-                    for b in 0...nBlocks {
+                    for block in 0...nBlocks {
                         
-                        b0 = b
+                        block0 = block
                         
-                        if h >= blockBound[b] && h < blockBound[b + 1]   {
+                        if h >= blockBound[block] && h < blockBound[block + 1]   {
                             
-                            xX = (h - blockBound[b])/(blockBound[b + 1] - blockBound[b])
+                            xX = (h - blockBound[block])/(blockBound[block + 1] - blockBound[block])
                             
-                            while b0 > nColors - 1 {
-                                b0 = b0 - nColors
+                            while block0 > nColors - 1 {
+                                block0 = block0 - nColors
                             }
                             
-                            b1 = b0 + 1
+                            block1 = block0 + 1
                             
-                            if b1 == nColors {
-                                b1 = b1 - nColors
+                            if block1 == nColors {
+                                block1 = block1 - nColors
                             }
                             
-                            color = colors[b0][0] + xX*(colors[b1][0] - colors[b0][0])
+                            color = colors[block0][0] + xX*(colors[block1][0] - colors[block0][0])
                             pixelAddress.pointee = UInt8(color)         // R
                             
-                            color = colors[b0][1] + xX*(colors[b1][1] - colors[b0][1])
+                            color = colors[block0][1] + xX*(colors[block1][1] - colors[block0][1])
                             (pixelAddress + 1).pointee = UInt8(color)   // G
                             
-                            color = colors[b0][2] + xX*(colors[b1][2] - colors[b0][2])
+                            color = colors[block0][2] + xX*(colors[block1][2] - colors[block0][2])
                             (pixelAddress + 2).pointee = UInt8(color)   // B
                             
                             (pixelAddress + 3).pointee = UInt8(255)     //alpha
