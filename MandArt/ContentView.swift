@@ -19,7 +19,8 @@ struct ContentView: View {
         var drawIt: Bool
     }*/
     
-    let instructionBackgroundColor = Color.green
+    let instructionBackgroundColor = Color.green.opacity(0.5)
+    
     let inputWidth: Double = 250
     
     @State private var showingAlert = false
@@ -45,6 +46,7 @@ struct ContentView: View {
     @State private var imageHeightStart: Int = 1_000
     @State private var nColorsStart: Int = 2
     
+    @State private var number1Start: Int =  1
     @State private var rR1Start: Double =  255.0
     @State private var gG1Start: Double =  255.0
     @State private var bB1Start: Double =  0.0
@@ -58,7 +60,8 @@ struct ContentView: View {
     @State private var bB3Start: Double =  0.0
     
     @State private var drawItStart = true
-    @State private var drawItPlainStart = true
+    @State private var drawItPlainStart = false
+    @State private var drawGradientStart = false
     
     @State private var scaleOld: Double =  1.0
     
@@ -214,6 +217,7 @@ struct ContentView: View {
         var eE: Double = 0.0
         var dE: Double = 0.0
         
+        var number1: Int = 0
         var rR1: Double = 0.0
         var gG1: Double = 0.0
         var bB1: Double = 0.0
@@ -228,6 +232,7 @@ struct ContentView: View {
         eE = self.eEStart
         
         nColors = self.nColorsStart
+        number1 = self.number1Start
         rR1 = self.rR1Start
         gG1 = self.gG1Start
         bB1 = self.bB1Start
@@ -255,12 +260,6 @@ struct ContentView: View {
   //      var colors: [[Double]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
   
         let colors: [[Double]] = [[rR1, gG1, bB1], [rR2, gG2, bB2], [rR3, gG3, bB3]]
-        
-        let colorsR: [Double] = [rR1, rR2, rR3]
-    
-   //     nColors = colorsR.filter{$0 < 300}.count
-   //     nColors = 2
-        print(nColors)
           
         var h: Double = 0.0
         var xX: Double = 0.0
@@ -490,7 +489,8 @@ struct ContentView: View {
         rasterBufferPtr.deallocate()
         
         return contextImageBlank
-    }   // end else
+    }   // end else 
+
     }   //  end func
     
     func getColorImage(rRLeft:Double, gGLeft:Double, bBLeft:Double, rRRight:Double, gGRight:Double, bBRight:Double) -> CGImage { 
@@ -744,20 +744,29 @@ struct ContentView: View {
                     TextField("nColors",value: $nColorsStart, formatter: ContentView.cgUnboundFormatter)
                 }
             
+                HStack{
+                
                 VStack{
-                    Text("Enter R1 component:")
+                    Text("No:")
+                    TextField("number1",value: $number1Start, formatter: ContentView.cgUnboundFormatter)
+                    .disabled(true)
+                }
+                
+                VStack{
+                    Text("Enter R1:")
                     TextField("rR1",value: $rR1Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
-                    Text("Enter G1 component:")
+                    Text("Enter G1:")
                     TextField("gG1",value: $gG1Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
-                    Text("Enter B1 component:")
+                    Text("Enter B1:")
                     TextField("bB1",value: $bB1Start, formatter: ContentView.cgUnboundFormatter)
                 }
+                }   // end HStack
                 
                 VStack{
                     Text("Enter R2 component:")
@@ -776,14 +785,13 @@ struct ContentView: View {
                 
                 } // end of group
                 
-                Group{
+     /*           Group{
                 
                 VStack{
                     let colorImage:CGImage = getColorImage(rR1Start, gG1Start, bB1Start, rR2Start, gG2Start, bB2Start)
-        //            print("hello")
                 }   
                                                 
-                } // end of group
+                } // end of group   */
                 
                 Group{
                 
@@ -850,15 +858,26 @@ struct ContentView: View {
                 
                 
             } // end VStack for user instructions
+    /*        .contentShape(Rectangle())
+            .onTapGesture(count:3){
+                drawItStart = false
+        //        drawItPlainStart = true
+                drawItPlainStart = false
+                drawGradientStart = true
+            } */
             .contentShape(Rectangle())
             .onTapGesture(count:2){
                 drawItStart = true
-                drawItPlainStart = true
-            }
+        //        drawItPlainStart = true
+                drawItPlainStart = false
+                drawGradientStart = false
+            }   
             .contentShape(Rectangle())
             .onTapGesture(count:1){
                 drawItStart = false
+       //         drawItStart = true
                 drawItPlainStart = true
+                drawGradientStart = false
             }
             .background(instructionBackgroundColor)
             .frame(width:inputWidth)
