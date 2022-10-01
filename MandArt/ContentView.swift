@@ -47,17 +47,17 @@ struct ContentView: View {
     @State private var nColorsStart: Int = 2
     
     @State private var number1Start: Int =  1
-    @State private var rR1Start: Double =  255.0
-    @State private var gG1Start: Double =  255.0
-    @State private var bB1Start: Double =  0.0
+    @State private var r1Start: Double =  255.0
+    @State private var g1Start: Double =  255.0
+    @State private var b1Start: Double =  0.0
     
-    @State private var rR2Start: Double =  255.0
-    @State private var gG2Start: Double =  0.0
-    @State private var bB2Start: Double =  0.0
+    @State private var r2Start: Double =  255.0
+    @State private var g2Start: Double =  0.0
+    @State private var b2Start: Double =  0.0
     
-    @State private var rR3Start: Double =  0.0
-    @State private var gG3Start: Double =  0.0
-    @State private var bB3Start: Double =  0.0
+    @State private var r3Start: Double =  0.0
+    @State private var g3Start: Double =  0.0
+    @State private var b3Start: Double =  0.0
     
     @State private var drawItStart = true
     @State private var drawItPlainStart = false
@@ -218,30 +218,30 @@ struct ContentView: View {
         var dE: Double = 0.0
         
         var number1: Int = 0
-        var rR1: Double = 0.0
-        var gG1: Double = 0.0
-        var bB1: Double = 0.0
-        var rR2: Double = 0.0
-        var gG2: Double = 0.0
-        var bB2: Double = 0.0    
-        var rR3: Double = 0.0
-        var gG3: Double = 0.0
-        var bB3: Double = 0.0    
+        var r1: Double = 0.0
+        var g1: Double = 0.0
+        var b1: Double = 0.0
+        var r2: Double = 0.0
+        var g2: Double = 0.0
+        var b2: Double = 0.0    
+        var r3: Double = 0.0
+        var g3: Double = 0.0
+        var b3: Double = 0.0    
         
         bE = self.bEStart
         eE = self.eEStart
         
         nColors = self.nColorsStart
         number1 = self.number1Start
-        rR1 = self.rR1Start
-        gG1 = self.gG1Start
-        bB1 = self.bB1Start
-        rR2 = self.rR2Start
-        gG2 = self.gG2Start
-        bB2 = self.bB2Start
-        rR3 = self.rR3Start
-        gG3 = self.gG3Start
-        bB3 = self.bB3Start
+        r1 = self.r1Start
+        g1 = self.g1Start
+        b1 = self.b1Start
+        r2 = self.r2Start
+        g2 = self.g2Start
+        b2 = self.b2Start
+        r3 = self.r3Start
+        g3 = self.g3Start
+        b3 = self.b3Start
         
         nBlocks = 60
         bE = 5.0
@@ -259,7 +259,7 @@ struct ContentView: View {
         
   //      var colors: [[Double]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
   
-        let colors: [[Double]] = [[rR1, gG1, bB1], [rR2, gG2, bB2], [rR3, gG3, bB3]]
+        let colors: [[Double]] = [[r1, g1, b1], [r2, g2, b2], [r3, g3, b3]]
           
         var h: Double = 0.0
         var xX: Double = 0.0
@@ -493,7 +493,7 @@ struct ContentView: View {
 
     }   //  end func
     
-    func getColorImage(rRLeft:Double, gGLeft:Double, bBLeft:Double, rRRight:Double, gGRight:Double, bBRight:Double) -> CGImage { 
+    func getColorImage(rLeft:Double, gLeft:Double, bLeft:Double, rRight:Double, gRight:Double, bRight:Double) -> CGImage { 
    
         var colorImage: CGImage
         
@@ -567,13 +567,13 @@ struct ContentView: View {
                 
                 xGradient = Double(u/colorWidth)
 
-                colorGradient = rRLeft + xGradient*(rRRight - rRLeft)
+                colorGradient = rLeft + xGradient*(rRight - rLeft)
                 pixelAddress.pointee = UInt8(colorGradient)         // R
                 
-                colorGradient = gGLeft + xGradient*(gGRight - gGLeft)
+                colorGradient = gLeft + xGradient*(gRight - gLeft)
                 (pixelAddress + 1).pointee = UInt8(colorGradient)   // G
                 
-                colorGradient = bBLeft + xGradient*(bBRight - bBLeft)
+                colorGradient = bLeft + xGradient*(bRight - bLeft)
                 (pixelAddress + 2).pointee = UInt8(colorGradient)   // B
                 
                 (pixelAddress + 3).pointee = UInt8(255)     //alpha
@@ -754,33 +754,33 @@ struct ContentView: View {
                 
                 VStack{
                     Text("Enter R1:")
-                    TextField("rR1",value: $rR1Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("r1",value: $r1Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter G1:")
-                    TextField("gG1",value: $gG1Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("g1",value: $g1Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter B1:")
-                    TextField("bB1",value: $bB1Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("b1",value: $b1Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 }   // end HStack
                 
                 VStack{
                     Text("Enter R2 component:")
-                    TextField("rR2",value: $rR2Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("r2",value: $r2Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter G2 component:")
-                    TextField("gG2",value: $gG2Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("g2",value: $g2Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter B2 component:")
-                    TextField("bB2",value: $bB2Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("b2",value: $b2Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 } // end of group
@@ -788,7 +788,7 @@ struct ContentView: View {
      /*           Group{
                 
                 VStack{
-                    let colorImage:CGImage = getColorImage(rR1Start, gG1Start, bB1Start, rR2Start, gG2Start, bB2Start)
+                    let colorImage:CGImage = getColorImage(r1Start, g1Start, b1Start, r2Start, g2Start, b2Start)
                 }   
                                                 
                 } // end of group   */
@@ -797,47 +797,47 @@ struct ContentView: View {
                 
                 VStack{
                     Text("Enter R3 component:")
-                    TextField("rR3",value: $rR3Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("r3",value: $r3Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter G3 component:")
-                    TextField("gG3",value: $gG3Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("g3",value: $g3Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter B3 component:")
-                    TextField("bB3",value: $bB3Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("b3",value: $b3Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
      /*           VStack{
                     Text("Enter R4 component:")
-                    TextField("rR4",value: $rR4Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("r4",value: $r4Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter G4 component:")
-                    TextField("gG4",value: $gG4Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("g4",value: $g4Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter B4 component:")
-                    TextField("bB4",value: $bB4Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("b4",value: $b4Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter R5 component:")
-                    TextField("rR5",value: $rR5Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("r5",value: $r5Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter G5 component:")
-                    TextField("gG5",value: $gG5Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("g5",value: $g5Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter B5 component:")
-                    TextField("bB5",value: $bB5Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("b5",value: $b5Start, formatter: ContentView.cgUnboundFormatter)
                 }*/
                                 
                 Text("")
