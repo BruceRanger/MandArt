@@ -23,6 +23,7 @@ struct ContentView: View {
     
     let inputWidth: Double = 250
     
+    
     @State private var showingAlert = false
     @State private var tapX: Double = 0
     @State private var tapY: Double = 0
@@ -44,20 +45,107 @@ struct ContentView: View {
     @State private var eEStart: Double =  15.0
     @State private var imageWidthStart: Int = 1_200
     @State private var imageHeightStart: Int = 1_000
-    @State private var nColorsStart: Int = 2
+    @State private var nColorsStart: Int = 6
     
     @State private var number1Start: Int =  1
-    @State private var r1Start: Double =  255.0
+    @State private var r1Start: Double =  0.0
     @State private var g1Start: Double =  255.0
     @State private var b1Start: Double =  0.0
     
+    @State private var number2Start: Int =  2
     @State private var r2Start: Double =  255.0
-    @State private var g2Start: Double =  0.0
+    @State private var g2Start: Double =  255.0
     @State private var b2Start: Double =  0.0
     
-    @State private var r3Start: Double =  0.0
+    @State private var number3Start: Int =  3
+    @State private var r3Start: Double =  255.0
     @State private var g3Start: Double =  0.0
     @State private var b3Start: Double =  0.0
+    
+    @State private var number4Start: Int =  4
+    @State private var r4Start: Double =  255.0
+    @State private var g4Start: Double =  0.0
+    @State private var b4Start: Double =  255.0
+    
+    @State private var number5Start: Int =  5
+    @State private var r5Start: Double =  0.0
+    @State private var g5Start: Double =  0.0
+    @State private var b5Start: Double =  255.0
+    
+    @State private var number6Start: Int =  6
+    @State private var r6Start: Double =  0.0
+    @State private var g6Start: Double =  255.0
+    @State private var b6Start: Double =  255.0
+    
+    @State private var number7Start: Int =  7
+    @State private var r7Start: Double =  0.0
+    @State private var g7Start: Double =  0.0
+    @State private var b7Start: Double =  0.0
+    
+    @State private var number8Start: Int =  8
+    @State private var r8Start: Double =  0.0
+    @State private var g8Start: Double =  0.0
+    @State private var b8Start: Double =  0.0
+    
+    @State private var number9Start: Int =  9
+    @State private var r9Start: Double =  0.0
+    @State private var g9Start: Double =  0.0
+    @State private var b9Start: Double =  0.0
+    
+    @State private var number10Start: Int =  10
+    @State private var r10Start: Double =  0.0
+    @State private var g10Start: Double =  0.0
+    @State private var b10Start: Double =  0.0
+    
+    @State private var number11Start: Int =  11
+    @State private var r11Start: Double =  0.0
+    @State private var g11Start: Double =  0.0
+    @State private var b11Start: Double =  0.0
+    
+    @State private var number12Start: Int =  12
+    @State private var r12Start: Double =  0.0
+    @State private var g12Start: Double =  0.0
+    @State private var b12Start: Double =  0.0
+    
+    @State private var number13Start: Int =  13
+    @State private var r13Start: Double =  0.0
+    @State private var g13Start: Double =  0.0
+    @State private var b13Start: Double =  0.0
+    
+    @State private var number14Start: Int =  14
+    @State private var r14Start: Double =  0.0
+    @State private var g14Start: Double =  0.0
+    @State private var b14Start: Double =  0.0
+    
+    @State private var number15Start: Int =  15
+    @State private var r15Start: Double =  0.0
+    @State private var g15Start: Double =  0.0
+    @State private var b15Start: Double =  0.0
+    
+    @State private var number16Start: Int =  16
+    @State private var r16Start: Double =  0.0
+    @State private var g16Start: Double =  0.0
+    @State private var b16Start: Double =  0.0
+    
+    @State private var number17Start: Int =  17
+    @State private var r17Start: Double =  0.0
+    @State private var g17Start: Double =  0.0
+    @State private var b17Start: Double =  0.0
+    
+    @State private var number18Start: Int =  18
+    @State private var r18Start: Double =  0.0
+    @State private var g18Start: Double =  0.0
+    @State private var b18Start: Double =  0.0
+    
+    @State private var number19Start: Int =  19
+    @State private var r19Start: Double =  0.0
+    @State private var g19Start: Double =  0.0
+    @State private var b19Start: Double =  0.0
+    
+    @State private var number20Start: Int =  20
+    @State private var r20Start: Double =  0.0
+    @State private var g20Start: Double =  0.0
+    @State private var b20Start: Double =  0.0
     
     @State private var drawItStart = true
     @State private var drawItPlainStart = false
@@ -218,6 +306,25 @@ struct ContentView: View {
         var dE: Double = 0.0
         
         var number1: Int = 0
+        var number2: Int = 0
+        var number3: Int = 0
+        var number4: Int = 0
+        var number5: Int = 0
+        var number6: Int = 0
+        var number7: Int = 0
+        var number8: Int = 0
+        var number9: Int = 0
+        var number10: Int = 0
+        var number11: Int = 0
+        var number12: Int = 0
+        var number13: Int = 0
+        var number14: Int = 0
+        var number15: Int = 0
+        var number16: Int = 0
+        var number17: Int = 0
+        var number18: Int = 0
+        var number19: Int = 0
+        var number20: Int = 0
         var r1: Double = 0.0
         var g1: Double = 0.0
         var b1: Double = 0.0
@@ -226,13 +333,83 @@ struct ContentView: View {
         var b2: Double = 0.0    
         var r3: Double = 0.0
         var g3: Double = 0.0
-        var b3: Double = 0.0    
+        var b3: Double = 0.0
+        var r4: Double = 0.0
+        var g4: Double = 0.0
+        var b4: Double = 0.0
+        var r5: Double = 0.0
+        var g5: Double = 0.0
+        var b5: Double = 0.0    
+        var r6: Double = 0.0
+        var g6: Double = 0.0
+        var b6: Double = 0.0
+        var r7: Double = 0.0
+        var g7: Double = 0.0
+        var b7: Double = 0.0
+        var r8: Double = 0.0
+        var g8: Double = 0.0
+        var b8: Double = 0.0    
+        var r9: Double = 0.0
+        var g9: Double = 0.0
+        var b9: Double = 0.0
+        var r10: Double = 0.0
+        var g10: Double = 0.0
+        var b10: Double = 0.0
+        var r11: Double = 0.0
+        var g11: Double = 0.0
+        var b11: Double = 0.0    
+        var r12: Double = 0.0
+        var g12: Double = 0.0
+        var b12: Double = 0.0
+        var r13: Double = 0.0
+        var g13: Double = 0.0
+        var b13: Double = 0.0
+        var r14: Double = 0.0
+        var g14: Double = 0.0
+        var b14: Double = 0.0    
+        var r15: Double = 0.0
+        var g15: Double = 0.0
+        var b15: Double = 0.0
+        var r16: Double = 0.0
+        var g16: Double = 0.0
+        var b16: Double = 0.0
+        var r17: Double = 0.0
+        var g17: Double = 0.0
+        var b17: Double = 0.0    
+        var r18: Double = 0.0
+        var g18: Double = 0.0
+        var b18: Double = 0.0
+        var r19: Double = 0.0
+        var g19: Double = 0.0
+        var b19: Double = 0.0
+        var r20: Double = 0.0
+        var g20: Double = 0.0
+        var b20: Double = 0.0    
         
         bE = self.bEStart
         eE = self.eEStart
         
         nColors = self.nColorsStart
         number1 = self.number1Start
+        number2 = self.number2Start
+        number3 = self.number3Start
+        number4 = self.number4Start
+        number5 = self.number5Start
+        number6 = self.number6Start
+        number7 = self.number7Start
+        number8 = self.number8Start
+        number9 = self.number9Start
+        number10 = self.number10Start
+        number11 = self.number11Start
+        number12 = self.number12Start
+        number13 = self.number13Start
+        number14 = self.number14Start
+        number15 = self.number15Start
+        number16 = self.number16Start
+        number17 = self.number17Start
+        number18 = self.number18Start
+        number19 = self.number19Start
+        number20 = self.number20Start
         r1 = self.r1Start
         g1 = self.g1Start
         b1 = self.b1Start
@@ -242,6 +419,61 @@ struct ContentView: View {
         r3 = self.r3Start
         g3 = self.g3Start
         b3 = self.b3Start
+        r4 = self.r4Start
+        g4 = self.g4Start
+        b4 = self.b4Start
+        r5 = self.r5Start
+        g5 = self.g5Start
+        b5 = self.b5Start
+        r6 = self.r6Start
+        g6 = self.g6Start
+        b6 = self.b6Start
+        r7 = self.r7Start
+        g7 = self.g7Start
+        b7 = self.b7Start
+        r8 = self.r8Start
+        g8 = self.g8Start
+        b8 = self.b8Start
+        r9 = self.r9Start
+        g9 = self.g9Start
+        b9 = self.b9Start
+        r10 = self.r10Start
+        g10 = self.g10Start
+        b10 = self.b10Start
+        r11 = self.r11Start
+        g11 = self.g11Start
+        b11 = self.b11Start
+        r12 = self.r12Start
+        g12 = self.g12Start
+        b12 = self.b12Start
+        r13 = self.r13Start
+        g13 = self.g13Start
+        b13 = self.b13Start
+        r14 = self.r14Start
+        g14 = self.g14Start
+        b14 = self.b14Start
+        r15 = self.r15Start
+        g15 = self.g15Start
+        b15 = self.b15Start
+        r16 = self.r16Start
+        g16 = self.g16Start
+        b16 = self.b16Start
+        r17 = self.r17Start
+        g17 = self.g17Start
+        b17 = self.b17Start
+        r18 = self.r18Start
+        g18 = self.g18Start
+        b18 = self.b18Start
+        r19 = self.r19Start
+        g19 = self.g19Start
+        b19 = self.b19Start
+        r20 = self.r20Start
+        g20 = self.g20Start
+        b20 = self.b20Start
+        
+   /*     print()
+        print(r6, g6, b6)
+        print() */
         
         nBlocks = 60
         bE = 5.0
@@ -259,7 +491,21 @@ struct ContentView: View {
         
   //      var colors: [[Double]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
   
-        let colors: [[Double]] = [[r1, g1, b1], [r2, g2, b2], [r3, g3, b3]]
+        let colors: [[Double]] =   [[r1, g1, b1],     [r2, g2, b2],     [r3, g3, b3],
+                                    [r4, g4, b4],     [r5, g5, b5],     [r6, g6, b6],
+                                    [r7, g7, b7],     [r8, g8, b8],     [r9, g9, b9],
+                                    [r10, g10, b10],  [r11, g11, b11],  [r12, g12, b12],
+                                    [r13, g13, b13],  [r14, g14, b14],  [r15, g15, b15],
+                                    [r16, g16, b16],  [r17, g17, b17],  [r18, g18, b18],
+                                    [r19, g19, b19],  [r20, g20, b20]]
+                                    
+                          /*          print(r1, g1, b1)
+                                    print(r2, g2, b2)
+                                    print(r3, g3, b3)
+                                    print(r4, g4, b4)
+                                    print(r5, g5, b5)
+                                    print(r6, g6, b6)
+                                    print(r7, g7, b7)   */
           
         var h: Double = 0.0
         var xX: Double = 0.0
@@ -664,7 +910,7 @@ struct ContentView: View {
                     Text("Between -2 and 2")
                     TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
                     //  .textFieldStyle(.roundedBorder)
-                    //    .padding()
+                        .padding(2)
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
@@ -672,84 +918,90 @@ struct ContentView: View {
                     Text("Between -2 and 2")
                     TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
                     //  .textFieldStyle(.roundedBorder)
-                    //    .padding()
+                        .padding(2)
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter scale:")
                     TextField("Scale",value: $scaleStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
-                    //    .padding()
+                        .padding(2)
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter iMax:")
                     TextField("iMax",value: $iMaxStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
-                    //    .padding()
+                        .padding(2)
                 }   
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter rSqLimit:")
                     TextField("rSqLimit",value: $rSqLimitStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
-                    //    .padding()
+                        .padding(2)
                 } 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter imageWidth:")
                     TextField("imageWidth",value: $imageWidthStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
-                    //    .padding()
+                        .padding(2)
                 } 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter imageHeight:")
                     TextField("imageHeightStart",value: $imageHeightStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
-                    //    .padding()
+                        .padding(2)
                 } 
                 
                 } // end of group
                 
-     /*           Group{
+                Group{
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter nBlocks:")
                     TextField("nBlocks",value: $nBlocksStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
-                    //    .padding()
+                        .padding(2)
                 } 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter bE:")
                     TextField("bE",value: $bEStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
-                    //    .padding()
+                        .padding(2)
                 } 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter eE:")
                     TextField("eE",value: $eEStart, formatter: ContentView.cgUnboundFormatter)
                     //    .textFieldStyle(.roundedBorder)
-                    //    .padding()
+                        .padding(2)
                 } 
                 
-                }   // end of group */
+       //         }   // end of group 
                 
-                Group{
+      //          Group{
                 
                 VStack{
                     Text("Enter number of colors")
                     TextField("nColors",value: $nColorsStart, formatter: ContentView.cgUnboundFormatter)
+                        .padding(2)
                 }
+                
+                }   // end of group
+                
+                Group{
             
                 HStack{
                 
                 VStack{
                     Text("No:")
                     TextField("number1",value: $number1Start, formatter: ContentView.cgUnboundFormatter)
-                    .disabled(true)
+                        .disabled(true)
+                        .padding(2)
                 }
                 
                 VStack{
@@ -765,8 +1017,18 @@ struct ContentView: View {
                 VStack{
                     Text("Enter B1:")
                     TextField("b1",value: $b1Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
                 }
                 }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number2",value: $number2Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
                 
                 VStack{
                     Text("Enter R2 component:")
@@ -782,33 +1044,852 @@ struct ContentView: View {
                     Text("Enter B2 component:")
                     TextField("b2",value: $b2Start, formatter: ContentView.cgUnboundFormatter)
                 }
+                }
                 
                 } // end of group
                 
-     /*           Group{
+        /*        Group{
+            
+                HStack{
                 
                 VStack{
-                    let colorImage:CGImage = getColorImage(r1Start, g1Start, b1Start, r2Start, g2Start, b2Start)
-                }   
-                                                
+                    Text("No:")
+                    TextField("number1",value: $number1Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R1:")
+                    TextField("r1",value: $r1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G1:")
+                    TextField("g1",value: $g1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B1:")
+                    TextField("b1",value: $b1Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number2",value: $number2Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R2 component:")
+                    TextField("r2",value: $r2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G2 component:")
+                    TextField("g2",value: $g2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B2 component:")
+                    TextField("b2",value: $b2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group   */
+                
+        /*        Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number1",value: $number1Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R1:")
+                    TextField("r1",value: $r1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G1:")
+                    TextField("g1",value: $g1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B1:")
+                    TextField("b1",value: $b1Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number2",value: $number2Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R2 component:")
+                    TextField("r2",value: $r2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G2 component:")
+                    TextField("g2",value: $g2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B2 component:")
+                    TextField("b2",value: $b2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group   */
+                
+     /*           Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number1",value: $number1Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R1:")
+                    TextField("r1",value: $r1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G1:")
+                    TextField("g1",value: $g1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B1:")
+                    TextField("b1",value: $b1Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number2",value: $number2Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R2 component:")
+                    TextField("r2",value: $r2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G2 component:")
+                    TextField("g2",value: $g2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B2 component:")
+                    TextField("b2",value: $b2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group   */
+                
+      /*          Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number1",value: $number1Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R1:")
+                    TextField("r1",value: $r1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G1:")
+                    TextField("g1",value: $g1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B1:")
+                    TextField("b1",value: $b1Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number2",value: $number2Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R2 component:")
+                    TextField("r2",value: $r2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G2 component:")
+                    TextField("g2",value: $g2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B2 component:")
+                    TextField("b2",value: $b2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group   */
+                
+       /*         Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number1",value: $number1Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R1:")
+                    TextField("r1",value: $r1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G1:")
+                    TextField("g1",value: $g1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B1:")
+                    TextField("b1",value: $b1Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number2",value: $number2Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R2 component:")
+                    TextField("r2",value: $r2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G2 component:")
+                    TextField("g2",value: $g2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B2 component:")
+                    TextField("b2",value: $b2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group   */
+                
+       /*         Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number1",value: $number1Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R1:")
+                    TextField("r1",value: $r1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G1:")
+                    TextField("g1",value: $g1Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B1:")
+                    TextField("b1",value: $b1Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number2",value: $number2Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R2 component:")
+                    TextField("r2",value: $r2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G2 component:")
+                    TextField("g2",value: $g2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B2 component:")
+                    TextField("b2",value: $b2Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
                 } // end of group   */
                 
                 Group{
+            
+                HStack{
                 
                 VStack{
-                    Text("Enter R3 component:")
+                    Text("No:")
+                    TextField("number3",value: $number3Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R3:")
                     TextField("r3",value: $r3Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
-                    Text("Enter G3 component:")
+                    Text("Enter G3:")
                     TextField("g3",value: $g3Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
-                    Text("Enter B3 component:")
+                    Text("Enter B3:")
                     TextField("b3",value: $b3Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
                 }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number4",value: $number4Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R4 component:")
+                    TextField("r4",value: $r4Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G4 component:")
+                    TextField("g4",value: $g4Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B4 component:")
+                    TextField("b4",value: $b4Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group
+                
+                Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number5",value: $number5Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R5:")
+                    TextField("r5",value: $r5Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G5:")
+                    TextField("g5",value: $g5Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B5:")
+                    TextField("b5",value: $b5Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number6",value: $number6Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R6 component:")
+                    TextField("r6",value: $r6Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G6 component:")
+                    TextField("g6",value: $g6Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B6 component:")
+                    TextField("b6",value: $b6Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group
+                
+                Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number7",value: $number7Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R7:")
+                    TextField("r7",value: $r7Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G7:")
+                    TextField("g7",value: $g7Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B7:")
+                    TextField("b7",value: $b7Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number8",value: $number8Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R8 component:")
+                    TextField("r8",value: $r8Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G8 component:")
+                    TextField("g8",value: $g8Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B8 component:")
+                    TextField("b8",value: $b8Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group
+                
+                Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number9",value: $number9Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R9:")
+                    TextField("r9",value: $r9Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G9:")
+                    TextField("g9",value: $g9Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B9:")
+                    TextField("b9",value: $b9Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number10",value: $number10Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R10 component:")
+                    TextField("r10",value: $r10Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G10 component:")
+                    TextField("g10",value: $g10Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B10 component:")
+                    TextField("b10",value: $b10Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group
+                Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number11",value: $number11Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R11:")
+                    TextField("r11",value: $r11Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G11:")
+                    TextField("g11",value: $g11Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B11:")
+                    TextField("b11",value: $b11Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number12",value: $number12Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R12 component:")
+                    TextField("r12",value: $r12Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G12 component:")
+                    TextField("g12",value: $g12Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B12 component:")
+                    TextField("b12",value: $b12Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group
+                
+                Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number13",value: $number13Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R13:")
+                    TextField("r13",value: $r13Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G13:")
+                    TextField("g13",value: $g13Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B13:")
+                    TextField("b13",value: $b13Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number14",value: $number14Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R14 component:")
+                    TextField("r14",value: $r14Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G14 component:")
+                    TextField("g14",value: $g14Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B14 component:")
+                    TextField("b14",value: $b14Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group
+                
+    /*            Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number15",value: $number15Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R15:")
+                    TextField("r15",value: $r15Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G15:")
+                    TextField("g15",value: $g15Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B15:")
+                    TextField("b15",value: $b15Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number16",value: $number16Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R16 component:")
+                    TextField("r16",value: $r16Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G16 component:")
+                    TextField("g16",value: $g16Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B16 component:")
+                    TextField("b16",value: $b16Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group
+                
+                Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number17",value: $number17Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R17:")
+                    TextField("r17",value: $r17Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G17:")
+                    TextField("g17",value: $g17Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B17:")
+                    TextField("b17",value: $b17Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number18",value: $number18Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R18 component:")
+                    TextField("r18",value: $r18Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G18 component:")
+                    TextField("g18",value: $g18Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B18 component:")
+                    TextField("b18",value: $b18Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                } // end of group
+                
+                Group{
+            
+                HStack{
+                
+                VStack{
+                    Text("No:")
+                    TextField("number19",value: $number19Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R19:")
+                    TextField("r19",value: $r19Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G19:")
+                    TextField("g19",value: $g19Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B19:")
+                    TextField("b19",value: $b19Start, formatter: ContentView.cgUnboundFormatter)
+                    .padding(2)
+                }
+                }   // end HStack
+                
+                HStack {
+                
+                VStack{
+                    Text("No:")
+                    TextField("number20",value: $number20Start, formatter: ContentView.cgUnboundFormatter)
+                        .disabled(true)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter R20 component:")
+                    TextField("r20",value: $r20Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G20 component:")
+                    TextField("g20",value: $g20Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B20 component:")
+                    TextField("b20",value: $b20Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                }
+                
+                Text("")
+                
+                } // end of group   */
+                
+       /*         Group{
+                
+       /*         VStack{
+                    Text("Enter R9 component:")
+                    TextField("r9",value: $r9Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter G9 component:")
+                    TextField("g9",value: $g9Start, formatter: ContentView.cgUnboundFormatter)
+                }
+                
+                VStack{
+                    Text("Enter B9 component:")
+                    TextField("b9",value: $b9Start, formatter: ContentView.cgUnboundFormatter)
+                }   */
                 
      /*           VStack{
                     Text("Enter R4 component:")
@@ -842,7 +1923,7 @@ struct ContentView: View {
                                 
                 Text("")
                 
-                } // end of group
+                } // end of group   */
                 
       /*          // Then, there is a Picker to list the pre-selected scenes
                 Picker(
