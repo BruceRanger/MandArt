@@ -46,6 +46,7 @@ struct ContentView: View {
     @State private var imageWidthStart: Int = 1_200
     @State private var imageHeightStart: Int = 1_000
     @State private var nColorsStart: Int = 6
+    @State private var leftNumberStart: Int = 1
     
     @State private var number1Start: Int =  1
     @State private var r1Start: Double =  0.0
@@ -177,7 +178,7 @@ struct ContentView: View {
         self.scaleStart = self.scaleOld * 2.0
     }
 
-    func getImage(drawIt:Bool, drawItBlank: Bool, drawGradient: Bool) -> CGImage { 
+    func getImage(drawIt:Bool, drawItBlank: Bool, drawGradient: Bool, leftNumber: Int) -> CGImage { 
    
         if drawIt == true {
         
@@ -296,8 +297,9 @@ struct ContentView: View {
         nBlocks = self.nBlocksStart
         var fNBlocks: Double = 0.0
         var nColors: Int = 0
+        var leftNumber: Int = 0
+        var rightNumber: Int = 0
         var color: Double = 0.0
-   //     var colorGradient: Double = 0.0
         var block0: Int = 0
         var block1: Int = 0
         
@@ -390,6 +392,7 @@ struct ContentView: View {
         eE = self.eEStart
         
         nColors = self.nColorsStart
+        leftNumber = self.leftNumberStart
  /*       number1 = self.number1Start
         number2 = self.number2Start
         number3 = self.number3Start
@@ -736,11 +739,7 @@ struct ContentView: View {
         rasterBufferPtr.deallocate()
         
         return contextImageBlank
-    }   // end elseif 
-
- //   }   //  end func
-    
- //   func getGradientImage() -> CGImage { 
+    }   // end else if  
  
         else {
        
@@ -755,6 +754,8 @@ struct ContentView: View {
         // Now we need to generate a bitmap image.
         
         var nColors: Int = 0
+        var leftNumber: Int = 0
+        var rightNumber: Int = 0
         var color: Double = 0.0
         
  /*       var number1: Int = 0
@@ -839,6 +840,7 @@ struct ContentView: View {
         var b20: Double = 0.0    
         
         nColors = self.nColorsStart
+        leftNumber = self.leftNumberStart
   /*      number1 = self.number1Start
         number2 = self.number2Start
         number3 = self.number3Start
@@ -991,18 +993,24 @@ struct ContentView: View {
                 
                 // calculate the offset of the pixel
                 let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
-                
-       //         {
 
+                rightNumber = leftNumber + 1
+                
+                if leftNumber >= nColors {
+                    rightNumber = 1
+                    }
+                    
+                    
+                
                 xGradient = Double(u)/Double(width)
                             
-                            color = colors[2-1][0] + xGradient*(colors[3-1][0] - colors[1-1][0])
+                            color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
                             pixelAddress.pointee = UInt8(color)         // R
                             
-                            color = colors[2-1][1] + xGradient*(colors[3-1][1] - colors[1-1][1])
+                            color = colors[leftNumber-1][1] + xGradient*(colors[rightNumber - 1][1] - colors[leftNumber-1][1])
                             (pixelAddress + 1).pointee = UInt8(color)   // G
                             
-                            color = colors[2-1][2] + xGradient*(colors[3-1][2] - colors[1-1][2])
+                            color = colors[leftNumber-1][2] + xGradient*(colors[rightNumber - 1][2] - colors[leftNumber-1][2])
                             (pixelAddress + 2).pointee = UInt8(color)   // B
                             
                             (pixelAddress + 3).pointee = UInt8(255)     //alpha
@@ -1011,7 +1019,6 @@ struct ContentView: View {
                     // IMPORTANT:
                     // there is no type checking here and it is up to you to make sure that the
                     // address indexes do not go beyond the memory allocated for the buffer
-      //          }    //
                 
             }    //end for u
             
@@ -1056,7 +1063,7 @@ struct ContentView: View {
     
     var body: some View {
 
-        let image: CGImage = getImage(drawIt:drawItStart, drawItBlank: drawItBlankStart, drawGradient: drawGradientStart)
+        let image: CGImage = getImage(drawIt:drawItStart, drawItBlank: drawItBlankStart, drawGradient: drawGradientStart, leftNumber: leftNumberStart)
         let img = Image(image, scale: 1.0, label: Text("Test"))
         
         HStack{ // this container shows instructions on left / dwg on right
@@ -1170,6 +1177,12 @@ struct ContentView: View {
                 VStack{
                     Text("Enter number of colors")
                     TextField("nColors",value: $nColorsStart, formatter: ContentView.cgUnboundFormatter)
+                        .padding(2)
+                }
+                
+                VStack{
+                    Text("Enter left gradient color number")
+                    TextField("leftNumber",value: $leftNumberStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }
                 
@@ -1731,8 +1744,6 @@ struct ContentView: View {
             
             .contentShape(Rectangle())
             .onLongPressGesture(minimumDuration: 1){
-      //          let gradientImage: CGImage = getGradientImage()
-          //      let img = Image(gradientImage, scale: 1.0, label: Text("Test"))
                 drawItStart = false
                 drawItBlankStart = false
                 drawGradientStart = true
