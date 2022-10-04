@@ -148,7 +148,7 @@ struct ContentView: View {
     @State private var b20Start: Double =  0.0
     
     @State private var drawItStart = true
-    @State private var drawItPlainStart = false
+    @State private var drawItBlankStart = false
     @State private var drawGradientStart = false
     
     @State private var scaleOld: Double =  1.0
@@ -177,7 +177,7 @@ struct ContentView: View {
         self.scaleStart = self.scaleOld * 2.0
     }
 
-    func getContextImage(drawIt:Bool) -> CGImage { 
+    func getImage(drawIt:Bool, drawItBlank: Bool, drawGradient: Bool) -> CGImage { 
    
         if drawIt == true {
         
@@ -305,7 +305,7 @@ struct ContentView: View {
         var eE: Double = 0.0
         var dE: Double = 0.0
         
-        var number1: Int = 0
+ /*       var number1: Int = 0
         var number2: Int = 0
         var number3: Int = 0
         var number4: Int = 0
@@ -324,7 +324,7 @@ struct ContentView: View {
         var number17: Int = 0
         var number18: Int = 0
         var number19: Int = 0
-        var number20: Int = 0
+        var number20: Int = 0   */
         var r1: Double = 0.0
         var g1: Double = 0.0
         var b1: Double = 0.0
@@ -390,7 +390,7 @@ struct ContentView: View {
         eE = self.eEStart
         
         nColors = self.nColorsStart
-        number1 = self.number1Start
+ /*       number1 = self.number1Start
         number2 = self.number2Start
         number3 = self.number3Start
         number4 = self.number4Start
@@ -409,7 +409,7 @@ struct ContentView: View {
         number17 = self.number17Start
         number18 = self.number18Start
         number19 = self.number19Start
-        number20 = self.number20Start
+        number20 = self.number20Start   */
         r1 = self.r1Start
         g1 = self.g1Start
         b1 = self.b1Start
@@ -640,9 +640,7 @@ struct ContentView: View {
         return contextImage
     }   //end if == true
 
-        else {
-        
-        print("Blank")
+        else if drawItBlank == true {
         
         var contextImageBlank: CGImage
         
@@ -738,14 +736,14 @@ struct ContentView: View {
         rasterBufferPtr.deallocate()
         
         return contextImageBlank
-    }   // end else 
+    }   // end elseif 
 
-    }   //  end func
+ //   }   //  end func
     
-    func getGradientImage(drawGradient:Bool) -> CGImage { 
-    
-        print("Gradient")
-   
+ //   func getGradientImage() -> CGImage { 
+ 
+        else {
+       
         var gradientImage: CGImage
         
         var imageWidth: Int = 0
@@ -759,7 +757,7 @@ struct ContentView: View {
         var nColors: Int = 0
         var color: Double = 0.0
         
-        var number1: Int = 0
+ /*       var number1: Int = 0
         var number2: Int = 0
         var number3: Int = 0
         var number4: Int = 0
@@ -778,7 +776,7 @@ struct ContentView: View {
         var number17: Int = 0
         var number18: Int = 0
         var number19: Int = 0
-        var number20: Int = 0
+        var number20: Int = 0   */
         var r1: Double = 0.0
         var g1: Double = 0.0
         var b1: Double = 0.0
@@ -841,7 +839,7 @@ struct ContentView: View {
         var b20: Double = 0.0    
         
         nColors = self.nColorsStart
-        number1 = self.number1Start
+  /*      number1 = self.number1Start
         number2 = self.number2Start
         number3 = self.number3Start
         number4 = self.number4Start
@@ -860,7 +858,7 @@ struct ContentView: View {
         number17 = self.number17Start
         number18 = self.number18Start
         number19 = self.number19Start
-        number20 = self.number20Start
+        number20 = self.number20Start   */
         r1 = self.r1Start
         g1 = self.g1Start
         b1 = self.b1Start
@@ -998,13 +996,13 @@ struct ContentView: View {
 
                 xGradient = Double(u)/Double(width)
                             
-                            color = colors[1-1][0] + xGradient*(colors[2-1][0] - colors[1-1][0])
+                            color = colors[2-1][0] + xGradient*(colors[3-1][0] - colors[1-1][0])
                             pixelAddress.pointee = UInt8(color)         // R
                             
-                            color = colors[1-1][1] + xGradient*(colors[2-1][1] - colors[1-1][1])
+                            color = colors[2-1][1] + xGradient*(colors[3-1][1] - colors[1-1][1])
                             (pixelAddress + 1).pointee = UInt8(color)   // G
                             
-                            color = colors[1-1][2] + xGradient*(colors[2-1][2] - colors[1-1][2])
+                            color = colors[2-1][2] + xGradient*(colors[3-1][2] - colors[1-1][2])
                             (pixelAddress + 2).pointee = UInt8(color)   // B
                             
                             (pixelAddress + 3).pointee = UInt8(255)     //alpha
@@ -1027,6 +1025,7 @@ struct ContentView: View {
         rasterBufferPtr.deallocate()
         
         return gradientImage
+    }   // end else
     }   //  end func
     
     static var cgFormatter: NumberFormatter {
@@ -1057,8 +1056,8 @@ struct ContentView: View {
     
     var body: some View {
 
-        let contextImage: CGImage = getContextImage(drawIt:drawItStart)
-        let img = Image(contextImage, scale: 1.0, label: Text("Test"))
+        let image: CGImage = getImage(drawIt:drawItStart, drawItBlank: drawItBlankStart, drawGradient: drawGradientStart)
+        let img = Image(image, scale: 1.0, label: Text("Test"))
         
         HStack{ // this container shows instructions on left / dwg on right
         
@@ -1072,7 +1071,7 @@ struct ContentView: View {
                     Text("Double-click in green area to enter the values.")
                     Text("Press in green area for 3 seconds to make a gradient")
                     Text("Click in image to choose new center.\n")
-                }
+                }   // end of group
                 
                 Group{
                 
@@ -1167,10 +1166,6 @@ struct ContentView: View {
                     //    .textFieldStyle(.roundedBorder)
                         .padding(2)
                 } 
-                
-       //         }   // end of group 
-                
-      //          Group{
                 
                 VStack{
                     Text("Enter number of colors")
@@ -1648,10 +1643,6 @@ struct ContentView: View {
                     TextField("b18",value: $b18Start, formatter: ContentView.cgUnboundFormatter)
                 }
                 }
-                
-      //          } // end of group
-                
-      //          Group{
             
                 HStack{
                 
@@ -1729,23 +1720,21 @@ struct ContentView: View {
             
             .onTapGesture(count:2){
                 drawItStart = true
-        //        drawItPlainStart = true
-                drawItPlainStart = false
-                drawGradientStart = false
+                drawItBlankStart = false
             }   
             
             .contentShape(Rectangle())
             .onTapGesture(count:1){
                 drawItStart = false
-       //         drawItStart = true
-                drawItPlainStart = true
-                drawGradientStart = false
+                drawItBlankStart = true
             }
             
             .contentShape(Rectangle())
             .onLongPressGesture(minimumDuration: 1){
+      //          let gradientImage: CGImage = getGradientImage()
+          //      let img = Image(gradientImage, scale: 1.0, label: Text("Test"))
                 drawItStart = false
-                drawItPlainStart = false
+                drawItBlankStart = false
                 drawGradientStart = true
             } 
             
