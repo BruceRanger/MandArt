@@ -5,7 +5,27 @@
 //  Created by Bruce Johnson on 9/20/21.
 //  Edited by Bruce Johnson on 8/7/22.
 
-import SwiftUI
+/*    image = UIImage(named: "example.png") {
+        if let data = image.pngData() {
+            let filename = getDocumentsDirectory().appendingPathComponent("copy.png")
+            try? data.write(to: filename)
+        }   */
+        
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }   
+
+ /*   if let image = UIImage(named: "example.jpg") {
+        if let data = image.jpegData(compressionQuality: 0.8) {
+            let filename = getDocumentsDirectory().appendingPathComponent("copy.png")
+            try? data.write(to: filename)
+        }
+    }   */
+
+    import SwiftUI
+    import Foundation   //for trig functions
+//    import CoreImage
 
 struct ContentView: View {
     
@@ -22,7 +42,6 @@ struct ContentView: View {
     let instructionBackgroundColor = Color.green.opacity(0.5)
     
     let inputWidth: Double = 290
-    
     
     @State private var showingAlert = false
     @State private var tapX: Double = 0
@@ -43,6 +62,7 @@ struct ContentView: View {
     @State private var nBlocksStart: Int =  60
     @State private var bEStart: Double =  5.0
     @State private var eEStart: Double =  15.0
+    @State private var thetaStart: Double =  0.0
     @State private var imageWidthStart: Int = 1_200
     @State private var imageHeightStart: Int = 1_000
     @State private var nColorsStart: Int = 6
@@ -155,6 +175,11 @@ struct ContentView: View {
     @State private var scaleOld: Double =  1.0
     
 //    @State private var selectedConfig: Config?
+
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
     
     func getCenterXFromTapX(tapX: Double, imageWidthStart:Int) -> Double {
         let tapXDifference = (tapX - Double(imageWidthStart)/2.0)/scaleStart
@@ -180,7 +205,7 @@ struct ContentView: View {
 
     func getImage(drawIt:Bool, drawItBlank: Bool, drawGradient: Bool, leftNumber: Int) -> CGImage { 
    
-        if drawIt == true {
+        if drawIt == true { // draws image
         
         var contextImage: CGImage
         
@@ -219,7 +244,6 @@ struct ContentView: View {
         
         rSqLimit = 400.0
         scale = self.scaleStart
-  //      imageWidth = self.imageWidthStart
         xC = self.xCStart
         yC = self.yCStart
         iMax = self.iMaxStart
@@ -297,8 +321,6 @@ struct ContentView: View {
         nBlocks = self.nBlocksStart
         var fNBlocks: Double = 0.0
         var nColors: Int = 0
-        var leftNumber: Int = 0
-        var rightNumber: Int = 0
         var color: Double = 0.0
         var block0: Int = 0
         var block1: Int = 0
@@ -306,27 +328,9 @@ struct ContentView: View {
         var bE: Double = 0.0
         var eE: Double = 0.0
         var dE: Double = 0.0
+        var theta: Double = 0.0
+        let pi: Double = 3.14159
         
- /*       var number1: Int = 0
-        var number2: Int = 0
-        var number3: Int = 0
-        var number4: Int = 0
-        var number5: Int = 0
-        var number6: Int = 0
-        var number7: Int = 0
-        var number8: Int = 0
-        var number9: Int = 0
-        var number10: Int = 0
-        var number11: Int = 0
-        var number12: Int = 0
-        var number13: Int = 0
-        var number14: Int = 0
-        var number15: Int = 0
-        var number16: Int = 0
-        var number17: Int = 0
-        var number18: Int = 0
-        var number19: Int = 0
-        var number20: Int = 0   */
         var r1: Double = 0.0
         var g1: Double = 0.0
         var b1: Double = 0.0
@@ -390,29 +394,9 @@ struct ContentView: View {
         
         bE = self.bEStart
         eE = self.eEStart
+        theta = self.thetaStart
         
         nColors = self.nColorsStart
-        leftNumber = self.leftNumberStart
- /*       number1 = self.number1Start
-        number2 = self.number2Start
-        number3 = self.number3Start
-        number4 = self.number4Start
-        number5 = self.number5Start
-        number6 = self.number6Start
-        number7 = self.number7Start
-        number8 = self.number8Start
-        number9 = self.number9Start
-        number10 = self.number10Start
-        number11 = self.number11Start
-        number12 = self.number12Start
-        number13 = self.number13Start
-        number14 = self.number14Start
-        number15 = self.number15Start
-        number16 = self.number16Start
-        number17 = self.number17Start
-        number18 = self.number18Start
-        number19 = self.number19Start
-        number20 = self.number20Start   */
         r1 = self.r1Start
         g1 = self.g1Start
         b1 = self.b1Start
@@ -474,10 +458,6 @@ struct ContentView: View {
         g20 = self.g20Start
         b20 = self.b20Start
         
-   /*     print()
-        print(r6, g6, b6)
-        print() */
-        
         nBlocks = 60
         bE = 5.0
         eE = 15.0
@@ -485,6 +465,7 @@ struct ContentView: View {
         nBlocks = self.nBlocksStart
         bE = self.bEStart
         eE = self.eEStart
+        theta = self.thetaStart
         
         fNBlocks = Double(nBlocks)
         
@@ -501,14 +482,6 @@ struct ContentView: View {
                                     [r13, g13, b13],  [r14, g14, b14],  [r15, g15, b15],
                                     [r16, g16, b16],  [r17, g17, b17],  [r18, g18, b18],
                                     [r19, g19, b19],  [r20, g20, b20]]
-                                    
-                          /*          print(r1, g1, b1)
-                                    print(r2, g2, b2)
-                                    print(r3, g3, b3)
-                                    print(r4, g4, b4)
-                                    print(r5, g5, b5)
-                                    print(r6, g6, b6)
-                                    print(r7, g7, b7)   */
           
         var h: Double = 0.0
         var xX: Double = 0.0
@@ -586,7 +559,7 @@ struct ContentView: View {
                     (pixelAddress + 2).pointee = UInt8(0)   //blue
                     (pixelAddress + 3).pointee = UInt8(255) //alpha
                     
-                }   //end if
+                }   // end if
                 
                 else    {
                     h = fIter[u][v] - fIterMin
@@ -640,10 +613,29 @@ struct ContentView: View {
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
         
+/*        UIImage(CGImage: cgImage)
+   
+        class UIImage : NSObject
+        
+            let nsContextImage = NSImage(cgImage: contextImage, size: NSMakeSize(Double(width), Double(height)))
+        let uiImage = UIImage(cgImage: cgimg)
+        
+        let image = UIImage(named: "example.jpg") {
+        let data = nsContextImage.jpegData(compressionQuality: 0.8) {
+            let filename = getDocumentsDirectory().appendingPathComponent("mandImage.jpg")
+            try? data.write(to: filename)
+        }   
+        }             */
+        
+  /*      let data = contextImage.jpegData(compressionQuality: 0.8) {
+            let filename = getDocumentsDirectory().appendingPathComponent("mandImage.jpg")
+            try? data.write(to: filename)
+        }   */
+                
         return contextImage
-    }   //end if == true
+    }   // end if == true
 
-        else if drawItBlank == true {
+        else if drawItBlank == true { // draws blue image
         
         var contextImageBlank: CGImage
         
@@ -714,7 +706,7 @@ struct ContentView: View {
                 // calculate the offset of the pixel
                 let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
                 
-       //         light blue for contexrImageBlank
+       //         light blue for contextImageBlank
                     pixelAddress.pointee = UInt8(135)         //red
                     (pixelAddress + 1).pointee = UInt8(206)   //green
                     (pixelAddress + 2).pointee = UInt8(255)   //blue
@@ -741,7 +733,7 @@ struct ContentView: View {
         return contextImageBlank
     }   // end else if  
  
-        else {
+        else {  // draws gradient image
        
         var gradientImage: CGImage
         
@@ -758,26 +750,6 @@ struct ContentView: View {
         var rightNumber: Int = 0
         var color: Double = 0.0
         
- /*       var number1: Int = 0
-        var number2: Int = 0
-        var number3: Int = 0
-        var number4: Int = 0
-        var number5: Int = 0
-        var number6: Int = 0
-        var number7: Int = 0
-        var number8: Int = 0
-        var number9: Int = 0
-        var number10: Int = 0
-        var number11: Int = 0
-        var number12: Int = 0
-        var number13: Int = 0
-        var number14: Int = 0
-        var number15: Int = 0
-        var number16: Int = 0
-        var number17: Int = 0
-        var number18: Int = 0
-        var number19: Int = 0
-        var number20: Int = 0   */
         var r1: Double = 0.0
         var g1: Double = 0.0
         var b1: Double = 0.0
@@ -841,26 +813,6 @@ struct ContentView: View {
         
         nColors = self.nColorsStart
         leftNumber = self.leftNumberStart
-  /*      number1 = self.number1Start
-        number2 = self.number2Start
-        number3 = self.number3Start
-        number4 = self.number4Start
-        number5 = self.number5Start
-        number6 = self.number6Start
-        number7 = self.number7Start
-        number8 = self.number8Start
-        number9 = self.number9Start
-        number10 = self.number10Start
-        number11 = self.number11Start
-        number12 = self.number12Start
-        number13 = self.number13Start
-        number14 = self.number14Start
-        number15 = self.number15Start
-        number16 = self.number16Start
-        number17 = self.number17Start
-        number18 = self.number18Start
-        number19 = self.number19Start
-        number20 = self.number20Start   */
         r1 = self.r1Start
         g1 = self.g1Start
         b1 = self.b1Start
@@ -1004,16 +956,16 @@ struct ContentView: View {
                 
                 xGradient = Double(u)/Double(width)
                             
-                            color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
-                            pixelAddress.pointee = UInt8(color)         // R
-                            
-                            color = colors[leftNumber-1][1] + xGradient*(colors[rightNumber - 1][1] - colors[leftNumber-1][1])
-                            (pixelAddress + 1).pointee = UInt8(color)   // G
-                            
-                            color = colors[leftNumber-1][2] + xGradient*(colors[rightNumber - 1][2] - colors[leftNumber-1][2])
-                            (pixelAddress + 2).pointee = UInt8(color)   // B
-                            
-                            (pixelAddress + 3).pointee = UInt8(255)     //alpha
+                color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
+                pixelAddress.pointee = UInt8(color)         // R
+                
+                color = colors[leftNumber-1][1] + xGradient*(colors[rightNumber - 1][1] - colors[leftNumber-1][1])
+                (pixelAddress + 1).pointee = UInt8(color)   // G
+                
+                color = colors[leftNumber-1][2] + xGradient*(colors[rightNumber - 1][2] - colors[leftNumber-1][2])
+                (pixelAddress + 2).pointee = UInt8(color)   // B
+                
+                (pixelAddress + 3).pointee = UInt8(255)     //alpha
                         
                 
                     // IMPORTANT:
@@ -1032,7 +984,7 @@ struct ContentView: View {
         rasterBufferPtr.deallocate()
         
         return gradientImage
-    }   // end else
+    }   // end else for gradient image
     }   //  end func
     
     static var cgFormatter: NumberFormatter {
@@ -1102,7 +1054,6 @@ struct ContentView: View {
                     Text("Enter center X")
                     Text("Between -2 and 2")
                     TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
-                    //  .textFieldStyle(.roundedBorder)
                         .padding(2)
                 }
                 
@@ -1110,42 +1061,36 @@ struct ContentView: View {
                     Text("Enter center Y")
                     Text("Between -2 and 2")
                     TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
-                    //  .textFieldStyle(.roundedBorder)
                         .padding(2)
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter scale:")
                     TextField("Scale",value: $scaleStart, formatter: ContentView.cgUnboundFormatter)
-                    //    .textFieldStyle(.roundedBorder)
                         .padding(2)
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter iMax:")
                     TextField("iMax",value: $iMaxStart, formatter: ContentView.cgUnboundFormatter)
-                    //    .textFieldStyle(.roundedBorder)
                         .padding(2)
                 }   
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter rSqLimit:")
                     TextField("rSqLimit",value: $rSqLimitStart, formatter: ContentView.cgUnboundFormatter)
-                    //    .textFieldStyle(.roundedBorder)
                         .padding(2)
                 } 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter imageWidth:")
                     TextField("imageWidth",value: $imageWidthStart, formatter: ContentView.cgUnboundFormatter)
-                    //    .textFieldStyle(.roundedBorder)
                         .padding(2)
                 } 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter imageHeight:")
                     TextField("imageHeightStart",value: $imageHeightStart, formatter: ContentView.cgUnboundFormatter)
-                    //    .textFieldStyle(.roundedBorder)
                         .padding(2)
                 } 
                 
@@ -1156,23 +1101,26 @@ struct ContentView: View {
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter nBlocks:")
                     TextField("nBlocks",value: $nBlocksStart, formatter: ContentView.cgUnboundFormatter)
-                    //    .textFieldStyle(.roundedBorder)
                         .padding(2)
                 } 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter bE:")
                     TextField("bE",value: $bEStart, formatter: ContentView.cgUnboundFormatter)
-                    //    .textFieldStyle(.roundedBorder)
                         .padding(2)
                 } 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter eE:")
                     TextField("eE",value: $eEStart, formatter: ContentView.cgUnboundFormatter)
-                    //    .textFieldStyle(.roundedBorder)
                         .padding(2)
                 } 
+                
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter theta:")
+                    TextField("theta",value: $thetaStart, formatter: ContentView.cgUnboundFormatter)
+                        .padding(2)
+                }
                 
                 VStack{
                     Text("Enter number of colors")
