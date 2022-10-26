@@ -217,6 +217,10 @@ struct ContentView: View {
         var rSqMax: Double = 0.0
         var x0: Double = 0.0
         var y0: Double = 0.0
+        var dX: Double = 0.0
+        var dY: Double = 0.0
+        var dXP: Double = 0.0
+        var dYP: Double = 0.0
         imageWidth = self.imageWidthStart
         imageHeight = self.imageHeightStart
         var xx: Double = 0.0
@@ -242,6 +246,13 @@ struct ContentView: View {
         var test1: Double = 0.0
         var test2: Double = 0.0
         
+        var theta: Double = 0.0
+        var thetaR: Double = 0.0
+        let pi: Double = 3.14159
+        
+        theta = self.thetaStart
+        thetaR = pi*theta/180.0
+        
         rSqLimit = 400.0
         scale = self.scaleStart
         xC = self.xCStart
@@ -256,8 +267,18 @@ struct ContentView: View {
             
             for v in 0...imageHeight - 1 {
                 
-                x0 = xC + (Double(u) - Double(imageWidth/2))/scale
-                y0 = yC + (Double(v) - Double(imageHeight/2))/scale
+      //          x0 = xC + (Double(u) - Double(imageWidth/2))/scale
+      //          y0 = yC + (Double(v) - Double(imageHeight/2))/scale
+      
+                dX = (Double(u) - Double(imageWidth/2))/scale
+                dY = (Double(v) - Double(imageHeight/2))/scale
+                
+                x0 = xC + dX
+                y0 = yC + dY     
+                
+                x0 = xC + dX*cos(thetaR) - dY*sin(thetaR)
+                y0 = yC + dX*sin(thetaR) + dY*cos(thetaR)
+                
                 xx = x0
                 yy = y0
                 rSq = xx*xx + yy*yy
@@ -328,8 +349,8 @@ struct ContentView: View {
         var bE: Double = 0.0
         var eE: Double = 0.0
         var dE: Double = 0.0
-        var theta: Double = 0.0
-        let pi: Double = 3.14159
+ //       var theta: Double = 0.0
+ //       let pi: Double = 3.14159
         
         var r1: Double = 0.0
         var g1: Double = 0.0
@@ -394,7 +415,7 @@ struct ContentView: View {
         
         bE = self.bEStart
         eE = self.eEStart
-        theta = self.thetaStart
+  //      theta = self.thetaStart
         
         nColors = self.nColorsStart
         r1 = self.r1Start
@@ -465,7 +486,7 @@ struct ContentView: View {
         nBlocks = self.nBlocksStart
         bE = self.bEStart
         eE = self.eEStart
-        theta = self.thetaStart
+   //     theta = self.thetaStart
         
         fNBlocks = Double(nBlocks)
         
