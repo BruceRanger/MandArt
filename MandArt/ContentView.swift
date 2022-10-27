@@ -63,7 +63,7 @@ struct ContentView: View {
     @State private var bEStart: Double =  5.0
     @State private var eEStart: Double =  15.0
     @State private var thetaStart: Double =  0.0
-    @State private var dFIterMinStart: Double =  0.0
+    @State private var dFIterMinStart: Double =  10.0
     @State private var imageWidthStart: Int = 1_200
     @State private var imageHeightStart: Int = 1_000
     @State private var nColorsStart: Int = 6
@@ -335,6 +335,8 @@ struct ContentView: View {
         fIterMin = fIterMins.min()!
         
         fIterMin = fIterMin - dIterMin
+        
+  //      print(fIterMin)
         
         // Now we need to generate a bitmap image.
         
