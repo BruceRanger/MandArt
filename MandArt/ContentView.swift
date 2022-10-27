@@ -63,6 +63,7 @@ struct ContentView: View {
     @State private var bEStart: Double =  5.0
     @State private var eEStart: Double =  15.0
     @State private var thetaStart: Double =  0.0
+    @State private var dFIterMinStart: Double =  0.0
     @State private var imageWidthStart: Int = 1_200
     @State private var imageHeightStart: Int = 1_000
     @State private var nColorsStart: Int = 6
@@ -219,8 +220,6 @@ struct ContentView: View {
         var y0: Double = 0.0
         var dX: Double = 0.0
         var dY: Double = 0.0
-        var dXP: Double = 0.0
-        var dYP: Double = 0.0
         imageWidth = self.imageWidthStart
         imageHeight = self.imageHeightStart
         var xx: Double = 0.0
@@ -248,9 +247,11 @@ struct ContentView: View {
         
         var theta: Double = 0.0
         var thetaR: Double = 0.0
+        var dIterMin: Double = 0.0
         let pi: Double = 3.14159
         
         theta = self.thetaStart
+        dIterMin = self.dFIterMinStart
         thetaR = pi*theta/180.0
         
         rSqLimit = 400.0
@@ -266,9 +267,6 @@ struct ContentView: View {
         for u in 0...imageWidth - 1 {
             
             for v in 0...imageHeight - 1 {
-                
-      //          x0 = xC + (Double(u) - Double(imageWidth/2))/scale
-      //          y0 = yC + (Double(v) - Double(imageHeight/2))/scale
       
                 dX = (Double(u) - Double(imageWidth/2))/scale
                 dY = (Double(v) - Double(imageHeight/2))/scale
@@ -336,6 +334,8 @@ struct ContentView: View {
         fIterMins = [fIterMinLeft, fIterMinRight, fIterMinBottom, fIterMinTop]
         fIterMin = fIterMins.min()!
         
+        fIterMin = fIterMin - dIterMin
+        
         // Now we need to generate a bitmap image.
         
         var nBlocks: Int = 0
@@ -349,8 +349,6 @@ struct ContentView: View {
         var bE: Double = 0.0
         var eE: Double = 0.0
         var dE: Double = 0.0
- //       var theta: Double = 0.0
- //       let pi: Double = 3.14159
         
         var r1: Double = 0.0
         var g1: Double = 0.0
@@ -415,7 +413,6 @@ struct ContentView: View {
         
         bE = self.bEStart
         eE = self.eEStart
-  //      theta = self.thetaStart
         
         nColors = self.nColorsStart
         r1 = self.r1Start
@@ -486,7 +483,6 @@ struct ContentView: View {
         nBlocks = self.nBlocksStart
         bE = self.bEStart
         eE = self.eEStart
-   //     theta = self.thetaStart
         
         fNBlocks = Double(nBlocks)
         
@@ -1140,6 +1136,12 @@ struct ContentView: View {
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter theta:")
                     TextField("theta",value: $thetaStart, formatter: ContentView.cgUnboundFormatter)
+                        .padding(2)
+                }
+                
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter dFIterMin:")
+                    TextField("dFIterMin",value: $dFIterMinStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }
                 
