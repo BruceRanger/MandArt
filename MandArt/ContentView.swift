@@ -27,6 +27,16 @@
     import Foundation   //for trig functions
 //    import CoreImage
 
+// SAVEFILE ******************************
+
+    import ImageIO   //  to save bitmap file
+    import CoreServices // to save bitmap file
+    /* https://stackoverflow.com/questions/1320988/saving-cgimageref-to-a-png-file
+     */
+
+// SAVEFILE ******************************
+
+
 struct ContentView: View {
     
 /*    struct Config: Codable, Hashable, Identifiable {
@@ -203,6 +213,61 @@ struct ContentView: View {
         self.scaleOld = self.scaleStart
         self.scaleStart = self.scaleOld * 2.0
     }
+    
+    // SAVEFILE ******************************
+    
+    // to see print statements in terminal use Xcode menu
+    // Product, Scheme, Edit Scheme, Run (Debug), Options, Console, Use Terminal.
+    
+    func saveImage(mandArtCGImage: CGImage) -> Bool {
+        print("In saveImage() img height= ", mandArtCGImage.height)
+        
+        // Set the destination URL
+        
+        let fn:String = "mandart.png"
+        print("In saveImage() exit filename = ", fn)
+        
+        let allocator : CFAllocator = kCFAllocatorDefault
+        let filePath: CFString = fn as NSString
+        let pathStyle: CFURLPathStyle = CFURLPathStyle.cfurlWindowsPathStyle
+        let isDirectory: Bool = false
+        
+        let url : CFURL = CFURLCreateWithFileSystemPath(allocator, filePath, pathStyle, isDirectory)
+        
+        // e.g. mandart.png -- file:///Users/denisecase/Library/Containers/Bruce-Johnson.MandArt/Data/
+        print("In saveImage(), file url is ", url)
+        
+        // create an image destination
+        // if it doesn't work, return false
+        
+        let imageType: CFString = kUTTypePNG
+        let count: Int = 1
+        let options: CFDictionary? = nil
+        var destination: CGImageDestination
+        
+        let destinationAttempt: CGImageDestination?  = CGImageDestinationCreateWithURL(url, imageType, count, options)
+        
+        // branch based on our attempt
+        
+        if (destinationAttempt == nil) {
+            return false
+        }
+        else {
+            destination = destinationAttempt.unsafelyUnwrapped
+            // add our mandart CG image to the image destination
+            CGImageDestinationAddImage(destination, mandArtCGImage, nil);
+            // finalize (write the information)
+            CGImageDestinationFinalize(destination)
+            return true
+            
+            // possibly helpful: https://gist.github.com/KrisYu/abf3d03a76b781ffc2a26848d713b11e
+        }
+    }
+   
+    
+    
+    // SAVEFILE ******************************
+
 
     func getImage(drawIt:Bool, drawItBlank: Bool, drawGradient: Bool, leftNumber: Int) -> CGImage { 
    
@@ -650,7 +715,15 @@ struct ContentView: View {
             let filename = getDocumentsDirectory().appendingPathComponent("mandImage.jpg")
             try? data.write(to: filename)
         }   */
-                
+            
+        // SAVEFILE ******************************
+            
+        let saved:Bool = saveImage(mandArtCGImage:contextImage)
+        print("Saved image = ", saved)
+               
+            
+        // SAVEFILE ******************************
+
         return contextImage
     }   // end if == true
 
