@@ -68,6 +68,7 @@ struct ContentView: View {
     @State private var bEStart: Double =  5.0
     @State private var eEStart: Double =  15.0
     @State private var thetaStart: Double =  0.0
+    @State private var nImageStart: Int = 0
     @State private var dFIterMinStart: Double =  10.0
     @State private var imageWidthStart: Int = 1_200
     @State private var imageHeightStart: Int = 1_000
@@ -217,12 +218,15 @@ struct ContentView: View {
     // to see print statements in Xcode use Xcode menu
     // Product, Scheme, Edit Scheme, Run (Debug), Options, Console, Use Xcode.
     
-    func saveImage(mandArtCGImage: CGImage) -> Bool {
+    func saveImage(mandArtCGImage: CGImage, nImageStart:Int) -> Bool {
   //      print("In saveImage() img height= ", mandArtCGImage.height)
         
         // Set the destination URL
         
-        let fn:String = "mandart.png"
+    //    let fn:String = "mandart.png"
+    
+        let fn:String = "mandart" + String(nImageStart) + ".png"
+    
    //     print("In saveImage() exit filename = ", fn)
         
         let allocator : CFAllocator = kCFAllocatorDefault
@@ -286,6 +290,7 @@ struct ContentView: View {
         
         var imageWidth: Int = 0
         var imageHeight: Int = 0
+ //       var nImage: Int = 0
         var iMax: Double = 10_000.0
         var rSq: Double = 0.0
         var rSqLimit: Double = 0.0
@@ -296,6 +301,7 @@ struct ContentView: View {
         var dY: Double = 0.0
         imageWidth = self.imageWidthStart
         imageHeight = self.imageHeightStart
+  //      nImage = self.nImageStart
         var xx: Double = 0.0
         var yy: Double = 0.0
         var xTemp: Double = 0.0
@@ -726,8 +732,11 @@ struct ContentView: View {
         }   */
             
         // SAVEFILE ******************************
+        
+ //       var nImage: Int = 0
+ //       nImage = 7
             
-        let saved:Bool = saveImage(mandArtCGImage:contextImage)
+        let saved:Bool = saveImage(mandArtCGImage:contextImage, nImageStart:nImageStart)
   //      print("Saved image = ", saved)
                
             
@@ -1220,6 +1229,12 @@ struct ContentView: View {
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter theta:")
                     TextField("theta",value: $thetaStart, formatter: ContentView.cgUnboundFormatter)
+                        .padding(2)
+                }
+                
+                VStack { // each input has a vertical container with a Text label & TextField for data
+                    Text("Enter nImage:")
+                    TextField("nImage",value: $nImageStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }
                 
