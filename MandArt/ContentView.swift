@@ -10,11 +10,6 @@
             let filename = getDocumentsDirectory().appendingPathComponent("copy.png")
             try? data.write(to: filename)
         }   */
-        
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }   
 
  /*   if let image = UIImage(named: "example.jpg") {
         if let data = image.jpegData(compressionQuality: 0.8) {
@@ -219,13 +214,16 @@ struct ContentView: View {
     // to see print statements in terminal use Xcode menu
     // Product, Scheme, Edit Scheme, Run (Debug), Options, Console, Use Terminal.
     
+    // to see print statements in Xcode use Xcode menu
+    // Product, Scheme, Edit Scheme, Run (Debug), Options, Console, Use Xcode.
+    
     func saveImage(mandArtCGImage: CGImage) -> Bool {
-        print("In saveImage() img height= ", mandArtCGImage.height)
+  //      print("In saveImage() img height= ", mandArtCGImage.height)
         
         // Set the destination URL
         
         let fn:String = "mandart.png"
-        print("In saveImage() exit filename = ", fn)
+   //     print("In saveImage() exit filename = ", fn)
         
         let allocator : CFAllocator = kCFAllocatorDefault
         let filePath: CFString = fn as NSString
@@ -235,10 +233,21 @@ struct ContentView: View {
         let url : CFURL = CFURLCreateWithFileSystemPath(allocator, filePath, pathStyle, isDirectory)
         
         // e.g. mandart.png -- file:///Users/denisecase/Library/Containers/Bruce-Johnson.MandArt/Data/
-        print("In saveImage(), file url is ", url)
+ //       print("In saveImage(), file url is ", url)
         
         // create an image destination
         // if it doesn't work, return false
+        
+  /*      func getDocumentsDirectory() -> URL {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            return paths[0]
+        }   */
+        
+        func getDocumentsDirectory() -> URL {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let documentsDirectory = paths[0]
+            return documentsDirectory
+        }   
         
         let imageType: CFString = kUTTypePNG
         let count: Int = 1
@@ -719,7 +728,7 @@ struct ContentView: View {
         // SAVEFILE ******************************
             
         let saved:Bool = saveImage(mandArtCGImage:contextImage)
-        print("Saved image = ", saved)
+  //      print("Saved image = ", saved)
                
             
         // SAVEFILE ******************************
