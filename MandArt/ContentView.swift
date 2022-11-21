@@ -31,6 +31,7 @@
 
 // SAVEFILE ******************************
 
+var nImage: Int = 0
 
 struct ContentView: View {
     
@@ -271,6 +272,10 @@ struct ContentView: View {
             CGImageDestinationAddImage(destination, mandArtCGImage, nil);
             // finalize (write the information)
             CGImageDestinationFinalize(destination)
+            
+            nImage = nImage + 1
+            print(nImage)
+            
             return true
             
             // possibly helpful: https://gist.github.com/KrisYu/abf3d03a76b781ffc2a26848d713b11e
@@ -1159,6 +1164,15 @@ struct ContentView: View {
                     Text("Zoom Out")
                 }
                 }
+                
+                VStack { // use a button to save as PNG
+                    Button(action: {
+          //              saveImage()
+                    }) {
+                    Text("Save As PNG")
+                }
+                }   
+
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter center X")
