@@ -219,14 +219,14 @@ struct ContentView: View {
     // to see print statements in Xcode use Xcode menu
     // Product, Scheme, Edit Scheme, Run (Debug), Options, Console, Use Xcode.
     
-    func saveImage(mandArtCGImage: CGImage, nImageStart:Int) -> Bool {
+    func saveImage(mandArtCGImage: CGImage/*, nImageStart:Int*/) -> Bool {
   //      print("In saveImage() img height= ", mandArtCGImage.height)
         
         // Set the destination URL
         
     //    let fn:String = "mandart.png"
     
-        let fn:String = "mandart" + String(nImageStart) + ".png"
+        let fn:String = "mandart" + String(nImage) + ".png"
     
    //     print("In saveImage() exit filename = ", fn)
         
@@ -741,7 +741,7 @@ struct ContentView: View {
  //       var nImage: Int = 0
  //       nImage = 7
             
-        let saved:Bool = saveImage(mandArtCGImage:contextImage, nImageStart:nImageStart)
+        let saved:Bool = saveImage(mandArtCGImage:contextImage/*, nImageStart:nImageStart*/)
   //      print("Saved image = ", saved)
                
             
@@ -1167,7 +1167,7 @@ struct ContentView: View {
                 
                 VStack { // use a button to save as PNG
                     Button(action: {
-          //              saveImage()
+                        //saveImage()
                     }) {
                     Text("Save As PNG")
                 }
