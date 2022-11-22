@@ -32,6 +32,7 @@
 // SAVEFILE ******************************
 
 var nImage: Int = 0
+var contextImageGlobal: CGImage?
 
 struct ContentView: View {
     
@@ -219,16 +220,13 @@ struct ContentView: View {
     // to see print statements in Xcode use Xcode menu
     // Product, Scheme, Edit Scheme, Run (Debug), Options, Console, Use Xcode.
     
-    func saveImage(mandArtCGImage: CGImage/*, nImageStart:Int*/) -> Bool {
-  //      print("In saveImage() img height= ", mandArtCGImage.height)
-        
+    func saveImage() -> Bool {
+        print("In saveImage() starting.... ")
+
         // Set the destination URL
-        
-    //    let fn:String = "mandart.png"
-    
+        // let fn:String = "mandart.png"
         let fn:String = "mandart" + String(nImage) + ".png"
-    
-   //     print("In saveImage() exit filename = ", fn)
+        print("In saveImage() exit filename = ", fn)
         
         let allocator : CFAllocator = kCFAllocatorDefault
         let filePath: CFString = fn as NSString
@@ -238,7 +236,7 @@ struct ContentView: View {
         let url : CFURL = CFURLCreateWithFileSystemPath(allocator, filePath, pathStyle, isDirectory)
         
         // e.g. mandart.png -- file:///Users/denisecase/Library/Containers/Bruce-Johnson.MandArt/Data/
- //       print("In saveImage(), file url is ", url)
+        print("In saveImage(), file url is ", url)
         
         // create an image destination
         // if it doesn't work, return false
@@ -269,7 +267,7 @@ struct ContentView: View {
         else {
             destination = destinationAttempt.unsafelyUnwrapped
             // add our mandart CG image to the image destination
-            CGImageDestinationAddImage(destination, mandArtCGImage, nil);
+            CGImageDestinationAddImage(destination, contextImageGlobal!, nil);
             // finalize (write the information)
             CGImageDestinationFinalize(destination)
             
@@ -741,9 +739,13 @@ struct ContentView: View {
  //       var nImage: Int = 0
  //       nImage = 7
             
-        let saved:Bool = saveImage(mandArtCGImage:contextImage/*, nImageStart:nImageStart*/)
-  //      print("Saved image = ", saved)
-               
+        // STASH bitmap
+        // before returning it, set the global variable
+        // in case they want to save
+        contextImageGlobal = contextImage
+            
+        // let saved:Bool = saveImage()
+        // print("Saved image = ", saved)
             
         // SAVEFILE ******************************
 
@@ -1167,7 +1169,7 @@ struct ContentView: View {
                 
                 VStack { // use a button to save as PNG
                     Button(action: {
-                        //saveImage()
+                        saveImage()
                     }) {
                     Text("Save As PNG")
                 }
