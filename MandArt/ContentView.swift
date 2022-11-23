@@ -18,33 +18,32 @@
         }
     }   */
 
-    import SwiftUI
-    import Foundation   //for trig functions
-//    import CoreImage
+import SwiftUI
+import Foundation   //for trig functions
+// import CoreImage
 
 // SAVEFILE ******************************
 
-    import ImageIO   //  to save bitmap file
-    import CoreServices // to save bitmap file
-    /* https://stackoverflow.com/questions/1320988/saving-cgimageref-to-a-png-file
-     */
+import ImageIO   //  to save bitmap file
+import CoreServices // to save bitmap file
 
-// SAVEFILE ******************************
+// define a Config structure with info to recreate an image
+// TODO: add all the input variables to this struct
+// TODO: make all of them optional (use the ?)
+struct MandArtConfig: Codable, Hashable {
+    var nColors: Int?
+    var theta: Double?
+}
 
+// define some global variables for saving
 var nImage: Int = 0
 var contextImageGlobal: CGImage?
+var configGlobal: MandArtConfig = MandArtConfig()
+
+// SAVEFILE ******************************
+
 
 struct ContentView: View {
-    
-/*    struct Config: Codable, Hashable, Identifiable {
-        let id: UUID
-        let tag: String
-        var xC: Double
-        var yC: Double
-        var scale: Double
-  //      var imageWidth: Int
-        var drawIt: Bool
-    }*/
     
     let instructionBackgroundColor = Color.green.opacity(0.5)
     
@@ -221,12 +220,12 @@ struct ContentView: View {
     // Product, Scheme, Edit Scheme, Run (Debug), Options, Console, Use Xcode.
     
     func saveImage() -> Bool {
-        print("In saveImage() starting.... ")
 
-        // Set the destination URL
-        // let fn:String = "mandart.png"
+        // Set the destination image file name and data file name
         let fn:String = "mandart" + String(nImage) + ".png"
-        print("In saveImage() exit filename = ", fn)
+        let dn:String = "mandart" + String(nImage) + ".json"
+        print("In saveImage() image filename = ", fn)
+        print("In saveImage() data filename = ", dn)
         
         let allocator : CFAllocator = kCFAllocatorDefault
         let filePath: CFString = fn as NSString
@@ -267,16 +266,45 @@ struct ContentView: View {
         else {
             destination = destinationAttempt.unsafelyUnwrapped
             // add our mandart CG image to the image destination
-            CGImageDestinationAddImage(destination, contextImageGlobal!, nil);
+            CGImageDestinationAddImage(destination,contextImageGlobal!, nil);
             // finalize (write the information)
             CGImageDestinationFinalize(destination)
+            print("Wrote image to ", fn)
+
+            // after, also write the image information to a json file
             
+            configGlobal.nColors = 3
+            configGlobal.theta = 1.33333
+            
+            do {
+                let fileURL = try FileManager.default
+                .url(for: .documentDirectory,
+                     in: .userDomainMask,
+                     appropriateFor: nil,
+                     create: true)
+                .appendingPathComponent(dn)
+                print("fileURL for JSON is ", dn)
+                
+                do {
+                    // convert the struct to JSON string
+                    let jsonData = try JSONEncoder().encode(configGlobal)
+                    
+                    do {
+                        try jsonData.write(to: fileURL)
+                        print("Wrote json to ", dn)
+                        let jsonString = String(data:jsonData, encoding: .utf8)!
+                        print(jsonString)
+                    } catch { print(error)}
+
+                } catch { print(error)}
+                
+            } catch { print(error)}
+
             nImage = nImage + 1
             print(nImage)
             
             return true
             
-            // possibly helpful: https://gist.github.com/KrisYu/abf3d03a76b781ffc2a26848d713b11e
         }
     }
    
@@ -744,8 +772,9 @@ struct ContentView: View {
         // in case they want to save
         contextImageGlobal = contextImage
             
-        // let saved:Bool = saveImage()
-        // print("Saved image = ", saved)
+        // STASH all the other info needed to recreate it
+            
+  
             
         // SAVEFILE ******************************
 
