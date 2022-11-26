@@ -5,18 +5,7 @@
 //  Created by Bruce Johnson on 9/20/21.
 //  Edited by Bruce Johnson on 8/7/22.
 
-/*    image = UIImage(named: "example.png") {
-        if let data = image.pngData() {
-            let filename = getDocumentsDirectory().appendingPathComponent("copy.png")
-            try? data.write(to: filename)
-        }   */
 
- /*   if let image = UIImage(named: "example.jpg") {
-        if let data = image.jpegData(compressionQuality: 0.8) {
-            let filename = getDocumentsDirectory().appendingPathComponent("copy.png")
-            try? data.write(to: filename)
-        }
-    }   */
 
 import SwiftUI
 import Foundation   //for trig functions
@@ -177,7 +166,6 @@ struct ContentView: View {
     @State private var b20Start: Double =  0.0
     
     @State private var drawItStart = true
- //   @State private var drawItBlankStart = false
     @State private var drawGradientStart = false
     
     @State private var scaleOld: Double =  1.0
@@ -239,11 +227,6 @@ struct ContentView: View {
         
         // create an image destination
         // if it doesn't work, return false
-        
-  /*      func getDocumentsDirectory() -> URL {
-            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            return paths[0]
-        }   */
         
         func getDocumentsDirectory() -> URL {
             let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -321,7 +304,6 @@ struct ContentView: View {
         
         var imageWidth: Int = 0
         var imageHeight: Int = 0
- //       var nImage: Int = 0
         var iMax: Double = 10_000.0
         var rSq: Double = 0.0
         var rSqLimit: Double = 0.0
@@ -332,7 +314,6 @@ struct ContentView: View {
         var dY: Double = 0.0
         imageWidth = self.imageWidthStart
         imageHeight = self.imageHeightStart
-  //      nImage = self.nImageStart
         var xx: Double = 0.0
         var yy: Double = 0.0
         var xTemp: Double = 0.0
@@ -446,8 +427,6 @@ struct ContentView: View {
         fIterMin = fIterMins.min()!
         
         fIterMin = fIterMin - dIterMin
-        
-  //      print(fIterMin)
         
         // Now we need to generate a bitmap image.
         
@@ -742,30 +721,8 @@ struct ContentView: View {
         // no automatic deallocation for the raster data
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
-        
-/*        UIImage(CGImage: cgImage)
-   
-        class UIImage : NSObject
-        
-            let nsContextImage = NSImage(cgImage: contextImage, size: NSMakeSize(Double(width), Double(height)))
-        let uiImage = UIImage(cgImage: cgimg)
-        
-        let image = UIImage(named: "example.jpg") {
-        let data = nsContextImage.jpegData(compressionQuality: 0.8) {
-            let filename = getDocumentsDirectory().appendingPathComponent("mandImage.jpg")
-            try? data.write(to: filename)
-        }   
-        }             */
-        
-  /*      let data = contextImage.jpegData(compressionQuality: 0.8) {
-            let filename = getDocumentsDirectory().appendingPathComponent("mandImage.jpg")
-            try? data.write(to: filename)
-        }   */
             
         // SAVEFILE ******************************
-        
- //       var nImage: Int = 0
- //       nImage = 7
             
         // STASH bitmap
         // before returning it, set the global variable
@@ -774,118 +731,12 @@ struct ContentView: View {
             
         // STASH all the other info needed to recreate it
             
-  
-            
         // SAVEFILE ******************************
 
         return contextImage
     }   // end if == true
 
-   /*     else if drawItBlank == true { // draws blue image
-        
-        var contextImageBlank: CGImage
-        
-        var imageWidth: Int = 0
-        var imageHeight: Int = 0
-        imageWidth = self.imageWidthStart
-        imageHeight = self.imageHeightStart
-   
-        // set up CG parameters
-        let bitsPerComponent: Int = 8   // for UInt8
-        let componentsPerPixel: Int = 4  // RGBA = 4 components
-        let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
-            let bytesPerRow: Int = imageWidth * bytesPerPixel
-            let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
-        
-        // Allocate data for the raster buffer.  I'm using UInt8 so that I can
-        // address individual RGBA components easily.
-            let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
-        
-        // Create a CGBitmapContext for drawing and converting into an image for display
-            let context: CGContext = CGContext(data: rasterBufferPtr,
-                                           width: imageWidth,
-                                           height: imageHeight,
-                                           bitsPerComponent: bitsPerComponent,
-                                           bytesPerRow: bytesPerRow,
-                                           space: CGColorSpace(name:CGColorSpace.sRGB)!,
-                                           bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
-        
-        // use CG to draw into the context
-        // you can use any of the CG drawing routines for drawing into this context
-        // here we will just erase the contents of the CGBitmapContext as the
-        // raster buffer just contains random uninitialized data at this point.
-        context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
-        context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(100), height: Double(100)))
-        context.fillPath()
-        
-        // in addition to using any of the CG drawing routines, you can draw yourself
-        // by accessing individual pixels in the raster image.
-        // here we'll draw a square one pixel at a time.
-            let xStarting: Int = 0
-            let yStarting: Int = 0
-            let width: Int = imageWidth
-            let height: Int = imageHeight
-        
-        // iterate over all of the rows for the entire height of the square
-        for v in 0...(height - 1) {
-            
-            // calculate the offset to the row of pixels in the raster buffer
-            // assume the origin is at the bottom left corner of the raster image.
-            // note, you could also use the top left, but GC uses the bottom left
-            // so this method keeps your drawing and CG in sync in case you wanted
-            // to use the CG methods for drawing too.
-            //
-            // note, you could do this calculation all together inside of the xoffset
-            // loop, but it's a small optimization to pull this part out and do it here
-            // instead of every time through.
-            let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
-            
-            // iterate over all of the pixels in this row
-            for u in 0...(width - 1) {
-                
-                // calculate the horizontal offset to the pixel in the row
-                let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
-                
-                // sum the horizontal and vertical offsets to get the pixel offset
-                let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
-                
-                // calculate the offset of the pixel
-                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
-                
-  /*     //         light blue for contextImageBlank
-                    pixelAddress.pointee = UInt8(135)         //red
-                    (pixelAddress + 1).pointee = UInt8(206)   //green
-                    (pixelAddress + 2).pointee = UInt8(255)   //blue
-                    (pixelAddress + 3).pointee = UInt8(255) //alpha */
-                    
-       //         gray for contextImageBlank
-                    pixelAddress.pointee = UInt8(233)         //red
-                    (pixelAddress + 1).pointee = UInt8(239)   //green
-                    (pixelAddress + 2).pointee = UInt8(239)   //blue
-                    (pixelAddress + 3).pointee = UInt8(255) //alpha
-                
-                 
-                    
-                    
-                    // IMPORTANT:
-                    // there is no type checking here and it is up to you to make sure that the
-                    // address indexes do not go beyond the memory allocated for the buffer
-                
-            }    //end for u
-            
-        }    //end for v
-        
-        // convert the context into an image - this is what the function will return
-        contextImageBlank = context.makeImage()!
-        
-        // no automatic deallocation for the raster data
-        // you need to manage that yourself
-        rasterBufferPtr.deallocate()
-        
-        return contextImageBlank
-    }   // end else if  */
  
-   //     else {  // draws gradient image
         
         else if drawGradient == true { // draws gradient image
        
@@ -1105,9 +956,7 @@ struct ContentView: View {
                 if leftNumber >= nColors {
                     rightNumber = 1
                     }
-                    
-                    
-                
+
                 xGradient = Double(u)/Double(width)
                             
                 color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
@@ -1180,15 +1029,17 @@ struct ContentView: View {
             VStack( // the left side is a vertical container with user stuff
                 alignment: .center, spacing: 10) // spacing is between VStacks
             {
-                Group{
+       /*         Group{
                     Text("")
                     Text("Click in green area to define values.")
                     Text("Double-click in green area to enter the values.")
                     Text("Press in green area for 3 seconds to make a gradient")
                     Text("Click in image to choose new center.\n")
-                }   // end of group
+                }   // end of group */
                 
                 Group{
+                
+                HStack {
                 
                 VStack { // use a button to zoom in
                     Button(action: {
@@ -1197,6 +1048,7 @@ struct ContentView: View {
                     Text("Zoom In")
                 }
                 }
+                .padding(10)
 
                 VStack { // use a button to zoom out
                     Button(action: {
@@ -1206,13 +1058,61 @@ struct ContentView: View {
                 }
                 }
                 
+                }
+                
+                
                 VStack { // use a button to save as PNG
                     Button(action: {
                         saveImage()
                     }) {
                     Text("Save As PNG")
                 }
-                }   
+                }
+                HStack {
+                
+                VStack { // use a button to pause to change values
+                    Button(action: {
+                        drawItStart = false
+                    }) {
+                    Text("Pause to change values")
+                }
+                }
+                .padding(10)
+                
+                VStack { // use a button to resume
+                    Button(action: {
+                        drawItStart = true
+                    }) {
+                    Text("Resume")
+                }
+                }
+                
+                
+                
+                } // end HStack
+                
+                HStack {
+                
+                VStack { // use a button made a gradient
+                    Button(action: {
+                        drawItStart = false
+                        drawGradientStart = true
+                    }) {
+                    Text("Make a gradient")
+                }
+                }
+                .padding(10)
+                
+                VStack { // use a button to resume
+                    Button(action: {
+                        drawItStart = true
+                        drawGradientStart = false
+                    }) {
+                    Text("Resume")
+                }
+                }
+                
+                } // end HStack
 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
@@ -1251,7 +1151,11 @@ struct ContentView: View {
                     Text("Enter imageWidth:")
                     TextField("imageWidth",value: $imageWidthStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
-                } 
+                }
+                
+                } // end of group
+                
+                Group{ 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter imageHeight:")
@@ -1259,10 +1163,7 @@ struct ContentView: View {
                         .padding(2)
                 } 
                 
-                } // end of group
-                
-                Group{
-                
+
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter nBlocks:")
                     TextField("nBlocks",value: $nBlocksStart, formatter: ContentView.cgUnboundFormatter)
@@ -1856,21 +1757,18 @@ struct ContentView: View {
             
             .contentShape(Rectangle())
             
-            .onTapGesture(count:2){
+     /*       .onTapGesture(count:2){
                 drawItStart = true
-    //            drawItBlankStart = false
             }   
             
             .contentShape(Rectangle())
             .onTapGesture(count:1){
                 drawItStart = false
-       //         drawItBlankStart = false    //  true
-            }
+            }   */
             
             .contentShape(Rectangle())
             .onLongPressGesture(minimumDuration: 1){
                 drawItStart = false
-       //         drawItBlankStart = false
                 drawGradientStart = true
             } 
             
