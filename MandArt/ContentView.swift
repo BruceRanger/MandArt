@@ -177,7 +177,7 @@ struct ContentView: View {
     @State private var b20Start: Double =  0.0
     
     @State private var drawItStart = true
-    @State private var drawItBlankStart = false
+ //   @State private var drawItBlankStart = false
     @State private var drawGradientStart = false
     
     @State private var scaleOld: Double =  1.0
@@ -313,7 +313,7 @@ struct ContentView: View {
     // SAVEFILE ******************************
 
 
-    func getImage(drawIt:Bool, drawItBlank: Bool, drawGradient: Bool, leftNumber: Int) -> CGImage { 
+    func getImage(drawIt:Bool, drawGradient: Bool, leftNumber: Int) -> CGImage? { 
    
         if drawIt == true { // draws image
         
@@ -781,7 +781,7 @@ struct ContentView: View {
         return contextImage
     }   // end if == true
 
-        else if drawItBlank == true { // draws blue image
+   /*     else if drawItBlank == true { // draws blue image
         
         var contextImageBlank: CGImage
         
@@ -846,16 +846,22 @@ struct ContentView: View {
                 // calculate the horizontal offset to the pixel in the row
                 let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
                 
-                // sum the horixontal and vertical offsets to get the pixel offset
+                // sum the horizontal and vertical offsets to get the pixel offset
                 let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
                 
                 // calculate the offset of the pixel
                 let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
                 
-       //         light blue for contextImageBlank
+  /*     //         light blue for contextImageBlank
                     pixelAddress.pointee = UInt8(135)         //red
                     (pixelAddress + 1).pointee = UInt8(206)   //green
                     (pixelAddress + 2).pointee = UInt8(255)   //blue
+                    (pixelAddress + 3).pointee = UInt8(255) //alpha */
+                    
+       //         gray for contextImageBlank
+                    pixelAddress.pointee = UInt8(233)         //red
+                    (pixelAddress + 1).pointee = UInt8(239)   //green
+                    (pixelAddress + 2).pointee = UInt8(239)   //blue
                     (pixelAddress + 3).pointee = UInt8(255) //alpha
                 
                  
@@ -877,9 +883,11 @@ struct ContentView: View {
         rasterBufferPtr.deallocate()
         
         return contextImageBlank
-    }   // end else if  
+    }   // end else if  */
  
-        else {  // draws gradient image
+   //     else {  // draws gradient image
+        
+        else if drawGradient == true { // draws gradient image
        
         var gradientImage: CGImage
         
@@ -1131,7 +1139,9 @@ struct ContentView: View {
         
         return gradientImage
     }   // end else for gradient image
-    }   //  end func
+    
+        return nil
+    }   //  end func    
     
     static var cgFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -1161,7 +1171,7 @@ struct ContentView: View {
     
     var body: some View {
 
-        let image: CGImage = getImage(drawIt:drawItStart, drawItBlank: drawItBlankStart, drawGradient: drawGradientStart, leftNumber: leftNumberStart)
+        let image: CGImage = getImage(drawIt:drawItStart, drawGradient: drawGradientStart, leftNumber: leftNumberStart)!
         let img = Image(image, scale: 1.0, label: Text("Test"))
         
         HStack{ // this container shows instructions on left / dwg on right
@@ -1848,19 +1858,19 @@ struct ContentView: View {
             
             .onTapGesture(count:2){
                 drawItStart = true
-                drawItBlankStart = false
+    //            drawItBlankStart = false
             }   
             
             .contentShape(Rectangle())
             .onTapGesture(count:1){
                 drawItStart = false
-                drawItBlankStart = true
+       //         drawItBlankStart = false    //  true
             }
             
             .contentShape(Rectangle())
             .onLongPressGesture(minimumDuration: 1){
                 drawItStart = false
-                drawItBlankStart = false
+       //         drawItBlankStart = false
                 drawGradientStart = true
             } 
             
@@ -1885,7 +1895,7 @@ struct ContentView: View {
                                 message: Text("  "),
                                 dismissButton: .default(Text("  ")))
                                 
-                        }
+                        }   
                 }
                 
             } // end GeoReader
