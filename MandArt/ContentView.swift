@@ -22,6 +22,8 @@ import CoreServices // to save bitmap file
 struct MandArtConfig: Codable, Hashable {
     var nColors: Int?
     var theta: Double?
+    var scale: Double?
+    // var colors:
 }
 
 // define some global variables for saving
@@ -256,8 +258,9 @@ struct ContentView: View {
 
             // after, also write the image information to a json file
             
-            configGlobal.nColors = 3
-            configGlobal.theta = 1.33333
+            configGlobal.nColors = nColorsStart
+            configGlobal.theta = thetaStart
+            configGlobal.scale = scaleStart
             
             do {
                 let fileURL = try FileManager.default
