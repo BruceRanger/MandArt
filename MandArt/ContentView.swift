@@ -5,37 +5,32 @@
 //  Created by Bruce Johnson on 9/20/21.
 //  Edited by Bruce Johnson on 8/7/22.
 
-
-
 import SwiftUI
 import Foundation   //for trig functions
-// import CoreImage
-
-// SAVEFILE ******************************
-
-import ImageIO   //  to save bitmap file
-import CoreServices // to save bitmap file
-
-// define a Config structure with info to recreate an image
-// TODO: add all the input variables to this struct
-// TODO: make all of them optional (use the ?)
-struct MandArtConfig: Codable, Hashable {
-    var nColors: Int?
-    var theta: Double?
-    var scale: Double?
-    // var colors:
-}
+import ImageIO
+import CoreServices
 
 // define some global variables for saving
 var nImage: Int = 0
 var contextImageGlobal: CGImage?
-var configGlobal: MandArtConfig = MandArtConfig()
-
-// SAVEFILE ******************************
-
+var startFile = "default.json"
 
 struct ContentView: View {
     
+    // group the whole set of input values in a PictureDefinition
+    // right now, we can only load & save three items
+    // but we can expand it
+    
+    @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
+    
+    // The following are now obtained from the set of input values
+    
+    // @State private var nColorsStart: Int = 6
+    // @State private var thetaStart: Double =  0.0
+    // @State private var scaleStart: Double =  2_880_000.0
+    
+    // continue as usual ..........................................
+
     let instructionBackgroundColor = Color.green.opacity(0.5)
     
     let inputWidth: Double = 290
@@ -53,18 +48,15 @@ struct ContentView: View {
     
     @State private var xCStart: Double = -0.74725
     @State private var yCStart: Double =  0.08442
-    @State private var scaleStart: Double =  2_880_000.0
     @State private var iMaxStart: Double =  10_000.0
     @State private var rSqLimitStart: Double =  400.0
     @State private var nBlocksStart: Int =  60
     @State private var bEStart: Double =  5.0
     @State private var eEStart: Double =  15.0
-    @State private var thetaStart: Double =  0.0
     @State private var nImageStart: Int = 0
     @State private var dFIterMinStart: Double =  10.0
     @State private var imageWidthStart: Int = 1_200
     @State private var imageHeightStart: Int = 1_000
-    @State private var nColorsStart: Int = 6
     @State private var leftNumberStart: Int = 1
     
     @State private var number1Start: Int =  1
@@ -180,25 +172,25 @@ struct ContentView: View {
     }
     
     func getCenterXFromTapX(tapX: Double, imageWidthStart:Int) -> Double {
-        let tapXDifference = (tapX - Double(imageWidthStart)/2.0)/scaleStart
+        let tapXDifference = (tapX - Double(imageWidthStart)/2.0)/picdef.scaleStart
         let newXC: Double = xCStart + tapXDifference // needs work
         return newXC
     }
     
     func getCenterYFromTapY(tapY: Double, imageHeightStart:Int) -> Double {
-        let tapYDifference = ((Double(imageHeightStart) - tapY) - Double(imageHeightStart)/2.0)/scaleStart
+        let tapYDifference = ((Double(imageHeightStart) - tapY) - Double(imageHeightStart)/2.0)/picdef.scaleStart
         let newYC: Double = (yCStart + tapYDifference) // needs work
         return newYC
     }
     
     func zoomOut(){
-        self.scaleOld = self.scaleStart
-        self.scaleStart = self.scaleOld / 2.0
+        self.scaleOld = picdef.scaleStart
+        picdef.scaleStart = self.scaleOld / 2.0
     }
     
     func zoomIn(){
-        self.scaleOld = self.scaleStart
-        self.scaleStart = self.scaleOld * 2.0
+        self.scaleOld = picdef.scaleStart
+        picdef.scaleStart = self.scaleOld * 2.0
     }
     
     // SAVEFILE ******************************
@@ -256,12 +248,6 @@ struct ContentView: View {
             CGImageDestinationFinalize(destination)
             print("Wrote image to ", fn)
 
-            // after, also write the image information to a json file
-            
-            configGlobal.nColors = nColorsStart
-            configGlobal.theta = thetaStart
-            configGlobal.scale = scaleStart
-            
             do {
                 let fileURL = try FileManager.default
                 .url(for: .documentDirectory,
@@ -273,7 +259,7 @@ struct ContentView: View {
                 
                 do {
                     // convert the struct to JSON string
-                    let jsonData = try JSONEncoder().encode(configGlobal)
+                    let jsonData = try JSONEncoder().encode(picdef)
                     
                     do {
                         try jsonData.write(to: fileURL)
@@ -294,10 +280,6 @@ struct ContentView: View {
         }
     }
    
-    
-    
-    // SAVEFILE ******************************
-
 
     func getImage(drawIt:Bool, drawGradient: Bool, leftNumber: Int) -> CGImage? { 
    
@@ -345,12 +327,12 @@ struct ContentView: View {
         var dIterMin: Double = 0.0
         let pi: Double = 3.14159
         
-        theta = self.thetaStart
+        theta = picdef.thetaStart
         dIterMin = self.dFIterMinStart
         thetaR = pi*theta/180.0
         
         rSqLimit = 400.0
-        scale = self.scaleStart
+        scale = picdef.scaleStart
         xC = self.xCStart
         yC = self.yCStart
         iMax = self.iMaxStart
@@ -509,7 +491,7 @@ struct ContentView: View {
         bE = self.bEStart
         eE = self.eEStart
         
-        nColors = self.nColorsStart
+        nColors = picdef.nColorsStart
         r1 = self.r1Start
         g1 = self.g1Start
         b1 = self.b1Start
@@ -819,7 +801,7 @@ struct ContentView: View {
         var g20: Double = 0.0
         var b20: Double = 0.0    
         
-        nColors = self.nColorsStart
+        nColors = picdef.nColorsStart
         leftNumber = self.leftNumberStart
         r1 = self.r1Start
         g1 = self.g1Start
@@ -1134,7 +1116,7 @@ struct ContentView: View {
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter scale:")
-                    TextField("Scale",value: $scaleStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("Scale",value: $picdef.scaleStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }
                 
@@ -1187,7 +1169,7 @@ struct ContentView: View {
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter theta:")
-                    TextField("theta",value: $thetaStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("theta",value: $picdef.thetaStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }
                 
@@ -1205,7 +1187,7 @@ struct ContentView: View {
                 
                 VStack{
                     Text("Enter number of colors")
-                    TextField("nColors",value: $nColorsStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("nColors",value: $picdef.nColorsStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }
                 
