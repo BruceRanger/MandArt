@@ -1755,23 +1755,6 @@ struct ContentView: View {
                 
             } // end VStack for user instructions
             
-            .contentShape(Rectangle())
-            
-     /*       .onTapGesture(count:2){
-                drawItStart = true
-            }   
-            
-            .contentShape(Rectangle())
-            .onTapGesture(count:1){
-                drawItStart = false
-            }   */
-            
-            .contentShape(Rectangle())
-            .onLongPressGesture(minimumDuration: 1){
-                drawItStart = false
-                drawGradientStart = true
-            } 
-            
             .background(instructionBackgroundColor)
             .frame(width:inputWidth)
             .padding(10)
@@ -1780,7 +1763,7 @@ struct ContentView: View {
             GeometryReader {
                 geometry in
                 ZStack(alignment: .topLeading) {
-                    Text("Scene")
+                    Text("")
                     img
                         .gesture(self.tapGesture)
                         .alert(isPresented: $showingAlert) {
