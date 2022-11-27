@@ -28,6 +28,8 @@ struct ContentView: View {
     // @State private var nColorsStart: Int = 6
     // @State private var thetaStart: Double =  0.0
     // @State private var scaleStart: Double =  2_880_000.0
+    // @State private var bEStart: Double =  5.0
+
     
     // continue as usual ..........................................
 
@@ -51,7 +53,6 @@ struct ContentView: View {
     @State private var iMaxStart: Double =  10_000.0
     @State private var rSqLimitStart: Double =  400.0
     @State private var nBlocksStart: Int =  60
-    @State private var bEStart: Double =  5.0
     @State private var eEStart: Double =  15.0
     @State private var nImageStart: Int = 0
     @State private var dFIterMinStart: Double =  10.0
@@ -488,7 +489,7 @@ struct ContentView: View {
         var g20: Double = 0.0
         var b20: Double = 0.0    
         
-        bE = self.bEStart
+        bE = picdef.bEStart
         eE = self.eEStart
         
         nColors = picdef.nColorsStart
@@ -558,7 +559,7 @@ struct ContentView: View {
         eE = 15.0
         
         nBlocks = self.nBlocksStart
-        bE = self.bEStart
+        bE = picdef.bEStart
         eE = self.eEStart
         
         fNBlocks = Double(nBlocks)
@@ -1157,7 +1158,7 @@ struct ContentView: View {
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter bE:")
-                    TextField("bE",value: $bEStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("bE",value: $picdef.bEStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 } 
                 

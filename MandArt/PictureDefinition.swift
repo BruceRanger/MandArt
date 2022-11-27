@@ -11,4 +11,5 @@ class PictureDefinition: Codable, ObservableObject {
     var nColorsStart: Int
     var thetaStart: Double
     var scaleStart: Double
+    var bEStart: Double
 }
