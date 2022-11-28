@@ -23,14 +23,12 @@ struct ContentView: View {
     
     let inputWidth: Double = 290
     
-    @State private var saveFileName = "mandart"
-    @State private var showSaveAlert = false
     @State private var showingAlert = false
-    @State private var tapX: Double = 0
-    @State private var tapY: Double = 0
+    @State private var tapX: Double = 0.0
+    @State private var tapY: Double = 0.0
     
     @State private var tapLocations: [CGPoint] = []
-    @State private var moved: Double = 0
+    @State private var moved: Double = 0.0
     @State private var startTime: Date?
     
     @State private var dragCompleted = false
@@ -147,13 +145,13 @@ struct ContentView: View {
     }
     
     func getCenterXFromTapX(tapX: Double, imageWidthStart:Int) -> Double {
-        let tapXDifference = (tapX - Double(imageWidthStart)/2.0)/picdef.scaleStart
+        let tapXDifference = (tapX - Double(picdef.imageWidthStart)/2.0)/picdef.scaleStart
         let newXC: Double = picdef.xCStart + tapXDifference // needs work
         return newXC
     }
     
     func getCenterYFromTapY(tapY: Double, imageHeightStart:Int) -> Double {
-        let tapYDifference = ((Double(imageHeightStart) - tapY) - Double(imageHeightStart)/2.0)/picdef.scaleStart
+        let tapYDifference = ((Double(picdef.imageHeightStart) - tapY) - Double(picdef.imageHeightStart)/2.0)/picdef.scaleStart
         let newYC: Double = (picdef.yCStart + tapYDifference) // needs work
         return newYC
     }
@@ -169,13 +167,39 @@ struct ContentView: View {
     }
     
     
+    fileprivate func saveImageData() {
+        do {
+            let dn:String = "mandart" + String(nImage) + ".json"
+            print("In saveDataFile() data filename = ", dn)
+            let fileURL = try FileManager.default
+                .url(for: .documentDirectory,
+                     in: .userDomainMask,
+                     appropriateFor: nil,
+                     create: true)
+                .appendingPathComponent(dn)
+            print("fileURL for JSON is ", dn)
+            
+            do {
+                    // convert the struct to JSON string
+                let jsonData = try JSONEncoder().encode(picdef)
+                
+                do {
+                    try jsonData.write(to: fileURL)
+                    print("Wrote json to ", dn)
+                    let jsonString = String(data:jsonData, encoding: .utf8)!
+                    print(jsonString)
+                } catch { print(error)}
+                
+            } catch { print(error)}
+            
+        } catch { print(error)}
+    }
+    
     func saveImage() -> Bool {
 
         // Set the destination image file name and data file name
         let fn:String = "mandart" + String(nImage) + ".png"
-        let dn:String = "mandart" + String(nImage) + ".json"
         print("In saveImage() image filename = ", fn)
-        print("In saveImage() data filename = ", dn)
         
         let allocator : CFAllocator = kCFAllocatorDefault
         let filePath: CFString = fn as NSString
@@ -216,33 +240,12 @@ struct ContentView: View {
             CGImageDestinationFinalize(destination)
             print("Wrote image to ", fn)
 
-            do {
-                let fileURL = try FileManager.default
-                .url(for: .documentDirectory,
-                     in: .userDomainMask,
-                     appropriateFor: nil,
-                     create: true)
-                .appendingPathComponent(dn)
-                print("fileURL for JSON is ", dn)
-                
-                do {
-                    // convert the struct to JSON string
-                    let jsonData = try JSONEncoder().encode(picdef)
-                    
-                    do {
-                        try jsonData.write(to: fileURL)
-                        print("Wrote json to ", dn)
-                        let jsonString = String(data:jsonData, encoding: .utf8)!
-                        print(jsonString)
-                    } catch { print(error)}
-
-                } catch { print(error)}
-                
-            } catch { print(error)}
+            saveImageData()
+            print("In saveImage(), picture and data saved with number ",nImage)
 
             nImage = nImage + 1
-            print(nImage)
-            
+            print("In saveImage(), incrementing to ",nImage)
+
             return true
             
         }
@@ -252,7 +255,7 @@ struct ContentView: View {
     func getImage(drawIt:Bool, drawGradient: Bool, leftNumber: Int) -> CGImage? { 
    
         if drawIt == true { // draws image
-        
+                    
         var contextImage: CGImage
         
         var imageWidth: Int = 0
@@ -982,13 +985,6 @@ struct ContentView: View {
             VStack( // the left side is a vertical container with user stuff
                 alignment: .center, spacing: 10) // spacing is between VStacks
             {
-       /*         Group{
-                    Text("")
-                    Text("Click in green area to define values.")
-                    Text("Double-click in green area to enter the values.")
-                    Text("Press in green area for 3 seconds to make a gradient")
-                    Text("Click in image to choose new center.\n")
-                }   // end of group */
                 
                 Group{
                 
@@ -1017,21 +1013,9 @@ struct ContentView: View {
                 VStack {
                     Button("Save as PNG",
                            action: {
-                        showSaveAlert = true
                         saveImage()
                         }
                     )
-                  //.alert("Saving")
-                    //,
-//                           isPresented: showSaveAlert,
-//                           message: {
-//                        Text("Enter a file name to save this picture.")
-//                    },
-                          // action: {
-                        //TextField("Filename:", text: $saveFileName)
-                        //Button("Save", action: saveImage())
-                        //Button("Cancel", role: .cancel, action: {})
-                   // }
                 }
                 HStack {
                 
