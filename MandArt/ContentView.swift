@@ -166,7 +166,6 @@ struct ContentView: View {
         picdef.scaleStart = self.scaleOld * 2.0
     }
     
-    
     fileprivate func saveImageData() {
         do {
             let dn:String = "mandart" + String(nImage) + ".json"
@@ -222,6 +221,7 @@ struct ContentView: View {
         let count: Int = 1
         let options: CFDictionary? = nil
         var destination: CGImageDestination
+
         let destinationAttempt: CGImageDestination?  = CGImageDestinationCreateWithURL(url, imageType, count, options)
                 
         if (destinationAttempt == nil) {
@@ -1155,31 +1155,34 @@ struct ContentView: View {
                 }   // end of group
                 
                 Group{
+                    
+                // switch to list
             
-                HStack{
+               HStack{
                 
                 VStack{
                     Text("No:")
-                    TextField("number1",value: $number1Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("number1",value: $picdef.hues[0].numberStart, formatter: ContentView.cgUnboundFormatter)
                         .disabled(true)
                         .padding(2)
                 }
                 
                 VStack{
                     Text("Enter R1:")
-                    TextField("r1",value: $r1Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("r1",value: $picdef.hues[0].rStart, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter G1:")
-                    TextField("g1",value: $g1Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("g1",value: $picdef.hues[0].gStart, formatter: ContentView.cgUnboundFormatter)
                 }
                 
                 VStack{
                     Text("Enter B1:")
-                    TextField("b1",value: $b1Start, formatter: ContentView.cgUnboundFormatter)
+                    TextField("b1",value: $picdef.hues[0].bStart, formatter: ContentView.cgUnboundFormatter)
                     .padding(2)
                 }
+                      
                 }   // end HStack
                 
                 HStack {

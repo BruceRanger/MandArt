@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Hue: Codable, ObservableObject {
+class Hue: Codable, Identifiable, ObservableObject {
     var numberStart: Int =  1
     var rStart: Double =  0.0
     var gStart: Double =  255.0
