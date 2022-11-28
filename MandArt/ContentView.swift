@@ -16,17 +16,15 @@ var contextImageGlobal: CGImage?
 var startFile = "default.json"
 
 struct ContentView: View {
-    
-    // group the whole set of input values in a PictureDefinition
-    // right now, we can only load & save three items
-    // but we can expand it
-    
+
     @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
     
     let instructionBackgroundColor = Color.green.opacity(0.5)
     
     let inputWidth: Double = 290
     
+    @State private var saveFileName = "mandart"
+    @State private var showSaveAlert = false
     @State private var showingAlert = false
     @State private var tapX: Double = 0
     @State private var tapY: Double = 0
@@ -143,8 +141,6 @@ struct ContentView: View {
     
     @State private var scaleOld: Double =  1.0
     
-//    @State private var selectedConfig: Config?
-
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -1018,12 +1014,24 @@ struct ContentView: View {
                 }
                 
                 
-                VStack { // use a button to save as PNG
-                    Button(action: {
+                VStack {
+                    Button("Save as PNG",
+                           action: {
+                        showSaveAlert = true
                         saveImage()
-                    }) {
-                    Text("Save As PNG")
-                }
+                        }
+                    )
+                  //.alert("Saving")
+                    //,
+//                           isPresented: showSaveAlert,
+//                           message: {
+//                        Text("Enter a file name to save this picture.")
+//                    },
+                          // action: {
+                        //TextField("Filename:", text: $saveFileName)
+                        //Button("Save", action: saveImage())
+                        //Button("Cancel", role: .cancel, action: {})
+                   // }
                 }
                 HStack {
                 
