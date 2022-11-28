@@ -196,8 +196,6 @@ struct ContentView: View {
     }
     
     func saveImage() -> Bool {
-
-        // Set the destination image file name and data file name
         let fn:String = "mandart" + String(nImage) + ".png"
         print("In saveImage() image filename = ", fn)
         
@@ -224,11 +222,8 @@ struct ContentView: View {
         let count: Int = 1
         let options: CFDictionary? = nil
         var destination: CGImageDestination
-        
         let destinationAttempt: CGImageDestination?  = CGImageDestinationCreateWithURL(url, imageType, count, options)
-        
-        // branch based on our attempt
-        
+                
         if (destinationAttempt == nil) {
             return false
         }
@@ -239,15 +234,11 @@ struct ContentView: View {
             // finalize (write the information)
             CGImageDestinationFinalize(destination)
             print("Wrote image to ", fn)
-
             saveImageData()
             print("In saveImage(), picture and data saved with number ",nImage)
-
             nImage = nImage + 1
             print("In saveImage(), incrementing to ",nImage)
-
             return true
-            
         }
     }
    

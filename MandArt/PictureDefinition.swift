@@ -23,4 +23,12 @@ class PictureDefinition: Codable, ObservableObject {
     var dFIterMinStart: Double =  10.0
     var nColorsStart: Int = 6
     var leftNumberStart: Int = 1
+    var hues: [Hue]? = [
+        Hue(numberStart:1, rStart:0.0, gStart:255.0, bStart:0.0),
+        Hue(numberStart:2, rStart:255.0, gStart:255.0, bStart:0.0),
+        Hue(numberStart:3,rStart:255.0, gStart:0.0, bStart:0.0),
+        Hue(numberStart:4,rStart:255.0, gStart:0.0, bStart:255.0),
+        Hue(numberStart:5,rStart:0.0, gStart:0.0, bStart:255.0),
+        Hue(numberStart:6,rStart:0.0, gStart:255.0, bStart:255.0)
+    ]
 }

@@ -13,5 +13,42 @@
     "thetaStart": 0,
     "imageWidthStart": 1200,
     "imageHeightStart": 1000,
-    "nBlocksStart": 60
+    "nBlocksStart": 60,
+    "hues": [{
+        "numberStart": 1,
+        "rStart": 0.0,
+        "gStart": 255.0,
+        "bStart": 0.0
+    },
+        {
+            "numberStart": 2,
+            "rStart": 255.0,
+            "gStart": 255.0,
+            "bStart": 0.0
+        },
+        {
+            "numberStart": 3,
+            "rStart": 255.0,
+            "gStart": 0.0,
+            "bStart": 0.0
+        },
+        {
+            "numberStart": 4,
+            "rStart": 255.0,
+            "gStart": 0.0,
+            "bStart": 255.0
+        },
+        {
+            "numberStart": 5,
+            "rStart": 0.0,
+            "gStart": 0.0,
+            "bStart": 255.0
+        },
+        {
+            "numberStart": 6,
+            "rStart": 0.0,
+            "gStart": 255.0,
+            "bStart": 255.0
+        }
+    ]
 }
