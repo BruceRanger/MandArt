@@ -47,23 +47,28 @@ struct ContentView: View {
     func getCenterXFromTapX(tapX: Double, imageWidthStart:Int) -> Double {
         let tapXDifference = (tapX - Double(picdef.imageWidthStart)/2.0)/picdef.scaleStart
         let newXC: Double = picdef.xCStart + tapXDifference // needs work
+        print("Clicked on picture, newXC is",newXC)
         return newXC
     }
     
     func getCenterYFromTapY(tapY: Double, imageHeightStart:Int) -> Double {
         let tapYDifference = ((Double(picdef.imageHeightStart) - tapY) - Double(picdef.imageHeightStart)/2.0)/picdef.scaleStart
         let newYC: Double = (picdef.yCStart + tapYDifference) // needs work
+        print("Clicked on picture, newYC is",newYC)
         return newYC
     }
     
     func zoomOut(){
         self.scaleOld = picdef.scaleStart
         picdef.scaleStart = self.scaleOld / 2.0
+        print("Zoomed out, new scale is",picdef.scaleStart)
     }
     
     func zoomIn(){
         self.scaleOld = picdef.scaleStart
         picdef.scaleStart = self.scaleOld * 2.0
+        print("Zoomed in, new scale is",picdef.scaleStart)
+
     }
     
     fileprivate func saveImageData() {
@@ -704,6 +709,8 @@ struct ContentView: View {
                         VStack { // use a button to pause to change values
                             Button(action: {
                                 drawItStart = false
+                                drawGradientStart = false
+                                print("Paused. draw, drawGradient=",drawItStart,drawGradientStart)
                             }) {
                                 Text("Pause to change values")
                             }
@@ -713,6 +720,9 @@ struct ContentView: View {
                         VStack { // use a button to resume
                             Button(action: {
                                 drawItStart = true
+                                drawGradientStart = false
+                                print("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
+
                             }) {
                                 Text("Resume")
                             }
@@ -728,6 +738,8 @@ struct ContentView: View {
                             Button(action: {
                                 drawItStart = false
                                 drawGradientStart = true
+                                print("Making gradient. draw, drawGradient=",drawItStart,drawGradientStart)
+
                             }) {
                                 Text("Make a gradient")
                             }
@@ -738,6 +750,8 @@ struct ContentView: View {
                             Button(action: {
                                 drawItStart = true
                                 drawGradientStart = false
+                                print("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
+
                             }) {
                                 Text("Resume")
                             }
@@ -818,7 +832,7 @@ struct ContentView: View {
                         TextField("nImage",value: $picdef.nImageStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
                     }
-                    VStack { 
+                    VStack {
                         Text("Enter dFIterMin:")
                         TextField("dFIterMin",value: $picdef.dFIterMinStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
@@ -898,11 +912,13 @@ struct ContentView: View {
                 }
             }
             .onEnded { tap in
+                print("User clicked on picture x,y:",tap.startLocation)
                     // if we haven't moved very much, treat it as a tap event
                 if self.moved < 10 && self.moved > -10 {
                     tapX = tap.startLocation.x
                     tapY = tap.startLocation.y
-                    showingAlert = false // we don't need it any more but hard to remove
+                    showingAlert = false
+                        // we don't need it any more but hard to remove
                     self.tapLocations.append(tap.startLocation)
                         // the right place to update
                     picdef.xCStart = getCenterXFromTapX(tapX:tapX,imageWidthStart:picdef.imageWidthStart)
