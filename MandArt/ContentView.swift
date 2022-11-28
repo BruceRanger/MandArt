@@ -23,16 +23,6 @@ struct ContentView: View {
     
     @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
     
-    // The following are now obtained from the set of input values
-    
-    // @State private var nColorsStart: Int = 6
-    // @State private var thetaStart: Double =  0.0
-    // @State private var scaleStart: Double =  2_880_000.0
-    // @State private var bEStart: Double =  5.0
-
-    
-    // continue as usual ..........................................
-
     let instructionBackgroundColor = Color.green.opacity(0.5)
     
     let inputWidth: Double = 290
@@ -47,19 +37,7 @@ struct ContentView: View {
     
     @State private var dragCompleted = false
     @State private var dragOffset = CGSize.zero
-    
-    @State private var xCStart: Double = -0.74725
-    @State private var yCStart: Double =  0.08442
-    @State private var iMaxStart: Double =  10_000.0
-    @State private var rSqLimitStart: Double =  400.0
-    @State private var nBlocksStart: Int =  60
-    @State private var eEStart: Double =  15.0
-    @State private var nImageStart: Int = 0
-    @State private var dFIterMinStart: Double =  10.0
-    @State private var imageWidthStart: Int = 1_200
-    @State private var imageHeightStart: Int = 1_000
-    @State private var leftNumberStart: Int = 1
-    
+        
     @State private var number1Start: Int =  1
     @State private var r1Start: Double =  0.0
     @State private var g1Start: Double =  255.0
@@ -174,13 +152,13 @@ struct ContentView: View {
     
     func getCenterXFromTapX(tapX: Double, imageWidthStart:Int) -> Double {
         let tapXDifference = (tapX - Double(imageWidthStart)/2.0)/picdef.scaleStart
-        let newXC: Double = xCStart + tapXDifference // needs work
+        let newXC: Double = picdef.xCStart + tapXDifference // needs work
         return newXC
     }
     
     func getCenterYFromTapY(tapY: Double, imageHeightStart:Int) -> Double {
         let tapYDifference = ((Double(imageHeightStart) - tapY) - Double(imageHeightStart)/2.0)/picdef.scaleStart
-        let newYC: Double = (yCStart + tapYDifference) // needs work
+        let newYC: Double = (picdef.yCStart + tapYDifference) // needs work
         return newYC
     }
     
@@ -194,13 +172,6 @@ struct ContentView: View {
         picdef.scaleStart = self.scaleOld * 2.0
     }
     
-    // SAVEFILE ******************************
-    
-    // to see print statements in terminal use Xcode menu
-    // Product, Scheme, Edit Scheme, Run (Debug), Options, Console, Use Terminal.
-    
-    // to see print statements in Xcode use Xcode menu
-    // Product, Scheme, Edit Scheme, Run (Debug), Options, Console, Use Xcode.
     
     func saveImage() -> Bool {
 
@@ -298,8 +269,8 @@ struct ContentView: View {
         var y0: Double = 0.0
         var dX: Double = 0.0
         var dY: Double = 0.0
-        imageWidth = self.imageWidthStart
-        imageHeight = self.imageHeightStart
+        imageWidth = picdef.imageWidthStart
+        imageHeight = picdef.imageHeightStart
         var xx: Double = 0.0
         var yy: Double = 0.0
         var xTemp: Double = 0.0
@@ -329,15 +300,15 @@ struct ContentView: View {
         let pi: Double = 3.14159
         
         theta = picdef.thetaStart
-        dIterMin = self.dFIterMinStart
+        dIterMin = picdef.dFIterMinStart
         thetaR = pi*theta/180.0
         
         rSqLimit = 400.0
         scale = picdef.scaleStart
-        xC = self.xCStart
-        yC = self.yCStart
-        iMax = self.iMaxStart
-        rSqLimit = self.rSqLimitStart
+        xC = picdef.xCStart
+        yC = picdef.yCStart
+        iMax = picdef.iMaxStart
+        rSqLimit = picdef.rSqLimitStart
         rSqMax = 1.01*(rSqLimit + 2)*(rSqLimit + 2)
         gGML = log( log(rSqMax) ) - log(log(rSqLimit) )
         gGL = log(log(rSqLimit) )
@@ -417,7 +388,7 @@ struct ContentView: View {
         // Now we need to generate a bitmap image.
         
         var nBlocks: Int = 0
-        nBlocks = self.nBlocksStart
+        nBlocks = picdef.nBlocksStart
         var fNBlocks: Double = 0.0
         var nColors: Int = 0
         var color: Double = 0.0
@@ -490,7 +461,7 @@ struct ContentView: View {
         var b20: Double = 0.0    
         
         bE = picdef.bEStart
-        eE = self.eEStart
+        eE = picdef.eEStart
         
         nColors = picdef.nColorsStart
         r1 = self.r1Start
@@ -558,9 +529,9 @@ struct ContentView: View {
         bE = 5.0
         eE = 15.0
         
-        nBlocks = self.nBlocksStart
+        nBlocks = picdef.nBlocksStart
         bE = picdef.bEStart
-        eE = self.eEStart
+        eE = picdef.eEStart
         
         fNBlocks = Double(nBlocks)
         
@@ -731,8 +702,8 @@ struct ContentView: View {
         var imageWidth: Int = 0
         var imageHeight: Int = 0
         
-        imageWidth = self.imageWidthStart
-        imageHeight = self.imageHeightStart
+        imageWidth = picdef.imageWidthStart
+        imageHeight = picdef.imageHeightStart
         
         // Now we need to generate a bitmap image.
         
@@ -803,7 +774,7 @@ struct ContentView: View {
         var b20: Double = 0.0    
         
         nColors = picdef.nColorsStart
-        leftNumber = self.leftNumberStart
+        leftNumber = picdef.leftNumberStart
         r1 = self.r1Start
         g1 = self.g1Start
         b1 = self.b1Start
@@ -1006,7 +977,7 @@ struct ContentView: View {
     
     var body: some View {
 
-        let image: CGImage = getImage(drawIt:drawItStart, drawGradient: drawGradientStart, leftNumber: leftNumberStart)!
+        let image: CGImage = getImage(drawIt:drawItStart, drawGradient: drawGradientStart, leftNumber: picdef.leftNumberStart)!
         let img = Image(image, scale: 1.0, label: Text("Test"))
         
         HStack{ // this container shows instructions on left / dwg on right
@@ -1104,14 +1075,14 @@ struct ContentView: View {
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter center X")
                     Text("Between -2 and 2")
-                    TextField("X",value: $xCStart, formatter: ContentView.cgFormatter)
+                    TextField("X",value: $picdef.xCStart, formatter: ContentView.cgFormatter)
                         .padding(2)
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter center Y")
                     Text("Between -2 and 2")
-                    TextField("Y",value: $yCStart, formatter: ContentView.cgFormatter)
+                    TextField("Y",value: $picdef.yCStart, formatter: ContentView.cgFormatter)
                         .padding(2)
                 }
                 
@@ -1123,19 +1094,19 @@ struct ContentView: View {
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter iMax:")
-                    TextField("iMax",value: $iMaxStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("iMax",value: $picdef.iMaxStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }   
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter rSqLimit:")
-                    TextField("rSqLimit",value: $rSqLimitStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("rSqLimit",value: $picdef.rSqLimitStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 } 
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter imageWidth:")
-                    TextField("imageWidth",value: $imageWidthStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("imageWidth",value: $picdef.imageWidthStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }
                 
@@ -1145,14 +1116,14 @@ struct ContentView: View {
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter imageHeight:")
-                    TextField("imageHeightStart",value: $imageHeightStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("imageHeightStart",value: $picdef.imageHeightStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 } 
                 
 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter nBlocks:")
-                    TextField("nBlocks",value: $nBlocksStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("nBlocks",value: $picdef.nBlocksStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 } 
                 
@@ -1164,7 +1135,7 @@ struct ContentView: View {
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter eE:")
-                    TextField("eE",value: $eEStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("eE",value: $picdef.eEStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 } 
                 
@@ -1176,13 +1147,13 @@ struct ContentView: View {
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter nImage:")
-                    TextField("nImage",value: $nImageStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("nImage",value: $picdef.nImageStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }
                 
                 VStack { // each input has a vertical container with a Text label & TextField for data
                     Text("Enter dFIterMin:")
-                    TextField("dFIterMin",value: $dFIterMinStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("dFIterMin",value: $picdef.dFIterMinStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }
                 
@@ -1194,7 +1165,7 @@ struct ContentView: View {
                 
                 VStack{
                     Text("Enter left gradient color number")
-                    TextField("leftNumber",value: $leftNumberStart, formatter: ContentView.cgUnboundFormatter)
+                    TextField("leftNumber",value: $picdef.leftNumberStart, formatter: ContentView.cgUnboundFormatter)
                         .padding(2)
                 }
                 
@@ -1754,8 +1725,8 @@ struct ContentView: View {
                         .gesture(self.tapGesture)
                         .alert(isPresented: $showingAlert) {
                             // fixed imageWidth & imageHeight
-                            xCStart = getCenterXFromTapX(tapX:tapX,imageWidthStart:imageWidthStart)
-                            yCStart = getCenterYFromTapY(tapY:tapY,imageHeightStart:imageHeightStart)
+                            picdef.xCStart = getCenterXFromTapX(tapX:tapX,imageWidthStart:picdef.imageWidthStart)
+                            picdef.yCStart = getCenterYFromTapY(tapY:tapY,imageHeightStart:picdef.imageHeightStart)
                                 
                             return Alert(
                                 title: Text("  "),
@@ -1788,8 +1759,8 @@ struct ContentView: View {
                     showingAlert = false // we don't need it any more but hard to remove
                     self.tapLocations.append(tap.startLocation)
                     // the right place to update
-                    xCStart = getCenterXFromTapX(tapX:tapX,imageWidthStart:imageWidthStart)
-                    yCStart = getCenterYFromTapY(tapY:tapY,imageHeightStart:imageHeightStart)
+                    picdef.xCStart = getCenterXFromTapX(tapX:tapX,imageWidthStart:picdef.imageWidthStart)
+                    picdef.yCStart = getCenterYFromTapY(tapY:tapY,imageHeightStart:picdef.imageHeightStart)
                 }
                 
                 // reset tap event states

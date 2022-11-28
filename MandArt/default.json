@@ -1,1 +1,17 @@
-{"nColorsStart":6,"thetaStart":0,"scaleStart":2880000, "bEStart":5.0}
+{
+    "yCStart": 0.08442,
+    "scaleStart": 2880000,
+    "eEStart": 15,
+    "dFIterMinStart": 10,
+    "nImageStart": 0,
+    "nColorsStart": 6,
+    "leftNumberStart": 1,
+    "bEStart": 5,
+    "rSqLimitStart": 400,
+    "xCStart": -0.74725,
+    "iMaxStart": 10000,
+    "thetaStart": 0,
+    "imageWidthStart": 1200,
+    "imageHeightStart": 1000,
+    "nBlocksStart": 60
+}

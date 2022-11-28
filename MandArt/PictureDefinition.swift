@@ -1,15 +1,26 @@
 //
-//  Definition.swift
+//  PictureDefinition.swift
 //  MandArt
 //
-//  Created by Denise Case on 11/27/22.
+//  Managing user inputs
 //
 
 import Foundation
 
 class PictureDefinition: Codable, ObservableObject {
-    var nColorsStart: Int
-    var thetaStart: Double
-    var scaleStart: Double
-    var bEStart: Double
+    var xCStart: Double = -0.74725
+    var yCStart: Double =  0.08442
+    var scaleStart: Double =  2_880_000.0
+    var iMaxStart: Double =  10_000.0
+    var rSqLimitStart: Double =  400.0
+    var imageWidthStart: Int = 1_200
+    var imageHeightStart: Int = 1_000
+    var nBlocksStart: Int =  60
+    var bEStart: Double =  5.0
+    var eEStart: Double =  15.0
+    var thetaStart: Double =  0.0
+    var nImageStart: Int = 0
+    var dFIterMinStart: Double =  10.0
+    var nColorsStart: Int = 6
+    var leftNumberStart: Int = 1
 }
