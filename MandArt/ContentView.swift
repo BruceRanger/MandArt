@@ -11,7 +11,6 @@ import ImageIO
 import CoreServices
 
 // define some global variables for saving
-var nImage: Int = 0
 var contextImageGlobal: CGImage?
 var startFile = "default.json"
 var countFile = "outcount.json"
@@ -19,7 +18,6 @@ var countFile = "outcount.json"
 struct ContentView: View {
     
     @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
-    @StateObject private var countdef: CountDefinition = ModelData.shared.load(countFile)
     
     let instructionBackgroundColor = Color.green.opacity(0.5)
     
@@ -72,11 +70,37 @@ struct ContentView: View {
         print("Zoomed in, new scale is",picdef.scaleStart)
     }
     
-    fileprivate func saveOutCount() {
+    func readOutCount() -> Int {
+        print("reading the picture count into state")
+        var newCount: Int = 0
+        do {
+            let fileURL = try FileManager.default
+                .url(for: .applicationDirectory,
+                     in: .userDomainMask,
+                     appropriateFor: nil,
+                     create: true)
+                .appendingPathComponent(countFile)
+            print("in readOutCount() reading from ", fileURL)
+            let data = try Data(contentsOf: fileURL)
+            let decoder = JSONDecoder()
+            let countdef = try decoder.decode(CountDefinition.self, from: data)
+            let newCount = countdef.nImages
+            print("Just read the new i, it will be", newCount)
+            return newCount
+        } catch {
+            debugPrint(error.localizedDescription)
+            return newCount
+        }
+    }
+    
+     func saveOutCount(newi: Int) {
+        print("Saving the new count for next time as ", newi)
         let encoder = JSONEncoder()
         do {
-            // convert the struct to JSON string
-            let jsonData = try encoder.encode(countdef)
+            // update the object before saving
+            let updated:CountDefinition = CountDefinition()
+            updated.nImages = newi
+            let jsonData = try encoder.encode(updated)
             let fileURL = try FileManager.default
                 .url(for: .applicationDirectory,
                      in: .userDomainMask,
@@ -90,9 +114,9 @@ struct ContentView: View {
         }
     }
     
-    fileprivate func saveImageData() {
+    fileprivate func saveImageData(i:Int) {
         do {
-            let dn:String = "mandart" + String(countdef.nImages) + ".json"
+            let dn:String = "mandart" + String(i) + ".json"
             print("In saveDataFile() data filename = ", dn)
             let fileURL = try FileManager.default
                 .url(for: .documentDirectory,
@@ -105,21 +129,18 @@ struct ContentView: View {
             do {
                     // convert the struct to JSON string
                 let jsonData = try JSONEncoder().encode(picdef)
-                
                 do {
                     try jsonData.write(to: fileURL)
                     print("Wrote json to ", dn)
                     let jsonString = String(data:jsonData, encoding: .utf8)!
                     print(jsonString)
                 } catch { print(error)}
-                
             } catch { print(error)}
-            
         } catch { print(error)}
     }
     
-    func saveImage() -> Bool {
-        let fn:String = "mandart" + String(countdef.nImages) + ".png"
+    func saveImage(i: Int) -> Bool {
+        let fn:String = "mandart" + String(i) + ".png"
         print("In saveImage() image filename = ", fn)
         
         let allocator : CFAllocator = kCFAllocatorDefault
@@ -140,34 +161,28 @@ struct ContentView: View {
             let documentsDirectory = paths[0]
             return documentsDirectory
         }
-        
         let imageType: CFString = kUTTypePNG
         let count: Int = 1
         let options: CFDictionary? = nil
         var destination: CGImageDestination
         
         let destinationAttempt: CGImageDestination?  = CGImageDestinationCreateWithURL(url, imageType, count, options)
-        
         if (destinationAttempt == nil) {
             return false
         }
         else {
             destination = destinationAttempt.unsafelyUnwrapped
-                // add our mandart CG image to the image destination
             CGImageDestinationAddImage(destination,contextImageGlobal!, nil);
-                // finalize (write the information)
             CGImageDestinationFinalize(destination)
             print("Wrote image to ", fn)
-            saveImageData()
-            print("In saveImage(), picture and data saved with number ",countdef.nImages)
-            countdef.nImages = countdef.nImages + 1
-            print("In saveImage(), incrementing to ",countdef.nImages)
-            
-            saveOutCount()
+            saveImageData(i: i)
+            print("In saveImage(), picture and data saved with int ",i)
+            let newi = i + 1
+            print("In saveImage(), incrementing to ",i)
+            saveOutCount(newi: newi)
             return true
         }
     }
-    
     
     func getImage(drawIt:Bool, drawGradient: Bool, leftNumber: Int) -> CGImage? {
         
@@ -721,7 +736,13 @@ struct ContentView: View {
                     VStack {
                         Button("Save as PNG",
                                action: {
-                            saveImage()
+                            
+                            // read and update the global variable
+                            let imageCount = readOutCount()
+                            
+                            // then save the image (& data)
+                            let success = saveImage(i:imageCount)
+                            print("successful picture save =",success)
                         }
                         )
                     }
