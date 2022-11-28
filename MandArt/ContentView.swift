@@ -696,6 +696,13 @@ struct ContentView: View {
         formatter.numberStyle = .ordinal
         return formatter
     }
+    
+    func ratio() -> Double{
+        let h : Double = Double(picdef.imageHeightStart)
+        let w : Double = Double(picdef.imageWidthStart)
+        let ratio: Double = max (h/w, w/h)
+       return ratio
+    }
         
     var body: some View {
         
@@ -856,6 +863,11 @@ struct ContentView: View {
                             Text("Image height, px:")
                             TextField("imageHeightStart",value: $picdef.imageHeightStart, formatter: ContentView.cgUnboundFormatter)
                                 .padding(2)
+                        }
+                        VStack {
+                            Text("Aspect ratio:")
+                            Text("\(self.ratio())")
+                                .padding(3)
                         }
                     }
                 }
