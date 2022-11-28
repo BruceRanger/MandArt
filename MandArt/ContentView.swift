@@ -14,10 +14,12 @@ import CoreServices
 var nImage: Int = 0
 var contextImageGlobal: CGImage?
 var startFile = "default.json"
+var countFile = "outcount.json"
 
 struct ContentView: View {
     
     @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
+    @StateObject private var countdef: CountDefinition = ModelData.shared.load(countFile)
     
     let instructionBackgroundColor = Color.green.opacity(0.5)
     
@@ -68,12 +70,29 @@ struct ContentView: View {
         self.scaleOld = picdef.scaleStart
         picdef.scaleStart = self.scaleOld * 2.0
         print("Zoomed in, new scale is",picdef.scaleStart)
-
+    }
+    
+    fileprivate func saveOutCount() {
+        let encoder = JSONEncoder()
+        do {
+            // convert the struct to JSON string
+            let jsonData = try encoder.encode(countdef)
+            let fileURL = try FileManager.default
+                .url(for: .applicationDirectory,
+                     in: .userDomainMask,
+                     appropriateFor: nil,
+                     create: true)
+                .appendingPathComponent(countFile)
+            print("fileURL for OUTCOUNT JSON is ", fileURL)
+            try jsonData.write(to: fileURL)
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
     }
     
     fileprivate func saveImageData() {
         do {
-            let dn:String = "mandart" + String(nImage) + ".json"
+            let dn:String = "mandart" + String(countdef.nImages) + ".json"
             print("In saveDataFile() data filename = ", dn)
             let fileURL = try FileManager.default
                 .url(for: .documentDirectory,
@@ -100,7 +119,7 @@ struct ContentView: View {
     }
     
     func saveImage() -> Bool {
-        let fn:String = "mandart" + String(nImage) + ".png"
+        let fn:String = "mandart" + String(countdef.nImages) + ".png"
         print("In saveImage() image filename = ", fn)
         
         let allocator : CFAllocator = kCFAllocatorDefault
@@ -140,9 +159,11 @@ struct ContentView: View {
             CGImageDestinationFinalize(destination)
             print("Wrote image to ", fn)
             saveImageData()
-            print("In saveImage(), picture and data saved with number ",nImage)
-            nImage = nImage + 1
-            print("In saveImage(), incrementing to ",nImage)
+            print("In saveImage(), picture and data saved with number ",countdef.nImages)
+            countdef.nImages = countdef.nImages + 1
+            print("In saveImage(), incrementing to ",countdef.nImages)
+            
+            saveOutCount()
             return true
         }
     }
