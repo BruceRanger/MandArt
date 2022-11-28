@@ -15,8 +15,6 @@
 		882BAED529340ABE003ACB0B /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED429340ABE003ACB0B /* ModelData.swift */; };
 		882BAED72934167D003ACB0B /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 882BAED62934167D003ACB0B /* default.json */; };
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
-		882BAEDB29347AB1003ACB0B /* HueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAEDA29347AB1003ACB0B /* HueView.swift */; };
-		882BAEDD2934819E003ACB0B /* HueListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAEDC2934819E003ACB0B /* HueListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +28,6 @@
 		882BAED429340ABE003ACB0B /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		882BAED62934167D003ACB0B /* default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = default.json; sourceTree = "<group>"; };
 		882BAED829346C92003ACB0B /* Hue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hue.swift; sourceTree = "<group>"; };
-		882BAEDA29347AB1003ACB0B /* HueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HueView.swift; sourceTree = "<group>"; };
-		882BAEDC2934819E003ACB0B /* HueListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HueListView.swift; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,8 +64,6 @@
 				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
 				6A3AEC0C26F879E700D7E31A /* AppDelegate.swift */,
 				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
-				882BAEDC2934819E003ACB0B /* HueListView.swift */,
-				882BAEDA29347AB1003ACB0B /* HueView.swift */,
 				882BAED2293409FE003ACB0B /* PictureDefinition.swift */,
 				882BAED829346C92003ACB0B /* Hue.swift */,
 				6A3AEC1026F879F500D7E31A /* Assets.xcassets */,
@@ -154,10 +148,8 @@
 				882BAED929346C92003ACB0B /* Hue.swift in Sources */,
 				6A3AEC0F26F879E700D7E31A /* ContentView.swift in Sources */,
 				882BAED529340ABE003ACB0B /* ModelData.swift in Sources */,
-				882BAEDD2934819E003ACB0B /* HueListView.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
 				6A3AEC0D26F879E700D7E31A /* AppDelegate.swift in Sources */,
-				882BAEDB29347AB1003ACB0B /* HueView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
