@@ -34,106 +34,6 @@ struct ContentView: View {
     @State private var dragCompleted = false
     @State private var dragOffset = CGSize.zero
     
-    @State private var number1Start: Int =  1
-    @State private var r1Start: Double =  0.0
-    @State private var g1Start: Double =  255.0
-    @State private var b1Start: Double =  0.0
-    
-    @State private var number2Start: Int =  2
-    @State private var r2Start: Double =  255.0
-    @State private var g2Start: Double =  255.0
-    @State private var b2Start: Double =  0.0
-    
-    @State private var number3Start: Int =  3
-    @State private var r3Start: Double =  255.0
-    @State private var g3Start: Double =  0.0
-    @State private var b3Start: Double =  0.0
-    
-    @State private var number4Start: Int =  4
-    @State private var r4Start: Double =  255.0
-    @State private var g4Start: Double =  0.0
-    @State private var b4Start: Double =  255.0
-    
-    @State private var number5Start: Int =  5
-    @State private var r5Start: Double =  0.0
-    @State private var g5Start: Double =  0.0
-    @State private var b5Start: Double =  255.0
-    
-    @State private var number6Start: Int =  6
-    @State private var r6Start: Double =  0.0
-    @State private var g6Start: Double =  255.0
-    @State private var b6Start: Double =  255.0
-    
-    @State private var number7Start: Int =  7
-    @State private var r7Start: Double =  0.0
-    @State private var g7Start: Double =  0.0
-    @State private var b7Start: Double =  0.0
-    
-    @State private var number8Start: Int =  8
-    @State private var r8Start: Double =  0.0
-    @State private var g8Start: Double =  0.0
-    @State private var b8Start: Double =  0.0
-    
-    @State private var number9Start: Int =  9
-    @State private var r9Start: Double =  0.0
-    @State private var g9Start: Double =  0.0
-    @State private var b9Start: Double =  0.0
-    
-    @State private var number10Start: Int =  10
-    @State private var r10Start: Double =  0.0
-    @State private var g10Start: Double =  0.0
-    @State private var b10Start: Double =  0.0
-    
-    @State private var number11Start: Int =  11
-    @State private var r11Start: Double =  0.0
-    @State private var g11Start: Double =  0.0
-    @State private var b11Start: Double =  0.0
-    
-    @State private var number12Start: Int =  12
-    @State private var r12Start: Double =  0.0
-    @State private var g12Start: Double =  0.0
-    @State private var b12Start: Double =  0.0
-    
-    @State private var number13Start: Int =  13
-    @State private var r13Start: Double =  0.0
-    @State private var g13Start: Double =  0.0
-    @State private var b13Start: Double =  0.0
-    
-    @State private var number14Start: Int =  14
-    @State private var r14Start: Double =  0.0
-    @State private var g14Start: Double =  0.0
-    @State private var b14Start: Double =  0.0
-    
-    @State private var number15Start: Int =  15
-    @State private var r15Start: Double =  0.0
-    @State private var g15Start: Double =  0.0
-    @State private var b15Start: Double =  0.0
-    
-    @State private var number16Start: Int =  16
-    @State private var r16Start: Double =  0.0
-    @State private var g16Start: Double =  0.0
-    @State private var b16Start: Double =  0.0
-    
-    @State private var number17Start: Int =  17
-    @State private var r17Start: Double =  0.0
-    @State private var g17Start: Double =  0.0
-    @State private var b17Start: Double =  0.0
-    
-    @State private var number18Start: Int =  18
-    @State private var r18Start: Double =  0.0
-    @State private var g18Start: Double =  0.0
-    @State private var b18Start: Double =  0.0
-    
-    @State private var number19Start: Int =  19
-    @State private var r19Start: Double =  0.0
-    @State private var g19Start: Double =  0.0
-    @State private var b19Start: Double =  0.0
-    
-    @State private var number20Start: Int =  20
-    @State private var r20Start: Double =  0.0
-    @State private var g20Start: Double =  0.0
-    @State private var b20Start: Double =  0.0
-    
     @State private var drawItStart = true
     @State private var drawGradientStart = false
     
@@ -246,7 +146,8 @@ struct ContentView: View {
     func getImage(drawIt:Bool, drawGradient: Bool, leftNumber: Int) -> CGImage? {
         
         if drawIt == true { // draws image
-            
+            print("Drawing picture")
+
             var contextImage: CGImage
             
             var imageWidth: Int = 0
@@ -389,132 +290,10 @@ struct ContentView: View {
             var eE: Double = 0.0
             var dE: Double = 0.0
             
-            var r1: Double = 0.0
-            var g1: Double = 0.0
-            var b1: Double = 0.0
-            var r2: Double = 0.0
-            var g2: Double = 0.0
-            var b2: Double = 0.0
-            var r3: Double = 0.0
-            var g3: Double = 0.0
-            var b3: Double = 0.0
-            var r4: Double = 0.0
-            var g4: Double = 0.0
-            var b4: Double = 0.0
-            var r5: Double = 0.0
-            var g5: Double = 0.0
-            var b5: Double = 0.0
-            var r6: Double = 0.0
-            var g6: Double = 0.0
-            var b6: Double = 0.0
-            var r7: Double = 0.0
-            var g7: Double = 0.0
-            var b7: Double = 0.0
-            var r8: Double = 0.0
-            var g8: Double = 0.0
-            var b8: Double = 0.0
-            var r9: Double = 0.0
-            var g9: Double = 0.0
-            var b9: Double = 0.0
-            var r10: Double = 0.0
-            var g10: Double = 0.0
-            var b10: Double = 0.0
-            var r11: Double = 0.0
-            var g11: Double = 0.0
-            var b11: Double = 0.0
-            var r12: Double = 0.0
-            var g12: Double = 0.0
-            var b12: Double = 0.0
-            var r13: Double = 0.0
-            var g13: Double = 0.0
-            var b13: Double = 0.0
-            var r14: Double = 0.0
-            var g14: Double = 0.0
-            var b14: Double = 0.0
-            var r15: Double = 0.0
-            var g15: Double = 0.0
-            var b15: Double = 0.0
-            var r16: Double = 0.0
-            var g16: Double = 0.0
-            var b16: Double = 0.0
-            var r17: Double = 0.0
-            var g17: Double = 0.0
-            var b17: Double = 0.0
-            var r18: Double = 0.0
-            var g18: Double = 0.0
-            var b18: Double = 0.0
-            var r19: Double = 0.0
-            var g19: Double = 0.0
-            var b19: Double = 0.0
-            var r20: Double = 0.0
-            var g20: Double = 0.0
-            var b20: Double = 0.0
-            
             bE = picdef.bEStart
             eE = picdef.eEStart
             
             nColors = picdef.nColorsStart
-            r1 = self.r1Start
-            g1 = self.g1Start
-            b1 = self.b1Start
-            r2 = self.r2Start
-            g2 = self.g2Start
-            b2 = self.b2Start
-            r3 = self.r3Start
-            g3 = self.g3Start
-            b3 = self.b3Start
-            r4 = self.r4Start
-            g4 = self.g4Start
-            b4 = self.b4Start
-            r5 = self.r5Start
-            g5 = self.g5Start
-            b5 = self.b5Start
-            r6 = self.r6Start
-            g6 = self.g6Start
-            b6 = self.b6Start
-            r7 = self.r7Start
-            g7 = self.g7Start
-            b7 = self.b7Start
-            r8 = self.r8Start
-            g8 = self.g8Start
-            b8 = self.b8Start
-            r9 = self.r9Start
-            g9 = self.g9Start
-            b9 = self.b9Start
-            r10 = self.r10Start
-            g10 = self.g10Start
-            b10 = self.b10Start
-            r11 = self.r11Start
-            g11 = self.g11Start
-            b11 = self.b11Start
-            r12 = self.r12Start
-            g12 = self.g12Start
-            b12 = self.b12Start
-            r13 = self.r13Start
-            g13 = self.g13Start
-            b13 = self.b13Start
-            r14 = self.r14Start
-            g14 = self.g14Start
-            b14 = self.b14Start
-            r15 = self.r15Start
-            g15 = self.g15Start
-            b15 = self.b15Start
-            r16 = self.r16Start
-            g16 = self.g16Start
-            b16 = self.b16Start
-            r17 = self.r17Start
-            g17 = self.g17Start
-            b17 = self.b17Start
-            r18 = self.r18Start
-            g18 = self.g18Start
-            b18 = self.b18Start
-            r19 = self.r19Start
-            g19 = self.g19Start
-            b19 = self.b19Start
-            r20 = self.r20Start
-            g20 = self.g20Start
-            b20 = self.b20Start
-            
             nBlocks = 60
             bE = 5.0
             eE = 15.0
@@ -528,20 +307,41 @@ struct ContentView: View {
             dE = (iMax - fIterMin - fNBlocks*bE)/pow(fNBlocks, eE)
             
             var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
+ 
+//            let colors: [[Double]] =   [[r1, g1, b1],     [r2, g2, b2],     [r3, g3, b3],
+//                                        [r4, g4, b4],     [r5, g5, b5],     [r6, g6, b6],
+//                                        [r7, g7, b7],     [r8, g8, b8],     [r9, g9, b9],
+//                                        [r10, g10, b10],  [r11, g11, b11],  [r12, g12, b12],
+//                                        [r13, g13, b13],  [r14, g14, b14],  [r15, g15, b15],
+//                                        [r16, g16, b16],  [r17, g17, b17],  [r18, g18, b18],
+//                                        [r19, g19, b19],  [r20, g20, b20]]
+//
             
-                //      var colors: [[Double]] = [[0.0, 255.0, 0.0], [255.0, 255.0, 0.0], [255.0, 0.0, 0.0], [255.0, 0.0, 255.0], [0.0, 0.0, 255.0], [0.0, 255.0, 255.0]]
-            
-            let colors: [[Double]] =   [[r1, g1, b1],     [r2, g2, b2],     [r3, g3, b3],
-                                        [r4, g4, b4],     [r5, g5, b5],     [r6, g6, b6],
-                                        [r7, g7, b7],     [r8, g8, b8],     [r9, g9, b9],
-                                        [r10, g10, b10],  [r11, g11, b11],  [r12, g12, b12],
-                                        [r13, g13, b13],  [r14, g14, b14],  [r15, g15, b15],
-                                        [r16, g16, b16],  [r17, g17, b17],  [r18, g18, b18],
-                                        [r19, g19, b19],  [r20, g20, b20]]
+        let colors: [[Double]] = [
+                [picdef.hues[0].rStart, picdef.hues[0].gStart, picdef.hues[0].bStart],
+                [picdef.hues[1].rStart, picdef.hues[1].gStart, picdef.hues[1].bStart],
+                [picdef.hues[2].rStart, picdef.hues[2].gStart, picdef.hues[2].bStart],
+                [picdef.hues[3].rStart, picdef.hues[3].gStart, picdef.hues[3].bStart],
+                [picdef.hues[4].rStart, picdef.hues[4].gStart, picdef.hues[4].bStart],
+                [picdef.hues[5].rStart, picdef.hues[5].gStart, picdef.hues[5].bStart],
+                [picdef.hues[6].rStart, picdef.hues[6].gStart, picdef.hues[6].bStart],
+                [picdef.hues[7].rStart, picdef.hues[7].gStart, picdef.hues[7].bStart],
+                [picdef.hues[8].rStart, picdef.hues[8].gStart, picdef.hues[8].bStart],
+                [picdef.hues[9].rStart, picdef.hues[9].gStart, picdef.hues[9].bStart],
+                [picdef.hues[10].rStart, picdef.hues[10].gStart, picdef.hues[10].bStart],
+                [picdef.hues[11].rStart, picdef.hues[11].gStart, picdef.hues[11].bStart],
+                [picdef.hues[12].rStart, picdef.hues[12].gStart, picdef.hues[12].bStart],
+                [picdef.hues[13].rStart, picdef.hues[13].gStart, picdef.hues[13].bStart],
+                [picdef.hues[14].rStart, picdef.hues[14].gStart, picdef.hues[14].bStart],
+                [picdef.hues[15].rStart, picdef.hues[15].gStart, picdef.hues[15].bStart],
+                [picdef.hues[16].rStart, picdef.hues[16].gStart, picdef.hues[16].bStart],
+                [picdef.hues[17].rStart, picdef.hues[17].gStart, picdef.hues[17].bStart],
+                [picdef.hues[18].rStart, picdef.hues[18].gStart, picdef.hues[18].bStart],
+                [picdef.hues[19].rStart, picdef.hues[19].gStart, picdef.hues[19].bStart],
+               ]
             
             var h: Double = 0.0
             var xX: Double = 0.0
-            
             
             for i in 0...nBlocks {
                 blockBound[i] = bE*Double(i) + dE*pow(Double(i), eE)
@@ -640,13 +440,13 @@ struct ContentView: View {
                                 
                                 color = colors[block0][0] + xX*(colors[block1][0] - colors[block0][0])
                                 pixelAddress.pointee = UInt8(color)         // R
-                                
+
                                 color = colors[block0][1] + xX*(colors[block1][1] - colors[block0][1])
                                 (pixelAddress + 1).pointee = UInt8(color)   // G
-                                
+
                                 color = colors[block0][2] + xX*(colors[block1][2] - colors[block0][2])
                                 (pixelAddress + 2).pointee = UInt8(color)   // B
-                                
+
                                 (pixelAddress + 3).pointee = UInt8(255)     //alpha
                                 
                             }
@@ -686,6 +486,7 @@ struct ContentView: View {
         
         
         else if drawGradient == true { // draws gradient image
+            print("Drawing gradient")
             
             var gradientImage: CGImage
             
@@ -701,139 +502,33 @@ struct ContentView: View {
             var leftNumber: Int = 0
             var rightNumber: Int = 0
             var color: Double = 0.0
-            
-            var r1: Double = 0.0
-            var g1: Double = 0.0
-            var b1: Double = 0.0
-            var r2: Double = 0.0
-            var g2: Double = 0.0
-            var b2: Double = 0.0
-            var r3: Double = 0.0
-            var g3: Double = 0.0
-            var b3: Double = 0.0
-            var r4: Double = 0.0
-            var g4: Double = 0.0
-            var b4: Double = 0.0
-            var r5: Double = 0.0
-            var g5: Double = 0.0
-            var b5: Double = 0.0
-            var r6: Double = 0.0
-            var g6: Double = 0.0
-            var b6: Double = 0.0
-            var r7: Double = 0.0
-            var g7: Double = 0.0
-            var b7: Double = 0.0
-            var r8: Double = 0.0
-            var g8: Double = 0.0
-            var b8: Double = 0.0
-            var r9: Double = 0.0
-            var g9: Double = 0.0
-            var b9: Double = 0.0
-            var r10: Double = 0.0
-            var g10: Double = 0.0
-            var b10: Double = 0.0
-            var r11: Double = 0.0
-            var g11: Double = 0.0
-            var b11: Double = 0.0
-            var r12: Double = 0.0
-            var g12: Double = 0.0
-            var b12: Double = 0.0
-            var r13: Double = 0.0
-            var g13: Double = 0.0
-            var b13: Double = 0.0
-            var r14: Double = 0.0
-            var g14: Double = 0.0
-            var b14: Double = 0.0
-            var r15: Double = 0.0
-            var g15: Double = 0.0
-            var b15: Double = 0.0
-            var r16: Double = 0.0
-            var g16: Double = 0.0
-            var b16: Double = 0.0
-            var r17: Double = 0.0
-            var g17: Double = 0.0
-            var b17: Double = 0.0
-            var r18: Double = 0.0
-            var g18: Double = 0.0
-            var b18: Double = 0.0
-            var r19: Double = 0.0
-            var g19: Double = 0.0
-            var b19: Double = 0.0
-            var r20: Double = 0.0
-            var g20: Double = 0.0
-            var b20: Double = 0.0
-            
+             
             nColors = picdef.nColorsStart
             leftNumber = picdef.leftNumberStart
-            r1 = self.r1Start
-            g1 = self.g1Start
-            b1 = self.b1Start
-            r2 = self.r2Start
-            g2 = self.g2Start
-            b2 = self.b2Start
-            r3 = self.r3Start
-            g3 = self.g3Start
-            b3 = self.b3Start
-            r4 = self.r4Start
-            g4 = self.g4Start
-            b4 = self.b4Start
-            r5 = self.r5Start
-            g5 = self.g5Start
-            b5 = self.b5Start
-            r6 = self.r6Start
-            g6 = self.g6Start
-            b6 = self.b6Start
-            r7 = self.r7Start
-            g7 = self.g7Start
-            b7 = self.b7Start
-            r8 = self.r8Start
-            g8 = self.g8Start
-            b8 = self.b8Start
-            r9 = self.r9Start
-            g9 = self.g9Start
-            b9 = self.b9Start
-            r10 = self.r10Start
-            g10 = self.g10Start
-            b10 = self.b10Start
-            r11 = self.r11Start
-            g11 = self.g11Start
-            b11 = self.b11Start
-            r12 = self.r12Start
-            g12 = self.g12Start
-            b12 = self.b12Start
-            r13 = self.r13Start
-            g13 = self.g13Start
-            b13 = self.b13Start
-            r14 = self.r14Start
-            g14 = self.g14Start
-            b14 = self.b14Start
-            r15 = self.r15Start
-            g15 = self.g15Start
-            b15 = self.b15Start
-            r16 = self.r16Start
-            g16 = self.g16Start
-            b16 = self.b16Start
-            r17 = self.r17Start
-            g17 = self.g17Start
-            b17 = self.b17Start
-            r18 = self.r18Start
-            g18 = self.g18Start
-            b18 = self.b18Start
-            r19 = self.r19Start
-            g19 = self.g19Start
-            b19 = self.b19Start
-            r20 = self.r20Start
-            g20 = self.g20Start
-            b20 = self.b20Start
-            
-            let colors: [[Double]] =   [[r1, g1, b1],     [r2, g2, b2],     [r3, g3, b3],
-                                        [r4, g4, b4],     [r5, g5, b5],     [r6, g6, b6],
-                                        [r7, g7, b7],     [r8, g8, b8],     [r9, g9, b9],
-                                        [r10, g10, b10],  [r11, g11, b11],  [r12, g12, b12],
-                                        [r13, g13, b13],  [r14, g14, b14],  [r15, g15, b15],
-                                        [r16, g16, b16],  [r17, g17, b17],  [r18, g18, b18],
-                                        [r19, g19, b19],  [r20, g20, b20]]
-            
+            print("Drawing gradient, left color number is ", leftNumber)
+           
+            let colors: [[Double]] = [
+                [picdef.hues[0].rStart, picdef.hues[0].gStart, picdef.hues[0].bStart],
+                [picdef.hues[1].rStart, picdef.hues[1].gStart, picdef.hues[1].bStart],
+                [picdef.hues[2].rStart, picdef.hues[2].gStart, picdef.hues[2].bStart],
+                [picdef.hues[3].rStart, picdef.hues[3].gStart, picdef.hues[3].bStart],
+                [picdef.hues[4].rStart, picdef.hues[4].gStart, picdef.hues[4].bStart],
+                [picdef.hues[5].rStart, picdef.hues[5].gStart, picdef.hues[5].bStart],
+                [picdef.hues[6].rStart, picdef.hues[6].gStart, picdef.hues[6].bStart],
+                [picdef.hues[7].rStart, picdef.hues[7].gStart, picdef.hues[7].bStart],
+                [picdef.hues[8].rStart, picdef.hues[8].gStart, picdef.hues[8].bStart],
+                [picdef.hues[9].rStart, picdef.hues[9].gStart, picdef.hues[9].bStart],
+                [picdef.hues[10].rStart, picdef.hues[10].gStart, picdef.hues[10].bStart],
+                [picdef.hues[11].rStart, picdef.hues[11].gStart, picdef.hues[11].bStart],
+                [picdef.hues[12].rStart, picdef.hues[12].gStart, picdef.hues[12].bStart],
+                [picdef.hues[13].rStart, picdef.hues[13].gStart, picdef.hues[13].bStart],
+                [picdef.hues[14].rStart, picdef.hues[14].gStart, picdef.hues[14].bStart],
+                [picdef.hues[15].rStart, picdef.hues[15].gStart, picdef.hues[15].bStart],
+                [picdef.hues[16].rStart, picdef.hues[16].gStart, picdef.hues[16].bStart],
+                [picdef.hues[17].rStart, picdef.hues[17].gStart, picdef.hues[17].bStart],
+                [picdef.hues[18].rStart, picdef.hues[18].gStart, picdef.hues[18].bStart],
+                [picdef.hues[19].rStart, picdef.hues[19].gStart, picdef.hues[19].bStart],
+            ]
             var xGradient: Double = 0.0
             
                 // set up CG parameters
@@ -960,9 +655,7 @@ struct ContentView: View {
         formatter.numberStyle = .ordinal
         return formatter
     }
-    
-        // ........................................................................
-    
+        
     var body: some View {
         
         let image: CGImage = getImage(drawIt:drawItStart, drawGradient: drawGradientStart, leftNumber: picdef.leftNumberStart)!
@@ -1100,88 +793,69 @@ struct ContentView: View {
                         TextField("imageHeightStart",value: $picdef.imageHeightStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
                     }
-                    
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
+                    VStack {
                         Text("Enter nBlocks:")
                         TextField("nBlocks",value: $picdef.nBlocksStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
                     }
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
+                    VStack {
                         Text("Enter bE:")
                         TextField("bE",value: $picdef.bEStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
                     }
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
+                    VStack {
                         Text("Enter eE:")
                         TextField("eE",value: $picdef.eEStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
                     }
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
+                    VStack {
                         Text("Enter theta:")
                         TextField("theta",value: $picdef.thetaStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
                     }
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
+                    VStack {
                         Text("Enter nImage:")
                         TextField("nImage",value: $picdef.nImageStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
                     }
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
+                    VStack { 
                         Text("Enter dFIterMin:")
                         TextField("dFIterMin",value: $picdef.dFIterMinStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
                     }
-                    
                     VStack{
                         Text("Enter number of colors")
                         TextField("nColors",value: $picdef.nColorsStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
                     }
-                    
                     VStack{
                         Text("Enter left gradient color number")
                         TextField("leftNumber",value: $picdef.leftNumberStart, formatter: ContentView.cgUnboundFormatter)
                             .padding(2)
                     }
-                    
                 }   // end of group
-                
                 Group{
-                    
-                        // switch to list
-                    
                     ForEach($picdef.hues, id: \.numberStart) { hue in
                         HStack{
-                            
                             VStack{
                                 Text("No:")
                                 TextField("number",value: hue.numberStart, formatter: ContentView.cgUnboundFormatter)
                                     .disabled(true)
                                     .padding(2)
                             }
-                            
                             VStack{
                                 Text("Enter R:")
                                 TextField("r",value: hue.rStart, formatter: ContentView.cgUnboundFormatter)
                             }
-                            
                             VStack{
                                 Text("Enter G:")
                                 TextField("g",value: hue.gStart, formatter: ContentView.cgUnboundFormatter)
                             }
-                            
                             VStack{
                                 Text("Enter B:")
                                 TextField("b",value: hue.bStart, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
-                            
                         }   // end HStack
                     } // end foreach
                 } // end colors group
@@ -1191,7 +865,6 @@ struct ContentView: View {
                 .frame(width:inputWidth)
                 .padding(10)
             }
-            
             GeometryReader {
                 geometry in
                 ZStack(alignment: .topLeading) {
@@ -1207,10 +880,8 @@ struct ContentView: View {
                                 title: Text("  "),
                                 message: Text("  "),
                                 dismissButton: .default(Text("  ")))
-                            
                         }
                 }
-                
             } // end GeoReader
         } // end HStack
     } // end view body
@@ -1237,12 +908,10 @@ struct ContentView: View {
                     picdef.xCStart = getCenterXFromTapX(tapX:tapX,imageWidthStart:picdef.imageWidthStart)
                     picdef.yCStart = getCenterYFromTapY(tapY:tapY,imageHeightStart:picdef.imageHeightStart)
                 }
-                
                     // reset tap event states
                 self.moved = 0
                 self.startTime = nil
             }
     } // end tapGesture
     
-
 }
