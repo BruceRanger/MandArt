@@ -84,7 +84,7 @@ struct ContentView: View {
             let data = try Data(contentsOf: fileURL)
             let decoder = JSONDecoder()
             let countdef = try decoder.decode(CountDefinition.self, from: data)
-            let newCount = countdef.nImages
+            newCount = countdef.nImages
             print("Just read the new i, it will be", newCount)
             return newCount
         } catch {
@@ -800,94 +800,122 @@ struct ContentView: View {
                         }
                         
                     } // end HStack
-                    
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
-                        Text("Enter center X")
-                        Text("Between -2 and 2")
-                        TextField("X",value: $picdef.xCStart, formatter: ContentView.cgFormatter)
-                            .padding(2)
+                    Group {
+                        HStack {
+                            
+                            VStack { // each input has a vertical container with a Text label & TextField for data
+                                Text("Enter center X")
+                                Text("Between -2 and 2")
+                                TextField("X",value: $picdef.xCStart, formatter: ContentView.cgFormatter)
+                                    .padding(2)
+                            }
+                            
+                            VStack { // each input has a vertical container with a Text label & TextField for data
+                                Text("Enter center Y")
+                                Text("Between -2 and 2")
+                                TextField("Y",value: $picdef.yCStart, formatter: ContentView.cgFormatter)
+                                    .padding(2)
+                            }
+                        }
                     }
                     
-                    VStack { // each input has a vertical container with a Text label & TextField for data
-                        Text("Enter center Y")
-                        Text("Between -2 and 2")
-                        TextField("Y",value: $picdef.yCStart, formatter: ContentView.cgFormatter)
-                            .padding(2)
+                    Group {
+                        HStack {
+                            VStack { // each input has a vertical container with a Text label & TextField for data
+                                Text("scale:")
+                                TextField("Scale",value: $picdef.scaleStart, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
+                            
+                            VStack { // each input has a vertical container with a Text label & TextField for data
+                                Text("iMax:")
+                                TextField("iMax",value: $picdef.iMaxStart, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
+                            
+                            VStack { // each input has a vertical container with a Text label & TextField for data
+                                Text("rSqLimit:")
+                                TextField("rSqLimit",value: $picdef.rSqLimitStart, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
+                        }
                     }
                     
-                    VStack { // each input has a vertical container with a Text label & TextField for data
-                        Text("Enter scale:")
-                        TextField("Scale",value: $picdef.scaleStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
-                    }
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
-                        Text("Enter iMax:")
-                        TextField("iMax",value: $picdef.iMaxStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
-                    }
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
-                        Text("Enter rSqLimit:")
-                        TextField("rSqLimit",value: $picdef.rSqLimitStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
-                    }
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
-                        Text("Enter imageWidth:")
-                        TextField("imageWidth",value: $picdef.imageWidthStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
-                    }
+                  
                     
                 } // end of group
                 
+                Group {
+                    HStack {
+                        VStack {
+                            Text("Image width, px:")
+                            TextField("imageWidth",value: $picdef.imageWidthStart, formatter: ContentView.cgUnboundFormatter)
+                                .padding(2)
+                        }
+                        VStack {
+                            Text("Image height, px:")
+                            TextField("imageHeightStart",value: $picdef.imageHeightStart, formatter: ContentView.cgUnboundFormatter)
+                                .padding(2)
+                        }
+                    }
+                }
+                
                 Group{
-                    
-                    VStack { // each input has a vertical container with a Text label & TextField for data
-                        Text("Enter imageHeight:")
-                        TextField("imageHeightStart",value: $picdef.imageHeightStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
+                    HStack{
+                        
+                        VStack {
+                            Text("bE:")
+                            TextField("bE",value: $picdef.bEStart, formatter: ContentView.cgUnboundFormatter)
+                                .padding(2)
+                        }
+                        VStack {
+                            Text("eE:")
+                            TextField("eE",value: $picdef.eEStart, formatter: ContentView.cgUnboundFormatter)
+                                .padding(2)
+                        }
                     }
-                    VStack {
-                        Text("Enter nBlocks:")
-                        TextField("nBlocks",value: $picdef.nBlocksStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
+                }
+                Group {
+                    HStack{
+                        VStack {
+                            Text("theta:")
+                            TextField("theta",value: $picdef.thetaStart, formatter: ContentView.cgUnboundFormatter)
+                                .padding(2)
+                        }
+                        VStack {
+                            Text("nImage:")
+                            TextField("nImage",value: $picdef.nImageStart, formatter: ContentView.cgUnboundFormatter)
+                                .padding(2)
+                        }
                     }
-                    VStack {
-                        Text("Enter bE:")
-                        TextField("bE",value: $picdef.bEStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
+                }
+                Group {
+                    HStack {
+                        
+                        VStack {
+                            Text("dFIterMin:")
+                            TextField("dFIterMin",value: $picdef.dFIterMinStart, formatter: ContentView.cgUnboundFormatter)
+                                .padding(2)
+                        }
+                        VStack {
+                            Text("nBlocks:")
+                            TextField("nBlocks",value: $picdef.nBlocksStart, formatter: ContentView.cgUnboundFormatter)
+                                .padding(2)
+                        }
                     }
-                    VStack {
-                        Text("Enter eE:")
-                        TextField("eE",value: $picdef.eEStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
-                    }
-                    VStack {
-                        Text("Enter theta:")
-                        TextField("theta",value: $picdef.thetaStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
-                    }
-                    VStack {
-                        Text("Enter nImage:")
-                        TextField("nImage",value: $picdef.nImageStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
-                    }
-                    VStack {
-                        Text("Enter dFIterMin:")
-                        TextField("dFIterMin",value: $picdef.dFIterMinStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
-                    }
-                    VStack{
-                        Text("Enter number of colors")
-                        TextField("nColors",value: $picdef.nColorsStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
-                    }
-                    VStack{
-                        Text("Enter left gradient color number")
-                        TextField("leftNumber",value: $picdef.leftNumberStart, formatter: ContentView.cgUnboundFormatter)
-                            .padding(2)
+                }
+                Group {
+                    HStack {
+                        VStack{
+                            Text("Number of colors")
+                            TextField("nColors",value: $picdef.nColorsStart, formatter: ContentView.cgUnboundFormatter)
+                                .padding(2)
+                        }
+                        VStack{
+                            Text("Left gradient color number")
+                            TextField("leftNumber",value: $picdef.leftNumberStart, formatter: ContentView.cgUnboundFormatter)
+                                .padding(2)
+                        }
                     }
                 }   // end of group
                 Group{
