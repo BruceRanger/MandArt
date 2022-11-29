@@ -3,12 +3,13 @@
 //  MandArt
 //
 //  Created by Bruce Johnson on 9/20/21.
-//  Edited by Bruce Johnson on 8/7/22.
+//  Revised and updated 2021-2
+//  All rights reserved.
 
-import SwiftUI
-import Foundation   //for trig functions
-import ImageIO
-import CoreServices
+import SwiftUI      // views
+import Foundation   // trig functions
+import ImageIO      // saving
+import CoreServices // persistence
 
 // define some global variables for saving
 var contextImageGlobal: CGImage?
@@ -18,6 +19,9 @@ var countFile = "outcount.json"
 struct ContentView: View {
     
     @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
+    @State private var bgColor =
+    Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
+
     
     let instructionBackgroundColor = Color.green.opacity(0.5)
     
@@ -47,31 +51,31 @@ struct ContentView: View {
     func getCenterXFromTapX(tapX: Double, imageWidthStart:Int) -> Double {
         let tapXDifference = (tapX - Double(picdef.imageWidthStart)/2.0)/picdef.scaleStart
         let newXC: Double = picdef.xCStart + tapXDifference // needs work
-        print("Clicked on picture, newXC is",newXC)
+        debug("Clicked on picture, newXC is",newXC)
         return newXC
     }
     
     func getCenterYFromTapY(tapY: Double, imageHeightStart:Int) -> Double {
         let tapYDifference = ((Double(picdef.imageHeightStart) - tapY) - Double(picdef.imageHeightStart)/2.0)/picdef.scaleStart
         let newYC: Double = (picdef.yCStart + tapYDifference) // needs work
-        print("Clicked on picture, newYC is",newYC)
+        debugPrint("Clicked on picture, newYC is",newYC)
         return newYC
     }
     
     func zoomOut(){
         self.scaleOld = picdef.scaleStart
         picdef.scaleStart = self.scaleOld / 2.0
-        print("Zoomed out, new scale is",picdef.scaleStart)
+        debugPrint("Zoomed out, new scale is",picdef.scaleStart)
     }
     
     func zoomIn(){
         self.scaleOld = picdef.scaleStart
         picdef.scaleStart = self.scaleOld * 2.0
-        print("Zoomed in, new scale is",picdef.scaleStart)
+        debugPrint("Zoomed in, new scale is",picdef.scaleStart)
     }
     
     func readOutCount() -> Int {
-        print("reading the picture count into state")
+        debugPrint("reading the picture count into state")
         var newCount: Int = 0
         do {
             let fileURL = try FileManager.default
@@ -80,12 +84,12 @@ struct ContentView: View {
                      appropriateFor: nil,
                      create: true)
                 .appendingPathComponent(countFile)
-            print("in readOutCount() reading from ", fileURL)
+            debugPrint("in readOutCount() reading from ", fileURL)
             let data = try Data(contentsOf: fileURL)
             let decoder = JSONDecoder()
             let countdef = try decoder.decode(CountDefinition.self, from: data)
             newCount = countdef.nImages
-            print("Just read the new i, it will be", newCount)
+            debugPrint("Just read the new i, it will be", newCount)
             return newCount
         } catch {
             debugPrint(error.localizedDescription)
@@ -107,7 +111,7 @@ struct ContentView: View {
                      appropriateFor: nil,
                      create: true)
                 .appendingPathComponent(countFile)
-            print("fileURL for OUTCOUNT JSON is ", fileURL)
+            debug("fileURL for OUTCOUNT JSON is ", fileURL)
             try jsonData.write(to: fileURL)
         } catch {
             debugPrint(error.localizedDescription)
@@ -185,6 +189,31 @@ struct ContentView: View {
     }
     
     func getImage(drawIt:Bool, drawGradient: Bool, leftNumber: Int) -> CGImage? {
+        
+        // common initialization
+        
+        let colors: [[Double]] = [
+            [picdef.hues[0].rStart, picdef.hues[0].gStart, picdef.hues[0].bStart],
+            [picdef.hues[1].rStart, picdef.hues[1].gStart, picdef.hues[1].bStart],
+            [picdef.hues[2].rStart, picdef.hues[2].gStart, picdef.hues[2].bStart],
+            [picdef.hues[3].rStart, picdef.hues[3].gStart, picdef.hues[3].bStart],
+            [picdef.hues[4].rStart, picdef.hues[4].gStart, picdef.hues[4].bStart],
+            [picdef.hues[5].rStart, picdef.hues[5].gStart, picdef.hues[5].bStart],
+            [picdef.hues[6].rStart, picdef.hues[6].gStart, picdef.hues[6].bStart],
+            [picdef.hues[7].rStart, picdef.hues[7].gStart, picdef.hues[7].bStart],
+            [picdef.hues[8].rStart, picdef.hues[8].gStart, picdef.hues[8].bStart],
+            [picdef.hues[9].rStart, picdef.hues[9].gStart, picdef.hues[9].bStart],
+            [picdef.hues[10].rStart, picdef.hues[10].gStart, picdef.hues[10].bStart],
+            [picdef.hues[11].rStart, picdef.hues[11].gStart, picdef.hues[11].bStart],
+            [picdef.hues[12].rStart, picdef.hues[12].gStart, picdef.hues[12].bStart],
+            [picdef.hues[13].rStart, picdef.hues[13].gStart, picdef.hues[13].bStart],
+            [picdef.hues[14].rStart, picdef.hues[14].gStart, picdef.hues[14].bStart],
+            [picdef.hues[15].rStart, picdef.hues[15].gStart, picdef.hues[15].bStart],
+            [picdef.hues[16].rStart, picdef.hues[16].gStart, picdef.hues[16].bStart],
+            [picdef.hues[17].rStart, picdef.hues[17].gStart, picdef.hues[17].bStart],
+            [picdef.hues[18].rStart, picdef.hues[18].gStart, picdef.hues[18].bStart],
+            [picdef.hues[19].rStart, picdef.hues[19].gStart, picdef.hues[19].bStart],
+        ]
         
         if drawIt == true { // draws image
             print("Drawing picture")
@@ -358,29 +387,7 @@ struct ContentView: View {
 //                                        [r19, g19, b19],  [r20, g20, b20]]
 //
             
-        let colors: [[Double]] = [
-                [picdef.hues[0].rStart, picdef.hues[0].gStart, picdef.hues[0].bStart],
-                [picdef.hues[1].rStart, picdef.hues[1].gStart, picdef.hues[1].bStart],
-                [picdef.hues[2].rStart, picdef.hues[2].gStart, picdef.hues[2].bStart],
-                [picdef.hues[3].rStart, picdef.hues[3].gStart, picdef.hues[3].bStart],
-                [picdef.hues[4].rStart, picdef.hues[4].gStart, picdef.hues[4].bStart],
-                [picdef.hues[5].rStart, picdef.hues[5].gStart, picdef.hues[5].bStart],
-                [picdef.hues[6].rStart, picdef.hues[6].gStart, picdef.hues[6].bStart],
-                [picdef.hues[7].rStart, picdef.hues[7].gStart, picdef.hues[7].bStart],
-                [picdef.hues[8].rStart, picdef.hues[8].gStart, picdef.hues[8].bStart],
-                [picdef.hues[9].rStart, picdef.hues[9].gStart, picdef.hues[9].bStart],
-                [picdef.hues[10].rStart, picdef.hues[10].gStart, picdef.hues[10].bStart],
-                [picdef.hues[11].rStart, picdef.hues[11].gStart, picdef.hues[11].bStart],
-                [picdef.hues[12].rStart, picdef.hues[12].gStart, picdef.hues[12].bStart],
-                [picdef.hues[13].rStart, picdef.hues[13].gStart, picdef.hues[13].bStart],
-                [picdef.hues[14].rStart, picdef.hues[14].gStart, picdef.hues[14].bStart],
-                [picdef.hues[15].rStart, picdef.hues[15].gStart, picdef.hues[15].bStart],
-                [picdef.hues[16].rStart, picdef.hues[16].gStart, picdef.hues[16].bStart],
-                [picdef.hues[17].rStart, picdef.hues[17].gStart, picdef.hues[17].bStart],
-                [picdef.hues[18].rStart, picdef.hues[18].gStart, picdef.hues[18].bStart],
-                [picdef.hues[19].rStart, picdef.hues[19].gStart, picdef.hues[19].bStart],
-               ]
-            
+              
             var h: Double = 0.0
             var xX: Double = 0.0
             
@@ -527,7 +534,7 @@ struct ContentView: View {
         
         
         else if drawGradient == true { // draws gradient image
-            print("Drawing gradient")
+            debug("Drawing gradient")
             
             var gradientImage: CGImage
             
@@ -546,31 +553,9 @@ struct ContentView: View {
              
             nColors = picdef.nColorsStart
             leftNumber = picdef.leftNumberStart
-            print("Drawing gradient, left color number is ", leftNumber)
+            debug("Drawing gradient, left color number is ", leftNumber)
            
-            let colors: [[Double]] = [
-                [picdef.hues[0].rStart, picdef.hues[0].gStart, picdef.hues[0].bStart],
-                [picdef.hues[1].rStart, picdef.hues[1].gStart, picdef.hues[1].bStart],
-                [picdef.hues[2].rStart, picdef.hues[2].gStart, picdef.hues[2].bStart],
-                [picdef.hues[3].rStart, picdef.hues[3].gStart, picdef.hues[3].bStart],
-                [picdef.hues[4].rStart, picdef.hues[4].gStart, picdef.hues[4].bStart],
-                [picdef.hues[5].rStart, picdef.hues[5].gStart, picdef.hues[5].bStart],
-                [picdef.hues[6].rStart, picdef.hues[6].gStart, picdef.hues[6].bStart],
-                [picdef.hues[7].rStart, picdef.hues[7].gStart, picdef.hues[7].bStart],
-                [picdef.hues[8].rStart, picdef.hues[8].gStart, picdef.hues[8].bStart],
-                [picdef.hues[9].rStart, picdef.hues[9].gStart, picdef.hues[9].bStart],
-                [picdef.hues[10].rStart, picdef.hues[10].gStart, picdef.hues[10].bStart],
-                [picdef.hues[11].rStart, picdef.hues[11].gStart, picdef.hues[11].bStart],
-                [picdef.hues[12].rStart, picdef.hues[12].gStart, picdef.hues[12].bStart],
-                [picdef.hues[13].rStart, picdef.hues[13].gStart, picdef.hues[13].bStart],
-                [picdef.hues[14].rStart, picdef.hues[14].gStart, picdef.hues[14].bStart],
-                [picdef.hues[15].rStart, picdef.hues[15].gStart, picdef.hues[15].bStart],
-                [picdef.hues[16].rStart, picdef.hues[16].gStart, picdef.hues[16].bStart],
-                [picdef.hues[17].rStart, picdef.hues[17].gStart, picdef.hues[17].bStart],
-                [picdef.hues[18].rStart, picdef.hues[18].gStart, picdef.hues[18].bStart],
-                [picdef.hues[19].rStart, picdef.hues[19].gStart, picdef.hues[19].bStart],
-            ]
-            var xGradient: Double = 0.0
+              var xGradient: Double = 0.0
             
                 // set up CG parameters
             let bitsPerComponent: Int = 8   // for UInt8
@@ -715,41 +700,33 @@ struct ContentView: View {
                 VStack( // the left side is a vertical container with user stuff
                     alignment: .center, spacing: 10) // spacing is between VStacks
                 {
-                
+                Text("MandArt")
+                    .font(.title)
+                    .padding()
+            
                 Group{
-                    
                     HStack {
                         
                         VStack { // use a button to zoom in
-                            Button(action: {
+                            Button("Zoom In") {
                                 zoomIn()
-                            }) {
-                                Text("Zoom In")
                             }
                         }
                         .padding(10)
-                        
+    
                         VStack { // use a button to zoom out
-                            Button(action: {
+                            Button("Zoom Out") {
                                 zoomOut()
-                            }) {
-                                Text("Zoom Out")
                             }
                         }
-                        
                     }
-                    
                     
                     VStack {
                         Button("Save as PNG",
                                action: {
-                            
-                            // read and update the global variable
-                            let imageCount = readOutCount()
-                            
-                            // then save the image (& data)
-                            let success = saveImage(i:imageCount)
-                            print("successful picture save =",success)
+                                 let imageCount = readOutCount()
+                                 let saveSuccess = saveImage(i:imageCount)
+                            debug("Save success",saveSuccess)
                         }
                         )
                     }
@@ -759,7 +736,7 @@ struct ContentView: View {
                             Button(action: {
                                 drawItStart = false
                                 drawGradientStart = false
-                                print("Paused. draw, drawGradient=",drawItStart,drawGradientStart)
+                                debug("Paused. draw, drawGradient=",drawItStart,drawGradientStart)
                             }) {
                                 Text("Pause to change values")
                             }
@@ -770,7 +747,7 @@ struct ContentView: View {
                             Button(action: {
                                 drawItStart = true
                                 drawGradientStart = false
-                                print("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
+                                debug("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
 
                             }) {
                                 Text("Resume")
@@ -787,7 +764,7 @@ struct ContentView: View {
                             Button(action: {
                                 drawItStart = false
                                 drawGradientStart = true
-                                print("Making gradient. draw, drawGradient=",drawItStart,drawGradientStart)
+                                debug("Making gradient. draw, drawGradient=",drawItStart,drawGradientStart)
 
                             }) {
                                 Text("Make a gradient")
@@ -799,7 +776,7 @@ struct ContentView: View {
                             Button(action: {
                                 drawItStart = true
                                 drawGradientStart = false
-                                print("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
+                                debug("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
 
                             }) {
                                 Text("Resume")
@@ -847,9 +824,6 @@ struct ContentView: View {
                             }
                         }
                     }
-                    
-                  
-                    
                 } // end of group
                 
                 Group {
@@ -955,7 +929,10 @@ struct ContentView: View {
                         }   // end HStack
                     } // end foreach
                 } // end colors group
-                Text("")
+                Text("Try clicking om the color below")
+                ColorPicker("Color Picker", selection: $bgColor)
+                    .padding()
+
                 } // end VStack for user instructions
                 .background(instructionBackgroundColor)
                 .frame(width:inputWidth)
@@ -994,7 +971,7 @@ struct ContentView: View {
                 }
             }
             .onEnded { tap in
-                print("User clicked on picture x,y:",tap.startLocation)
+                debug("User clicked on picture x,y:",tap.startLocation)
                     // if we haven't moved very much, treat it as a tap event
                 if self.moved < 10 && self.moved > -10 {
                     tapX = tap.startLocation.x
@@ -1012,4 +989,10 @@ struct ContentView: View {
             }
     } // end tapGesture
     
+}
+
+extension View {
+    func debug(_ params: Any ...){
+        print(params)
+    }
 }
