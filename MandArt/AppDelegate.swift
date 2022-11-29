@@ -3,6 +3,8 @@
 //  MandArt
 //
 //  Created by Bruce Johnson on 9/20/21.
+//  Modified 2021-2
+//  All rights reserved.
 //
 
 import SwiftUI
@@ -23,10 +25,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             backing: .buffered, defer: false)
         window.isReleasedWhenClosed = false
         window.center()
-        window.setFrameAutosaveName("Main Window")
+        window.setFrameAutosaveName("MandArt")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
     }
-
 }
 

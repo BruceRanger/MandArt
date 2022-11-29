@@ -16,13 +16,28 @@ var contextImageGlobal: CGImage?
 var startFile = "default.json"
 var countFile = "outcount.json"
 
+struct BGColor: Identifiable {
+    var id = UUID()
+    var num: Int
+    var hue: Color
+}
+
+
 struct ContentView: View {
     
     @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
     @State private var bgColor =
     Color(.sRGB, red: 0.98, green: 0.9, blue: 0.2)
 
-    
+    @State private var bgColors: [BGColor] = [
+        BGColor(num: 1, hue:Color(.sRGB, red:   0/255, green: 255/255, blue:   0/255)),
+        BGColor(num: 2, hue:Color(.sRGB, red: 255/255, green: 255/255, blue:   0/255)),
+        BGColor(num: 3, hue:Color(.sRGB, red: 255/255, green:   0/255, blue:   0/255)),
+        BGColor(num: 4, hue:Color(.sRGB, red: 255/255, green:   0/255, blue: 255/255)),
+        BGColor(num: 5, hue:Color(.sRGB, red:   0/255, green:   0/255, blue: 255/255)),
+        BGColor(num: 6, hue:Color(.sRGB, red:   0/255, green: 255/255, blue: 255/255))
+    ]
+
     let instructionBackgroundColor = Color.green.opacity(0.5)
     
     let inputWidth: Double = 290
@@ -189,31 +204,8 @@ struct ContentView: View {
     }
     
     func getImage(drawIt:Bool, drawGradient: Bool, leftNumber: Int) -> CGImage? {
+                
         
-        // common initialization
-        
-        let colors: [[Double]] = [
-            [picdef.hues[0].rStart, picdef.hues[0].gStart, picdef.hues[0].bStart],
-            [picdef.hues[1].rStart, picdef.hues[1].gStart, picdef.hues[1].bStart],
-            [picdef.hues[2].rStart, picdef.hues[2].gStart, picdef.hues[2].bStart],
-            [picdef.hues[3].rStart, picdef.hues[3].gStart, picdef.hues[3].bStart],
-            [picdef.hues[4].rStart, picdef.hues[4].gStart, picdef.hues[4].bStart],
-            [picdef.hues[5].rStart, picdef.hues[5].gStart, picdef.hues[5].bStart],
-            [picdef.hues[6].rStart, picdef.hues[6].gStart, picdef.hues[6].bStart],
-            [picdef.hues[7].rStart, picdef.hues[7].gStart, picdef.hues[7].bStart],
-            [picdef.hues[8].rStart, picdef.hues[8].gStart, picdef.hues[8].bStart],
-            [picdef.hues[9].rStart, picdef.hues[9].gStart, picdef.hues[9].bStart],
-            [picdef.hues[10].rStart, picdef.hues[10].gStart, picdef.hues[10].bStart],
-            [picdef.hues[11].rStart, picdef.hues[11].gStart, picdef.hues[11].bStart],
-            [picdef.hues[12].rStart, picdef.hues[12].gStart, picdef.hues[12].bStart],
-            [picdef.hues[13].rStart, picdef.hues[13].gStart, picdef.hues[13].bStart],
-            [picdef.hues[14].rStart, picdef.hues[14].gStart, picdef.hues[14].bStart],
-            [picdef.hues[15].rStart, picdef.hues[15].gStart, picdef.hues[15].bStart],
-            [picdef.hues[16].rStart, picdef.hues[16].gStart, picdef.hues[16].bStart],
-            [picdef.hues[17].rStart, picdef.hues[17].gStart, picdef.hues[17].bStart],
-            [picdef.hues[18].rStart, picdef.hues[18].gStart, picdef.hues[18].bStart],
-            [picdef.hues[19].rStart, picdef.hues[19].gStart, picdef.hues[19].bStart],
-        ]
         
         if drawIt == true { // draws image
             print("Drawing picture")
@@ -377,17 +369,30 @@ struct ContentView: View {
             dE = (iMax - fIterMin - fNBlocks*bE)/pow(fNBlocks, eE)
             
             var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
- 
-//            let colors: [[Double]] =   [[r1, g1, b1],     [r2, g2, b2],     [r3, g3, b3],
-//                                        [r4, g4, b4],     [r5, g5, b5],     [r6, g6, b6],
-//                                        [r7, g7, b7],     [r8, g8, b8],     [r9, g9, b9],
-//                                        [r10, g10, b10],  [r11, g11, b11],  [r12, g12, b12],
-//                                        [r13, g13, b13],  [r14, g14, b14],  [r15, g15, b15],
-//                                        [r16, g16, b16],  [r17, g17, b17],  [r18, g18, b18],
-//                                        [r19, g19, b19],  [r20, g20, b20]]
-//
             
-              
+            let colors: [[Double]] = [
+                [picdef.hues[0].rStart, picdef.hues[0].gStart, picdef.hues[0].bStart],
+                [picdef.hues[1].rStart, picdef.hues[1].gStart, picdef.hues[1].bStart],
+                [picdef.hues[2].rStart, picdef.hues[2].gStart, picdef.hues[2].bStart],
+                [picdef.hues[3].rStart, picdef.hues[3].gStart, picdef.hues[3].bStart],
+                [picdef.hues[4].rStart, picdef.hues[4].gStart, picdef.hues[4].bStart],
+                [picdef.hues[5].rStart, picdef.hues[5].gStart, picdef.hues[5].bStart],
+                [picdef.hues[6].rStart, picdef.hues[6].gStart, picdef.hues[6].bStart],
+                [picdef.hues[7].rStart, picdef.hues[7].gStart, picdef.hues[7].bStart],
+                [picdef.hues[8].rStart, picdef.hues[8].gStart, picdef.hues[8].bStart],
+                [picdef.hues[9].rStart, picdef.hues[9].gStart, picdef.hues[9].bStart],
+                [picdef.hues[10].rStart, picdef.hues[10].gStart, picdef.hues[10].bStart],
+                [picdef.hues[11].rStart, picdef.hues[11].gStart, picdef.hues[11].bStart],
+                [picdef.hues[12].rStart, picdef.hues[12].gStart, picdef.hues[12].bStart],
+                [picdef.hues[13].rStart, picdef.hues[13].gStart, picdef.hues[13].bStart],
+                [picdef.hues[14].rStart, picdef.hues[14].gStart, picdef.hues[14].bStart],
+                [picdef.hues[15].rStart, picdef.hues[15].gStart, picdef.hues[15].bStart],
+                [picdef.hues[16].rStart, picdef.hues[16].gStart, picdef.hues[16].bStart],
+                [picdef.hues[17].rStart, picdef.hues[17].gStart, picdef.hues[17].bStart],
+                [picdef.hues[18].rStart, picdef.hues[18].gStart, picdef.hues[18].bStart],
+                [picdef.hues[19].rStart, picdef.hues[19].gStart, picdef.hues[19].bStart],
+            ]
+
             var h: Double = 0.0
             var xX: Double = 0.0
             
@@ -554,6 +559,29 @@ struct ContentView: View {
             nColors = picdef.nColorsStart
             leftNumber = picdef.leftNumberStart
             debug("Drawing gradient, left color number is ", leftNumber)
+            
+            let colors: [[Double]] = [
+                [picdef.hues[0].rStart, picdef.hues[0].gStart, picdef.hues[0].bStart],
+                [picdef.hues[1].rStart, picdef.hues[1].gStart, picdef.hues[1].bStart],
+                [picdef.hues[2].rStart, picdef.hues[2].gStart, picdef.hues[2].bStart],
+                [picdef.hues[3].rStart, picdef.hues[3].gStart, picdef.hues[3].bStart],
+                [picdef.hues[4].rStart, picdef.hues[4].gStart, picdef.hues[4].bStart],
+                [picdef.hues[5].rStart, picdef.hues[5].gStart, picdef.hues[5].bStart],
+                [picdef.hues[6].rStart, picdef.hues[6].gStart, picdef.hues[6].bStart],
+                [picdef.hues[7].rStart, picdef.hues[7].gStart, picdef.hues[7].bStart],
+                [picdef.hues[8].rStart, picdef.hues[8].gStart, picdef.hues[8].bStart],
+                [picdef.hues[9].rStart, picdef.hues[9].gStart, picdef.hues[9].bStart],
+                [picdef.hues[10].rStart, picdef.hues[10].gStart, picdef.hues[10].bStart],
+                [picdef.hues[11].rStart, picdef.hues[11].gStart, picdef.hues[11].bStart],
+                [picdef.hues[12].rStart, picdef.hues[12].gStart, picdef.hues[12].bStart],
+                [picdef.hues[13].rStart, picdef.hues[13].gStart, picdef.hues[13].bStart],
+                [picdef.hues[14].rStart, picdef.hues[14].gStart, picdef.hues[14].bStart],
+                [picdef.hues[15].rStart, picdef.hues[15].gStart, picdef.hues[15].bStart],
+                [picdef.hues[16].rStart, picdef.hues[16].gStart, picdef.hues[16].bStart],
+                [picdef.hues[17].rStart, picdef.hues[17].gStart, picdef.hues[17].bStart],
+                [picdef.hues[18].rStart, picdef.hues[18].gStart, picdef.hues[18].bStart],
+                [picdef.hues[19].rStart, picdef.hues[19].gStart, picdef.hues[19].bStart],
+            ]
            
               var xGradient: Double = 0.0
             
@@ -676,9 +704,20 @@ struct ContentView: View {
         return formatter
     }
     
+    static var cgDecimal2Formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        return formatter
+    }
+    
     static var intFormatter: NumberFormatter {
         let formatter = NumberFormatter()
-        formatter.numberStyle = .ordinal
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumIntegerDigits = 3
+        formatter.minimum = 1
+        formatter.maximum = 20
         return formatter
     }
     
@@ -686,7 +725,7 @@ struct ContentView: View {
         let h : Double = Double(picdef.imageHeightStart)
         let w : Double = Double(picdef.imageWidthStart)
         let ratio: Double = max (h/w, w/h)
-       return ratio
+        return ratio
     }
         
     var body: some View {
@@ -757,33 +796,34 @@ struct ContentView: View {
                         
                         
                     } // end HStack
+                    Divider()
                     
                     HStack {
-                        
+                        VStack{
+                            Text("Left #")
+                            TextField("leftNumber",value: $picdef.leftNumberStart, formatter: ContentView.intFormatter)
+                                .frame(maxWidth: 30)
+                        }
                         VStack { // use a button made a gradient
-                            Button(action: {
+                            Text("")
+                            Button("Make a gradient") {
                                 drawItStart = false
                                 drawGradientStart = true
                                 debug("Making gradient. draw, drawGradient=",drawItStart,drawGradientStart)
-
-                            }) {
-                                Text("Make a gradient")
                             }
                         }
-                        .padding(10)
-                        
-                        VStack { // use a button to resume
-                            Button(action: {
+                        VStack {
+                            Text("")
+                            Button("Resume") {
                                 drawItStart = true
                                 drawGradientStart = false
                                 debug("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
-
-                            }) {
-                                Text("Resume")
                             }
                         }
-                        
                     } // end HStack
+                    
+                 Divider()
+                    
                     Group {
                         HStack {
                             
@@ -840,8 +880,8 @@ struct ContentView: View {
                         }
                         VStack {
                             Text("Aspect ratio:")
-                            Text("\(self.ratio())")
-                                .padding(3)
+                            Text("\(ratio())")
+                                .padding(2)
                         }
                     }
                 }
@@ -897,11 +937,7 @@ struct ContentView: View {
                             TextField("nColors",value: $picdef.nColorsStart, formatter: ContentView.cgUnboundFormatter)
                                 .padding(2)
                         }
-                        VStack{
-                            Text("Left gradient color number")
-                            TextField("leftNumber",value: $picdef.leftNumberStart, formatter: ContentView.cgUnboundFormatter)
-                                .padding(2)
-                        }
+                       
                     }
                 }   // end of group
                 Group{
@@ -929,9 +965,24 @@ struct ContentView: View {
                         }   // end HStack
                     } // end foreach
                 } // end colors group
-                Text("Try clicking color below")
-                ColorPicker("Color Picker", selection: $bgColor)
-                    .padding()
+  
+                Group{
+                    ColorPicker("1", selection: $bgColors[0].hue)
+                    ColorPicker("2", selection: $bgColors[1].hue)
+                    ColorPicker("3", selection: $bgColors[2].hue)
+                    ColorPicker("4", selection: $bgColors[3].hue)
+                    ColorPicker("5", selection: $bgColors[4].hue)
+                    ColorPicker("6", selection: $bgColors[5].hue)
+
+//                    ForEach($bgColors){ $BGColor in
+//                        HStack{
+//                            VStack{
+//                             //   ColorPicker("choose:", selection: BGColor.hue)
+//                            }
+//                        }   // end HStack
+//                   } // end foreach
+                } // end colors group
+               
 
                 } // end VStack for user instructions
                 .background(instructionBackgroundColor)
