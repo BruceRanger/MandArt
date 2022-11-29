@@ -929,7 +929,7 @@ struct ContentView: View {
                         }   // end HStack
                     } // end foreach
                 } // end colors group
-                Text("Try clicking om the color below")
+                Text("Try clicking color below")
                 ColorPicker("Color Picker", selection: $bgColor)
                     .padding()
 
