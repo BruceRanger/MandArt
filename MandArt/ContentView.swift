@@ -40,30 +40,40 @@ struct ContentView: View {
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
-    
-    func getCenterXFromTapX(tapX: Double, imageWidthStart:Int) -> Double {
+
+
+    /// Returns the new x to be the picture center x when user clicks on the picture.
+    /// - Parameters:
+    ///   - tapX: x coordinate from user tap
+    /// - Returns: new center x = current x + (tapX - (imagewidth / 2.0)/ scale
+    func getCenterXFromTapX(tapX: Double) -> Double {
         let tapXDifference = (tapX - Double(picdef.imageWidthStart)/2.0)/picdef.scaleStart
-        let newXC: Double = picdef.xCStart + tapXDifference // needs work
+        let newXC: Double = picdef.xCStart + tapXDifference
         debug("Clicked on picture, newXC is",newXC)
         return newXC
     }
-    
-    func getCenterYFromTapY(tapY: Double, imageHeightStart:Int) -> Double {
+
+    /// Returns the new y to be the picture center y when user clicks on the picture.
+    /// - Parameters:
+    ///   - tapY: y coordinate from user tap
+    /// - Returns: new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
+    func getCenterYFromTapY(tapY: Double) -> Double {
         let tapYDifference = ((Double(picdef.imageHeightStart) - tapY) - Double(picdef.imageHeightStart)/2.0)/picdef.scaleStart
-        let newYC: Double = (picdef.yCStart + tapYDifference) // needs work
+        let newYC: Double = (picdef.yCStart + tapYDifference)
         debugPrint("Clicked on picture, newYC is",newYC)
         return newYC
     }
-    
+
+
+    /// Divides scale by 2.0
     func zoomOut(){
-        self.scaleOld = picdef.scaleStart
-        picdef.scaleStart = self.scaleOld / 2.0
+        picdef.scaleStart = picdef.scaleStart / 2.0
         debugPrint("Zoomed out, new scale is",picdef.scaleStart)
     }
-    
+
+    /// Multiplies scale by 2.0
     func zoomIn(){
-        self.scaleOld = picdef.scaleStart
-        picdef.scaleStart = self.scaleOld * 2.0
+        picdef.scaleStart = picdef.scaleStart * 2.0
         debugPrint("Zoomed in, new scale is",picdef.scaleStart)
     }
     
@@ -870,8 +880,8 @@ struct ContentView: View {
                     tapX = tap.startLocation.x
                     tapY = tap.startLocation.y
                     self.tapLocations.append(tap.startLocation)
-                    picdef.xCStart = getCenterXFromTapX(tapX:tapX,imageWidthStart:picdef.imageWidthStart)
-                    picdef.yCStart = getCenterYFromTapY(tapY:tapY,imageHeightStart:picdef.imageHeightStart)
+                    picdef.xCStart = getCenterXFromTapX(tapX:tapX)
+                    picdef.yCStart = getCenterYFromTapY(tapY:tapY)
                 }
                 // reset tap event states
                 self.moved = 0
