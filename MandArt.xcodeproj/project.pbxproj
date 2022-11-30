@@ -17,6 +17,7 @@
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
 		882BAEDF2934FE42003ACB0B /* outcount.json in Resources */ = {isa = PBXBuildFile; fileRef = 882BAEDE2934FE42003ACB0B /* outcount.json */; };
 		882BAEE12934FFCB003ACB0B /* CountDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAEE02934FFCB003ACB0B /* CountDefinition.swift */; };
+		882BAEE92937C71A003ACB0B /* ErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		882BAED829346C92003ACB0B /* Hue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hue.swift; sourceTree = "<group>"; };
 		882BAEDE2934FE42003ACB0B /* outcount.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = outcount.json; sourceTree = "<group>"; };
 		882BAEE02934FFCB003ACB0B /* CountDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountDefinition.swift; sourceTree = "<group>"; };
+		882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModel.swift; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +70,7 @@
 				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
 				6A3AEC0C26F879E700D7E31A /* AppDelegate.swift */,
 				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
+				882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */,
 				882BAED2293409FE003ACB0B /* PictureDefinition.swift */,
 				882BAEE02934FFCB003ACB0B /* CountDefinition.swift */,
 				882BAED829346C92003ACB0B /* Hue.swift */,
@@ -154,6 +157,7 @@
 			files = (
 				882BAED929346C92003ACB0B /* Hue.swift in Sources */,
 				6A3AEC0F26F879E700D7E31A /* ContentView.swift in Sources */,
+				882BAEE92937C71A003ACB0B /* ErrorViewModel.swift in Sources */,
 				882BAED529340ABE003ACB0B /* ModelData.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
 				882BAEE12934FFCB003ACB0B /* CountDefinition.swift in Sources */,

@@ -21,6 +21,7 @@ struct ContentView: View {
     let inputWidth: Double = 290
 
     @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
+    @StateObject var errdef = ErrorViewModel()
 
     @State private var testColor = Color.red
     @State private var tapX: Double = 0.0
@@ -41,6 +42,15 @@ struct ContentView: View {
         let ratioDouble: Double = max (h/w, w/h)
         let ratioString = String(format: "%.2f", ratioDouble)
         return ratioString
+    }
+
+    var leftGradientIsValid: Bool {
+        var isValid = false
+        let leftNum = picdef.leftNumberStart
+        let lastPossible = picdef.hues.count
+        isValid =  leftNum >= 1 && leftNum <= lastPossible
+        print("leftGradient leftNum=", leftNum,"and isValid=", isValid)
+        return isValid
     }
 
     @State private var colorEntries: [Color] = [
@@ -499,7 +509,7 @@ struct ContentView: View {
         
         
         
-        else if drawGradient == true { // draws gradient image
+        else if drawGradient == true && leftGradientIsValid { // draws gradient image
             debugPrint("Drawing gradient")
             
             var gradientImage: CGImage
@@ -511,7 +521,8 @@ struct ContentView: View {
             var color: Double = 0.0
 
             debugPrint("Drawing gradient, left color number is ", leftNumber)
-           
+            debugPrint("leftGradiaentIsValid=",leftGradientIsValid)
+
               var xGradient: Double = 0.0
             
             // set up CG parameters
@@ -641,12 +652,12 @@ struct ContentView: View {
         return formatter
     }
     
-    static var intMax20Formatter: NumberFormatter {
+    static var intMaxColorsFormatter: NumberFormatter {
         let formatter = NumberFormatter()
-        formatter.minimumIntegerDigits = 1
-        formatter.maximumIntegerDigits = 2
         formatter.minimum = 1
         formatter.maximum = 20
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumIntegerDigits = 2
         return formatter
     }
 
@@ -709,9 +720,12 @@ struct ContentView: View {
                     HStack {
                         VStack{
                             Text("Left #")
-                            TextField("leftNumber",value: $picdef.leftNumberStart, formatter: ContentView.intMax20Formatter)
+                            TextField("leftNumber",value: $picdef.leftNumberStart, formatter: ContentView.intMaxColorsFormatter)
                                 .frame(maxWidth: 30)
+                                .foregroundColor(leftGradientIsValid ? .primary : .red)
                         }
+                        //.errorAlert(error: $errdef.leftGradientOutOfRange)
+
                         VStack { // use a button made a gradient
                             Text("")
                             Button("Make a gradient") {
@@ -719,10 +733,6 @@ struct ContentView: View {
                                 drawIt = !drawIt
                                 drawIt = false
                                 drawGradient = true
-                                print("Clicked Make gradient. draw=",drawIt, "drawGradient=",drawGradient, picdef.leftNumberStart)
-                                // update colore used for pickers
-                                colorEntries = calcColorEntries()
-
                             }
                         }
                         VStack {
@@ -730,9 +740,6 @@ struct ContentView: View {
                             Button("Resume") {
                                 drawIt = true
                                 drawGradient = false
-                                // update colore used for pickers
-                                colorEntries = calcColorEntries()
-                                print("Clicked Gradient Resume. draw=",drawIt, "drawGradient=",drawGradient,picdef.leftNumberStart)
                             }
                         }
                     } // end HStack
@@ -916,4 +923,32 @@ struct ContentView: View {
                 self.startTime = nil
             }
     } // end tapGesture
+}
+
+extension View {
+    func errorAlert(error: Binding<Error?>, buttonTitle: String = "OK") -> some View {
+        let localizedAlertError = LocalizedAlertError(error: error.wrappedValue)
+        return alert(isPresented: .constant(localizedAlertError != nil), error: localizedAlertError) { _ in
+            Button(buttonTitle) {
+                error.wrappedValue = nil
+            }
+        } message: { error in
+            Text(error.recoverySuggestion ?? "")
+        }
+    }
+}
+
+struct LocalizedAlertError: LocalizedError {
+    let underlyingError: LocalizedError
+    var errorDescription: String? {
+        underlyingError.errorDescription
+    }
+    var recoverySuggestion: String? {
+        underlyingError.recoverySuggestion
+    }
+
+    init?(error: Error?) {
+        guard let localizedError = error as? LocalizedError else { return nil }
+        underlyingError = localizedError
+    }
 }
