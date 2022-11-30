@@ -32,8 +32,8 @@ struct ContentView: View {
     @State private var dragOffset = CGSize.zero
     @State private var scaleOld: Double =  1.0
 
-    @State private var drawItStart = true
-    @State private var drawGradientStart = false
+    @State private var drawIt = true
+    @State private var drawGradient = false
 
     private var aspectRatio: String{
         let h : Double = Double(picdef.imageHeightStart)
@@ -52,7 +52,7 @@ struct ContentView: View {
         Color(.sRGB, red:   0/255, green: 255/255, blue: 255/255)
     ]
 
-    private var colorEntriesCalc: [Color]{
+    private func  calcColorEntries() -> [Color] {
         var arr: [Color] = []
         picdef.hues.forEach{hue in
             let newColor: Color = Color(
@@ -213,21 +213,24 @@ struct ContentView: View {
         }
     }
     
-    func getImage(drawIt:Bool, drawGradient: Bool, leftNumber: Int) -> CGImage? {
-        // get colors dynamically - however many there are
+    func getImage() -> CGImage? {
+        print("Starting getImage(): drawIt=",drawIt, "drawGradient=",drawGradient)
+
+       // update colors used for picture and gradient
         var colors: [[Double]] = []
         picdef.hues.forEach{hue in
             let arr: [Double] = [hue.r, hue.g, hue.b]
             colors.insert(arr, at: colors.endIndex)
         }
+        let imageWidth: Int = picdef.imageWidthStart
+        let imageHeight: Int = picdef.imageHeightStart
+        let nColors: Int = picdef.nColorsStart
 
         if drawIt == true { // draws image
             debugPrint("Drawing picture: drawIt=",drawIt)
 
             var contextImage: CGImage
-            
-            let imageWidth: Int = picdef.imageWidthStart
-            let imageHeight: Int = picdef.imageHeightStart
+
             let iMax: Double = picdef.iMaxStart
             var rSq: Double = 0.0
             var rSqLimit: Double = 0.0
@@ -500,13 +503,9 @@ struct ContentView: View {
             debugPrint("Drawing gradient")
             
             var gradientImage: CGImage
-            
-            let imageWidth: Int = picdef.imageWidthStart
-            let imageHeight: Int = picdef.imageHeightStart
 
             // Now we need to generate a bitmap image.
-            
-            let nColors: Int = picdef.nColorsStart
+
             let leftNumber: Int = picdef.leftNumberStart
             var rightNumber: Int = 0
             var color: Double = 0.0
@@ -653,7 +652,7 @@ struct ContentView: View {
 
     var body: some View {
         
-        let image: CGImage = getImage(drawIt:drawItStart, drawGradient: drawGradientStart, leftNumber: picdef.leftNumberStart)!
+      var image: CGImage = getImage()!
         let img = Image(image, scale: 1.0, label: Text("Test"))
         
         HStack{ // this container shows instructions on left / dwg on right
@@ -690,24 +689,19 @@ struct ContentView: View {
                     }
                     HStack {
                         VStack { // use a button to pause to change values
-                            Button(action: {
-                                drawItStart = false
-                                drawGradientStart = false
-                                debugPrint("Paused. draw, drawGradient=",drawItStart,drawGradientStart)
-                            }) {
-                                Text("Pause to change values")
+                            Button("Pause to change values") {
+                                drawIt = false
+                                drawGradient = false
+                                debugPrint("Clicked Pause for changes. draw=",drawIt, "drawGradient=",drawGradient)
                             }
                         }
                         .padding(10)
                         
                         VStack { // use a button to resume
-                            Button(action: {
-                                drawItStart = true
-                                drawGradientStart = false
-                                debugPrint("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
-
-                            }) {
-                                Text("Resume")
+                            Button("Resume") {
+                                drawIt = true
+                                drawGradient = false
+                                debugPrint("Clicked Resume live drawing. draw=",drawIt, "drawGradient=",drawGradient)
                             }
                         }
                     } // end HStack
@@ -721,17 +715,24 @@ struct ContentView: View {
                         VStack { // use a button made a gradient
                             Text("")
                             Button("Make a gradient") {
-                                drawItStart = false
-                                drawGradientStart = true
-                                debugPrint("Making gradient. draw, drawGradient=",drawItStart,drawGradientStart)
+                                // trigger a state change
+                                drawIt = !drawIt
+                                drawIt = false
+                                drawGradient = true
+                                print("Clicked Make gradient. draw=",drawIt, "drawGradient=",drawGradient, picdef.leftNumberStart)
+                                // update colore used for pickers
+                                colorEntries = calcColorEntries()
+
                             }
                         }
                         VStack {
                             Text("")
                             Button("Resume") {
-                                drawItStart = true
-                                drawGradientStart = false
-                                debugPrint("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
+                                drawIt = true
+                                drawGradient = false
+                                // update colore used for pickers
+                                colorEntries = calcColorEntries()
+                                print("Clicked Gradient Resume. draw=",drawIt, "drawGradient=",drawGradient,picdef.leftNumberStart)
                             }
                         }
                     } // end HStack
