@@ -21,7 +21,8 @@ struct ContentView: View {
     let inputWidth: Double = 290
 
     @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
-    
+
+    @State private var testColor = Color.red
     @State private var tapX: Double = 0.0
     @State private var tapY: Double = 0.0
     @State private var tapLocations: [CGPoint] = []
@@ -40,6 +41,28 @@ struct ContentView: View {
         let ratioDouble: Double = max (h/w, w/h)
         let ratioString = String(format: "%.2f", ratioDouble)
         return ratioString
+    }
+
+    @State private var colorEntries: [Color] = [
+        Color(.sRGB, red:   0/255, green: 255/255, blue:   0/255),
+        Color(.sRGB, red: 255/255, green: 255/255, blue:   0/255),
+        Color(.sRGB, red: 255/255, green:   0/255, blue:   0/255),
+        Color(.sRGB, red: 255/255, green:   0/255, blue: 255/255),
+        Color(.sRGB, red:   0/255, green:   0/255, blue: 255/255),
+        Color(.sRGB, red:   0/255, green: 255/255, blue: 255/255)
+    ]
+
+    private var colorEntriesCalc: [Color]{
+        var arr: [Color] = []
+        picdef.hues.forEach{hue in
+            let newColor: Color = Color(
+                .sRGB,
+                red: hue.r/255.0,
+                green: hue.g/255.0,
+                blue: hue.b/255.0)
+            arr.insert(newColor, at: arr.endIndex)
+        }
+        return arr
     }
 
     /// Return the document directory for this app.
@@ -847,9 +870,7 @@ struct ContentView: View {
   
                 Group {
                     ForEach($picdef.hues) { $hue in
-                        Text("Color \(hue.num)")
-                        // create function to go from hue shape to Color
-                        // ColorPicker("\($hue.num)")
+                        ColorPicker("\(hue.num)", selection: $colorEntries[hue.num-1])
                     }
                     Text("")
                 } // end colors group
