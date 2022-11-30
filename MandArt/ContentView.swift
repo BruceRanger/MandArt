@@ -29,12 +29,21 @@ struct ContentView: View {
     @State private var startTime: Date?
     @State private var dragCompleted = false
     @State private var dragOffset = CGSize.zero
-    
-    @State private var drawItStart = true
-    @State private var drawGradientStart = false
-    
     @State private var scaleOld: Double =  1.0
 
+    @State private var drawItStart = true
+    @State private var drawGradientStart = false
+
+    private var aspectRatio: String{
+        let h : Double = Double(picdef.imageHeightStart)
+        let w : Double = Double(picdef.imageWidthStart)
+        let ratioDouble: Double = max (h/w, w/h)
+        let ratioString = String(format: "%.2f", ratioDouble)
+        return ratioString
+    }
+
+    /// Return the document directory for this app.
+    /// - Returns: URL to document directory
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
@@ -44,19 +53,19 @@ struct ContentView: View {
 
     /// Returns the new x to be the picture center x when user clicks on the picture.
     /// - Parameters:
-    ///   - tapX: x coordinate from user tap
-    /// - Returns: new center x = current x + (tapX - (imagewidth / 2.0)/ scale
+    ///   - tapX: Double x coordinate from user tap
+    /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
     func getCenterXFromTapX(tapX: Double) -> Double {
         let tapXDifference = (tapX - Double(picdef.imageWidthStart)/2.0)/picdef.scaleStart
         let newXC: Double = picdef.xCStart + tapXDifference
-        debug("Clicked on picture, newXC is",newXC)
+        debugPrint("Clicked on picture, newXC is",newXC)
         return newXC
     }
 
     /// Returns the new y to be the picture center y when user clicks on the picture.
     /// - Parameters:
-    ///   - tapY: y coordinate from user tap
-    /// - Returns: new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
+    ///   - tapY: Double y coordinate from user tap
+    /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
     func getCenterYFromTapY(tapY: Double) -> Double {
         let tapYDifference = ((Double(picdef.imageHeightStart) - tapY) - Double(picdef.imageHeightStart)/2.0)/picdef.scaleStart
         let newYC: Double = (picdef.yCStart + tapYDifference)
@@ -65,18 +74,20 @@ struct ContentView: View {
     }
 
 
-    /// Divides scale by 2.0
+    /// Divides scale by 2.0.
     func zoomOut(){
         picdef.scaleStart = picdef.scaleStart / 2.0
         debugPrint("Zoomed out, new scale is",picdef.scaleStart)
     }
 
-    /// Multiplies scale by 2.0
+    /// Multiplies scale by 2.0.
     func zoomIn(){
         picdef.scaleStart = picdef.scaleStart * 2.0
         debugPrint("Zoomed in, new scale is",picdef.scaleStart)
     }
-    
+
+    /// Reads pictue count (from previous session) to make unique save numbers.
+    /// - Returns: newly incremented count
     func readOutCount() -> Int {
         debugPrint("reading the picture count into state")
         var newCount: Int = 0
@@ -95,13 +106,15 @@ struct ContentView: View {
             debugPrint("Just read the new i, it will be", newCount)
             return newCount
         } catch {
-            debugPrint(error.localizedDescription)
+            debugPrint("Error in readOutCount",error.localizedDescription)
             return newCount
         }
     }
-    
+
+    /// Saves new picture count to be used for the next saved picture.
+    /// - Parameter newi: count to be saved
      func saveOutCount(newi: Int) {
-        print("Saving the new count for next time as ", newi)
+         debugPrint("Saving the new count for next time as ", newi)
         let encoder = JSONEncoder()
         do {
             // update the object before saving
@@ -114,7 +127,7 @@ struct ContentView: View {
                      appropriateFor: nil,
                      create: true)
                 .appendingPathComponent(countFile)
-            debug("fileURL for OUTCOUNT JSON is ", fileURL)
+            debugPrint("fileURL for OUTCOUNT JSON is ", fileURL)
             try jsonData.write(to: fileURL)
         } catch {
             debugPrint(error.localizedDescription)
@@ -186,7 +199,7 @@ struct ContentView: View {
         }
 
         if drawIt == true { // draws image
-            debug("Drawing picture: drawIt=",drawIt)
+            debugPrint("Drawing picture: drawIt=",drawIt)
 
             var contextImage: CGImage
             
@@ -461,7 +474,7 @@ struct ContentView: View {
         
         
         else if drawGradient == true { // draws gradient image
-            debug("Drawing gradient")
+            debugPrint("Drawing gradient")
             
             var gradientImage: CGImage
             
@@ -475,7 +488,7 @@ struct ContentView: View {
             var rightNumber: Int = 0
             var color: Double = 0.0
 
-            debug("Drawing gradient, left color number is ", leftNumber)
+            debugPrint("Drawing gradient, left color number is ", leftNumber)
            
               var xGradient: Double = 0.0
             
@@ -614,14 +627,7 @@ struct ContentView: View {
         formatter.maximum = 20
         return formatter
     }
-    
-    func ratio() -> Double{
-        let h : Double = Double(picdef.imageHeightStart)
-        let w : Double = Double(picdef.imageWidthStart)
-        let ratio: Double = max (h/w, w/h)
-        return ratio
-    }
-        
+
     var body: some View {
         
         let image: CGImage = getImage(drawIt:drawItStart, drawGradient: drawGradientStart, leftNumber: picdef.leftNumberStart)!
@@ -656,7 +662,7 @@ struct ContentView: View {
                                action: {
                                  let imageCount = readOutCount()
                                  let saveSuccess = saveImage(i:imageCount)
-                            debug("Save success",saveSuccess)
+                            debugPrint("Save success",saveSuccess)
                         })
                     }
                     HStack {
@@ -664,7 +670,7 @@ struct ContentView: View {
                             Button(action: {
                                 drawItStart = false
                                 drawGradientStart = false
-                                debug("Paused. draw, drawGradient=",drawItStart,drawGradientStart)
+                                debugPrint("Paused. draw, drawGradient=",drawItStart,drawGradientStart)
                             }) {
                                 Text("Pause to change values")
                             }
@@ -675,7 +681,7 @@ struct ContentView: View {
                             Button(action: {
                                 drawItStart = true
                                 drawGradientStart = false
-                                debug("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
+                                debugPrint("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
 
                             }) {
                                 Text("Resume")
@@ -694,7 +700,7 @@ struct ContentView: View {
                             Button("Make a gradient") {
                                 drawItStart = false
                                 drawGradientStart = true
-                                debug("Making gradient. draw, drawGradient=",drawItStart,drawGradientStart)
+                                debugPrint("Making gradient. draw, drawGradient=",drawItStart,drawGradientStart)
                             }
                         }
                         VStack {
@@ -702,7 +708,7 @@ struct ContentView: View {
                             Button("Resume") {
                                 drawItStart = true
                                 drawGradientStart = false
-                                debug("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
+                                debugPrint("Resumed. draw, drawGradient=",drawItStart,drawGradientStart)
                             }
                         }
                     } // end HStack
@@ -757,7 +763,7 @@ struct ContentView: View {
                         }
                         VStack {
                             Text("Aspect ratio:")
-                            Text("\(ratio())")
+                            Text("\(aspectRatio)")
                                 .padding(2)
                         }
                     }
@@ -874,7 +880,7 @@ struct ContentView: View {
                 }
             }
             .onEnded { tap in
-                debug("User clicked on picture x,y:",tap.startLocation)
+                debugPrint("User clicked on picture x,y:",tap.startLocation)
                     // if we haven't moved very much, treat it as a tap event
                 if self.moved < 10 && self.moved > -10 {
                     tapX = tap.startLocation.x
@@ -888,10 +894,4 @@ struct ContentView: View {
                 self.startTime = nil
             }
     } // end tapGesture
-}
-
-extension View {
-    func debug(_ params: Any ...){
-        print(params)
-    }
 }
