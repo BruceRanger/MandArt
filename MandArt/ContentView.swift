@@ -75,6 +75,18 @@ struct ContentView: View {
         return arr
     }
 
+    func addColorEntry(){
+        let newColor: Color = Color(
+            .sRGB,
+            red: 1,
+            green: 1,
+            blue: 1
+        )
+        colorEntries.append(
+            newColor
+        )
+    }
+
     /// Return the document directory for this app.
     /// - Returns: URL to document directory
     func getDocumentsDirectory() -> URL {
@@ -876,13 +888,15 @@ struct ContentView: View {
                     } // end foreach
                 } // end colors group
   
-                Group {
-                    ForEach($picdef.hues) { $hue in
-                        ColorPicker("\(hue.num)", selection: $colorEntries[hue.num-1])
-                    }
-                    Text("")
+                Group { // dont nest list in existing scrollview
+                    Text("Ordered List of Colors")
+                    // Button("Add Color", action: { addColorEntry() }
+                        ForEach($picdef.hues, id:\.num) { $hue in
+                                ColorPicker("\(hue.num)", selection: $colorEntries[hue.num-1])
+                        }
+                        Text("")
                 } // end colors group
-               
+
                 } // end VStack for user instructions
                 .background(instructionBackgroundColor)
                 .frame(width:inputWidth)
