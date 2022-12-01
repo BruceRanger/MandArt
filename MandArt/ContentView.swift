@@ -671,12 +671,27 @@ struct ContentView: View {
                 } // end colors group
   
                 Group { // dont nest list in existing scrollview
-                    Text("Ordered List of Colors")
-                    // Button("Add Color", action: { addColorEntry() }
-                        ForEach($picdef.hues, id:\.num) { $hue in
-                               ColorPicker("\(hue.num)", selection: $colorEntries[hue.num-1])
+                    VStack {
+                        Text("Ordered List of Colors")
+                        Text("Dad: do you like the red x or the button?")
+
+                            ForEach($picdef.hues, id:\.num) { $hue in
+                                HStack {
+                                ColorPicker("\(hue.num)", selection: $colorEntries[hue.num-1])
+                                Image(systemName: "multiply.circle.fill")
+                                    .foregroundColor(.red)
+                                    .help("Delete \(hue.num)")
+                                Button(role: .destructive) {
+                                    //$picdef.hues.remove(object: hue)
+                                } label: {Label("Delete", systemImage: "trash")
+                                }
+                            }
+                        }
+                        Button("Add Color") {
+                            //addColorEntry()
                         }
                         Text("")
+                    }
                 } // end colors group
 
                 } // end VStack for user instructions
