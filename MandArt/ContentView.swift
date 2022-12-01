@@ -464,7 +464,7 @@ struct ContentView: View {
 
     var body: some View {
         
-      var image: CGImage = getImage()!
+      let image: CGImage = getImage()!
       let img = Image(image, scale: 1.0, label: Text("Test"))
         
         HStack{ // instructions on left, picture on right
@@ -695,8 +695,6 @@ struct ContentView: View {
     } // end view body
 
     var tapGesture: some Gesture {
-        // only respond to taps if this is a picture not gradient
-
             DragGesture(minimumDistance: 0, coordinateSpace: .local)
                 .onChanged { value in
                     // store distance the touch has moved as a sum of all movements
@@ -708,6 +706,7 @@ struct ContentView: View {
                 }
                 .onEnded { tap in
                     debugPrint("User clicked on picture x,y:",tap.startLocation)
+                    // only respond to taps if this is a picture not gradient
                     if (drawIt == true) {
                         // if we haven't moved very much, treat it as a tap event
                         if self.moved < 10 && self.moved > -10 {
@@ -717,6 +716,12 @@ struct ContentView: View {
                             picdef.xC = getCenterXFromTapX(tapX:tapX)
                             picdef.yC = getCenterYFromTapY(tapY:tapY)
                             readyForPicture()
+                        }
+                        // if we have moved a lot, treat it as a drag event
+                        else {
+                            tapX = tap.startLocation.x
+                            tapY = tap.startLocation.y
+                            print("Dragged from ",tapX,tapY, tap.location.x,tap.location.y)
                         }
                         // reset tap event states
                         self.moved = 0
