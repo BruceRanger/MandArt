@@ -724,19 +724,16 @@ struct ContentView: View {
                     // only respond to taps if this is a picture not gradient
                     if (drawIt == true) {
                         // if we haven't moved very much, treat it as a tap event
-                        if self.moved < 10 && self.moved > -10 {
-                            tapX = tap.startLocation.x
-                            tapY = tap.startLocation.y
-                            self.tapLocations.append(tap.startLocation)
-                            picdef.xC = getCenterXFromTapX(tapX:tapX)
-                            picdef.yC = getCenterYFromTapY(tapY:tapY)
+                        if self.moved < 1 && self.moved > -1 {
+                            picdef.xC = getCenterXFromTap(tap)
+                            picdef.yC = getCenterYFromTap(tap)
                             readyForPicture()
                         }
                         // if we have moved a lot, treat it as a drag event
                         else {
-                            tapX = tap.startLocation.x
-                            tapY = tap.startLocation.y
-                            print("Dragged from ",tapX,tapY, tap.location.x,tap.location.y)
+                            picdef.xC = getCenterXFromDrag(tap)
+                            picdef.yC = getCenterYFromDrag(tap)
+                            readyForPicture()
                         }
                         // reset tap event states
                         self.moved = 0
@@ -827,26 +824,53 @@ struct ContentView: View {
         return arr
     }
 
+
+    /// Returns the new x to be the picture center x when user drags in the picture.
+    /// - Parameter tap: information about the drag
+    /// - Returns: Double new center x
+    private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
+        let start = tap.startLocation.x
+        let end = tap.location.x
+        let diff = (start - Double(picdef.imageWidth)/2.0)/picdef.scale
+        let newCenter: Double = picdef.xC + diff
+        print("Dragged from ",start,"to",end, "diff", diff, "old center ",picdef.xC,"becomes",newCenter)
+        return newCenter
+    }
+
     /// Returns the new x to be the picture center x when user clicks on the picture.
-    /// - Parameters:
-    ///   - tapX: Double x coordinate from user tap
+    /// - Parameter tap: information about the tap
     /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
-    func getCenterXFromTapX(tapX: Double) -> Double {
-        let tapXDifference = (tapX - Double(picdef.imageWidth)/2.0)/picdef.scale
-        let newXC: Double = picdef.xC + tapXDifference
-        debugPrint("Clicked on picture, newXC is",newXC)
-        return newXC
+    private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
+        let start = tap.startLocation.x
+        let w:Double = Double(picdef.imageWidth)
+        let diff = (start - w/2.0) / picdef.scale
+        let newCenter: Double = picdef.xC + diff
+        debugPrint("Clicked on picture, old center ",picdef.xC,"becomes",newCenter)
+        return newCenter
+    }
+
+    /// Returns the new y to be the picture center y when user drags in the picture.
+    /// - Parameter tap: information about the drag
+    /// - Returns: Double new center y
+    private func getCenterYFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
+        let start = tap.startLocation.y
+        let end = tap.location.y
+        let diff = start - end
+        let newCenter = picdef.yC - diff
+        print("Dragged from ",start,"to",end, "diff", diff, "old center ",picdef.yC,"becomes",newCenter)
+        return newCenter
     }
 
     /// Returns the new y to be the picture center y when user clicks on the picture.
-    /// - Parameters:
-    ///   - tapY: Double y coordinate from user tap
+    /// - Parameter tap: information about the tap
     /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
-    func getCenterYFromTapY(tapY: Double) -> Double {
-        let tapYDifference = ((Double(picdef.imageHeight) - tapY) - Double(picdef.imageHeight)/2.0)/picdef.scale
-        let newYC: Double = (picdef.yC + tapYDifference)
-        debugPrint("Clicked on picture, newYC is",newYC)
-        return newYC
+    private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
+        let start = tap.startLocation.y
+        let h:Double = Double(picdef.imageHeight)
+        let diff = ((h - start) - h/2.0) / picdef.scale
+        let newCenter: Double = (picdef.yC + diff)
+        debugPrint("Clicked on picture, old center ",picdef.yC,"becomes",newCenter)
+        return newCenter
     }
 
     /// Return the document directory for this app.
@@ -931,7 +955,6 @@ struct ContentView: View {
         }
     }
 
-
     /// Save picture iimage inputs in human-readable format
     /// - Parameter i: int unique number to avoid overwriting
     fileprivate func saveImageData(i:Int) {
@@ -956,8 +979,6 @@ struct ContentView: View {
             } catch { print(error)}
         } catch { print(error)}
     }
-
-
 
     /// Saves new picture count to be used for the next saved picture.
     /// - Parameter newi: count to be saved
