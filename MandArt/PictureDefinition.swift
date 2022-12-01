@@ -8,21 +8,21 @@
 import Foundation
 
 class PictureDefinition: Codable, ObservableObject {
-    var xCStart: Double = -0.74725
-    var yCStart: Double =  0.08442
-    var scaleStart: Double =  2_880_000.0
-    var iMaxStart: Double =  10_000.0
-    var rSqLimitStart: Double =  400.0
-    var imageWidthStart: Int = 1_200
-    var imageHeightStart: Int = 1_000
-    var nBlocksStart: Int =  60
-    var bEStart: Double =  5.0
-    var eEStart: Double =  15.0
-    var thetaStart: Double =  0.0
-    var nImageStart: Int = 0
-    var dFIterMinStart: Double =  10.0
-    var nColorsStart: Int = 6
-    var leftNumberStart: Int = 1
+    var xC: Double = -0.74725
+    var yC: Double =  0.08442
+    var scale: Double =  2_880_000.0
+    var iMax: Double =  10_000.0
+    var rSqLimit: Double =  400.0
+    var imageWidth: Int = 1_200
+    var imageHeight: Int = 1_000
+    var nBlocks: Int =  60
+    var bE: Double =  5.0
+    var eE: Double =  15.0
+    var theta: Double =  0.0
+    var nImage: Int = 0
+    var dFIterMin: Double =  10.0
+    var nColors: Int = 6
+    var leftNumber: Int = 1
     var hues: [Hue] = [
         Hue(num:1, r:0.0, g:255.0, b:0.0),
         Hue(num:2, r:255.0, g:255.0, b:0.0),
