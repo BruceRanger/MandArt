@@ -32,208 +32,136 @@ struct ContentView: View {
     @State private var dragCompleted = false
     @State private var dragOffset = CGSize.zero
     @State private var scaleOld: Double =  1.0
-
     @State private var drawIt = true
     @State private var drawGradient = false
 
-    private var aspectRatio: String{
-        let h : Double = Double(picdef.imageHeight)
-        let w : Double = Double(picdef.imageWidth)
-        let ratioDouble: Double = max (h/w, w/h)
-        let ratioString = String(format: "%.2f", ratioDouble)
-        return ratioString
-    }
-
-    var leftGradientIsValid: Bool {
-        var isValid = false
-        let leftNum = picdef.leftNumber
-        let lastPossible = picdef.hues.count
-        isValid =  leftNum >= 1 && leftNum <= lastPossible
-        return isValid
-    }
-
-    @State private var colorEntries: [Color] = [
-        Color(.sRGB, red:   0/255, green: 255/255, blue:   0/255),
-        Color(.sRGB, red: 255/255, green: 255/255, blue:   0/255),
-        Color(.sRGB, red: 255/255, green:   0/255, blue:   0/255),
-        Color(.sRGB, red: 255/255, green:   0/255, blue: 255/255),
-        Color(.sRGB, red:   0/255, green:   0/255, blue: 255/255),
-        Color(.sRGB, red:   0/255, green: 255/255, blue: 255/255)
-    ]
-
-    private func  calcColorEntries() -> [Color] {
-        var arr: [Color] = []
-        picdef.hues.forEach{hue in
-            let newColor: Color = Color(
-                .sRGB,
-                red: hue.r/255.0,
-                green: hue.g/255.0,
-                blue: hue.b/255.0)
-            arr.insert(newColor, at: arr.endIndex)
-        }
-        return arr
-    }
-
-//    func addColorEntry(){
-//        let newColor: Color = Color(
-//            .sRGB,
-//            red: 1,
-//            green: 1,
-//            blue: 1
-//        )
-//        colorEntries.append(
-//            newColor
-//        )
-//    }
-
-    /// Return the document directory for this app.
-    /// - Returns: URL to document directory
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let documentsDirectory = paths[0]
-        return documentsDirectory
-    }
-
-
-    /// Returns the new x to be the picture center x when user clicks on the picture.
+    /// Function to create and return a gradient bitmap
     /// - Parameters:
-    ///   - tapX: Double x coordinate from user tap
-    /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
-    func getCenterXFromTapX(tapX: Double) -> Double {
-        let tapXDifference = (tapX - Double(picdef.imageWidth)/2.0)/picdef.scale
-        let newXC: Double = picdef.xC + tapXDifference
-        debugPrint("Clicked on picture, newXC is",newXC)
-        return newXC
-    }
+    ///   - imageHeight: Int bitmap image height in pixels
+    ///   - imageWidth: Int bitmap image width in pixels
+    ///   - nColors: int number of the left hand color, starting with 1 (not 0)
+    ///   - colors: array of colors (for the whole picture)
+    /// - Returns: optional CGImage with the bitmap or nil
+    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nColors: Int, _ colors: inout [[Double]]) -> CGImage? {
+            debugPrint("Drawing gradient")
 
-    /// Returns the new y to be the picture center y when user clicks on the picture.
-    /// - Parameters:
-    ///   - tapY: Double y coordinate from user tap
-    /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
-    func getCenterYFromTapY(tapY: Double) -> Double {
-        let tapYDifference = ((Double(picdef.imageHeight) - tapY) - Double(picdef.imageHeight)/2.0)/picdef.scale
-        let newYC: Double = (picdef.yC + tapYDifference)
-        debugPrint("Clicked on picture, newYC is",newYC)
-        return newYC
-    }
+            var gradientImage: CGImage
+            let leftNumber: Int = picdef.leftNumber
+            var rightNumber: Int = 0
+            var color: Double = 0.0
+
+            debugPrint("Drawing gradient, left color number is ", leftNumber)
+            debugPrint("leftGradiaentIsValid=",leftGradientIsValid)
+
+            var xGradient: Double = 0.0
+
+            // set up CG parameters
+            let bitsPerComponent: Int = 8   // for UInt8
+            let componentsPerPixel: Int = 4  // RGBA = 4 components
+            let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
+            let bytesPerRow: Int = imageWidth * bytesPerPixel
+            let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
+
+            // Allocate data for the raster buffer.  I'm using UInt8 so that I can
+            // address individual RGBA components easily.
+            let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
+
+            // Create a CGBitmapContext for drawing and converting into an image for display
+            let context: CGContext =
+            CGContext(data: rasterBufferPtr,
+                      width: imageWidth,
+                      height: imageHeight,
+                      bitsPerComponent: bitsPerComponent,
+                      bytesPerRow: bytesPerRow,
+                      space: CGColorSpace(name:CGColorSpace.sRGB)!,
+                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+
+            // use CG to draw into the context
+            // you can use any of the CG drawing routines for drawing into this context
+            // here we will just erase the contents of the CGBitmapContext as the
+            // raster buffer just contains random uninitialized data at this point.
+            context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
+            context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
+            context.fillPath()
+
+            // in addition to using any of the CG drawing routines, you can draw yourself
+            // by accessing individual pixels in the raster image.
+            // here we'll draw a square one pixel at a time.
+            let xStarting: Int = 0
+            let yStarting: Int = 0
+            let width: Int = imageWidth
+            let height: Int = imageHeight
+
+            // iterate over all of the rows for the entire height of the square
+            for v in 0...(height - 1) {
+
+                // calculate the offset to the row of pixels in the raster buffer
+                // assume the origin is at the bottom left corner of the raster image.
+                // note, you could also use the top left, but GC uses the bottom left
+                // so this method keeps your drawing and CG in sync in case you wanted
+                // to use the CG methods for drawing too.
+                //
+                // note, you could do this calculation all together inside of the xoffset
+                // loop, but it's a small optimization to pull this part out and do it here
+                // instead of every time through.
+                let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
+
+                // iterate over all of the pixels in this row
+                for u in 0...(width - 1) {
+
+                    // calculate the horizontal offset to the pixel in the row
+                    let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
+
+                    // sum the horixontal and vertical offsets to get the pixel offset
+                    let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
+
+                    // calculate the offset of the pixel
+                    let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+
+                    rightNumber = leftNumber + 1
+
+                    if leftNumber == nColors {
+                        rightNumber = 1
+                    }
+
+                    xGradient = Double(u)/Double(width)
+
+                    color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
+                    pixelAddress.pointee = UInt8(color)         // R
+
+                    color = colors[leftNumber-1][1] + xGradient*(colors[rightNumber - 1][1] - colors[leftNumber-1][1])
+                    (pixelAddress + 1).pointee = UInt8(color)   // G
+
+                    color = colors[leftNumber-1][2] + xGradient*(colors[rightNumber - 1][2] - colors[leftNumber-1][2])
+                    (pixelAddress + 2).pointee = UInt8(color)   // B
+
+                    (pixelAddress + 3).pointee = UInt8(255)     //alpha
 
 
-    /// Divides scale by 2.0.
-    func zoomOut(){
-        picdef.scale = picdef.scale / 2.0
-    }
+                    // IMPORTANT:
+                    // there is no type checking here and it is up to you to make sure that the
+                    // address indexes do not go beyond the memory allocated for the buffer
 
-    /// Multiplies scale by 2.0.
-    func zoomIn(){
-        picdef.scale = picdef.scale * 2.0
-    }
+                } //end for u
 
-    /// Reads pictue count (from previous session) to make unique save numbers.
-    /// - Returns: newly incremented count
-    func readOutCount() -> Int {
-        var newCount: Int = 0
-        do {
-            let fileURL = try FileManager.default
-                .url(for: .applicationDirectory,
-                     in: .userDomainMask,
-                     appropriateFor: nil,
-                     create: true)
-                .appendingPathComponent(countFile)
-            debugPrint("in readOutCount() reading from ", fileURL)
-            let data = try Data(contentsOf: fileURL)
-            let decoder = JSONDecoder()
-            let countdef = try decoder.decode(CountDefinition.self, from: data)
-            newCount = countdef.nImages
-            debugPrint("Just read the new i, it will be", newCount)
-            return newCount
-        } catch {
-            debugPrint("Error in readOutCount",error.localizedDescription)
-            return newCount
+            } //end for v
+
+            // convert the context into an image - this is what the function will return
+            gradientImage = context.makeImage()!
+
+            // no automatic deallocation for the raster data
+            // you need to manage that yourself
+            rasterBufferPtr.deallocate()
+
+            return gradientImage
         }
-    }
 
-    /// Saves new picture count to be used for the next saved picture.
-    /// - Parameter newi: count to be saved
-     func saveOutCount(newi: Int) {
-         debugPrint("Saving the new count for next time as ", newi)
-        let encoder = JSONEncoder()
-        do {
-            // update the object before saving
-            let updated:CountDefinition = CountDefinition()
-            updated.nImages = newi
-            let jsonData = try encoder.encode(updated)
-            let fileURL = try FileManager.default
-                .url(for: .applicationDirectory,
-                     in: .userDomainMask,
-                     appropriateFor: nil,
-                     create: true)
-                .appendingPathComponent(countFile)
-            debugPrint("fileURL for OUTCOUNT JSON is ", fileURL)
-            try jsonData.write(to: fileURL)
-        } catch {
-            debugPrint(error.localizedDescription)
-        }
-    }
-    
-    fileprivate func saveImageData(i:Int) {
-        do {
-            let dn:String = "mandart" + String(i) + ".json"
-            let fileURL = try FileManager.default
-                .url(for: .documentDirectory,
-                     in: .userDomainMask,
-                     appropriateFor: nil,
-                     create: true)
-                .appendingPathComponent(dn)
-            print("fileURL for JSON is ", dn)
-            do {
-                    // convert the struct to JSON string
-                let jsonData = try JSONEncoder().encode(picdef)
-                do {
-                    try jsonData.write(to: fileURL)
-                    print("Wrote json to ", dn)
-                    let jsonString = String(data:jsonData, encoding: .utf8)!
-                    print(jsonString)
-                } catch { print(error)}
-            } catch { print(error)}
-        } catch { print(error)}
-    }
-    
-    func saveImage(i: Int) -> Bool {
-        let fn:String = "mandart" + String(i) + ".png"
-        print("In saveImage() image filename = ", fn)
-        let allocator : CFAllocator = kCFAllocatorDefault
-        let filePath: CFString = fn as NSString
-        let pathStyle: CFURLPathStyle = CFURLPathStyle.cfurlWindowsPathStyle
-        let isDirectory: Bool = false
-        let url : CFURL = CFURLCreateWithFileSystemPath(allocator, filePath, pathStyle, isDirectory)
-        //  file:///Users/denisecase/Library/Containers/Bruce-Johnson.MandArt/Data/
-        print("In saveImage(), file url is ", url)
-        let imageType: CFString = kUTTypePNG
-        let count: Int = 1
-        let options: CFDictionary? = nil
-        var destination: CGImageDestination
-        let destinationAttempt: CGImageDestination?  = CGImageDestinationCreateWithURL(url, imageType, count, options)
-        if (destinationAttempt == nil) {
-            return false
-        }
-        else {
-            destination = destinationAttempt.unsafelyUnwrapped
-            CGImageDestinationAddImage(destination,contextImageGlobal!, nil);
-            CGImageDestinationFinalize(destination)
-            print("Wrote image to ", fn)
-            saveImageData(i: i)
-            print("In saveImage(), picture and data saved with int ",i)
-            let newi = i + 1
-            print("In saveImage(), incrementing to ",newi)
-            saveOutCount(newi: newi)
-            return true
-        }
-    }
-    
+    /// Gets an image to display on the right side of the app
+    /// - Returns: An optional CGImage or nil
     func getImage() -> CGImage? {
         print("Starting getImage(): drawIt=",drawIt, "drawGradient=",drawGradient)
 
-       // update colors used for picture and gradient
+        // update colors used for picture and gradient
         var colors: [[Double]] = []
         picdef.hues.forEach{hue in
             let arr: [Double] = [hue.r, hue.g, hue.b]
@@ -243,441 +171,296 @@ struct ContentView: View {
         let imageHeight: Int = picdef.imageHeight
         let nColors: Int = picdef.nColors
 
-        if drawIt == true { // draws image
-            print("Drawing picture")
-            let iMax: Double = picdef.iMax
-            let scale: Double = picdef.scale
-            let xC: Double = picdef.xC
-            let yC: Double = picdef.yC
-            let theta: Double = picdef.theta
-            let dIterMin: Double = picdef.dFIterMin
-            let pi: Double = 3.14159
-            let thetaR: Double = pi*theta/180.0
-            let rSqLimit: Double = picdef.rSqLimit
+        if drawIt {
+            return getPictureImage(imageHeight, imageWidth, &colors)
+        }
+        else if drawGradient == true && leftGradientIsValid {
+            return getGradientImage(imageWidth, imageHeight, nColors, &colors)
+        }
+        return nil
+    }
 
-            var contextImage: CGImage
-            var rSq: Double = 0.0
-            var rSqMax: Double = 0.0
-            var x0: Double = 0.0
-            var y0: Double = 0.0
-            var dX: Double = 0.0
-            var dY: Double = 0.0
-            var xx: Double = 0.0
-            var yy: Double = 0.0
-            var xTemp: Double = 0.0
-            var iter: Double = 0.0
-            var dIter: Double = 0.0
-            var gGML: Double = 0.0
-            var gGL: Double = 0.0
-            var fIter = [[Double]](repeating: [Double](repeating: 0.0, count: imageHeight), count: imageWidth)
-            var fIterMinLeft: Double = 0.0
-            var fIterMinRight: Double = 0.0
-            var fIterBottom = [Double](repeating: 0.0, count: imageWidth)
-            var fIterTop = [Double](repeating: 0.0, count: imageWidth)
-            var fIterMinBottom: Double = 0.0
-            var fIterMinTop: Double = 0.0
-            var fIterMins = [Double](repeating: 0.0, count: 4)
-            var fIterMin: Double = 0.0
-            var p: Double = 0.0
-            var test1: Double = 0.0
-            var test2: Double = 0.0
 
-            rSqMax = 1.01*(rSqLimit + 2)*(rSqLimit + 2)
-            gGML = log( log(rSqMax) ) - log(log(rSqLimit) )
-            gGL = log(log(rSqLimit) )
-            
-            for u in 0...imageWidth - 1 {
-                
-                for v in 0...imageHeight - 1 {
-                    
-                    dX = (Double(u) - Double(imageWidth/2))/scale
-                    dY = (Double(v) - Double(imageHeight/2))/scale
-                    
-                    x0 = xC + dX
-                    y0 = yC + dY
-                    
-                    x0 = xC + dX*cos(thetaR) - dY*sin(thetaR)
-                    y0 = yC + dX*sin(thetaR) + dY*cos(thetaR)
-                    
-                    xx = x0
-                    yy = y0
-                    rSq = xx*xx + yy*yy
-                    iter = 0.0
-                    
-                    p = sqrt((xx - 0.25)*(xx - 0.25) + yy*yy)
-                    test1 = p - 2.0*p*p + 0.25
-                    test2 = (xx + 1.0)*(xx + 1.0) + yy*yy
-                    
-                    if xx < test1 || test2 < 0.0625 {
-                        fIter[u][v] = iMax  // black
-                        iter = iMax  // black
-                    }   //end if
-                    
-                    else {
-                        for i in 1...Int(iMax) {
-                            if rSq >= rSqLimit{
-                                break
-                            }
-                            
-                            xTemp = xx*xx - yy*yy + x0
-                            yy = 2*xx*yy + y0
-                            xx = xTemp
-                            rSq = xx*xx + yy*yy
-                            iter = Double(i)
+    /// Function to create and return a user-created MandArt bitmap
+    /// - Parameters:
+    ///   - imageHeight: Int bitmap image height in pixels
+    ///   - imageWidth: Int bitmap image width in pixels
+    ///   - colors: array of colors
+    /// - Returns: optional CGImage with the bitmap or nil
+    fileprivate func getPictureImage(_ imageHeight: Int, _ imageWidth: Int, _ colors: inout [[Double]]) -> CGImage? {
+        // draws image
+        print("Drawing picture")
+        let iMax: Double = picdef.iMax
+        let scale: Double = picdef.scale
+        let xC: Double = picdef.xC
+        let yC: Double = picdef.yC
+        let theta: Double = picdef.theta
+        let dIterMin: Double = picdef.dFIterMin
+        let pi: Double = 3.14159
+        let thetaR: Double = pi*theta/180.0
+        let rSqLimit: Double = picdef.rSqLimit
+
+        var contextImage: CGImage
+        var rSq: Double = 0.0
+        var rSqMax: Double = 0.0
+        var x0: Double = 0.0
+        var y0: Double = 0.0
+        var dX: Double = 0.0
+        var dY: Double = 0.0
+        var xx: Double = 0.0
+        var yy: Double = 0.0
+        var xTemp: Double = 0.0
+        var iter: Double = 0.0
+        var dIter: Double = 0.0
+        var gGML: Double = 0.0
+        var gGL: Double = 0.0
+        var fIter = [[Double]](repeating: [Double](repeating: 0.0, count: imageHeight), count: imageWidth)
+        var fIterMinLeft: Double = 0.0
+        var fIterMinRight: Double = 0.0
+        var fIterBottom = [Double](repeating: 0.0, count: imageWidth)
+        var fIterTop = [Double](repeating: 0.0, count: imageWidth)
+        var fIterMinBottom: Double = 0.0
+        var fIterMinTop: Double = 0.0
+        var fIterMins = [Double](repeating: 0.0, count: 4)
+        var fIterMin: Double = 0.0
+        var p: Double = 0.0
+        var test1: Double = 0.0
+        var test2: Double = 0.0
+
+        rSqMax = 1.01*(rSqLimit + 2)*(rSqLimit + 2)
+        gGML = log( log(rSqMax) ) - log(log(rSqLimit) )
+        gGL = log(log(rSqLimit) )
+
+        for u in 0...imageWidth - 1 {
+
+            for v in 0...imageHeight - 1 {
+
+                dX = (Double(u) - Double(imageWidth/2))/scale
+                dY = (Double(v) - Double(imageHeight/2))/scale
+
+                x0 = xC + dX
+                y0 = yC + dY
+
+                x0 = xC + dX*cos(thetaR) - dY*sin(thetaR)
+                y0 = yC + dX*sin(thetaR) + dY*cos(thetaR)
+
+                xx = x0
+                yy = y0
+                rSq = xx*xx + yy*yy
+                iter = 0.0
+
+                p = sqrt((xx - 0.25)*(xx - 0.25) + yy*yy)
+                test1 = p - 2.0*p*p + 0.25
+                test2 = (xx + 1.0)*(xx + 1.0) + yy*yy
+
+                if xx < test1 || test2 < 0.0625 {
+                    fIter[u][v] = iMax  // black
+                    iter = iMax  // black
+                }   //end if
+
+                else {
+                    for i in 1...Int(iMax) {
+                        if rSq >= rSqLimit{
+                            break
                         }
-                    }   //end else
-                    
-                    if iter < iMax {
-                        
-                        dIter = Double(-(  log( log(rSq) ) - gGL  )/gGML)
-                        
-                        fIter[u][v] = iter + dIter
-                    }   //end if
-                    
-                    else {
-                        fIter[u][v] = iter
-                    }   //end else
-                    
-                }    // end first for v
-                
-            }    // end first for u
-            
-            for u in 0...imageWidth - 1 {
-                
-                fIterBottom[u] = fIter[u][0]
-                fIterTop[u] = fIter[u][imageHeight - 1]
-                
-            }    // end second for u
-            
-            fIterMinLeft = fIter[0].min()!
-            fIterMinRight = fIter[imageWidth - 1].min()!
-            fIterMinBottom = fIterBottom.min()!
-            fIterMinTop = fIterTop.min()!
-            fIterMins = [fIterMinLeft, fIterMinRight, fIterMinBottom, fIterMinTop]
-            fIterMin = fIterMins.min()!
-            
-            fIterMin = fIterMin - dIterMin
-            
-            // Now we need to generate a bitmap image.
-            
-            let nBlocks: Int = picdef.nBlocks
-            let nColors: Int = picdef.nColors
-            let bE: Double = picdef.bE
-            let eE: Double = picdef.eE
-            
-            var dE: Double = 0.0
-            var fNBlocks: Double = 0.0
-            var color: Double = 0.0
-            var block0: Int = 0
-            var block1: Int = 0
-            
-            fNBlocks = Double(nBlocks)
-            
-            dE = (iMax - fIterMin - fNBlocks*bE)/pow(fNBlocks, eE)
-            
-            var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
 
-            var h: Double = 0.0
-            var xX: Double = 0.0
-            
-            for i in 0...nBlocks {
-                blockBound[i] = bE*Double(i) + dE*pow(Double(i), eE)
-            }
-            
-                // set up CG parameters
-            let bitsPerComponent: Int = 8   // for UInt8
-            let componentsPerPixel: Int = 4  // RGBA = 4 components
-            let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
-            let bytesPerRow: Int = imageWidth * bytesPerPixel
-            let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
-            
-            // Allocate data for the raster buffer.  I'm using UInt8 so that I can
-            // address individual RGBA components easily.
-            let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
-            
-            // Create a CGBitmapContext for drawing and converting into an image for display
-            let context: CGContext =
-                CGContext(data: rasterBufferPtr,
-                        width: imageWidth,
-                        height: imageHeight,
-                        bitsPerComponent: bitsPerComponent,
-                        bytesPerRow: bytesPerRow,
-                        space: CGColorSpace(name:CGColorSpace.sRGB)!,
-                        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
-            
-            // use CG to draw into the context
-            // you can use any of the CG drawing routines for drawing into this context
-            // here we will just erase the contents of the CGBitmapContext as the
-            // raster buffer just contains random uninitialized data at this point.
-            context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
-            context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
-            context.fillPath()
-            
-            // in addition to using any of the CG drawing routines, you can draw yourself
-            // by accessing individual pixels in the raster image.
-            // here we'll draw a square one pixel at a time.
-            let xStarting: Int = 0
-            let yStarting: Int = 0
-            let width: Int = imageWidth
-            let height: Int = imageHeight
-            
-            // iterate over all of the rows for the entire height of the square
-            for v in 0...(height - 1) {
-                
-                // calculate the offset to the row of pixels in the raster buffer
-                // assume the origin is at the bottom left corner of the raster image.
-                // note, you could also use the top left, but GC uses the bottom left
-                // so this method keeps your drawing and CG in sync in case you wanted
-                // to use the CG methods for drawing too.
-                //
-                // note, you could do this calculation all together inside of the xoffset
-                // loop, but it's a small optimization to pull this part out and do it here
-                // instead of every time through.
-                let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
-                
-                // iterate over all of the pixels in this row
-                for u in 0...(width - 1) {
-                    
-                    // calculate the horizontal offset to the pixel in the row
-                    let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
-                    
-                    // sum the horixontal and vertical offsets to get the pixel offset
-                    let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
-                    
-                    // calculate the offset of the pixel
-                    let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
-                    
-                    if fIter[u][v] >= iMax  {               //black
-                        pixelAddress.pointee = UInt8(0)         //red
-                        (pixelAddress + 1).pointee = UInt8(0)   //green
-                        (pixelAddress + 2).pointee = UInt8(0)   //blue
-                        (pixelAddress + 3).pointee = UInt8(255) //alpha
-                        
-                    }   // end if
-                    
-                    else    {
-                        h = fIter[u][v] - fIterMin
-                        
-                        for block in 0...nBlocks {
-                            
-                            block0 = block
-                            
-                            if h >= blockBound[block] && h < blockBound[block + 1]   {
-                                
-                                xX = (h - blockBound[block])/(blockBound[block + 1] - blockBound[block])
-                                
-                                while block0 > nColors - 1 {
-                                    block0 = block0 - nColors
-                                }
-                                
-                                block1 = block0 + 1
-                                
-                                if block1 == nColors {
-                                    block1 = block1 - nColors
-                                }
-                                
-                                color = colors[block0][0] + xX*(colors[block1][0] - colors[block0][0])
-                                pixelAddress.pointee = UInt8(color)         // R
-
-                                color = colors[block0][1] + xX*(colors[block1][1] - colors[block0][1])
-                                (pixelAddress + 1).pointee = UInt8(color)   // G
-
-                                color = colors[block0][2] + xX*(colors[block1][2] - colors[block0][2])
-                                (pixelAddress + 2).pointee = UInt8(color)   // B
-
-                                (pixelAddress + 3).pointee = UInt8(255)     //alpha
-                            }
-                        }
-                        // IMPORTANT:
-                        // there is no type checking here and it is up to you to make sure that the
-                        // address indexes do not go beyond the memory allocated for the buffer
-                    } //end else
-                    
-                } //end for u
-                
-            } //end for v
-            
-            // convert the context into an image - this is what the function will return
-            contextImage = context.makeImage()!
-            
-            // no automatic deallocation for the raster data
-            // you need to manage that yourself
-            rasterBufferPtr.deallocate()
-
-            // STASH bitmap
-            // before returning it, set the global variable
-            // in case they want to save
-            contextImageGlobal = contextImage
-
-            return contextImage
-        } // end if == true
-
-        else if drawGradient == true && leftGradientIsValid { // draws gradient image
-            debugPrint("Drawing gradient")
-            
-            var gradientImage: CGImage
-
-            // Now we need to generate a bitmap image.
-
-            let leftNumber: Int = picdef.leftNumber
-            var rightNumber: Int = 0
-            var color: Double = 0.0
-
-            debugPrint("Drawing gradient, left color number is ", leftNumber)
-            debugPrint("leftGradiaentIsValid=",leftGradientIsValid)
-
-            var xGradient: Double = 0.0
-            
-            // set up CG parameters
-            let bitsPerComponent: Int = 8   // for UInt8
-            let componentsPerPixel: Int = 4  // RGBA = 4 components
-            let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
-            let bytesPerRow: Int = imageWidth * bytesPerPixel
-            let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
-            
-            // Allocate data for the raster buffer.  I'm using UInt8 so that I can
-            // address individual RGBA components easily.
-            let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
-            
-            // Create a CGBitmapContext for drawing and converting into an image for display
-            let context: CGContext =
-                CGContext(data: rasterBufferPtr,
-                          width: imageWidth,
-                         height: imageHeight,
-                        bitsPerComponent: bitsPerComponent,
-                        bytesPerRow: bytesPerRow,
-                        space: CGColorSpace(name:CGColorSpace.sRGB)!,
-                        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
-            
-            // use CG to draw into the context
-            // you can use any of the CG drawing routines for drawing into this context
-            // here we will just erase the contents of the CGBitmapContext as the
-            // raster buffer just contains random uninitialized data at this point.
-            context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
-            context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
-            context.fillPath()
-            
-            // in addition to using any of the CG drawing routines, you can draw yourself
-            // by accessing individual pixels in the raster image.
-            // here we'll draw a square one pixel at a time.
-            let xStarting: Int = 0
-            let yStarting: Int = 0
-            let width: Int = imageWidth
-            let height: Int = imageHeight
-            
-            // iterate over all of the rows for the entire height of the square
-            for v in 0...(height - 1) {
-                
-                // calculate the offset to the row of pixels in the raster buffer
-                // assume the origin is at the bottom left corner of the raster image.
-                // note, you could also use the top left, but GC uses the bottom left
-                // so this method keeps your drawing and CG in sync in case you wanted
-                // to use the CG methods for drawing too.
-                //
-                // note, you could do this calculation all together inside of the xoffset
-                // loop, but it's a small optimization to pull this part out and do it here
-                // instead of every time through.
-                let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
-                
-                // iterate over all of the pixels in this row
-                for u in 0...(width - 1) {
-                    
-                    // calculate the horizontal offset to the pixel in the row
-                    let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
-                    
-                    // sum the horixontal and vertical offsets to get the pixel offset
-                    let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
-                    
-                    // calculate the offset of the pixel
-                    let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
-                    
-                    rightNumber = leftNumber + 1
-                    
-                    if leftNumber >= nColors {
-                        rightNumber = 1
+                        xTemp = xx*xx - yy*yy + x0
+                        yy = 2*xx*yy + y0
+                        xx = xTemp
+                        rSq = xx*xx + yy*yy
+                        iter = Double(i)
                     }
-                    
-                    xGradient = Double(u)/Double(width)
-                    
-                    color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
-                    pixelAddress.pointee = UInt8(color)         // R
-                    
-                    color = colors[leftNumber-1][1] + xGradient*(colors[rightNumber - 1][1] - colors[leftNumber-1][1])
-                    (pixelAddress + 1).pointee = UInt8(color)   // G
-                    
-                    color = colors[leftNumber-1][2] + xGradient*(colors[rightNumber - 1][2] - colors[leftNumber-1][2])
-                    (pixelAddress + 2).pointee = UInt8(color)   // B
-                    
-                    (pixelAddress + 3).pointee = UInt8(255)     //alpha
-                    
-                    
+                }   //end else
+
+                if iter < iMax {
+
+                    dIter = Double(-(  log( log(rSq) ) - gGL  )/gGML)
+
+                    fIter[u][v] = iter + dIter
+                }   //end if
+
+                else {
+                    fIter[u][v] = iter
+                }   //end else
+
+            }    // end first for v
+
+        }    // end first for u
+
+        for u in 0...imageWidth - 1 {
+
+            fIterBottom[u] = fIter[u][0]
+            fIterTop[u] = fIter[u][imageHeight - 1]
+
+        }    // end second for u
+
+        fIterMinLeft = fIter[0].min()!
+        fIterMinRight = fIter[imageWidth - 1].min()!
+        fIterMinBottom = fIterBottom.min()!
+        fIterMinTop = fIterTop.min()!
+        fIterMins = [fIterMinLeft, fIterMinRight, fIterMinBottom, fIterMinTop]
+        fIterMin = fIterMins.min()!
+
+        fIterMin = fIterMin - dIterMin
+
+        // Now we need to generate a bitmap image.
+
+        let nBlocks: Int = picdef.nBlocks
+        let nColors: Int = picdef.nColors
+        let bE: Double = picdef.bE
+        let eE: Double = picdef.eE
+
+        var dE: Double = 0.0
+        var fNBlocks: Double = 0.0
+        var color: Double = 0.0
+        var block0: Int = 0
+        var block1: Int = 0
+
+        fNBlocks = Double(nBlocks)
+
+        dE = (iMax - fIterMin - fNBlocks*bE)/pow(fNBlocks, eE)
+
+        var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
+
+        var h: Double = 0.0
+        var xX: Double = 0.0
+
+        for i in 0...nBlocks {
+            blockBound[i] = bE*Double(i) + dE*pow(Double(i), eE)
+        }
+
+        // set up CG parameters
+        let bitsPerComponent: Int = 8   // for UInt8
+        let componentsPerPixel: Int = 4  // RGBA = 4 components
+        let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
+        let bytesPerRow: Int = imageWidth * bytesPerPixel
+        let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
+
+        // Allocate data for the raster buffer.  I'm using UInt8 so that I can
+        // address individual RGBA components easily.
+        let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
+
+        // Create a CGBitmapContext for drawing and converting into an image for display
+        let context: CGContext =
+        CGContext(data: rasterBufferPtr,
+                  width: imageWidth,
+                  height: imageHeight,
+                  bitsPerComponent: bitsPerComponent,
+                  bytesPerRow: bytesPerRow,
+                  space: CGColorSpace(name:CGColorSpace.sRGB)!,
+                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+
+        // use CG to draw into the context
+        // you can use any of the CG drawing routines for drawing into this context
+        // here we will just erase the contents of the CGBitmapContext as the
+        // raster buffer just contains random uninitialized data at this point.
+        context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
+        context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
+        context.fillPath()
+
+        // in addition to using any of the CG drawing routines, you can draw yourself
+        // by accessing individual pixels in the raster image.
+        // here we'll draw a square one pixel at a time.
+        let xStarting: Int = 0
+        let yStarting: Int = 0
+        let width: Int = imageWidth
+        let height: Int = imageHeight
+
+        // iterate over all of the rows for the entire height of the square
+        for v in 0...(height - 1) {
+
+            // calculate the offset to the row of pixels in the raster buffer
+            // assume the origin is at the bottom left corner of the raster image.
+            // note, you could also use the top left, but GC uses the bottom left
+            // so this method keeps your drawing and CG in sync in case you wanted
+            // to use the CG methods for drawing too.
+            //
+            // note, you could do this calculation all together inside of the xoffset
+            // loop, but it's a small optimization to pull this part out and do it here
+            // instead of every time through.
+            let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
+
+            // iterate over all of the pixels in this row
+            for u in 0...(width - 1) {
+
+                // calculate the horizontal offset to the pixel in the row
+                let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
+
+                // sum the horixontal and vertical offsets to get the pixel offset
+                let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
+
+                // calculate the offset of the pixel
+                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+
+                if fIter[u][v] >= iMax  {               //black
+                    pixelAddress.pointee = UInt8(0)         //red
+                    (pixelAddress + 1).pointee = UInt8(0)   //green
+                    (pixelAddress + 2).pointee = UInt8(0)   //blue
+                    (pixelAddress + 3).pointee = UInt8(255) //alpha
+
+                }   // end if
+
+                else    {
+                    h = fIter[u][v] - fIterMin
+
+                    for block in 0...nBlocks {
+
+                        block0 = block
+
+                        if h >= blockBound[block] && h < blockBound[block + 1]   {
+
+                            xX = (h - blockBound[block])/(blockBound[block + 1] - blockBound[block])
+
+                            while block0 > nColors - 1 {
+                                block0 = block0 - nColors
+                            }
+
+                            block1 = block0 + 1
+
+                            if block1 == nColors {
+                                block1 = block1 - nColors
+                            }
+
+                            color = colors[block0][0] + xX*(colors[block1][0] - colors[block0][0])
+                            pixelAddress.pointee = UInt8(color)         // R
+
+                            color = colors[block0][1] + xX*(colors[block1][1] - colors[block0][1])
+                            (pixelAddress + 1).pointee = UInt8(color)   // G
+
+                            color = colors[block0][2] + xX*(colors[block1][2] - colors[block0][2])
+                            (pixelAddress + 2).pointee = UInt8(color)   // B
+
+                            (pixelAddress + 3).pointee = UInt8(255)     //alpha
+                        }
+                    }
                     // IMPORTANT:
                     // there is no type checking here and it is up to you to make sure that the
                     // address indexes do not go beyond the memory allocated for the buffer
-                    
-                } //end for u
-                
-            } //end for v
-            
-            // convert the context into an image - this is what the function will return
-            gradientImage = context.makeImage()!
-            
-            // no automatic deallocation for the raster data
-            // you need to manage that yourself
-            rasterBufferPtr.deallocate()
-            
-            return gradientImage
-        }   // end else for gradient image
-        
-        return nil
-    }   //  end func
-    
-    static var cgFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 8
-        formatter.maximum = 4.0
-        formatter.minimum = -4.0
-        return formatter
-    }
-    
-    static var cgUnboundFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 8
-        return formatter
-    }
-    
-    static var cgDecimal2Formatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        return formatter
-    }
-    
-    static var intMaxColorsFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.minimum = 1
-        formatter.maximum = 20
-        formatter.minimumIntegerDigits = 1
-        formatter.maximumIntegerDigits = 2
-        return formatter
+                } //end else
+
+            } //end for u
+
+        } //end for v
+
+        // convert the context into an image - this is what the function will return
+        contextImage = context.makeImage()!
+
+        // no automatic deallocation for the raster data
+        // you need to manage that yourself
+        rasterBufferPtr.deallocate()
+
+        // STASH bitmap
+        // before returning it, set the global variable
+        // in case they want to save
+        contextImageGlobal = contextImage
+
+        return contextImage
     }
 
-    fileprivate func readyForPicture() {
-        // trigger a state change
-        drawIt = !drawIt
-        drawIt = true
-        drawGradient = false
-    }
 
-    fileprivate func readyForGradient() {
-        // trigger a state change
-        drawIt = !drawIt
-        drawIt = false
-        drawGradient = true
-    }
+
+
+
 
     var body: some View {
         
@@ -942,6 +725,259 @@ struct ContentView: View {
                 }
 
     } // end tapGesture
+
+    // HELPER FUNCTIONS AND PRIVATE VARIABLES DOWN HERE......
+
+    static var cgFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 8
+        formatter.maximum = 4.0
+        formatter.minimum = -4.0
+        return formatter
+    }
+
+    static var cgUnboundFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 8
+        return formatter
+    }
+
+    static var cgDecimal2Formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        return formatter
+    }
+
+    static var intMaxColorsFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.minimum = 1
+        formatter.maximum = 20
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumIntegerDigits = 2
+        return formatter
+    }
+
+    private var aspectRatio: String{
+        let h : Double = Double(picdef.imageHeight)
+        let w : Double = Double(picdef.imageWidth)
+        let ratioDouble: Double = max (h/w, w/h)
+        let ratioString = String(format: "%.2f", ratioDouble)
+        return ratioString
+    }
+
+    private var leftGradientIsValid: Bool {
+        var isValid = false
+        let leftNum = picdef.leftNumber
+        let lastPossible = picdef.hues.count
+        isValid =  leftNum >= 1 && leftNum <= lastPossible
+        return isValid
+    }
+
+    @State private var colorEntries: [Color] = [
+        Color(.sRGB, red:   0/255, green: 255/255, blue:   0/255),
+        Color(.sRGB, red: 255/255, green: 255/255, blue:   0/255),
+        Color(.sRGB, red: 255/255, green:   0/255, blue:   0/255),
+        Color(.sRGB, red: 255/255, green:   0/255, blue: 255/255),
+        Color(.sRGB, red:   0/255, green:   0/255, blue: 255/255),
+        Color(.sRGB, red:   0/255, green: 255/255, blue: 255/255)
+    ]
+
+
+
+    //    func addColorEntry(){
+    //        let newColor: Color = Color(
+    //            .sRGB,
+    //            red: 1,
+    //            green: 1,
+    //            blue: 1
+    //        )
+    //        colorEntries.append(
+    //            newColor
+    //        )
+    //    }
+
+
+    private func  calcColorEntries() -> [Color] {
+        var arr: [Color] = []
+        picdef.hues.forEach{hue in
+            let newColor: Color = Color(
+                .sRGB,
+                red: hue.r/255.0,
+                green: hue.g/255.0,
+                blue: hue.b/255.0)
+            arr.insert(newColor, at: arr.endIndex)
+        }
+        return arr
+    }
+
+    /// Returns the new x to be the picture center x when user clicks on the picture.
+    /// - Parameters:
+    ///   - tapX: Double x coordinate from user tap
+    /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
+    func getCenterXFromTapX(tapX: Double) -> Double {
+        let tapXDifference = (tapX - Double(picdef.imageWidth)/2.0)/picdef.scale
+        let newXC: Double = picdef.xC + tapXDifference
+        debugPrint("Clicked on picture, newXC is",newXC)
+        return newXC
+    }
+
+    /// Returns the new y to be the picture center y when user clicks on the picture.
+    /// - Parameters:
+    ///   - tapY: Double y coordinate from user tap
+    /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
+    func getCenterYFromTapY(tapY: Double) -> Double {
+        let tapYDifference = ((Double(picdef.imageHeight) - tapY) - Double(picdef.imageHeight)/2.0)/picdef.scale
+        let newYC: Double = (picdef.yC + tapYDifference)
+        debugPrint("Clicked on picture, newYC is",newYC)
+        return newYC
+    }
+
+    /// Return the document directory for this app.
+    /// - Returns: URL to document directory
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
+
+    /// Reads pictue count (from previous session) to make unique save numbers.
+    /// - Returns: newly incremented count
+    func readOutCount() -> Int {
+        var newCount: Int = 0
+        do {
+            let fileURL = try FileManager.default
+                .url(for: .applicationDirectory,
+                     in: .userDomainMask,
+                     appropriateFor: nil,
+                     create: true)
+                .appendingPathComponent(countFile)
+            debugPrint("in readOutCount() reading from ", fileURL)
+            let data = try Data(contentsOf: fileURL)
+            let decoder = JSONDecoder()
+            let countdef = try decoder.decode(CountDefinition.self, from: data)
+            newCount = countdef.nImages
+            debugPrint("Just read the new i, it will be", newCount)
+            return newCount
+        } catch {
+            debugPrint("Error in readOutCount",error.localizedDescription)
+            return newCount
+        }
+    }
+
+    /// Get the app ready to draw a gradient.
+    fileprivate func readyForGradient() {
+        // trigger a state change
+        drawIt = !drawIt
+        drawIt = false
+        drawGradient = true
+    }
+
+    /// Get the app ready to draw a MandArt picture.
+    fileprivate func readyForPicture() {
+        // trigger a state change
+        drawIt = !drawIt
+        drawIt = true
+        drawGradient = false
+    }
+
+    /// Save custom user bitmap as a PNG file.
+    /// - Parameter i: int unique number to avoid overwriting
+    func saveImage(i: Int) -> Bool {
+        let fn:String = "mandart" + String(i) + ".png"
+        print("In saveImage() image filename = ", fn)
+        let allocator : CFAllocator = kCFAllocatorDefault
+        let filePath: CFString = fn as NSString
+        let pathStyle: CFURLPathStyle = CFURLPathStyle.cfurlWindowsPathStyle
+        let isDirectory: Bool = false
+        let url : CFURL = CFURLCreateWithFileSystemPath(allocator, filePath, pathStyle, isDirectory)
+        //  file:///Users/denisecase/Library/Containers/Bruce-Johnson.MandArt/Data/
+        print("In saveImage(), file url is ", url)
+        let imageType: CFString = kUTTypePNG
+        let count: Int = 1
+        let options: CFDictionary? = nil
+        var destination: CGImageDestination
+        let destinationAttempt: CGImageDestination?  = CGImageDestinationCreateWithURL(url, imageType, count, options)
+        if (destinationAttempt == nil) {
+            return false
+        }
+        else {
+            destination = destinationAttempt.unsafelyUnwrapped
+            CGImageDestinationAddImage(destination,contextImageGlobal!, nil);
+            CGImageDestinationFinalize(destination)
+            print("Wrote image to ", fn)
+            saveImageData(i: i)
+            print("In saveImage(), picture and data saved with int ",i)
+            let newi = i + 1
+            print("In saveImage(), incrementing to ",newi)
+            saveOutCount(newi: newi)
+            return true
+        }
+    }
+
+
+    /// Save picture iimage inputs in human-readable format
+    /// - Parameter i: int unique number to avoid overwriting
+    fileprivate func saveImageData(i:Int) {
+        do {
+            let dn:String = "mandart" + String(i) + ".json"
+            let fileURL = try FileManager.default
+                .url(for: .documentDirectory,
+                     in: .userDomainMask,
+                     appropriateFor: nil,
+                     create: true)
+                .appendingPathComponent(dn)
+            print("fileURL for JSON is ", dn)
+            do {
+                // convert the struct to JSON string
+                let jsonData = try JSONEncoder().encode(picdef)
+                do {
+                    try jsonData.write(to: fileURL)
+                    print("Wrote json to ", dn)
+                    let jsonString = String(data:jsonData, encoding: .utf8)!
+                    print(jsonString)
+                } catch { print(error)}
+            } catch { print(error)}
+        } catch { print(error)}
+    }
+
+
+
+    /// Saves new picture count to be used for the next saved picture.
+    /// - Parameter newi: count to be saved
+    func saveOutCount(newi: Int) {
+        debugPrint("Saving the new count for next time as ", newi)
+        let encoder = JSONEncoder()
+        do {
+            // update the object before saving
+            let updated:CountDefinition = CountDefinition()
+            updated.nImages = newi
+            let jsonData = try encoder.encode(updated)
+            let fileURL = try FileManager.default
+                .url(for: .applicationDirectory,
+                     in: .userDomainMask,
+                     appropriateFor: nil,
+                     create: true)
+                .appendingPathComponent(countFile)
+            debugPrint("fileURL for OUTCOUNT JSON is ", fileURL)
+            try jsonData.write(to: fileURL)
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
+    }
+
+    /// Multiplies scale by 2.0.
+    func zoomIn(){
+        picdef.scale = picdef.scale * 2.0
+    }
+
+    /// Divides scale by 2.0.
+    func zoomOut(){
+        picdef.scale = picdef.scale / 2.0
+    }
 }
 
 extension View {
