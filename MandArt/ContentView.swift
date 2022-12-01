@@ -49,7 +49,6 @@ struct ContentView: View {
         let leftNum = picdef.leftNumber
         let lastPossible = picdef.hues.count
         isValid =  leftNum >= 1 && leftNum <= lastPossible
-        print("leftGradient leftNum=", leftNum,"and isValid=", isValid)
         return isValid
     }
 
@@ -122,19 +121,16 @@ struct ContentView: View {
     /// Divides scale by 2.0.
     func zoomOut(){
         picdef.scale = picdef.scale / 2.0
-        debugPrint("Zoomed out, new scale is",picdef.scale)
     }
 
     /// Multiplies scale by 2.0.
     func zoomIn(){
         picdef.scale = picdef.scale * 2.0
-        debugPrint("Zoomed in, new scale is",picdef.scale)
     }
 
     /// Reads pictue count (from previous session) to make unique save numbers.
     /// - Returns: newly incremented count
     func readOutCount() -> Int {
-        debugPrint("reading the picture count into state")
         var newCount: Int = 0
         do {
             let fileURL = try FileManager.default
@@ -182,7 +178,6 @@ struct ContentView: View {
     fileprivate func saveImageData(i:Int) {
         do {
             let dn:String = "mandart" + String(i) + ".json"
-            print("In saveDataFile() data filename = ", dn)
             let fileURL = try FileManager.default
                 .url(for: .documentDirectory,
                      in: .userDomainMask,
@@ -229,7 +224,7 @@ struct ContentView: View {
             saveImageData(i: i)
             print("In saveImage(), picture and data saved with int ",i)
             let newi = i + 1
-            print("In saveImage(), incrementing to ",i)
+            print("In saveImage(), incrementing to ",newi)
             saveOutCount(newi: newi)
             return true
         }
@@ -670,6 +665,20 @@ struct ContentView: View {
         return formatter
     }
 
+    fileprivate func readyForPicture() {
+        // trigger a state change
+        drawIt = !drawIt
+        drawIt = true
+        drawGradient = false
+    }
+
+    fileprivate func readyForGradient() {
+        // trigger a state change
+        drawIt = !drawIt
+        drawIt = false
+        drawGradient = true
+    }
+
     var body: some View {
         
       var image: CGImage = getImage()!
@@ -688,12 +697,14 @@ struct ContentView: View {
                         HStack {
                             VStack {
                                 Button("Zoom In") {
+                                    readyForPicture()
                                     zoomIn()
                                 }
                             }
                             .padding(10)
                             VStack {
                                 Button("Zoom Out") {
+                                    readyForPicture()
                                     zoomOut()
                                 }
                             }
@@ -718,9 +729,7 @@ struct ContentView: View {
 
                             VStack { // use a button to resume
                                 Button("Resume") {
-                                    drawIt = true
-                                    drawGradient = false
-                                    debugPrint("Clicked Resume live drawing. draw=",drawIt, "drawGradient=",drawGradient)
+                                    readyForPicture()
                                 }
                             }
                         } // end HStack
@@ -739,17 +748,13 @@ struct ContentView: View {
                             VStack { // use a button made a gradient
                                 Text("")
                                 Button("Make a gradient") {
-                                    // trigger a state change
-                                    drawIt = !drawIt
-                                    drawIt = false
-                                    drawGradient = true
+                                    readyForGradient()
                                 }
                             }
                             VStack {
                                 Text("")
                                 Button("Resume") {
-                                    drawIt = true
-                                    drawGradient = false
+                                 readyForPicture()
                                 }
                             }
                         } // end HStack
@@ -907,29 +912,35 @@ struct ContentView: View {
     } // end view body
 
     var tapGesture: some Gesture {
-        DragGesture(minimumDistance: 0, coordinateSpace: .local)
-            .onChanged { value in
-                // store distance the touch has moved as a sum of all movements
-                self.moved += value.translation.width + value.translation.height
-                // only set the start time if it's the first event
-                if self.startTime == nil {
-                    self.startTime = value.time
+        // only respond to taps if this is a picture not gradient
+
+            DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                .onChanged { value in
+                    // store distance the touch has moved as a sum of all movements
+                    self.moved += value.translation.width + value.translation.height
+                    // only set the start time if it's the first event
+                    if self.startTime == nil {
+                        self.startTime = value.time
+                    }
                 }
-            }
-            .onEnded { tap in
-                debugPrint("User clicked on picture x,y:",tap.startLocation)
-                    // if we haven't moved very much, treat it as a tap event
-                if self.moved < 10 && self.moved > -10 {
-                    tapX = tap.startLocation.x
-                    tapY = tap.startLocation.y
-                    self.tapLocations.append(tap.startLocation)
-                    picdef.xC = getCenterXFromTapX(tapX:tapX)
-                    picdef.yC = getCenterYFromTapY(tapY:tapY)
+                .onEnded { tap in
+                    debugPrint("User clicked on picture x,y:",tap.startLocation)
+                    if (drawIt == true) {
+                        // if we haven't moved very much, treat it as a tap event
+                        if self.moved < 10 && self.moved > -10 {
+                            tapX = tap.startLocation.x
+                            tapY = tap.startLocation.y
+                            self.tapLocations.append(tap.startLocation)
+                            picdef.xC = getCenterXFromTapX(tapX:tapX)
+                            picdef.yC = getCenterYFromTapY(tapY:tapY)
+                            readyForPicture()
+                        }
+                        // reset tap event states
+                        self.moved = 0
+                        self.startTime = nil
+                    }
                 }
-                // reset tap event states
-                self.moved = 0
-                self.startTime = nil
-            }
+
     } // end tapGesture
 }
 
