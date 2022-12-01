@@ -831,9 +831,11 @@ struct ContentView: View {
     private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let start = tap.startLocation.x
         let end = tap.location.x
-        let diff = (start - Double(picdef.imageWidth)/2.0)/picdef.scale
+        let moved = end - start
+        let w:Double = Double(picdef.imageWidth)
+        let diff = (moved - w/2.0) / picdef.scale
         let newCenter: Double = picdef.xC + diff
-        print("Dragged from ",start,"to",end, "diff", diff, "old center ",picdef.xC,"becomes",newCenter)
+        print("X dragged from ",start,"to",end, "moved", moved, "old center ",picdef.xC,"becomes",newCenter)
         return newCenter
     }
 
@@ -855,9 +857,11 @@ struct ContentView: View {
     private func getCenterYFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let start = tap.startLocation.y
         let end = tap.location.y
-        let diff = start - end
-        let newCenter = picdef.yC - diff
-        print("Dragged from ",start,"to",end, "diff", diff, "old center ",picdef.yC,"becomes",newCenter)
+        let moved = end - start
+        let h:Double = Double(picdef.imageHeight)
+        let diff = ((h - moved) - h/2.0) / picdef.scale
+        let newCenter = picdef.yC + diff
+        print("Y dragged from ",start,"to",end, "moved", moved, "old center ",picdef.yC,"becomes",newCenter)
         return newCenter
     }
 
