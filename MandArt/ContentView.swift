@@ -670,29 +670,29 @@ struct ContentView: View {
                     } // end foreach
                 } // end colors group
   
-                Group { // dont nest list in existing scrollview
-                    VStack {
-                        Text("Ordered List of Colors")
-                        Text("Dad: do you like the red x or the button?")
+                    Group { // dont nest list in existing scrollview
+                        VStack {
+                            Text("Ordered List of Colors")
+                            Text("Dad: do you like the red x or the button?")
 
                             ForEach($picdef.hues, id:\.num) { $hue in
                                 HStack {
-                                ColorPicker("\(hue.num)", selection: $colorEntries[hue.num-1])
-                                Image(systemName: "multiply.circle.fill")
-                                    .foregroundColor(.red)
-                                    .help("Delete \(hue.num)")
-                                Button(role: .destructive) {
-                                    //$picdef.hues.remove(object: hue)
-                                } label: {Label("Delete", systemImage: "trash")
+                                    ColorPicker("\(hue.num)", selection: $colorEntries[hue.num-1])
+                                    Image(systemName: "multiply.circle.fill")
+                                        .foregroundColor(.red)
+                                        .help("Delete \(hue.num)")
+                                    Button(role: .destructive) {
+                                        //$picdef.hues.remove(object: hue)
+                                    } label: {Label("Delete", systemImage: "trash")
+                                    }
                                 }
                             }
+                            Button("Add Color") {
+                                //addColorEntry()
+                            }
+                            Text("")
                         }
-                        Button("Add Color") {
-                            //addColorEntry()
-                        }
-                        Text("")
-                    }
-                } // end colors group
+                    } // end colors group
 
                 } // end VStack for user instructions
                 .background(instructionBackgroundColor)
@@ -806,20 +806,13 @@ struct ContentView: View {
         Color(.sRGB, red:   0/255, green: 255/255, blue: 255/255)
     ]
 
+    private func addColorEntry(){
+        // colorEntries.append(Color(.sRGB, red: 1, green: 1, blue: 1))
+    }
 
-
-    //    func addColorEntry(){
-    //        let newColor: Color = Color(
-    //            .sRGB,
-    //            red: 1,
-    //            green: 1,
-    //            blue: 1
-    //        )
-    //        colorEntries.append(
-    //            newColor
-    //        )
-    //    }
-
+    func deleteColorEntry(at offsets: IndexSet){
+        colorEntries.remove(atOffsets: offsets)
+    }
 
     private func  calcColorEntries() -> [Color] {
         var arr: [Color] = []
