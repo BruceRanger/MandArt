@@ -673,83 +673,88 @@ struct ContentView: View {
     var body: some View {
         
       var image: CGImage = getImage()!
-        let img = Image(image, scale: 1.0, label: Text("Test"))
+      let img = Image(image, scale: 1.0, label: Text("Test"))
         
-        HStack{ // this container shows instructions on left / dwg on right
-            
+        HStack{ // instructions on left, picture on right
             ScrollView(showsIndicators: true) {
-                VStack( // the left side is a vertical container with user stuff
-                    alignment: .center, spacing: 10) // spacing is between VStacks
-                {
-                Text("MandArt")
-                    .font(.title)
-                    .padding()
-                Group{
-                    HStack {
-                        VStack {
-                            Button("Zoom In") {zoomIn()}
-                        }
-                        .padding(10)
-    
-                        VStack {
-                            Button("Zoom Out") {zoomOut()}
-                        }
-                    }
-                    VStack {
-                        Button("Save as PNG",
-                               action: {
-                                 let imageCount = readOutCount()
-                                 let saveSuccess = saveImage(i:imageCount)
-                            debugPrint("Save success",saveSuccess)
-                        })
-                    }
-                    HStack {
-                        VStack { // use a button to pause to change values
-                            Button("Pause to change values") {
-                                drawIt = false
-                                drawGradient = false
-                                debugPrint("Clicked Pause for changes. draw=",drawIt, "drawGradient=",drawGradient)
-                            }
-                        }
-                        .padding(10)
-                        
-                        VStack { // use a button to resume
-                            Button("Resume") {
-                                drawIt = true
-                                drawGradient = false
-                                debugPrint("Clicked Resume live drawing. draw=",drawIt, "drawGradient=",drawGradient)
-                            }
-                        }
-                    } // end HStack
-                    Divider()
-                    HStack {
-                        VStack{
-                            Text("Left #")
-                            TextField("leftNumber",value: $picdef.leftNumber, formatter: ContentView.intMaxColorsFormatter)
-                                .frame(maxWidth: 30)
-                                .foregroundColor(leftGradientIsValid ? .primary : .red)
-                        }
-                        //.errorAlert(error: $errdef.leftGradientOutOfRange)
 
-                        VStack { // use a button made a gradient
-                            Text("")
-                            Button("Make a gradient") {
-                                // trigger a state change
-                                drawIt = !drawIt
-                                drawIt = false
-                                drawGradient = true
+                // left side with user stuff
+                // spacing is between VStacks
+                VStack(alignment: .center, spacing: 10){
+                    Text("MandArt")
+                        .font(.title)
+                        .padding()
+                    Group{
+                        HStack {
+                            VStack {
+                                Button("Zoom In") {
+                                    zoomIn()
+                                }
+                            }
+                            .padding(10)
+                            VStack {
+                                Button("Zoom Out") {
+                                    zoomOut()
+                                }
                             }
                         }
                         VStack {
-                            Text("")
-                            Button("Resume") {
-                                drawIt = true
-                                drawGradient = false
-                            }
+                            Button("Save as PNG",
+                                   action: {
+                                let imageCount = readOutCount()
+                                let saveSuccess = saveImage(i:imageCount)
+                                debugPrint("Save success",saveSuccess)
+                            })
                         }
-                    } // end HStack
-                 Divider()
-                    Group {
+                        HStack {
+                            VStack { // use a button to pause to change values
+                                Button("Pause to change values") {
+                                    drawIt = false
+                                    drawGradient = false
+                                    debugPrint("Clicked Pause for changes. draw=",drawIt, "drawGradient=",drawGradient)
+                                }
+                            }
+                            .padding(10)
+
+                            VStack { // use a button to resume
+                                Button("Resume") {
+                                    drawIt = true
+                                    drawGradient = false
+                                    debugPrint("Clicked Resume live drawing. draw=",drawIt, "drawGradient=",drawGradient)
+                                }
+                            }
+                        } // end HStack
+                    }
+                    Divider()
+                    Group{
+                        HStack {
+                            VStack{
+                                Text("Left #")
+                                TextField("leftNumber",value: $picdef.leftNumber, formatter: ContentView.intMaxColorsFormatter)
+                                    .frame(maxWidth: 30)
+                                    .foregroundColor(leftGradientIsValid ? .primary : .red)
+                            }
+                            //.errorAlert(error: $errdef.leftGradientOutOfRange)
+
+                            VStack { // use a button made a gradient
+                                Text("")
+                                Button("Make a gradient") {
+                                    // trigger a state change
+                                    drawIt = !drawIt
+                                    drawIt = false
+                                    drawGradient = true
+                                }
+                            }
+                            VStack {
+                                Text("")
+                                Button("Resume") {
+                                    drawIt = true
+                                    drawGradient = false
+                                }
+                            }
+                        } // end HStack
+                        Divider()
+
                         HStack {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center X")
@@ -765,7 +770,8 @@ struct ContentView: View {
                             }
                         }
                     }
-                    Group {
+                    Divider()
+                    Group{
                         HStack {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("scale:")
@@ -783,70 +789,65 @@ struct ContentView: View {
                                     .padding(2)
                             }
                         }
-                    }
-                } // end of group
-                Group {
-                    HStack {
-                        VStack {
-                            Text("Image width, px:")
-                            TextField("imageWidth",value: $picdef.imageWidth, formatter: ContentView.cgUnboundFormatter)
-                                .padding(2)
+                        Divider()
+                        HStack {
+                            VStack {
+                                Text("Image width, px:")
+                                TextField("imageWidth",value: $picdef.imageWidth, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
+                            VStack {
+                                Text("Image height, px:")
+                                TextField("imageHeightStart",value: $picdef.imageHeight, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
+                            VStack {
+                                Text("Aspect ratio:")
+                                Text("\(aspectRatio)")
+                                    .padding(2)
+                            }
                         }
-                        VStack {
-                            Text("Image height, px:")
-                            TextField("imageHeightStart",value: $picdef.imageHeight, formatter: ContentView.cgUnboundFormatter)
-                                .padding(2)
+                        Divider()
+                        HStack{
+                            VStack {
+                                Text("bE:")
+                                TextField("bE",value: $picdef.bE, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
+                            VStack {
+                                Text("eE:")
+                                TextField("eE",value: $picdef.eE, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
                         }
-                        VStack {
-                            Text("Aspect ratio:")
-                            Text("\(aspectRatio)")
-                                .padding(2)
+                        Divider()
+                        HStack{
+                            VStack {
+                                Text("theta:")
+                                TextField("theta",value: $picdef.theta, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
+                            VStack {
+                                Text("nImage:")
+                                TextField("nImage",value: $picdef.nImage, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
                         }
-                    }
-                }
-                Group{
-                    HStack{
-                        VStack {
-                            Text("bE:")
-                            TextField("bE",value: $picdef.bE, formatter: ContentView.cgUnboundFormatter)
-                                .padding(2)
-                        }
-                        VStack {
-                            Text("eE:")
-                            TextField("eE",value: $picdef.eE, formatter: ContentView.cgUnboundFormatter)
-                                .padding(2)
-                        }
-                    }
-                }
-                Group {
-                    HStack{
-                        VStack {
-                            Text("theta:")
-                            TextField("theta",value: $picdef.theta, formatter: ContentView.cgUnboundFormatter)
-                                .padding(2)
-                        }
-                        VStack {
-                            Text("nImage:")
-                            TextField("nImage",value: $picdef.nImage, formatter: ContentView.cgUnboundFormatter)
-                                .padding(2)
-                        }
-                    }
-                }
-                Group {
-                    HStack {
-                        VStack {
-                            Text("dFIterMin:")
-                            TextField("dFIterMin",value: $picdef.dFIterMin, formatter: ContentView.cgUnboundFormatter)
-                                .padding(2)
-                        }
-                        VStack {
-                            Text("nBlocks:")
-                            TextField("nBlocks",value: $picdef.nBlocks, formatter: ContentView.cgUnboundFormatter)
-                                .padding(2)
+                        Divider()
+                        HStack {
+                            VStack {
+                                Text("dFIterMin:")
+                                TextField("dFIterMin",value: $picdef.dFIterMin, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
+                            VStack {
+                                Text("nBlocks:")
+                                TextField("nBlocks",value: $picdef.nBlocks, formatter: ContentView.cgUnboundFormatter)
+                                    .padding(2)
+                            }
                         }
                     }
-                }
-                Group {
+                    Divider()
                     HStack {
                         VStack{
                             Text("Number of colors")
@@ -854,7 +855,7 @@ struct ContentView: View {
                                 .padding(2)
                         }
                     }
-                }   // end of group
+
                 Group{
                     ForEach($picdef.hues, id: \.num) { hue in
                         HStack{
@@ -894,7 +895,7 @@ struct ContentView: View {
                 .background(instructionBackgroundColor)
                 .frame(width:inputWidth)
                 .padding(10)
-            }
+            } // end scroll bar
             GeometryReader {
                 geometry in
                 ZStack(alignment: .topLeading) {
