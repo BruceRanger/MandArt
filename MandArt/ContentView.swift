@@ -31,7 +31,6 @@ struct ContentView: View {
     @State private var startTime: Date?
     @State private var dragCompleted = false
     @State private var dragOffset = CGSize.zero
-//    @State private var scaleOld: Double =  1.0
     @State private var drawIt = true
     @State private var drawGradient = false
 
@@ -43,15 +42,11 @@ struct ContentView: View {
     ///   - colors: array of colors (for the whole picture)
     /// - Returns: optional CGImage with the bitmap or nil
     fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nColors: Int, _ colors: inout [[Double]]) -> CGImage? {
-            debugPrint("Drawing gradient")
 
             var gradientImage: CGImage
             let leftNumber: Int = picdef.leftNumber
             var rightNumber: Int = 0
             var color: Double = 0.0
-
-            debugPrint("Drawing gradient, left color number is ", leftNumber)
-            debugPrint("leftGradiaentIsValid=",leftGradientIsValid)
 
             var xGradient: Double = 0.0
 
@@ -453,11 +448,6 @@ struct ContentView: View {
         return contextImage
     }
 
-
-
-
-
-
     var body: some View {
         
       let image: CGImage = getImage()!
@@ -496,7 +486,6 @@ struct ContentView: View {
                                    action: {
                                 let imageCount = readOutCount()
                                 let saveSuccess = saveImage(i:imageCount)
-                                debugPrint("Save success",saveSuccess)
                             })
                         }
                         HStack {
@@ -504,7 +493,6 @@ struct ContentView: View {
                                 Button("Pause to change values") {
                                     drawIt = false
                                     drawGradient = false
-                                    debugPrint("Clicked Pause for changes. draw=",drawIt, "drawGradient=",drawGradient)
                                 }
                             }
                             .padding(10)
@@ -718,23 +706,18 @@ struct ContentView: View {
                     }
                 }
                 .onEnded { tap in
-                    debugPrint("User clicked on picture x,y:",tap.startLocation)
                     // only respond to taps if this is a picture not gradient
                     if (drawIt == true) {
                         // if we haven't moved very much, treat it as a tap event
                         if self.moved < 1 && self.moved > -1 {
                             picdef.xC = getCenterXFromTap(tap)
-              //              print(picdef.xC)
                             picdef.yC = getCenterYFromTap(tap)
-              //              print(picdef.yC)
                             readyForPicture()
                         }
                         // if we have moved a lot, treat it as a drag event
                         else {
                             picdef.xC = getCenterXFromDrag(tap)
-            //                print(picdef.xC)
                             picdef.yC = getCenterYFromDrag(tap)
-             //               print(picdef.yC)
                             readyForPicture()
                         }
                         // reset tap event states
@@ -832,16 +815,10 @@ struct ContentView: View {
     /// - Returns: Double new center x
     private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let start = tap.startLocation.x
-  //      print("xDragStart", start)
         let end = tap.location.x
         let moved = end - start
-   //     print("xDragMoved", moved)
-   //     let w:Double = Double(picdef.imageWidth)
-    //    let diff = ((w - moved) - w/2.0) / picdef.scale
         let diff = moved / picdef.scale
-   //     print("picdef.scale", picdef.scale)
         let newCenter: Double = picdef.xC - diff
-    //    print("X dragged from ",start,"to",end, "moved", moved, "old center ",picdef.xC,"becomes",newCenter)
         return newCenter
     }
     
@@ -850,16 +827,10 @@ struct ContentView: View {
     /// - Returns: Double new center y
     private func getCenterYFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let start = tap.startLocation.y
-   //     print("yDragStart", start)
         let end = tap.location.y
         let moved = end - start
-   //     print("yDragMoved", moved)
-    //    let h:Double = Double(picdef.imageHeight)
-    //    let diff = ((h - moved) - h/2.0) / picdef.scale
         let diff = moved / picdef.scale
-    //    print("picdef.scale", picdef.scale)
         let newCenter = picdef.yC + diff
-    //    print("Y dragged from ",start,"to",end, "moved", moved, "old center ",picdef.yC,"becomes",newCenter)
         return newCenter
     }
 
@@ -868,26 +839,20 @@ struct ContentView: View {
     /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
     private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let start = tap.startLocation.x
-   //     print("xTapStart", start)
         let w:Double = Double(picdef.imageWidth)
         let diff = (start - w/2.0) / picdef.scale
         let newCenter: Double = picdef.xC + diff
-        debugPrint("Clicked on picture, old center ",picdef.xC,"becomes",newCenter)
         return newCenter
     }
-
-
 
     /// Returns the new y to be the picture center y when user clicks on the picture.
     /// - Parameter tap: information about the tap
     /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
     private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let start = tap.startLocation.y
-   //     print("yTapStart", start)
         let h:Double = Double(picdef.imageHeight)
         let diff = ((h - start) - h/2.0) / picdef.scale
         let newCenter: Double = (picdef.yC + diff)
-        debugPrint("Clicked on picture, old center ",picdef.yC,"becomes",newCenter)
         return newCenter
     }
 
@@ -910,15 +875,12 @@ struct ContentView: View {
                      appropriateFor: nil,
                      create: true)
                 .appendingPathComponent(countFile)
-            debugPrint("in readOutCount() reading from ", fileURL)
             let data = try Data(contentsOf: fileURL)
             let decoder = JSONDecoder()
             let countdef = try decoder.decode(CountDefinition.self, from: data)
             newCount = countdef.nImages
-            debugPrint("Just read the new i, it will be", newCount)
             return newCount
         } catch {
-            debugPrint("Error in readOutCount",error.localizedDescription)
             return newCount
         }
     }
@@ -943,14 +905,12 @@ struct ContentView: View {
     /// - Parameter i: int unique number to avoid overwriting
     func saveImage(i: Int) -> Bool {
         let fn:String = "mandart" + String(i) + ".png"
-        print("In saveImage() image filename = ", fn)
         let allocator : CFAllocator = kCFAllocatorDefault
         let filePath: CFString = fn as NSString
         let pathStyle: CFURLPathStyle = CFURLPathStyle.cfurlWindowsPathStyle
         let isDirectory: Bool = false
         let url : CFURL = CFURLCreateWithFileSystemPath(allocator, filePath, pathStyle, isDirectory)
         //  file:///Users/denisecase/Library/Containers/Bruce-Johnson.MandArt/Data/
-        print("In saveImage(), file url is ", url)
         let imageType: CFString = kUTTypePNG
         let count: Int = 1
         let options: CFDictionary? = nil
@@ -963,11 +923,8 @@ struct ContentView: View {
             destination = destinationAttempt.unsafelyUnwrapped
             CGImageDestinationAddImage(destination,contextImageGlobal!, nil);
             CGImageDestinationFinalize(destination)
-            print("Wrote image to ", fn)
             saveImageData(i: i)
-            print("In saveImage(), picture and data saved with int ",i)
             let newi = i + 1
-            print("In saveImage(), incrementing to ",newi)
             saveOutCount(newi: newi)
             return true
         }
@@ -984,15 +941,12 @@ struct ContentView: View {
                      appropriateFor: nil,
                      create: true)
                 .appendingPathComponent(dn)
-            print("fileURL for JSON is ", dn)
             do {
                 // convert the struct to JSON string
                 let jsonData = try JSONEncoder().encode(picdef)
                 do {
                     try jsonData.write(to: fileURL)
-                    print("Wrote json to ", dn)
                     let jsonString = String(data:jsonData, encoding: .utf8)!
-                    print(jsonString)
                 } catch { print(error)}
             } catch { print(error)}
         } catch { print(error)}
@@ -1001,7 +955,7 @@ struct ContentView: View {
     /// Saves new picture count to be used for the next saved picture.
     /// - Parameter newi: count to be saved
     func saveOutCount(newi: Int) {
-        debugPrint("Saving the new count for next time as ", newi)
+  //      debugPrint("Saving the new count for next time as ", newi)
         let encoder = JSONEncoder()
         do {
             // update the object before saving
@@ -1014,10 +968,8 @@ struct ContentView: View {
                      appropriateFor: nil,
                      create: true)
                 .appendingPathComponent(countFile)
-            debugPrint("fileURL for OUTCOUNT JSON is ", fileURL)
             try jsonData.write(to: fileURL)
         } catch {
-            debugPrint(error.localizedDescription)
         }
     }
 
