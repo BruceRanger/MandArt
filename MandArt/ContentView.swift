@@ -16,12 +16,12 @@ var startFile = "default.json"
 var countFile = "outcount.json"
 
 struct ContentView: View {
-    @Binding var document: MandArtDocument
+    @EnvironmentObject var doc: MandArtDocument
 
     let instructionBackgroundColor = Color.green.opacity(0.5)
     let inputWidth: Double = 290
 
-    @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
+//    @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
     @StateObject var errdef = ErrorViewModel()
 
     @State private var testColor = Color.red
@@ -45,7 +45,7 @@ struct ContentView: View {
     fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nColors: Int, _ colors: inout [[Double]]) -> CGImage? {
 
             var gradientImage: CGImage
-            let leftNumber: Int = picdef.leftNumber
+        let leftNumber: Int = doc.picdef.leftNumber
             var rightNumber: Int = 0
             var color: Double = 0.0
 
@@ -156,13 +156,13 @@ struct ContentView: View {
     /// - Returns: An optional CGImage or nil
     func getImage() -> CGImage? {
         var colors: [[Double]] = []
-        picdef.hues.forEach{hue in
+        doc.picdef.hues.forEach{hue in
             let arr: [Double] = [hue.r, hue.g, hue.b]
             colors.insert(arr, at: colors.endIndex)
         }
-        let imageWidth: Int = picdef.imageWidth
-        let imageHeight: Int = picdef.imageHeight
-        let nColors: Int = picdef.nColors
+        let imageWidth: Int = doc.picdef.imageWidth
+        let imageHeight: Int = doc.picdef.imageHeight
+        let nColors: Int = doc.picdef.nColors
 
         if drawIt {
             return getPictureImage(imageHeight, imageWidth, &colors)
@@ -182,15 +182,15 @@ struct ContentView: View {
     /// - Returns: optional CGImage with the bitmap or nil
     fileprivate func getPictureImage(_ imageHeight: Int, _ imageWidth: Int, _ colors: inout [[Double]]) -> CGImage? {
         // draws image
-        let iMax: Double = picdef.iMax
-        let scale: Double = picdef.scale
-        let xC: Double = picdef.xC
-        let yC: Double = picdef.yC
-        let theta: Double = picdef.theta
-        let dIterMin: Double = picdef.dFIterMin
+        let iMax: Double = doc.picdef.iMax
+        let scale: Double = doc.picdef.scale
+        let xC: Double = doc.picdef.xC
+        let yC: Double = doc.picdef.yC
+        let theta: Double = doc.picdef.theta
+        let dIterMin: Double = doc.picdef.dFIterMin
         let pi: Double = 3.14159
         let thetaR: Double = pi*theta/180.0
-        let rSqLimit: Double = picdef.rSqLimit
+        let rSqLimit: Double = doc.picdef.rSqLimit
 
         var contextImage: CGImage
         var rSq: Double = 0.0
@@ -297,10 +297,10 @@ struct ContentView: View {
 
         // Now we need to generate a bitmap image.
 
-        let nBlocks: Int = picdef.nBlocks
-        let nColors: Int = picdef.nColors
-        let bE: Double = picdef.bE
-        let eE: Double = picdef.eE
+        let nBlocks: Int = doc.picdef.nBlocks
+        let nColors: Int = doc.picdef.nColors
+        let bE: Double = doc.picdef.bE
+        let eE: Double = doc.picdef.eE
 
         var dE: Double = 0.0
         var fNBlocks: Double = 0.0
@@ -514,7 +514,7 @@ struct ContentView: View {
                         HStack {
                             VStack{
                                 Text("Left #")
-                                TextField("leftNumber",value: $picdef.leftNumber, formatter: ContentView.intMaxColorsFormatter)
+                                TextField("leftNumber",value: $doc.picdef.leftNumber, formatter: ContentView.intMaxColorsFormatter)
                                     .frame(maxWidth: 30)
                                     .foregroundColor(leftGradientIsValid ? .primary : .red)
                             }
@@ -537,13 +537,13 @@ struct ContentView: View {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center X")
                                 Text("Between -2 and 2")
-                                TextField("X",value: $picdef.xC, formatter: ContentView.cgFormatter)
+                                TextField("X",value: $doc.picdef.xC, formatter: ContentView.cgFormatter)
                                     .padding(2)
                             }
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center Y")
                                 Text("Between -2 and 2")
-                                TextField("Y",value: $picdef.yC, formatter: ContentView.cgFormatter)
+                                TextField("Y",value: $doc.picdef.yC, formatter: ContentView.cgFormatter)
                                     .padding(2)
                             }
                         }
@@ -553,17 +553,17 @@ struct ContentView: View {
                         HStack {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("scale:")
-                                TextField("Scale",value: $picdef.scale, formatter: ContentView.cgUnboundFormatter)
+                                TextField("Scale",value: $doc.picdef.scale, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                             VStack {
                                 Text("iMax:")
-                                TextField("iMax",value: $picdef.iMax, formatter: ContentView.cgUnboundFormatter)
+                                TextField("iMax",value: $doc.picdef.iMax, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                             VStack {
                                 Text("rSqLimit:")
-                                TextField("rSqLimit",value: $picdef.rSqLimit, formatter: ContentView.cgUnboundFormatter)
+                                TextField("rSqLimit",value: $doc.picdef.rSqLimit, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                         }
@@ -571,12 +571,12 @@ struct ContentView: View {
                         HStack {
                             VStack {
                                 Text("Image width, px:")
-                                TextField("imageWidth",value: $picdef.imageWidth, formatter: ContentView.cgUnboundFormatter)
+                                TextField("imageWidth",value: $doc.picdef.imageWidth, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                             VStack {
                                 Text("Image height, px:")
-                                TextField("imageHeightStart",value: $picdef.imageHeight, formatter: ContentView.cgUnboundFormatter)
+                                TextField("imageHeightStart",value: $doc.picdef.imageHeight, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                             VStack {
@@ -589,12 +589,12 @@ struct ContentView: View {
                         HStack{
                             VStack {
                                 Text("bE:")
-                                TextField("bE",value: $picdef.bE, formatter: ContentView.cgUnboundFormatter)
+                                TextField("bE",value: $doc.picdef.bE, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                             VStack {
                                 Text("eE:")
-                                TextField("eE",value: $picdef.eE, formatter: ContentView.cgUnboundFormatter)
+                                TextField("eE",value: $doc.picdef.eE, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                         }
@@ -602,12 +602,12 @@ struct ContentView: View {
                         HStack{
                             VStack {
                                 Text("theta:")
-                                TextField("theta",value: $picdef.theta, formatter: ContentView.cgUnboundFormatter)
+                                TextField("theta",value: $doc.picdef.theta, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                             VStack {
                                 Text("nImage:")
-                                TextField("nImage",value: $picdef.nImage, formatter: ContentView.cgUnboundFormatter)
+                                TextField("nImage",value: $doc.picdef.nImage, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                         }
@@ -615,12 +615,12 @@ struct ContentView: View {
                         HStack {
                             VStack {
                                 Text("dFIterMin:")
-                                TextField("dFIterMin",value: $picdef.dFIterMin, formatter: ContentView.cgUnboundFormatter)
+                                TextField("dFIterMin",value: $doc.picdef.dFIterMin, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                             VStack {
                                 Text("nBlocks:")
-                                TextField("nBlocks",value: $picdef.nBlocks, formatter: ContentView.cgUnboundFormatter)
+                                TextField("nBlocks",value: $doc.picdef.nBlocks, formatter: ContentView.cgUnboundFormatter)
                                     .padding(2)
                             }
                         }
@@ -629,13 +629,13 @@ struct ContentView: View {
                     HStack {
                         VStack{
                             Text("Number of colors")
-                            TextField("nColors",value: $picdef.nColors, formatter: ContentView.cgUnboundFormatter)
+                            TextField("nColors",value: $doc.picdef.nColors, formatter: ContentView.cgUnboundFormatter)
                                 .padding(2)
                         }
                     }
 
                 Group{
-                    ForEach($picdef.hues, id: \.num) { hue in
+                    ForEach($doc.picdef.hues, id: \.num) { hue in
                         HStack{
                             VStack{
                                 Text("No:")
@@ -665,7 +665,7 @@ struct ContentView: View {
                             Text("Ordered List of Colors")
                             Text("Dad: do you like the red x or the button?")
 
-                            ForEach($picdef.hues, id:\.num) { $hue in
+                            ForEach($doc.picdef.hues, id:\.num) { $hue in
                                 HStack {
                                     ColorPicker("\(hue.num)", selection: $colorEntries[hue.num-1])
                                     Image(systemName: "multiply.circle.fill")
@@ -715,14 +715,14 @@ struct ContentView: View {
                     if (drawIt == true) {
                         // if we haven't moved very much, treat it as a tap event
                         if self.moved < 1 && self.moved > -1 {
-                            picdef.xC = getCenterXFromTap(tap)
-                            picdef.yC = getCenterYFromTap(tap)
+                            doc.picdef.xC = getCenterXFromTap(tap)
+                            doc.picdef.yC = getCenterYFromTap(tap)
                             readyForPicture()
                         }
                         // if we have moved a lot, treat it as a drag event
                         else {
-                            picdef.xC = getCenterXFromDrag(tap)
-                            picdef.yC = getCenterYFromDrag(tap)
+                            doc.picdef.xC = getCenterXFromDrag(tap)
+                            doc.picdef.yC = getCenterYFromDrag(tap)
                             readyForPicture()
                         }
                         // reset tap event states
@@ -769,8 +769,8 @@ struct ContentView: View {
     }
 
     private var aspectRatio: String{
-        let h : Double = Double(picdef.imageHeight)
-        let w : Double = Double(picdef.imageWidth)
+        let h : Double = Double(doc.picdef.imageHeight)
+        let w : Double = Double(doc.picdef.imageWidth)
         let ratioDouble: Double = max (h/w, w/h)
         let ratioString = String(format: "%.2f", ratioDouble)
         return ratioString
@@ -778,8 +778,8 @@ struct ContentView: View {
 
     private var leftGradientIsValid: Bool {
         var isValid = false
-        let leftNum = picdef.leftNumber
-        let lastPossible = picdef.hues.count
+        let leftNum = doc.picdef.leftNumber
+        let lastPossible = doc.picdef.hues.count
         isValid =  leftNum >= 1 && leftNum <= lastPossible
         return isValid
     }
@@ -803,7 +803,7 @@ struct ContentView: View {
 
     private func  calcColorEntries() -> [Color] {
         var arr: [Color] = []
-        picdef.hues.forEach{hue in
+        doc.picdef.hues.forEach{hue in
             let newColor: Color = Color(
                 .sRGB,
                 red: hue.r/255.0,
@@ -822,8 +822,8 @@ struct ContentView: View {
         let start = tap.startLocation.x
         let end = tap.location.x
         let moved = end - start
-        let diff = moved / picdef.scale
-        let newCenter: Double = picdef.xC - diff
+        let diff = moved / doc.picdef.scale
+        let newCenter: Double = doc.picdef.xC - diff
         return newCenter
     }
     
@@ -834,8 +834,8 @@ struct ContentView: View {
         let start = tap.startLocation.y
         let end = tap.location.y
         let moved = end - start
-        let diff = moved / picdef.scale
-        let newCenter = picdef.yC + diff
+        let diff = moved / doc.picdef.scale
+        let newCenter = doc.picdef.yC + diff
         return newCenter
     }
 
@@ -844,9 +844,9 @@ struct ContentView: View {
     /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
     private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let start = tap.startLocation.x
-        let w:Double = Double(picdef.imageWidth)
-        let diff = (start - w/2.0) / picdef.scale
-        let newCenter: Double = picdef.xC + diff
+        let w:Double = Double(doc.picdef.imageWidth)
+        let diff = (start - w/2.0) / doc.picdef.scale
+        let newCenter: Double = doc.picdef.xC + diff
         return newCenter
     }
 
@@ -855,9 +855,9 @@ struct ContentView: View {
     /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
     private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let start = tap.startLocation.y
-        let h:Double = Double(picdef.imageHeight)
-        let diff = ((h - start) - h/2.0) / picdef.scale
-        let newCenter: Double = (picdef.yC + diff)
+        let h:Double = Double(doc.picdef.imageHeight)
+        let diff = ((h - start) - h/2.0) / doc.picdef.scale
+        let newCenter: Double = (doc.picdef.yC + diff)
         return newCenter
     }
 
@@ -948,7 +948,7 @@ struct ContentView: View {
                 .appendingPathComponent(dn)
             do {
                 // convert the struct to JSON string
-                let jsonData = try JSONEncoder().encode(picdef)
+                let jsonData = try JSONEncoder().encode(doc.picdef)
                 do {
                     try jsonData.write(to: fileURL)
                     let jsonString = String(data:jsonData, encoding: .utf8)!
@@ -980,12 +980,12 @@ struct ContentView: View {
 
     /// Multiplies scale by 2.0.
     func zoomIn(){
-        picdef.scale = picdef.scale * 2.0
+        doc.picdef.scale = doc.picdef.scale * 2.0
     }
 
     /// Divides scale by 2.0.
     func zoomOut(){
-        picdef.scale = picdef.scale / 2.0
+        doc.picdef.scale = doc.picdef.scale / 2.0
     }
 }
 

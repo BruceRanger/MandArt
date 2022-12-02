@@ -7,7 +7,10 @@
 
 import Foundation
 
-class PictureDefinition: Codable, ObservableObject {
+//class PictureDefinition: Codable, ObservableObject {
+
+struct PictureDefinition: Codable, Identifiable {
+    var id = UUID()
     var xC: Double = -0.74725
     var yC: Double =  0.08442
     var scale: Double =  2_880_000.0
