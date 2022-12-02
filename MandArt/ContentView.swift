@@ -16,6 +16,7 @@ var startFile = "default.json"
 var countFile = "outcount.json"
 
 struct ContentView: View {
+    @Binding var document: MandArtDocument
 
     let instructionBackgroundColor = Color.green.opacity(0.5)
     let inputWidth: Double = 290
@@ -458,6 +459,7 @@ struct ContentView: View {
 
                 // left side with user stuff
                 // spacing is between VStacks
+
                 VStack(alignment: .center, spacing: 10){
                     Text("MandArt")
                         .font(.title)
@@ -486,6 +488,9 @@ struct ContentView: View {
                                    action: {
                                 let imageCount = readOutCount()
                                 let saveSuccess = saveImage(i:imageCount)
+                                if !saveSuccess {
+                                    // show error (TODO)
+                                }
                             })
                         }
                         HStack {
@@ -1017,10 +1022,8 @@ struct LocalizedAlertError: LocalizedError {
     }
 }
 
-//struct ContentView_Previews:
-//    // Needs optimization set to OnOne to preview
-//    PreviewProvider {
+//struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ContentView()
+//        ContentView(document: .constant(MandArtDocument()))
 //    }
 //}
