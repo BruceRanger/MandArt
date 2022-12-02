@@ -159,9 +159,6 @@ struct ContentView: View {
     /// Gets an image to display on the right side of the app
     /// - Returns: An optional CGImage or nil
     func getImage() -> CGImage? {
-        print("Starting getImage(): drawIt=",drawIt, "drawGradient=",drawGradient)
-
-        // update colors used for picture and gradient
         var colors: [[Double]] = []
         picdef.hues.forEach{hue in
             let arr: [Double] = [hue.r, hue.g, hue.b]
@@ -189,7 +186,6 @@ struct ContentView: View {
     /// - Returns: optional CGImage with the bitmap or nil
     fileprivate func getPictureImage(_ imageHeight: Int, _ imageWidth: Int, _ colors: inout [[Double]]) -> CGImage? {
         // draws image
-        print("Drawing picture")
         let iMax: Double = picdef.iMax
         let scale: Double = picdef.scale
         let xC: Double = picdef.xC
@@ -491,6 +487,9 @@ struct ContentView: View {
                                     zoomOut()
                                 }
                             }
+                            Button("test error"){
+                              errdef.testErrorBox()
+                            }
                         }
                         VStack {
                             Button("Save as PNG",
@@ -526,8 +525,6 @@ struct ContentView: View {
                                     .frame(maxWidth: 30)
                                     .foregroundColor(leftGradientIsValid ? .primary : .red)
                             }
-                            //.errorAlert(error: $errdef.leftGradientOutOfRange)
-
                             VStack { // use a button made a gradient
                                 Text("")
                                 Button("Make a gradient") {
@@ -698,6 +695,7 @@ struct ContentView: View {
                 .background(instructionBackgroundColor)
                 .frame(width:inputWidth)
                 .padding(10)
+                .errorAlert(error: $errdef.errorCustomObject)
             } // end scroll bar
             GeometryReader {
                 geometry in
@@ -1047,6 +1045,11 @@ extension View {
     }
 }
 
+
+/// Handle validation feedback and local alerts
+///  Based on
+///  https://www.avanderlee.com/swiftui/error-alert-presenting/
+///
 struct LocalizedAlertError: LocalizedError {
     let underlyingError: LocalizedError
     var errorDescription: String? {
@@ -1061,3 +1064,11 @@ struct LocalizedAlertError: LocalizedError {
         underlyingError = localizedError
     }
 }
+
+//struct ContentView_Previews:
+//    // Needs optimization set to OnOne to preview
+//    PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

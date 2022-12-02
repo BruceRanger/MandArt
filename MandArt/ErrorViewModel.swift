@@ -7,7 +7,7 @@
 import Foundation
 
 final class ErrorViewModel: ObservableObject {
-    enum Error: LocalizedError {
+    enum ErrorCustom: LocalizedError {
         case leftGradientOutOfRange
 
         var errorDescription: String? {
@@ -25,10 +25,10 @@ final class ErrorViewModel: ObservableObject {
         }
     }
 
-    @Published var title: String = ""
-    @Published var error: Swift.Error?
+    @Published var errorCustomTitle: String = ""
+    @Published var errorCustomObject: Swift.Error?
 
-    func publish() {
-        error = Error.leftGradientOutOfRange
+    func testErrorBox() {
+        errorCustomObject = ErrorCustom.leftGradientOutOfRange
     }
 }
