@@ -11,7 +11,6 @@ struct MandArtApp: App {
     var body: some Scene {
 
         WindowGroup("Welcome to MandArt") {
-            // ContentView()
 
             // In some action at the end of this scene flow
             // just close current window and open new document

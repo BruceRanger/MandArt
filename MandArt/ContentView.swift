@@ -13,7 +13,6 @@ import CoreServices // persistence
 
 var contextImageGlobal: CGImage?
 var startFile = "default.json"
-var countFile = "outcount.json"
 
 struct ContentView: View {
     @EnvironmentObject var doc: MandArtDocument
@@ -484,13 +483,9 @@ struct ContentView: View {
                             }
                         }
                         VStack {
-                            Button("Save as PNG",
+                            Button("Please use File/Save to save as PNG",
                                    action: {
-                                let imageCount = readOutCount()
-                                let saveSuccess = saveImage(i:imageCount)
-                                if !saveSuccess {
-                                    // show error (TODO)
-                                }
+                                print("please use the menu to save")
                             })
                         }
                         HStack {
@@ -869,26 +864,7 @@ struct ContentView: View {
         return documentsDirectory
     }
 
-    /// Reads pictue count (from previous session) to make unique save numbers.
-    /// - Returns: newly incremented count
-    func readOutCount() -> Int {
-        var newCount: Int = 0
-        do {
-            let fileURL = try FileManager.default
-                .url(for: .applicationDirectory,
-                     in: .userDomainMask,
-                     appropriateFor: nil,
-                     create: true)
-                .appendingPathComponent(countFile)
-            let data = try Data(contentsOf: fileURL)
-            let decoder = JSONDecoder()
-            let countdef = try decoder.decode(CountDefinition.self, from: data)
-            newCount = countdef.nImages
-            return newCount
-        } catch {
-            return newCount
-        }
-    }
+
 
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
@@ -906,78 +882,7 @@ struct ContentView: View {
         drawGradient = false
     }
 
-    /// Save custom user bitmap as a PNG file.
-    /// - Parameter i: int unique number to avoid overwriting
-    func saveImage(i: Int) -> Bool {
-        let fn:String = "mandart" + String(i) + ".png"
-        let allocator : CFAllocator = kCFAllocatorDefault
-        let filePath: CFString = fn as NSString
-        let pathStyle: CFURLPathStyle = CFURLPathStyle.cfurlWindowsPathStyle
-        let isDirectory: Bool = false
-        let url : CFURL = CFURLCreateWithFileSystemPath(allocator, filePath, pathStyle, isDirectory)
-        //  file:///Users/denisecase/Library/Containers/Bruce-Johnson.MandArt/Data/
-        let imageType: CFString = kUTTypePNG
-        let count: Int = 1
-        let options: CFDictionary? = nil
-        var destination: CGImageDestination
-        let destinationAttempt: CGImageDestination?  = CGImageDestinationCreateWithURL(url, imageType, count, options)
-        if (destinationAttempt == nil) {
-            return false
-        }
-        else {
-            destination = destinationAttempt.unsafelyUnwrapped
-            CGImageDestinationAddImage(destination,contextImageGlobal!, nil);
-            CGImageDestinationFinalize(destination)
-            saveImageData(i: i)
-            let newi = i + 1
-            saveOutCount(newi: newi)
-            return true
-        }
-    }
-
-    /// Save picture iimage inputs in human-readable format
-    /// - Parameter i: int unique number to avoid overwriting
-    fileprivate func saveImageData(i:Int) {
-        do {
-            let dn:String = "mandart" + String(i) + ".json"
-            let fileURL = try FileManager.default
-                .url(for: .documentDirectory,
-                     in: .userDomainMask,
-                     appropriateFor: nil,
-                     create: true)
-                .appendingPathComponent(dn)
-            do {
-                // convert the struct to JSON string
-                let jsonData = try JSONEncoder().encode(doc.picdef)
-                do {
-                    try jsonData.write(to: fileURL)
-                    let jsonString = String(data:jsonData, encoding: .utf8)!
-                } catch { print(error)}
-            } catch { print(error)}
-        } catch { print(error)}
-    }
-
-    /// Saves new picture count to be used for the next saved picture.
-    /// - Parameter newi: count to be saved
-    func saveOutCount(newi: Int) {
-  //      debugPrint("Saving the new count for next time as ", newi)
-        let encoder = JSONEncoder()
-        do {
-            // update the object before saving
-            let updated:CountDefinition = CountDefinition()
-            updated.nImages = newi
-            let jsonData = try encoder.encode(updated)
-            let fileURL = try FileManager.default
-                .url(for: .applicationDirectory,
-                     in: .userDomainMask,
-                     appropriateFor: nil,
-                     create: true)
-                .appendingPathComponent(countFile)
-            try jsonData.write(to: fileURL)
-        } catch {
-        }
-    }
-
+ 
     /// Multiplies scale by 2.0.
     func zoomIn(){
         doc.picdef.scale = doc.picdef.scale * 2.0
