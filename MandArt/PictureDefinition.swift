@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-/// The input information defining a MandArt picture.
+/// The use input information defining a MandArt picture.
 ///
 struct PictureDefinition: Codable, Identifiable {
     var id = UUID()
@@ -39,24 +39,39 @@ struct PictureDefinition: Codable, Identifiable {
 
     // initialize with defaults
     init(){
-        let hues: [Hue] = [
-            Hue(num:1, r:0.0, g:255.0, b:0.0),
-            Hue(num:2, r:255.0, g:255.0, b:0.0),
-            Hue(num:3, r:255.0, g:0.0, b:0.0),
-            Hue(num:4, r:255.0, g:0.0, b:255.0),
-            Hue(num:5, r:0.0, g:0.0, b:255.0),
-            Hue(num:6, r:0.0, g:255.0, b:255.0),
-        ]
-        self.hues = hues
         self.colorlist = Colorlist(hues: hues)
     }
 
     // initialize with defaults and default set of colors (hues)
+
+
+    /// Initialize with an array of Hues (sorted rgbs)
+    /// - Parameter hues: an array of hues
     init(hues:[Hue]){
         self.hues = hues
         self.colorlist = Colorlist(hues: hues)
     }
 
+
+    /// Initialize by setting everything.
+    /// - Parameters:
+    ///   - xC: <#xC description#>
+    ///   - yC: <#yC description#>
+    ///   - scale: <#scale description#>
+    ///   - iMax: <#iMax description#>
+    ///   - rSqLimit: <#rSqLimit description#>
+    ///   - imageWidth: <#imageWidth description#>
+    ///   - imageHeight: <#imageHeight description#>
+    ///   - nBlocks: <#nBlocks description#>
+    ///   - bE: <#bE description#>
+    ///   - eE: <#eE description#>
+    ///   - theta: <#theta description#>
+    ///   - nImage: <#nImage description#>
+    ///   - dFIterMin: <#dFIterMin description#>
+    ///   - nColors: <#nColors description#>
+    ///   - leftNumber: <#leftNumber description#>
+    ///   - hues: <#hues description#>
+    ///   - colorlist: <#colorlist description#>
     init(
         xC: Double,
         yC: Double,
@@ -93,13 +108,5 @@ struct PictureDefinition: Codable, Identifiable {
             self.hues = hues
             self.colorlist = Colorlist(hues: hues)
         }
+
 }
-
-//[ColorlistItems: items: [
-//    item1: ColorlistItem(num:1, color:  Color(.sRGB, red:   0/255, green: 255/255, blue:   0/255), r:0.0, g:255.0, b:0.0 ),
-//    item2: ColorlistItem(num:2, color: Color(.sRGB, red:   255/255, green: 255/255, blue:   0/255), r:255.0, g:255.0, b:0.0),
-//    item3: ColorlistItem(num:3, color: Color(.sRGB, red: 255/255, green: 0/255, blue:   0/255),r:255.0, g:0.0, b:0.0),
-//    item4: ColorlistItem(num:4, color: Color(.sRGB, red: 255/255, green:   0/255, blue: 255/255),r:255.0, g:0.0, b:255.0),
-//    item5: ColorlistItem(num:5, color: Color(.sRGB, red:   0/255, green:   0/255, blue: 255/255),r:0.0, g:0.0, b:255.0),
-//    item6: ColorlistItem(num:6, color: Color(.sRGB, red:   0/255, green: 255/255, blue: 255/255),r:0.0, g:255.0, b:255.0)
-

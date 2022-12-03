@@ -58,6 +58,19 @@ final class MandArtDocument: ReferenceFileDocument {
         return fileWrapper
     }
 
+    /// Deletes a color item at an index, and registers an undo action.
+    func deleteItem(index: Int, undoManager: UndoManager? = nil) {
+        let oldHues = picdef.hues
+        withAnimation {
+            _ = picdef.hues.remove(at: index)
+        }
+
+        undoManager?.registerUndo(withTarget: self) { doc in
+            // Use the replaceItems symmetric undoable-redoable function.
+            doc.replaceHues(with: oldHues, undoManager: undoManager)
+        }
+    }
+
     /// Save custom user MandArt as a .png file.
     ///  To find it after saving, search your machine for mandart
     ///  It will be named mandart-datetime.png
@@ -111,6 +124,86 @@ final class MandArtDocument: ReferenceFileDocument {
     }
 
 }
+
+// Provide operations on the MandArt document.
+extension MandArtDocument {
+
+    /// Adds a new default hue, and registers an undo action.
+    func addHue(undoManager: UndoManager? = nil) {
+        picdef.hues.append(Hue())
+        let count = picdef.hues.count
+        undoManager?.registerUndo(withTarget: self) { doc in
+            withAnimation {
+                doc.deleteHue(index: count - 1, undoManager: undoManager)
+            }
+        }
+    }
+
+    /// Deletes the hue at an index, and registers an undo action.
+    func deleteHue(index: Int, undoManager: UndoManager? = nil) {
+        let oldHues = picdef.hues
+        withAnimation {
+            _ = picdef.hues.remove(at: index)
+        }
+
+        undoManager?.registerUndo(withTarget: self) { doc in
+            // Use the replaceItems symmetric undoable-redoable function.
+            doc.replaceHues(with: oldHues, undoManager: undoManager)
+        }
+    }
+
+
+
+    /// Replaces the existing items with a new set of items.
+    func replaceHues(with newHues: [Hue], undoManager: UndoManager? = nil, animation: Animation? = .default) {
+        let oldHues = picdef.hues
+
+        withAnimation(animation) {
+            picdef.hues = newHues
+        }
+
+        undoManager?.registerUndo(withTarget: self) { doc in
+            // Because you recurse here, redo support is automatic.
+            doc.replaceHues(with: oldHues, undoManager: undoManager, animation: animation)
+        }
+    }
+
+
+    /// Relocates the specified items, and registers an undo action.
+    func moveHuesAt(offsets: IndexSet, toOffset: Int, undoManager: UndoManager? = nil) {
+        let oldHues = picdef.hues
+        withAnimation {
+            picdef.hues.move(fromOffsets: offsets, toOffset: toOffset)
+        }
+
+        undoManager?.registerUndo(withTarget: self) { doc in
+            // Use the replaceItems symmetric undoable-redoable function.
+            doc.replaceHues(with: oldHues, undoManager: undoManager)
+        }
+
+    }
+
+    /// Registers an undo action and a redo action for a hue change
+    func registerUndoHueChange(for hue: Hue, oldHue: Hue, undoManager: UndoManager?) {
+        let index = picdef.hues.firstIndex(of: hue)!
+
+        // The change has already happened, so save the collection of new items.
+        let newHues = picdef.hues
+
+        // Register the undo action.
+        undoManager?.registerUndo(withTarget: self) { doc in
+            doc.picdef.hues[index] = oldHue
+
+            // Register the redo action.
+            undoManager?.registerUndo(withTarget: self) { doc in
+                // Use the replaceItems symmetric undoable-redoable function.
+                doc.replaceHues(with: newHues, undoManager: undoManager, animation: nil)
+            }
+        }
+    }
+
+}
+
 
 // Helper utility
 // Extending String functionality so we can use indexes to get substrings

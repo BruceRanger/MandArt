@@ -17,6 +17,7 @@
 		8806E11C293A5E37005F5CB4 /* ColorlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E118293A5E37005F5CB4 /* ColorlistView.swift */; };
 		8806E11D293A5E37005F5CB4 /* ColorlistRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E119293A5E37005F5CB4 /* ColorlistRow.swift */; };
 		8806E11E293A5E37005F5CB4 /* ColorlistDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E11A293A5E37005F5CB4 /* ColorlistDocument.swift */; };
+		8809EDA4293BB58D00F2F5BF /* HueRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8809EDA3293BB58D00F2F5BF /* HueRowView.swift */; };
 		882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED2293409FE003ACB0B /* PictureDefinition.swift */; };
 		882BAED72934167D003ACB0B /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 882BAED62934167D003ACB0B /* default.json */; };
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
@@ -38,6 +39,7 @@
 		8806E118293A5E37005F5CB4 /* ColorlistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorlistView.swift; sourceTree = "<group>"; };
 		8806E119293A5E37005F5CB4 /* ColorlistRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorlistRow.swift; sourceTree = "<group>"; };
 		8806E11A293A5E37005F5CB4 /* ColorlistDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorlistDocument.swift; sourceTree = "<group>"; };
+		8809EDA3293BB58D00F2F5BF /* HueRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HueRowView.swift; sourceTree = "<group>"; };
 		882BAED2293409FE003ACB0B /* PictureDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureDefinition.swift; sourceTree = "<group>"; };
 		882BAED62934167D003ACB0B /* default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = default.json; sourceTree = "<group>"; };
 		882BAED829346C92003ACB0B /* Hue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hue.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				888863D8293B808C001C2A8E /* ColorlistItem.swift */,
 				8806E11A293A5E37005F5CB4 /* ColorlistDocument.swift */,
 				8806E119293A5E37005F5CB4 /* ColorlistRow.swift */,
+				8809EDA3293BB58D00F2F5BF /* HueRowView.swift */,
 				8806E118293A5E37005F5CB4 /* ColorlistView.swift */,
 				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
 				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
@@ -180,6 +183,7 @@
 				882BAEE92937C71A003ACB0B /* ErrorViewModel.swift in Sources */,
 				8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */,
 				8806E11C293A5E37005F5CB4 /* ColorlistView.swift in Sources */,
+				8809EDA4293BB58D00F2F5BF /* HueRowView.swift in Sources */,
 				8806E11E293A5E37005F5CB4 /* ColorlistDocument.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
 				8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */,

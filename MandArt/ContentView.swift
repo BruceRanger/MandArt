@@ -476,12 +476,14 @@ struct ContentView: View {
                             Button("test error"){
                               errdef.testErrorBox()
                             }
+                            .help("This will be deleted.")
                         }
                         VStack {
                             Button("Please use File/Save to save as PNG",
                                    action: {
                                 print("please use the menu to save")
                             })
+                            .help("This can be deleted.")
                         }
                         HStack {
                             VStack { // use a button to pause to change values
@@ -625,54 +627,15 @@ struct ContentView: View {
                     }
 
                 Group{
-                    ForEach($doc.picdef.hues, id: \.num) { hue in
-                        HStack{
-                            VStack{
-                                Text("No:")
-                                TextField("number",value: hue.num, formatter: ContentView.cgUnboundFormatter)
-                                    .disabled(true)
-                                    .padding(2)
-                            }
-                            VStack{
-                                Text("Enter R:")
-                                TextField("r",value: hue.r, formatter: ContentView.cgUnboundFormatter)
-                            }
-                            VStack{
-                                Text("Enter G:")
-                                TextField("g",value: hue.g, formatter: ContentView.cgUnboundFormatter)
-                            }
-                            VStack{
-                                Text("Enter B:")
-                                TextField("b",value: hue.b, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
-                            }
-                        }   // end HStack
-                    } // end foreach
-                } // end colors group
-  
-                    Group { // dont nest list in existing scrollview
-                        VStack {
-                            Text("Ordered List of Colors")
-                            Text("(Not implemented yet)")
-
-                            ForEach($doc.picdef.hues, id:\.num) { $hue in
-                                HStack {
-                                    ColorPicker("\(hue.num)", selection: $colorEntries[hue.num-1])
-//                                    Image(systemName: "multiply.circle.fill")
-//                                        .foregroundColor(.red)
-//                                        .help("Delete \(hue.num)")
-                                    Button(role: .destructive) {
-                                        //$picdef.hues.remove(object: hue)
-                                    } label: {Label("Delete", systemImage: "trash")
-                                    }
-                                }
-                            }
-                            Button("Add Color") {
-                                //addColorEntry()
-                            }
-                            Text("")
+                    Divider()
+                        ForEach($doc.picdef.hues, id:\.num) { $hue in
+                            HueRowView(hue:$hue)
+                        } // end foreach
+                        Button("Add Color") {
+                            doc.addHue()
                         }
-                    } // end colors group
+                        Text("")
+                } // end colors group
 
                 } // end VStack for user instructions
                 .background(instructionBackgroundColor)
@@ -774,35 +737,13 @@ struct ContentView: View {
         return isValid
     }
 
-    @State private var colorEntries: [Color] = [
-        Color(.sRGB, red:   0/255, green: 255/255, blue:   0/255),
-        Color(.sRGB, red: 255/255, green: 255/255, blue:   0/255),
-        Color(.sRGB, red: 255/255, green:   0/255, blue:   0/255),
-        Color(.sRGB, red: 255/255, green:   0/255, blue: 255/255),
-        Color(.sRGB, red:   0/255, green:   0/255, blue: 255/255),
-        Color(.sRGB, red:   0/255, green: 255/255, blue: 255/255)
-    ]
 
-    private func addColorEntry(){
-        // colorEntries.append(Color(.sRGB, red: 1, green: 1, blue: 1))
-    }
 
     func deleteColorEntry(at offsets: IndexSet){
-        colorEntries.remove(atOffsets: offsets)
+        //colorEntries.remove(atOffsets: offsets)
     }
 
-    private func  calcColorEntries() -> [Color] {
-        var arr: [Color] = []
-        doc.picdef.hues.forEach{hue in
-            let newColor: Color = Color(
-                .sRGB,
-                red: hue.r/255.0,
-                green: hue.g/255.0,
-                blue: hue.b/255.0)
-            arr.insert(newColor, at: arr.endIndex)
-        }
-        return arr
-    }
+
 
 
     /// Returns the new x to be the picture center x when user drags in the picture.

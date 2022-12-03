@@ -15,7 +15,6 @@ struct ColorlistItem: Identifiable, Codable {
     var b : Double = 0
     var color : Color
 
-
     // default new entry will be white, with a num of zero
     init() {
         self.num = 0
