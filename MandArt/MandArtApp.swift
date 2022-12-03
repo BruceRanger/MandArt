@@ -8,12 +8,13 @@ import SwiftUI
 
 /// The main entry point for MandArt.
 ///
-///  This is where the magic happens.
+///  Click the button to open a picture document.
 ///
 @main
 struct MandArtApp: App {
 
     /// The body of the app; kicks off the opening page.
+    ///  It creates a WindowGroup and DocumentGroup.
     var body: some Scene {
 
         WindowGroup("Welcome to MandArt") {
