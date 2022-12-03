@@ -58,18 +58,6 @@ final class MandArtDocument: ReferenceFileDocument {
         return fileWrapper
     }
 
-    /// Deletes a color item at an index, and registers an undo action.
-    func deleteItem(index: Int, undoManager: UndoManager? = nil) {
-        let oldHues = picdef.hues
-        withAnimation {
-            _ = picdef.hues.remove(at: index)
-        }
-
-        undoManager?.registerUndo(withTarget: self) { doc in
-            // Use the replaceItems symmetric undoable-redoable function.
-            doc.replaceHues(with: oldHues, undoManager: undoManager)
-        }
-    }
 
     /// Save custom user MandArt as a .png file.
     ///  To find it after saving, search your machine for mandart
@@ -142,6 +130,8 @@ extension MandArtDocument {
     /// Deletes the hue at an index, and registers an undo action.
     func deleteHue(index: Int, undoManager: UndoManager? = nil) {
         let oldHues = picdef.hues
+        let oldNColors = picdef.nColors
+        picdef.nColors = picdef.nColors - 1
         withAnimation {
             _ = picdef.hues.remove(at: index)
         }

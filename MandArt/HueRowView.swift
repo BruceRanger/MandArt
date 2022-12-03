@@ -9,6 +9,7 @@ import SwiftUI
 struct HueRowView: View {
 
     @Binding var hue: Hue
+
     @FocusState private var isNumFieldFocused: Bool
     @FocusState private var isRFieldFocused: Bool
     @FocusState private var isGFieldFocused: Bool
@@ -17,11 +18,11 @@ struct HueRowView: View {
 
     // Define these handlers as properties that you initialize
     // at the callsite to facilitate preview and testing.
-//    var onNumCommit: (_ oldNum: Int) -> Void
-//    var onRCommit: (_ oldR: Double) -> Void
-//    var onGCommit: (_ oldG: Double) -> Void
-//    var onBCommit: (_ oldB: Double) -> Void
-//    var onColorCommit: (_ oldColor: Color) -> Void
+    //    var onNumCommit: (_ oldNum: Int) -> Void
+    //    var onRCommit: (_ oldR: Double) -> Void
+    //    var onGCommit: (_ oldG: Double) -> Void
+    //    var onBCommit: (_ oldB: Double) -> Void
+    //    var onColorCommit: (_ oldColor: Color) -> Void
 
     @State private var oldNum: Int = 0
     @State private var oldR: Double = 0
@@ -33,37 +34,41 @@ struct HueRowView: View {
 
     var body: some View {
         Group{
-           HStack{
-                    TextField("number",value: $hue.num, formatter: HueRowView.cgUnboundFormatter)
-                        .disabled(true)
-                        .padding(2)
+            HStack{
+                TextField("number",value: $hue.num, formatter: HueRowView.cg255Formatter)
+                    .disabled(true)
+                    .padding(2)
 
-                     TextField("r",value: $hue.r, formatter: HueRowView.cgUnboundFormatter)
+                TextField("r",value: $hue.r, formatter: HueRowView.cg255Formatter)
+                TextField("g",value: $hue.g, formatter: HueRowView.cg255Formatter)
+                TextField("b",value: $hue.b, formatter: HueRowView.cg255Formatter)
+                    .padding(2)
 
-                      TextField("g",value: $hue.g, formatter: HueRowView.cgUnboundFormatter)
+                ColorPicker("\(hue.num)", selection: $hue.color,supportsOpacity: false)
 
-                     TextField("b",value: $hue.b, formatter: HueRowView.cgUnboundFormatter)
-                     .padding(2)
-
-                      ColorPicker("1", selection: $hue.color)
-               Image(systemName: "trash")
-                            .foregroundColor(.white)
-                            .help("Delete \(hue.num)")
-                            .onSubmit{
-                                //$picdef.hues.remove(object: hue)
-                            }
-//                        Button(role: .destructive) {
-//                            //$picdef.hues.remove(object: hue)
-//                        } label: {Label("", systemImage: "trash")
-//                        }
-                }
+                Image(systemName: "trash")
+                    .foregroundColor(.white)
+                    .help("Delete \(hue.num)")
+                    .onSubmit{
+                        //self.remove(at: IndexSet(integer: self.index))   // << here !!
+                    }
+                //                        Button(role: .destructive) {
+                //                            //$picdef.hues.remove(object: hue)
+                //                        } label: {Label("", systemImage: "trash")
+                //                        }
             }
         }
+    }
 
-    static var cgUnboundFormatter: NumberFormatter {
+
+
+
+    static var cg255Formatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 8
+        formatter.maximumFractionDigits = 0
+        formatter.minimum = 0
+        formatter.maximum = 255
         return formatter
     }
 }

@@ -33,7 +33,23 @@ class Hue: Codable, Identifiable, ObservableObject {
         self.b = b
         self.color = Color(.sRGB,red: self.r/255,green: self.g/255,blue: self.b/255)
     }
+
+    func updateColorFromPicker(cgColor: CGColor) {
+        if let arr = cgColor.components {
+            self.r = arr[0]
+            self.g = arr[1]
+            self.b = arr[2]
+        }
+        else{
+            self.r = 0
+            self.g = 0
+            self.b = 0
+        }
+    }
+
 }
+
+
 
 extension Hue: Equatable {
     static func ==(lhs: Hue, rhs: Hue) -> Bool {

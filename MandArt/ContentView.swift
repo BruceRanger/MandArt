@@ -628,9 +628,33 @@ struct ContentView: View {
 
                 Group{
                     Divider()
-                        ForEach($doc.picdef.hues, id:\.num) { $hue in
-                            HueRowView(hue:$hue)
+                    ForEach($doc.picdef.hues, id:\.num) { $hue in
+                            HStack{
+                                TextField("number",value: $hue.num, formatter: ContentView.cgUnboundFormatter)
+                                    .disabled(true)
+                                    .padding(2)
+
+                                TextField("r",value: $hue.r, formatter: ContentView.cg255Formatter)
+                                TextField("g",value: $hue.g, formatter: ContentView.cg255Formatter)
+                                TextField("b",value: $hue.b, formatter: ContentView.cg255Formatter)
+                                    .padding(2)
+
+                                ColorPicker("\(hue.num)", selection: $hue.color,supportsOpacity: false)
+
+                                Button {
+                                    let i = hue.num-1
+                                    doc.deleteHue(index:i)
+                                    readyForPicture()
+
+                                } label: {
+                                   Image(systemName: "trash")
+                                }
+                                .help("Delete "+"\(hue.num)")
+
+                            }
                         } // end foreach
+                       // .onDelete(perform: doc.deleteHue(index:$0))
+
                         Button("Add Color") {
                             doc.addHue()
                         }
@@ -687,6 +711,15 @@ struct ContentView: View {
     } // end tapGesture
 
     // HELPER FUNCTIONS AND PRIVATE VARIABLES DOWN HERE......
+
+    static var cg255Formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        formatter.minimum = 0
+        formatter.maximum = 255
+        return formatter
+    }
 
     static var cgFormatter: NumberFormatter {
         let formatter = NumberFormatter()
