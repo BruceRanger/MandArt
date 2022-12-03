@@ -6,6 +6,9 @@
 
 <!--@START_MENU_TOKEN@-->Text<!--@END_MENU_TOKEN@-->
 
+![Example](mandart_gettingstarted.png)
+
+
 ## Topics
 
 ### <!--@START_MENU_TOKEN@-->Group<!--@END_MENU_TOKEN@-->
