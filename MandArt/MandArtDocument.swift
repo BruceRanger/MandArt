@@ -127,6 +127,9 @@ extension MandArtDocument {
     /// Adds a new default hue, and registers an undo action.
     func addHue(undoManager: UndoManager? = nil) {
         picdef.hues.append(Hue())
+        let newLength = picdef.hues.count
+        picdef.hues[newLength-1].num = newLength
+        picdef.nColors = newLength
         let count = picdef.hues.count
         undoManager?.registerUndo(withTarget: self) { doc in
             withAnimation {
