@@ -49,25 +49,28 @@ final class ColorlistDocument: ReferenceFileDocument {
     }
 }
 
-// Provide operations on the checklist document.
+// Provide operations on the colorlist document.
 extension ColorlistDocument {
     
-    /// Toggles an item's checked status, and registers an undo action.
-    /// - Tag: PerformToggle
-    func toggleItem(_ item: ColorlistItem, undoManager: UndoManager? = nil) {
-        let index = colorlist.items.firstIndex(of: item)!
-        
-        colorlist.items[index].isChecked.toggle()
-        
-        undoManager?.registerUndo(withTarget: self) { doc in
-            // Because it calls itself, this is redoable, as well.
-            doc.toggleItem(item, undoManager: undoManager)
-        }
-    }
+//    /// Toggles an item's checked status, and registers an undo action.
+//    /// - Tag: PerformToggle
+//    func toggleItem(_ item: ColorlistItem, undoManager: UndoManager? = nil) {
+//        let index = colorlist.items.firstIndex(of: item)!
+//
+//        //colorlist.items[index].isChecked.toggle()
+//
+//        undoManager?.registerUndo(withTarget: self) { doc in
+//            // Because it calls itself, this is redoable, as well.
+//            doc.toggleItem(item, undoManager: undoManager)
+//        }
+//    }
     
     /// Adds a new item, and registers an undo action.
-    func addItem(title: String, undoManager: UndoManager? = nil) {
-        colorlist.addItem(title: title)
+    func addItem(num : Int,color : Color,
+        r : Double,g : Double,b : Double,
+        undoManager: UndoManager? = nil) {
+
+        colorlist.addItem(num : num, color : color, r : r, g : g, b : b)
         let count = colorlist.items.count
         undoManager?.registerUndo(withTarget: self) { doc in
             withAnimation {
@@ -143,7 +146,7 @@ extension ColorlistDocument {
     }
     
     /// Registers an undo action and a redo action for a title change.
-    func registerUndoTitleChange(for item: ColorlistItem, oldTitle: String, undoManager: UndoManager?) {
+    func registerUndoTitleChange(for item: ColorlistItem, oldNum: Int, undoManager: UndoManager?) {
         let index = colorlist.items.firstIndex(of: item)!
         
         // The change has already happened, so save the collection of new items.
@@ -151,7 +154,7 @@ extension ColorlistDocument {
         
         // Register the undo action.
         undoManager?.registerUndo(withTarget: self) { doc in
-            doc.colorlist.items[index].title = oldTitle
+            doc.colorlist.items[index].num = oldNum
             
             // Register the redo action.
             undoManager?.registerUndo(withTarget: self) { doc in

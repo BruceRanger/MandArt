@@ -1,13 +1,19 @@
-//
-//  MandArtApp.swift
-//  MandArt
-//
-//  See https://developer.apple.com/documentation/swiftui/building_a_document-based_app_with_swiftui
+///
+///  MandArtApp.swift
+///  MandArt
+///
+///  See https://developer.apple.com/documentation/swiftui/building_a_document-based_app_with_swiftui
 
 import SwiftUI
 
+/// The main entry point for MandArt.
+///
+///  This is where the magic happens.
+///
 @main
 struct MandArtApp: App {
+
+    /// The body of the app; kicks off the opening page.
     var body: some Scene {
 
         WindowGroup("Welcome to MandArt") {

@@ -24,13 +24,21 @@ struct ColorlistView: View {
         List(selection: $selection) {
             // Iterate over a collection of bindings to the items.
             ForEach($document.colorlist.items) { $item in
-                ColorlistRow(item: $item) {
+               // ColorlistRow(item: $item) {
                     // The checkbox toggle action.
-                    document.toggleItem($item.wrappedValue, undoManager: undoManager)
-                } onTextCommit: { oldTitle in
-                    // The title changed the commit action.
-                    document.registerUndoTitleChange(for: $item.wrappedValue, oldTitle: oldTitle, undoManager: undoManager)
-                }
+                   // document.toggleItem($item.wrappedValue, undoManager: undoManager)
+
+
+
+
+               // }
+
+
+                
+//            onNumCommit: { oldNum in
+//                    // The num changed the commit action.
+//                    document.registerUndoNumChange(for: $item.wrappedValue, oldNum: oldNum, undoManager: undoManager)
+//                }
             }
             .onDelete(perform: onDelete)
             .onMove(perform: onMove)
@@ -60,7 +68,15 @@ struct ColorlistView: View {
         Button(action: {
             print("Button tapped!")
             withAnimation {
-                document.addItem(title: "Another item.", undoManager: undoManager)
+                document.addItem(
+                    num : document.colorlist.items.count+1,
+                    color : Color(.sRGB,
+                                  red: 255/255, green:255/255,
+                                  blue:255/255),
+                    r : 255,
+                    g : 255,
+                    b : 255,
+                    undoManager: undoManager)
             }
         }) {
             Image(systemName: "plus")

@@ -2,7 +2,6 @@
 //  MandArtUITestsLaunchTests.swift
 //  MandArtUITests
 //
-//  Created by Denise Case on 12/2/22.
 //
 
 import XCTest
