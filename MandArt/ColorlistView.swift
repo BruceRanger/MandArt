@@ -54,60 +54,60 @@ struct ColorlistView: View {
             }
             #elseif os(macOS)
             ToolbarItem {
-                addButton
+               // addButton
             }
             ToolbarItem {
-                deleteButton
+               // deleteButton
             }
             #endif // os(iOS)
         }
     }
     
-    /// Adds a new item to the list.
-    var addButton: some View {
-        Button(action: {
-            print("Button tapped!")
-            withAnimation {
-                document.addItem(
-                    num : document.colorlist.items.count+1,
-                    color : Color(.sRGB,
-                                  red: 255/255, green:255/255,
-                                  blue:255/255),
-                    r : 255,
-                    g : 255,
-                    b : 255,
-                    undoManager: undoManager)
-            }
-        }) {
-            Image(systemName: "plus")
-        }
-        .buttonStyle(BorderlessButtonStyle())
-    }
-    
-    /// A button with an action that deletes the selected items from the list.
-    var deleteButton: some View {
-        Button(action: {
-            print("Button tapped!")
-            withAnimation {
-                document.deleteItems(withIDs: Array(selection), undoManager: undoManager)
-            }
-            selection.removeAll()
-        }) {
-            Image(systemName: "trash")
-        }
-        .buttonStyle(BorderlessButtonStyle())
-        .disabled(selection.isEmpty)
-    }
-    
+//    /// Adds a new item to the list.
+//    var addButton: some View {
+//        Button(action: {
+//            print("Button tapped!")
+//            withAnimation {
+//                document.addItem(
+//                    num : document.colorlist.items.count+1,
+//                    color : Color(.sRGB,
+//                                  red: 255/255, green:255/255,
+//                                  blue:255/255),
+//                    r : 255,
+//                    g : 255,
+//                    b : 255,
+//                    undoManager: undoManager)
+//            }
+//        }) {
+//            Image(systemName: "plus")
+//        }
+//        .buttonStyle(BorderlessButtonStyle())
+//    }
+//
+//    /// A button with an action that deletes the selected items from the list.
+//    var deleteButton: some View {
+//        Button(action: {
+//            print("Button tapped!")
+//            withAnimation {
+//                document.deleteItems(withIDs: Array(selection), undoManager: undoManager)
+//            }
+//            selection.removeAll()
+//        }) {
+//            Image(systemName: "trash")
+//        }
+//        .buttonStyle(BorderlessButtonStyle())
+//        .disabled(selection.isEmpty)
+//    }
+
     /// Deletes a set of items from the list.
     func onDelete(offsets: IndexSet) {
-        document.delete(offsets: offsets, undoManager: undoManager)
+        //document.delete(offsets: offsets, undoManager: undoManager)
     }
-    
+
     /// Moves a set of items to a new location.
     func onMove(offsets: IndexSet, toOffset: Int) {
-        document.moveItemsAt(offsets: offsets, toOffset: toOffset, undoManager: undoManager)
-    }
+//        document.moveItemsAt(offsets: offsets, toOffset: toOffset, undoManager: undoManager)
+   }
 }
 
 struct ContentView_Previews: PreviewProvider {

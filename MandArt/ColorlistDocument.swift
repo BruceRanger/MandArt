@@ -50,118 +50,118 @@ final class ColorlistDocument: ReferenceFileDocument {
 }
 
 // Provide operations on the colorlist document.
-extension ColorlistDocument {
-    
-//    /// Toggles an item's checked status, and registers an undo action.
-//    /// - Tag: PerformToggle
-//    func toggleItem(_ item: ColorlistItem, undoManager: UndoManager? = nil) {
-//        let index = colorlist.items.firstIndex(of: item)!
+//extension ColorlistDocument {
 //
-//        //colorlist.items[index].isChecked.toggle()
+////    /// Toggles an item's checked status, and registers an undo action.
+////    /// - Tag: PerformToggle
+////    func toggleItem(_ item: ColorlistItem, undoManager: UndoManager? = nil) {
+////        let index = colorlist.items.firstIndex(of: item)!
+////
+////        //colorlist.items[index].isChecked.toggle()
+////
+////        undoManager?.registerUndo(withTarget: self) { doc in
+////            // Because it calls itself, this is redoable, as well.
+////            doc.toggleItem(item, undoManager: undoManager)
+////        }
+////    }
 //
+//    /// Adds a new item, and registers an undo action.
+//    func addItem(num : Int,color : Color,
+//        r : Double,g : Double,b : Double,
+//        undoManager: UndoManager? = nil) {
+//
+//        colorlist.addItem(num : num, color : color, r : r, g : g, b : b)
+//        let count = colorlist.items.count
 //        undoManager?.registerUndo(withTarget: self) { doc in
-//            // Because it calls itself, this is redoable, as well.
-//            doc.toggleItem(item, undoManager: undoManager)
+//            withAnimation {
+//                doc.deleteItem(index: count - 1, undoManager: undoManager)
+//            }
 //        }
 //    }
-    
-    /// Adds a new item, and registers an undo action.
-    func addItem(num : Int,color : Color,
-        r : Double,g : Double,b : Double,
-        undoManager: UndoManager? = nil) {
-
-        colorlist.addItem(num : num, color : color, r : r, g : g, b : b)
-        let count = colorlist.items.count
-        undoManager?.registerUndo(withTarget: self) { doc in
-            withAnimation {
-                doc.deleteItem(index: count - 1, undoManager: undoManager)
-            }
-        }
-    }
-    
-    /// Deletes the item at an index, and registers an undo action.
-    func deleteItem(index: Int, undoManager: UndoManager? = nil) {
-        let oldItems = colorlist.items
-        withAnimation {
-            _ = colorlist.items.remove(at: index)
-        }
-        
-        undoManager?.registerUndo(withTarget: self) { doc in
-            // Use the replaceItems symmetric undoable-redoable function.
-            doc.replaceItems(with: oldItems, undoManager: undoManager)
-        }
-    }
-    
-    /// Deletes the items with specified IDs.
-    func deleteItems(withIDs ids: [UUID], undoManager: UndoManager? = nil) {
-        var indexSet: IndexSet = IndexSet()
-
-        let enumerated = colorlist.items.enumerated()
-        for (index, item) in enumerated where ids.contains(item.id) {
-            indexSet.insert(index)
-        }
-
-        delete(offsets: indexSet, undoManager: undoManager)
-    }
-    
-    /// Replaces the existing items with a new set of items.
-    func replaceItems(with newItems: [ColorlistItem], undoManager: UndoManager? = nil, animation: Animation? = .default) {
-        let oldItems = colorlist.items
-        
-        withAnimation(animation) {
-            colorlist.items = newItems
-        }
-        
-        undoManager?.registerUndo(withTarget: self) { doc in
-                // Because you recurse here, redo support is automatic.
-            doc.replaceItems(with: oldItems, undoManager: undoManager, animation: animation)
-        }
-    }
-
-    /// Deletes the items at a specified set of offsets, and registers an undo action.
-    func delete(offsets: IndexSet, undoManager: UndoManager? = nil) {
-        let oldItems = colorlist.items
-        withAnimation {
-            colorlist.items.remove(atOffsets: offsets)
-        }
-        
-        undoManager?.registerUndo(withTarget: self) { doc in
-            // Use the replaceItems symmetric undoable-redoable function.
-            doc.replaceItems(with: oldItems, undoManager: undoManager)
-        }
-    }
-    
-    /// Relocates the specified items, and registers an undo action.
-    func moveItemsAt(offsets: IndexSet, toOffset: Int, undoManager: UndoManager? = nil) {
-        let oldItems = colorlist.items
-        withAnimation {
-            colorlist.items.move(fromOffsets: offsets, toOffset: toOffset)
-        }
-        
-        undoManager?.registerUndo(withTarget: self) { doc in
-            // Use the replaceItems symmetric undoable-redoable function.
-            doc.replaceItems(with: oldItems, undoManager: undoManager)
-        }
-        
-    }
-    
-    /// Registers an undo action and a redo action for a title change.
-    func registerUndoTitleChange(for item: ColorlistItem, oldNum: Int, undoManager: UndoManager?) {
-        let index = colorlist.items.firstIndex(of: item)!
-        
-        // The change has already happened, so save the collection of new items.
-        let newItems = colorlist.items
-        
-        // Register the undo action.
-        undoManager?.registerUndo(withTarget: self) { doc in
-            doc.colorlist.items[index].num = oldNum
-            
-            // Register the redo action.
-            undoManager?.registerUndo(withTarget: self) { doc in
-                // Use the replaceItems symmetric undoable-redoable function.
-                doc.replaceItems(with: newItems, undoManager: undoManager, animation: nil)
-            }
-        }
-    }
-
-}
+//
+//    /// Deletes the item at an index, and registers an undo action.
+//    func deleteItem(index: Int, undoManager: UndoManager? = nil) {
+//        let oldItems = colorlist.items
+//        withAnimation {
+//            _ = colorlist.items.remove(at: index)
+//        }
+//
+//        undoManager?.registerUndo(withTarget: self) { doc in
+//            // Use the replaceItems symmetric undoable-redoable function.
+//            doc.replaceItems(with: oldItems, undoManager: undoManager)
+//        }
+//    }
+//
+//    /// Deletes the items with specified IDs.
+//    func deleteItems(withIDs ids: [UUID], undoManager: UndoManager? = nil) {
+//        var indexSet: IndexSet = IndexSet()
+//
+//        let enumerated = colorlist.items.enumerated()
+//        for (index, item) in enumerated where ids.contains(item.id) {
+//            indexSet.insert(index)
+//        }
+//
+//        delete(offsets: indexSet, undoManager: undoManager)
+//    }
+//
+//    /// Replaces the existing items with a new set of items.
+//    func replaceItems(with newItems: [ColorlistItem], undoManager: UndoManager? = nil, animation: Animation? = .default) {
+//        let oldItems = colorlist.items
+//
+//        withAnimation(animation) {
+//            colorlist.items = newItems
+//        }
+//
+//        undoManager?.registerUndo(withTarget: self) { doc in
+//                // Because you recurse here, redo support is automatic.
+//            doc.replaceItems(with: oldItems, undoManager: undoManager, animation: animation)
+//        }
+//    }
+//
+//    /// Deletes the items at a specified set of offsets, and registers an undo action.
+//    func delete(offsets: IndexSet, undoManager: UndoManager? = nil) {
+//        let oldItems = colorlist.items
+//        withAnimation {
+//            colorlist.items.remove(atOffsets: offsets)
+//        }
+//
+//        undoManager?.registerUndo(withTarget: self) { doc in
+//            // Use the replaceItems symmetric undoable-redoable function.
+//            doc.replaceItems(with: oldItems, undoManager: undoManager)
+//        }
+//    }
+//
+//    /// Relocates the specified items, and registers an undo action.
+//    func moveItemsAt(offsets: IndexSet, toOffset: Int, undoManager: UndoManager? = nil) {
+//        let oldItems = colorlist.items
+//        withAnimation {
+//            colorlist.items.move(fromOffsets: offsets, toOffset: toOffset)
+//        }
+//
+//        undoManager?.registerUndo(withTarget: self) { doc in
+//            // Use the replaceItems symmetric undoable-redoable function.
+//            doc.replaceItems(with: oldItems, undoManager: undoManager)
+//        }
+//
+//    }
+//
+//    /// Registers an undo action and a redo action for a title change.
+//    func registerUndoTitleChange(for item: ColorlistItem, oldNum: Int, undoManager: UndoManager?) {
+//        let index = colorlist.items.firstIndex(of: item)!
+//
+//        // The change has already happened, so save the collection of new items.
+//        let newItems = colorlist.items
+//
+//        // Register the undo action.
+//        undoManager?.registerUndo(withTarget: self) { doc in
+//            doc.colorlist.items[index].num = oldNum
+//
+//            // Register the redo action.
+//            undoManager?.registerUndo(withTarget: self) { doc in
+//                // Use the replaceItems symmetric undoable-redoable function.
+//                doc.replaceItems(with: newItems, undoManager: undoManager, animation: nil)
+//            }
+//        }
+//    }
+//
+//}

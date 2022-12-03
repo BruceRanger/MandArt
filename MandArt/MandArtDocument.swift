@@ -9,9 +9,8 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-// ReferenceFileDocument for classes
-// FileDocument for struts
-
+/// A utility class to work with files for saving and sharing your art.
+///
 final class MandArtDocument: ReferenceFileDocument {
 
     // tell the system we support only reading / writing json files

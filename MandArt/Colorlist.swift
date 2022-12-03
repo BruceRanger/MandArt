@@ -2,53 +2,52 @@
 //  Colorlist.swift
 //  MandArt
 //
-//  This file defines `Colorlist` and `ColorlistItem`.
 //  See
 //  https://developer.apple.com/documentation/swiftui/building_a_document-based_app_with_swiftui
 
 import Foundation
-import SwiftUI      // Color
+import SwiftUI
 
 
-/// - Tag: DataModel
-struct ColorlistItem: Identifiable, Codable {
-    var id = UUID()
-    var num : Int = 0
-    var color : Color
-    var r : Double = 0
-    var g : Double = 0
-    var b : Double = 0
-}
-
+/// The ordered list of colors used to make the MandArt picture.
 struct Colorlist: Identifiable, Codable {
     var id = UUID()
     var items: [ColorlistItem]
-}
 
-extension ColorlistItem: Equatable {
-    static func ==(lhs: ColorlistItem, rhs: ColorlistItem) -> Bool {
-        lhs.id == rhs.id
+    init(){
+        self.items = []
+    }
+
+    /// Create a colorlist from an array of colorlist items
+    /// - Parameter items: array of color list items
+    init(items:[ColorlistItem] ) {
+        self.items = items
+    }
+
+    /// Create a colorlist from an array of hues
+    /// - Parameter hues: array of hues, each hue having rgb and sort order
+    init(hues:[Hue] ) {
+        self.items = []
+        hues.forEach() {hue in
+            let newItem = ColorlistItem(num:hue.num,r:hue.r,g:hue.g,b:hue.b)
+            self.addItem(item:newItem)
+        }
     }
 }
+
 
 // Provide some default content.
 extension Colorlist {
     // Provide an empty list.
-    static let emptyList = Colorlist(items: [])
+    static let emptyList = Colorlist()
     
     // Provide some starter content.
-    static let item1 = ColorlistItem(num:1, color:  Color(.sRGB, red:   0/255, green: 255/255, blue:   0/255), r:0.0, g:255.0, b:0.0 )
-
-    static let item2 = ColorlistItem(num:2, color: Color(.sRGB, red:   255/255, green: 255/255, blue:   0/255), r:255.0, g:255.0, b:0.0)
-
-    static let item3 = ColorlistItem(num:3, color: Color(.sRGB, red: 255/255, green: 0/255, blue:   0/255),r:255.0, g:0.0, b:0.0)
-
-    static let item4 = ColorlistItem(num:4, color: Color(.sRGB, red: 255/255, green:   0/255, blue: 255/255),r:255.0, g:0.0, b:255.0)
-
-    static let item5 = ColorlistItem(num:5, color: Color(.sRGB, red:   0/255, green:   0/255, blue: 255/255),r:0.0, g:0.0, b:255.0)
-
-    static let item6 = ColorlistItem(num:6, color: Color(.sRGB, red:   0/255, green: 255/255, blue: 255/255),r:0.0, g:255.0, b:255.0)
-
+    static let item1 = ColorlistItem(num:1, r:0.0, g:255.0, b:0.0)
+    static let item2 = ColorlistItem(num:2, r:255.0, g:255.0, b:0.0)
+    static let item3 = ColorlistItem(num:3,r:255.0, g:0.0, b:0.0)
+    static let item4 = ColorlistItem(num:4,r:255.0, g:0.0, b:255.0)
+    static let item5 = ColorlistItem(num:5,r:0.0, g:0.0, b:255.0)
+    static let item6 = ColorlistItem(num:6,r:0.0, g:255.0, b:255.0)
     static let demoList = Colorlist(items: [ item1, item2, item3, item4, item5, item6 ])
 }
 
@@ -59,9 +58,12 @@ extension Colorlist {
     }
     
     mutating func addItem(
-        num : Int,color : Color,
-        r : Double,g : Double,b : Double) {
-        addItem(item: ColorlistItem(num : num,color : color,r : r,g : g,b : b))
+        num : Int,
+        r : Double,
+        g : Double,
+        b : Double,
+        color : Color) {
+        addItem(item: ColorlistItem(num : num,r : r,g : g,b : b))
     }
 }
 

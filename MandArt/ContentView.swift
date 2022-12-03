@@ -8,8 +8,6 @@
 
 import SwiftUI      // views
 import Foundation   // trig functions
-//import ImageIO      // saving
-//import CoreServices // persistence
 
 var contextImageGlobal: CGImage?
 var startFile = "default.json"
@@ -440,11 +438,8 @@ struct ContentView: View {
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
 
-        // STASH bitmap
-        // before returning it, set the global variable
-        // in case they want to save
+        // stash picture in global var for saving
         contextImageGlobal = contextImage
-
         return contextImage
     }
 
