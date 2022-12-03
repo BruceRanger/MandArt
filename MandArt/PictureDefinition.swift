@@ -35,21 +35,12 @@ struct PictureDefinition: Codable, Identifiable {
         Hue(num:5, r:0.0, g:0.0, b:255.0),
         Hue(num:6, r:0.0, g:255.0, b:255.0),
     ]
-    var colorlist: Colorlist
-
-    // initialize with defaults
-    init(){
-        self.colorlist = Colorlist(hues: hues)
-    }
-
-    // initialize with defaults and default set of colors (hues)
 
 
     /// Initialize with an array of Hues (sorted rgbs)
     /// - Parameter hues: an array of hues
     init(hues:[Hue]){
         self.hues = hues
-        self.colorlist = Colorlist(hues: hues)
     }
 
 
@@ -71,7 +62,6 @@ struct PictureDefinition: Codable, Identifiable {
     ///   - nColors: <#nColors description#>
     ///   - leftNumber: <#leftNumber description#>
     ///   - hues: <#hues description#>
-    ///   - colorlist: <#colorlist description#>
     init(
         xC: Double,
         yC: Double,
@@ -88,8 +78,8 @@ struct PictureDefinition: Codable, Identifiable {
         dFIterMin: Double,
         nColors: Int,
         leftNumber: Int,
-        hues: [Hue],
-        colorlist: Colorlist){
+        hues: [Hue]
+        ){
             self.xC = xC
             self.yC = yC
             self.scale = scale
@@ -106,7 +96,6 @@ struct PictureDefinition: Codable, Identifiable {
             self.nColors = nColors
             self.leftNumber = leftNumber
             self.hues = hues
-            self.colorlist = Colorlist(hues: hues)
         }
 
 }

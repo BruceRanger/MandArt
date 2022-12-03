@@ -30,7 +30,15 @@ final class MandArtDocument: ReferenceFileDocument {
 
     /// A simple initializer that creates a new demo picture
     init() {
-        picdef = PictureDefinition()
+        var hues: [Hue] = [
+            Hue(num:1, r:0.0, g:255.0, b:0.0),
+            Hue(num:2, r:255.0, g:255.0, b:0.0),
+            Hue(num:3, r:255.0, g:0.0, b:0.0),
+            Hue(num:4, r:255.0, g:0.0, b:255.0),
+            Hue(num:5, r:0.0, g:0.0, b:255.0),
+            Hue(num:6, r:0.0, g:255.0, b:255.0),
+        ]
+        picdef = PictureDefinition(hues:hues)
     }
 
     /// Initialize a document with our picdef property

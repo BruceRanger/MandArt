@@ -13,16 +13,10 @@
 		8806E112293A4FF4005F5CB4 /* MandArtTests in Resources */ = {isa = PBXBuildFile; fileRef = 8806E110293A4FF4005F5CB4 /* MandArtTests */; };
 		8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E113293A5011005F5CB4 /* MandArtApp.swift */; };
 		8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E114293A5011005F5CB4 /* MandArtDocument.swift */; };
-		8806E11B293A5E37005F5CB4 /* Colorlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E117293A5E37005F5CB4 /* Colorlist.swift */; };
-		8806E11C293A5E37005F5CB4 /* ColorlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E118293A5E37005F5CB4 /* ColorlistView.swift */; };
-		8806E11D293A5E37005F5CB4 /* ColorlistRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E119293A5E37005F5CB4 /* ColorlistRow.swift */; };
-		8806E11E293A5E37005F5CB4 /* ColorlistDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E11A293A5E37005F5CB4 /* ColorlistDocument.swift */; };
-		8809EDA4293BB58D00F2F5BF /* HueRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8809EDA3293BB58D00F2F5BF /* HueRowView.swift */; };
 		882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED2293409FE003ACB0B /* PictureDefinition.swift */; };
 		882BAED72934167D003ACB0B /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 882BAED62934167D003ACB0B /* default.json */; };
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
 		882BAEE92937C71A003ACB0B /* ErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */; };
-		888863D9293B808C001C2A8E /* ColorlistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888863D8293B808C001C2A8E /* ColorlistItem.swift */; };
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
 /* End PBXBuildFile section */
 
@@ -35,16 +29,10 @@
 		8806E110293A4FF4005F5CB4 /* MandArtTests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MandArtTests; sourceTree = SOURCE_ROOT; };
 		8806E113293A5011005F5CB4 /* MandArtApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandArtApp.swift; sourceTree = "<group>"; };
 		8806E114293A5011005F5CB4 /* MandArtDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandArtDocument.swift; sourceTree = "<group>"; };
-		8806E117293A5E37005F5CB4 /* Colorlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colorlist.swift; sourceTree = "<group>"; };
-		8806E118293A5E37005F5CB4 /* ColorlistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorlistView.swift; sourceTree = "<group>"; };
-		8806E119293A5E37005F5CB4 /* ColorlistRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorlistRow.swift; sourceTree = "<group>"; };
-		8806E11A293A5E37005F5CB4 /* ColorlistDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorlistDocument.swift; sourceTree = "<group>"; };
-		8809EDA3293BB58D00F2F5BF /* HueRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HueRowView.swift; sourceTree = "<group>"; };
 		882BAED2293409FE003ACB0B /* PictureDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureDefinition.swift; sourceTree = "<group>"; };
 		882BAED62934167D003ACB0B /* default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = default.json; sourceTree = "<group>"; };
 		882BAED829346C92003ACB0B /* Hue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hue.swift; sourceTree = "<group>"; };
 		882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModel.swift; sourceTree = "<group>"; };
-		888863D8293B808C001C2A8E /* ColorlistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorlistItem.swift; sourceTree = "<group>"; };
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
 		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
@@ -82,12 +70,6 @@
 			isa = PBXGroup;
 			children = (
 				889E3F22293A7733009944AC /* MandArtRelease.entitlements */,
-				8806E117293A5E37005F5CB4 /* Colorlist.swift */,
-				888863D8293B808C001C2A8E /* ColorlistItem.swift */,
-				8806E11A293A5E37005F5CB4 /* ColorlistDocument.swift */,
-				8806E119293A5E37005F5CB4 /* ColorlistRow.swift */,
-				8809EDA3293BB58D00F2F5BF /* HueRowView.swift */,
-				8806E118293A5E37005F5CB4 /* ColorlistView.swift */,
 				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
 				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
 				8806E113293A5011005F5CB4 /* MandArtApp.swift */,
@@ -175,19 +157,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				888863D9293B808C001C2A8E /* ColorlistItem.swift in Sources */,
-				8806E11B293A5E37005F5CB4 /* Colorlist.swift in Sources */,
 				882BAED929346C92003ACB0B /* Hue.swift in Sources */,
 				889E3F24293AE0B6009944AC /* Documentation.docc in Sources */,
 				6A3AEC0F26F879E700D7E31A /* ContentView.swift in Sources */,
 				882BAEE92937C71A003ACB0B /* ErrorViewModel.swift in Sources */,
 				8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */,
-				8806E11C293A5E37005F5CB4 /* ColorlistView.swift in Sources */,
-				8809EDA4293BB58D00F2F5BF /* HueRowView.swift in Sources */,
-				8806E11E293A5E37005F5CB4 /* ColorlistDocument.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
 				8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */,
-				8806E11D293A5E37005F5CB4 /* ColorlistRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
