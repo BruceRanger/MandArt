@@ -635,11 +635,32 @@ struct ContentView: View {
                                     .padding(2)
 
                                 TextField("r",value: $hue.r, formatter: ContentView.cg255Formatter)
+                                    .onChange(of: hue.r) { newValue in
+                                        let i = hue.num-1
+                                        doc.updateHueWithColorNumberR(
+                                            index:i,newValue:newValue)
+                                    }
                                 TextField("g",value: $hue.g, formatter: ContentView.cg255Formatter)
+                                    .onChange(of: hue.g) { newValue in
+                                        let i = hue.num-1
+                                        doc.updateHueWithColorNumberG(
+                                            index:i,newValue:newValue)
+                                    }
+
                                 TextField("b",value: $hue.b, formatter: ContentView.cg255Formatter)
                                     .padding(2)
+                                    .onChange(of: hue.b) { newValue in
+                                        let i = hue.num-1
+                                        doc.updateHueWithColorNumberB(
+                                            index:i,newValue:newValue)
+                                    }
 
                                 ColorPicker("\(hue.num)", selection: $hue.color,supportsOpacity: false)
+                                    .onChange(of: hue.color) { newColor in
+                                        let i = hue.num-1
+                                        doc.updateHueWithColorPick(
+                                            index:i,newColorPick:newColor)
+                                    }
 
                                 Button {
                                     let i = hue.num-1

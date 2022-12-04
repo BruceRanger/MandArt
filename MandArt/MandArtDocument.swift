@@ -30,7 +30,7 @@ final class MandArtDocument: ReferenceFileDocument {
 
     /// A simple initializer that creates a new demo picture
     init() {
-        var hues: [Hue] = [
+        let hues: [Hue] = [
             Hue(num:1, r:0.0, g:255.0, b:0.0),
             Hue(num:2, r:255.0, g:255.0, b:0.0),
             Hue(num:3, r:255.0, g:0.0, b:0.0),
@@ -62,7 +62,7 @@ final class MandArtDocument: ReferenceFileDocument {
         print ("print the image too")
         let modDate = fileWrapper.fileAttributes["NSFileModificationDate"]
         let uniqueString = stringFromAny(modDate)
-        saveImage(tag: uniqueString)
+        let isSaved = saveImage(tag: uniqueString)
         return fileWrapper
     }
 
@@ -141,7 +141,6 @@ extension MandArtDocument {
     /// Deletes the hue at an index, and registers an undo action.
     func deleteHue(index: Int, undoManager: UndoManager? = nil) {
         let oldHues = picdef.hues
-        let oldNColors = picdef.nColors
         picdef.nColors = picdef.nColors - 1
         withAnimation {
             _ = picdef.hues.remove(at: index)
@@ -203,6 +202,69 @@ extension MandArtDocument {
         }
     }
 
+    func updateHueWithColorNumberB(index: Int, newValue: Double,undoManager: UndoManager? = nil){
+        let oldHues = picdef.hues
+        let oldHue = picdef.hues[index]
+        let newHue = Hue(num:oldHue.num,
+                         r:oldHue.r,
+                         g:oldHue.g,
+                         b:newValue)
+        picdef.hues[index] = newHue
+        undoManager?.registerUndo(withTarget: self) { doc in
+            // Use the replaceItems symmetric undoable-redoable function.
+            doc.replaceHues(with: oldHues, undoManager: undoManager)
+        }
+    }
+
+    func updateHueWithColorNumberG(index: Int, newValue: Double,undoManager: UndoManager? = nil){
+        let oldHues = picdef.hues
+        let oldHue = picdef.hues[index]
+        let newHue = Hue(num:oldHue.num,
+                         r:oldHue.r,
+                         g:newValue,
+                         b:oldHue.b)
+        picdef.hues[index] = newHue
+        undoManager?.registerUndo(withTarget: self) { doc in
+            // Use the replaceItems symmetric undoable-redoable function.
+            doc.replaceHues(with: oldHues, undoManager: undoManager)
+        }
+    }
+
+    func updateHueWithColorNumberR(index: Int, newValue: Double,undoManager: UndoManager? = nil){
+        let oldHues = picdef.hues
+        let oldHue = picdef.hues[index]
+        let newHue = Hue(num:oldHue.num,
+                             r:newValue,
+                         g:oldHue.g,
+                         b:oldHue.b)
+        picdef.hues[index] = newHue
+        undoManager?.registerUndo(withTarget: self) { doc in
+            // Use the replaceItems symmetric undoable-redoable function.
+            doc.replaceHues(with: oldHues, undoManager: undoManager)
+        }
+    }
+
+
+    /// Update an ordered color with a new selection from the ColorPicker
+    /// - Parameters:
+    ///   - index: an Int for the index of this ordered color
+    ///   - newColorPick: the Color of the new selection
+    ///   - undoManager: undoManager 
+    func updateHueWithColorPick(index: Int, newColorPick: Color,undoManager: UndoManager? = nil){
+        let oldHues = picdef.hues
+        let oldHue = picdef.hues[index]
+        if let arr = newColorPick.cgColor {
+            let newHue = Hue(num:oldHue.num,
+                             r:arr.components![0]*255.0,
+                             g:arr.components![1]*255.0,
+                             b:arr.components![2]*255.0)
+            picdef.hues[index] = newHue
+        }
+        undoManager?.registerUndo(withTarget: self) { doc in
+            // Use the replaceItems symmetric undoable-redoable function.
+            doc.replaceHues(with: oldHues, undoManager: undoManager)
+        }
+    }
 }
 
 
