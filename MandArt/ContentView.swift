@@ -448,6 +448,7 @@ struct ContentView: View {
       let img = Image(image, scale: 1.0, label: Text("Test"))
         
         HStack{ // instructions on left, picture on right
+      
             ScrollView(showsIndicators: true) {
 
                 // left side with user stuff

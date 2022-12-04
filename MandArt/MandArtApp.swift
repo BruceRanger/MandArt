@@ -33,5 +33,26 @@ struct MandArtApp: App {
         DocumentGroup(newDocument: { MandArtDocument() }) { configuration in
             ContentView()
         }
+        .commands {
+            // use CommandGroup to modify built-in menu behavior
+
+            // we don't need the pasteboard (cut/copy/paste/delete_
+           CommandGroup(replacing: .pasteboard) { }
+
+            // we don't need start dictation or emoji and symbols
+
+            // we want to enable undo redo
+           // CommandGroup(replacing: .undoRedo) {}
+
+
+            // we can add a new menu before the window option
+            // like so
+//            CommandMenu("About") {
+//                Button(action: {
+//                }) {
+//                    Text("Test")
+//                }
+//            }
+        }
     }
 }

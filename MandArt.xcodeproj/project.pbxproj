@@ -13,6 +13,7 @@
 		8806E112293A4FF4005F5CB4 /* MandArtTests in Resources */ = {isa = PBXBuildFile; fileRef = 8806E110293A4FF4005F5CB4 /* MandArtTests */; };
 		8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E113293A5011005F5CB4 /* MandArtApp.swift */; };
 		8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E114293A5011005F5CB4 /* MandArtDocument.swift */; };
+		881B2B6A293CE2A200037032 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 881B2B69293CE2A200037032 /* Credits.rtf */; };
 		882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED2293409FE003ACB0B /* PictureDefinition.swift */; };
 		882BAED72934167D003ACB0B /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 882BAED62934167D003ACB0B /* default.json */; };
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
@@ -29,6 +30,7 @@
 		8806E110293A4FF4005F5CB4 /* MandArtTests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MandArtTests; sourceTree = SOURCE_ROOT; };
 		8806E113293A5011005F5CB4 /* MandArtApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandArtApp.swift; sourceTree = "<group>"; };
 		8806E114293A5011005F5CB4 /* MandArtDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandArtDocument.swift; sourceTree = "<group>"; };
+		881B2B69293CE2A200037032 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		882BAED2293409FE003ACB0B /* PictureDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureDefinition.swift; sourceTree = "<group>"; };
 		882BAED62934167D003ACB0B /* default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = default.json; sourceTree = "<group>"; };
 		882BAED829346C92003ACB0B /* Hue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hue.swift; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
+				881B2B69293CE2A200037032 /* Credits.rtf */,
 				889E3F23293AE0B6009944AC /* Documentation.docc */,
 				6A3AEC0B26F879E700D7E31A /* MandArt */,
 				6A3AEC0A26F879E700D7E31A /* Products */,
@@ -143,6 +146,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				881B2B6A293CE2A200037032 /* Credits.rtf in Resources */,
 				882BAED72934167D003ACB0B /* default.json in Resources */,
 				8806E112293A4FF4005F5CB4 /* MandArtTests in Resources */,
 				6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */,
