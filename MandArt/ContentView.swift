@@ -18,7 +18,6 @@ struct ContentView: View {
     let instructionBackgroundColor = Color.green.opacity(0.5)
     let inputWidth: Double = 290
 
-//    @StateObject private var picdef: PictureDefinition = ModelData.shared.load(startFile)
     @StateObject var errdef = ErrorViewModel()
 
     @State private var testColor = Color.red

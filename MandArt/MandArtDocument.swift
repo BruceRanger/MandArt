@@ -118,7 +118,6 @@ final class MandArtDocument: ReferenceFileDocument {
         }
         return ""
     }
-
 }
 
 // Provide operations on the MandArt document.
@@ -151,8 +150,6 @@ extension MandArtDocument {
             doc.replaceHues(with: oldHues, undoManager: undoManager)
         }
     }
-
-
 
     /// Replaces the existing items with a new set of items.
     func replaceHues(with newHues: [Hue], undoManager: UndoManager? = nil, animation: Animation? = .default) {
