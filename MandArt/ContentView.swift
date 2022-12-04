@@ -19,7 +19,6 @@ struct ContentView: View {
     let inputWidth: Double = 290
 
     @StateObject var errdef = ErrorViewModel()
-
     @State private var testColor = Color.red
     @State private var tapX: Double = 0.0
     @State private var tapY: Double = 0.0
@@ -40,113 +39,113 @@ struct ContentView: View {
     /// - Returns: optional CGImage with the bitmap or nil
     fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nColors: Int, _ colors: inout [[Double]]) -> CGImage? {
 
-            var gradientImage: CGImage
+        var gradientImage: CGImage
         let leftNumber: Int = doc.picdef.leftNumber
-            var rightNumber: Int = 0
-            var color: Double = 0.0
+        var rightNumber: Int = 0
+        var color: Double = 0.0
 
-            var xGradient: Double = 0.0
+        var xGradient: Double = 0.0
 
-            // set up CG parameters
-            let bitsPerComponent: Int = 8   // for UInt8
-            let componentsPerPixel: Int = 4  // RGBA = 4 components
-            let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
-            let bytesPerRow: Int = imageWidth * bytesPerPixel
-            let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
+        // set up CG parameters
+        let bitsPerComponent: Int = 8   // for UInt8
+        let componentsPerPixel: Int = 4  // RGBA = 4 components
+        let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
+        let bytesPerRow: Int = imageWidth * bytesPerPixel
+        let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
 
-            // Allocate data for the raster buffer.  I'm using UInt8 so that I can
-            // address individual RGBA components easily.
-            let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
+        // Allocate data for the raster buffer.  I'm using UInt8 so that I can
+        // address individual RGBA components easily.
+        let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
 
-            // Create a CGBitmapContext for drawing and converting into an image for display
-            let context: CGContext =
-            CGContext(data: rasterBufferPtr,
-                      width: imageWidth,
-                      height: imageHeight,
-                      bitsPerComponent: bitsPerComponent,
-                      bytesPerRow: bytesPerRow,
-                      space: CGColorSpace(name:CGColorSpace.sRGB)!,
-                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        // Create a CGBitmapContext for drawing and converting into an image for display
+        let context: CGContext =
+        CGContext(data: rasterBufferPtr,
+                  width: imageWidth,
+                  height: imageHeight,
+                  bitsPerComponent: bitsPerComponent,
+                  bytesPerRow: bytesPerRow,
+                  space: CGColorSpace(name:CGColorSpace.sRGB)!,
+                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
-            // use CG to draw into the context
-            // you can use any of the CG drawing routines for drawing into this context
-            // here we will just erase the contents of the CGBitmapContext as the
-            // raster buffer just contains random uninitialized data at this point.
-            context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
-            context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
-            context.fillPath()
+        // use CG to draw into the context
+        // you can use any of the CG drawing routines for drawing into this context
+        // here we will just erase the contents of the CGBitmapContext as the
+        // raster buffer just contains random uninitialized data at this point.
+        context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
+        context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
+        context.fillPath()
 
-            // in addition to using any of the CG drawing routines, you can draw yourself
-            // by accessing individual pixels in the raster image.
-            // here we'll draw a square one pixel at a time.
-            let xStarting: Int = 0
-            let yStarting: Int = 0
-            let width: Int = imageWidth
-            let height: Int = imageHeight
+        // in addition to using any of the CG drawing routines, you can draw yourself
+        // by accessing individual pixels in the raster image.
+        // here we'll draw a square one pixel at a time.
+        let xStarting: Int = 0
+        let yStarting: Int = 0
+        let width: Int = imageWidth
+        let height: Int = imageHeight
 
-            // iterate over all of the rows for the entire height of the square
-            for v in 0...(height - 1) {
+        // iterate over all of the rows for the entire height of the square
+        for v in 0...(height - 1) {
 
-                // calculate the offset to the row of pixels in the raster buffer
-                // assume the origin is at the bottom left corner of the raster image.
-                // note, you could also use the top left, but GC uses the bottom left
-                // so this method keeps your drawing and CG in sync in case you wanted
-                // to use the CG methods for drawing too.
-                //
-                // note, you could do this calculation all together inside of the xoffset
-                // loop, but it's a small optimization to pull this part out and do it here
-                // instead of every time through.
-                let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
+            // calculate the offset to the row of pixels in the raster buffer
+            // assume the origin is at the bottom left corner of the raster image.
+            // note, you could also use the top left, but GC uses the bottom left
+            // so this method keeps your drawing and CG in sync in case you wanted
+            // to use the CG methods for drawing too.
+            //
+            // note, you could do this calculation all together inside of the xoffset
+            // loop, but it's a small optimization to pull this part out and do it here
+            // instead of every time through.
+            let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
 
-                // iterate over all of the pixels in this row
-                for u in 0...(width - 1) {
+            // iterate over all of the pixels in this row
+            for u in 0...(width - 1) {
 
-                    // calculate the horizontal offset to the pixel in the row
-                    let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
+                // calculate the horizontal offset to the pixel in the row
+                let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
 
-                    // sum the horixontal and vertical offsets to get the pixel offset
-                    let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
+                // sum the horixontal and vertical offsets to get the pixel offset
+                let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
 
-                    // calculate the offset of the pixel
-                    let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+                // calculate the offset of the pixel
+                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
 
-                    rightNumber = leftNumber + 1
+                rightNumber = leftNumber + 1
 
-                    if leftNumber == nColors {
-                        rightNumber = 1
-                    }
+                if leftNumber == nColors {
+                    rightNumber = 1
+                }
 
-                    xGradient = Double(u)/Double(width)
+                xGradient = Double(u)/Double(width)
 
-                    color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
-                    pixelAddress.pointee = UInt8(color)         // R
+                color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
+                pixelAddress.pointee = UInt8(color)         // R
 
-                    color = colors[leftNumber-1][1] + xGradient*(colors[rightNumber - 1][1] - colors[leftNumber-1][1])
-                    (pixelAddress + 1).pointee = UInt8(color)   // G
+                color = colors[leftNumber-1][1] + xGradient*(colors[rightNumber - 1][1] - colors[leftNumber-1][1])
+                (pixelAddress + 1).pointee = UInt8(color)   // G
 
-                    color = colors[leftNumber-1][2] + xGradient*(colors[rightNumber - 1][2] - colors[leftNumber-1][2])
-                    (pixelAddress + 2).pointee = UInt8(color)   // B
+                color = colors[leftNumber-1][2] + xGradient*(colors[rightNumber - 1][2] - colors[leftNumber-1][2])
+                (pixelAddress + 2).pointee = UInt8(color)   // B
 
-                    (pixelAddress + 3).pointee = UInt8(255)     //alpha
+                (pixelAddress + 3).pointee = UInt8(255)     //alpha
 
 
-                    // IMPORTANT:
-                    // there is no type checking here and it is up to you to make sure that the
-                    // address indexes do not go beyond the memory allocated for the buffer
+                // IMPORTANT:
+                // there is no type checking here and it is up to you to make sure that the
+                // address indexes do not go beyond the memory allocated for the buffer
 
-                } //end for u
+            } //end for u
 
-            } //end for v
+        } //end for v
 
-            // convert the context into an image - this is what the function will return
-            gradientImage = context.makeImage()!
+        // convert the context into an image - this is what the function will return
+        gradientImage = context.makeImage()!
 
-            // no automatic deallocation for the raster data
-            // you need to manage that yourself
-            rasterBufferPtr.deallocate()
+        // no automatic deallocation for the raster data
+        // you need to manage that yourself
+        rasterBufferPtr.deallocate()
 
-            return gradientImage
-        }
+        return gradientImage
+    }
 
     /// Gets an image to display on the right side of the app
     /// - Returns: An optional CGImage or nil
@@ -444,176 +443,154 @@ struct ContentView: View {
 
     var body: some View {
         
-      let image: CGImage = getImage()!
-      let img = Image(image, scale: 1.0, label: Text("Test"))
+        let image: CGImage = getImage()!
+        let img = Image(image, scale: 1.0, label: Text("Test"))
         
         HStack{ // instructions on left, picture on right
-      
-            ScrollView(showsIndicators: true) {
-
                 // left side with user stuff
                 // spacing is between VStacks
-
-                VStack(alignment: .center, spacing: 10){
-                    Text("MandArt")
-                        .font(.title)
-                        .padding()
-                    Group{
-                        HStack {
-                            VStack {
-                                Button("Zoom In") {
-                                    readyForPicture()
-                                    zoomIn()
-                                }
-                            }
-                            .padding(10)
-                            VStack {
-                                Button("Zoom Out") {
-                                    readyForPicture()
-                                    zoomOut()
-                                }
-                            }
-                            Button("test error"){
-                              errdef.testErrorBox()
-                            }
-                            .help("This will be deleted.")
+            VStack(alignment: .center, spacing: 10){
+                Text("MandArt")
+                    .font(.title)
+                    .padding(.top)
+                HStack {
+                    VStack {
+                        Button("Zoom In") {
+                            readyForPicture()
+                            zoomIn()
                         }
-                        VStack {
-                            Button("Please use File/Save to save as PNG",
-                                   action: {
-                                print("please use the menu to save")
-                            })
-                            .help("This can be deleted.")
-                        }
-                        HStack {
-                            VStack { // use a button to pause to change values
-                                Button("Pause to change values") {
-                                    drawIt = false
-                                    drawGradient = false
-                                }
-                            }
-                            .padding(10)
-
-                            VStack { // use a button to resume
-                                Button("Resume") {
-                                    readyForPicture()
-                                }
-                            }
-                        } // end HStack
                     }
-                    Divider()
+                    VStack {
+                        Button("Zoom Out") {
+                            readyForPicture()
+                            zoomOut()
+                        }
+                    }
+                }
+                HStack {
+                    VStack {
+                        Button("Pause to change values") {
+                            drawIt = false
+                            drawGradient = false
+                        }
+                    }
+                    VStack {
+                        Button("Resume") {readyForPicture()}
+                    }
+                }
+                Divider()
+                HStack{
+                    Text("Enter left color #:")
+                    TextField("leftNumber",value: $doc.picdef.leftNumber,
+                              formatter: ContentView.intMaxColorsFormatter)
+                    .frame(maxWidth: 30)
+                    .foregroundColor(leftGradientIsValid ? .primary : .red)
+                    Text("to "+String(rightGradientColor))
+                }
+                HStack {
+                    VStack {
+                        Button("Make a gradient") {readyForGradient()}
+                    }
+                    VStack {
+                        Button("Resume") {readyForPicture()}
+                    }
+                }
+                Divider()
+                Text("Enter MandArt inputs below")
+                Divider()
+                ScrollView(showsIndicators: true) {
                     Group{
-                        HStack {
-                            VStack{
-                                Text("Left #")
-                                TextField("leftNumber",value: $doc.picdef.leftNumber, formatter: ContentView.intMaxColorsFormatter)
-                                    .frame(maxWidth: 30)
-                                    .foregroundColor(leftGradientIsValid ? .primary : .red)
-                            }
-                            VStack { // use a button made a gradient
-                                Text("")
-                                Button("Make a gradient") {
-                                    readyForGradient()
-                                }
-                            }
-                            VStack {
-                                Text("")
-                                Button("Resume") {
-                                 readyForPicture()
-                                }
-                            }
-                        } // end HStack
-                        Divider()
-
                         HStack {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center X")
                                 Text("Between -2 and 2")
                                 TextField("X",value: $doc.picdef.xC, formatter: ContentView.cgFormatter)
-                                    .padding(2)
+                                    .padding(4)
+                                    .frame(maxWidth:120)
                             }
-                            VStack { // each input has a vertical container with a Text label & TextField for data
+                            VStack {
                                 Text("Enter center Y")
                                 Text("Between -2 and 2")
                                 TextField("Y",value: $doc.picdef.yC, formatter: ContentView.cgFormatter)
-                                    .padding(2)
+                                    .padding(4)
+                                    .frame(maxWidth:120)
                             }
                         }
                     }
                     Divider()
                     Group{
                         HStack {
-                            VStack { // each input has a vertical container with a Text label & TextField for data
+                            VStack {
                                 Text("scale:")
                                 TextField("Scale",value: $doc.picdef.scale, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
+                                    .frame(maxWidth:100)
                             }
                             VStack {
                                 Text("iMax:")
                                 TextField("iMax",value: $doc.picdef.iMax, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
+                                    .frame(maxWidth: 60)
                             }
                             VStack {
                                 Text("rSqLimit:")
                                 TextField("rSqLimit",value: $doc.picdef.rSqLimit, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
+                                    .frame(maxWidth: 60)
                             }
                         }
                         Divider()
                         HStack {
                             VStack {
-                                Text("Image width, px:")
+                                Text("Image")
+                                Text("width, px:")
                                 TextField("imageWidth",value: $doc.picdef.imageWidth, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
+                                    .frame(maxWidth: 80)
                             }
                             VStack {
-                                Text("Image height, px:")
+                                Text("Image")
+                                Text("height, px:")
                                 TextField("imageHeightStart",value: $doc.picdef.imageHeight, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
+                                    .frame(maxWidth: 80)
                             }
                             VStack {
-                                Text("Aspect ratio:")
+                                Text("Aspect")
+                                Text("ratio:")
                                 Text("\(aspectRatio)")
-                                    .padding(2)
+                                    .padding(1)
                             }
                         }
                         Divider()
                         HStack{
                             VStack {
                                 Text("bE:")
-                                TextField("bE",value: $doc.picdef.bE, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
+                                TextField("bE",value: $doc.picdef.bE,formatter: ContentView.cgUnboundFormatter)
+                                    .frame(maxWidth: 80)
                             }
                             VStack {
                                 Text("eE:")
                                 TextField("eE",value: $doc.picdef.eE, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
+                                    .frame(maxWidth: 80)
                             }
-                        }
-                        Divider()
-                        HStack{
                             VStack {
                                 Text("theta:")
                                 TextField("theta",value: $doc.picdef.theta, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
-                            }
-                            VStack {
-                                Text("nImage:")
-                                TextField("nImage",value: $doc.picdef.nImage, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
+                                    .frame(maxWidth: 80)
                             }
                         }
                         Divider()
                         HStack {
                             VStack {
+                                Text("nImage:")
+                                TextField("nImage",value: $doc.picdef.nImage, formatter: ContentView.cgUnboundFormatter)
+                                    .frame(maxWidth: 80)
+                            }
+                            VStack {
                                 Text("dFIterMin:")
                                 TextField("dFIterMin",value: $doc.picdef.dFIterMin, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
+                                    .frame(maxWidth: 80)
                             }
                             VStack {
                                 Text("nBlocks:")
                                 TextField("nBlocks",value: $doc.picdef.nBlocks, formatter: ContentView.cgUnboundFormatter)
-                                    .padding(2)
+                                    .frame(maxWidth: 80)
                             }
                         }
                     }
@@ -622,18 +599,16 @@ struct ContentView: View {
                         VStack{
                             Text("Number of colors")
                             TextField("nColors",value: $doc.picdef.nColors, formatter: ContentView.cgUnboundFormatter)
-                                .padding(2)
+                                .frame(maxWidth: 80)
                         }
                     }
-
-                Group{
-                    Divider()
-                    ForEach($doc.picdef.hues, id:\.num) { $hue in
+                    Group{
+                        Divider()
+                        ForEach($doc.picdef.hues, id:\.num) { $hue in
                             HStack{
                                 TextField("number",value: $hue.num, formatter: ContentView.cgUnboundFormatter)
                                     .disabled(true)
-                                    .padding(2)
-
+                                    .frame(maxWidth: 50)
                                 TextField("r",value: $hue.r, formatter: ContentView.cg255Formatter)
                                     .onChange(of: hue.r) { newValue in
                                         let i = hue.num-1
@@ -646,9 +621,7 @@ struct ContentView: View {
                                         doc.updateHueWithColorNumberG(
                                             index:i,newValue:newValue)
                                     }
-
                                 TextField("b",value: $hue.b, formatter: ContentView.cg255Formatter)
-                                    .padding(2)
                                     .onChange(of: hue.b) { newValue in
                                         let i = hue.num-1
                                         doc.updateHueWithColorNumberB(
@@ -661,33 +634,29 @@ struct ContentView: View {
                                         doc.updateHueWithColorPick(
                                             index:i,newColorPick:newColor)
                                     }
-
                                 Button {
                                     let i = hue.num-1
                                     doc.deleteHue(index:i)
                                     readyForPicture()
-
                                 } label: {
-                                   Image(systemName: "trash")
+                                    Image(systemName: "trash")
                                 }
+                                .padding(.trailing,5)
                                 .help("Delete "+"\(hue.num)")
-
                             }
                         } // end foreach
-                       // .onDelete(perform: doc.deleteHue(index:$0))
+                          // .onDelete(perform: doc.deleteHue(index:$0))
 
-                        Button("Add Color") {
-                            doc.addHue()
-                        }
+                        Button("Add Color") {doc.addHue()}
                         Text("")
-                } // end colors group
+                    } // end colors group
 
-                } // end VStack for user instructions
-                .background(instructionBackgroundColor)
-                .frame(width:inputWidth)
-                .padding(10)
-                .errorAlert(error: $errdef.errorCustomObject)
-            } // end scroll bar
+                } // end scroll bar
+            } // end VStack for user instructions
+            .background(instructionBackgroundColor)
+            .frame(width:inputWidth)
+            .padding(10)
+            .errorAlert(error: $errdef.errorCustomObject)
             GeometryReader {
                 geometry in
                 ZStack(alignment: .topLeading) {
@@ -699,35 +668,35 @@ struct ContentView: View {
     } // end view body
 
     var tapGesture: some Gesture {
-            DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                .onChanged { value in
-                    // store distance the touch has moved as a sum of all movements
-                    self.moved += value.translation.width + value.translation.height
-                    // only set the start time if it's the first event
-                    if self.startTime == nil {
-                        self.startTime = value.time
-                    }
+        DragGesture(minimumDistance: 0, coordinateSpace: .local)
+            .onChanged { value in
+                // store distance the touch has moved as a sum of all movements
+                self.moved += value.translation.width + value.translation.height
+                // only set the start time if it's the first event
+                if self.startTime == nil {
+                    self.startTime = value.time
                 }
-                .onEnded { tap in
-                    // only respond to taps if this is a picture not gradient
-                    if (drawIt == true) {
-                        // if we haven't moved very much, treat it as a tap event
-                        if self.moved < 1 && self.moved > -1 {
-                            doc.picdef.xC = getCenterXFromTap(tap)
-                            doc.picdef.yC = getCenterYFromTap(tap)
-                            readyForPicture()
-                        }
-                        // if we have moved a lot, treat it as a drag event
-                        else {
-                            doc.picdef.xC = getCenterXFromDrag(tap)
-                            doc.picdef.yC = getCenterYFromDrag(tap)
-                            readyForPicture()
-                        }
-                        // reset tap event states
-                        self.moved = 0
-                        self.startTime = nil
+            }
+            .onEnded { tap in
+                // only respond to taps if this is a picture not gradient
+                if (drawIt == true) {
+                    // if we haven't moved very much, treat it as a tap event
+                    if self.moved < 1 && self.moved > -1 {
+                        doc.picdef.xC = getCenterXFromTap(tap)
+                        doc.picdef.yC = getCenterYFromTap(tap)
+                        readyForPicture()
                     }
+                    // if we have moved a lot, treat it as a drag event
+                    else {
+                        doc.picdef.xC = getCenterXFromDrag(tap)
+                        doc.picdef.yC = getCenterYFromDrag(tap)
+                        readyForPicture()
+                    }
+                    // reset tap event states
+                    self.moved = 0
+                    self.startTime = nil
                 }
+            }
 
     } // end tapGesture
 
@@ -791,14 +760,18 @@ struct ContentView: View {
         return isValid
     }
 
+    private var rightGradientColor: Int{
+        if leftGradientIsValid && doc.picdef.leftNumber < doc.picdef.nColors {
+            return doc.picdef.leftNumber + 1
+        }
+        return 1
 
+
+    }
 
     func deleteColorEntry(at offsets: IndexSet){
         //colorEntries.remove(atOffsets: offsets)
     }
-
-
-
 
     /// Returns the new x to be the picture center x when user drags in the picture.
     /// - Parameter tap: information about the drag
@@ -854,8 +827,6 @@ struct ContentView: View {
         return documentsDirectory
     }
 
-
-
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
         // trigger a state change
@@ -872,7 +843,7 @@ struct ContentView: View {
         drawGradient = false
     }
 
- 
+
     /// Multiplies scale by 2.0.
     func zoomIn(){
         doc.picdef.scale = doc.picdef.scale * 2.0

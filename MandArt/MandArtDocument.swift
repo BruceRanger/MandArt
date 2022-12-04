@@ -10,8 +10,12 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 /// A utility class to work with files for saving and sharing your art.
+/// Includes logic for adding, deleting, and reordering colors.
 ///
-/// Since it's a class, we derive from ReferenceFileDocument
+/// Note: Since MandArtDocument is a class, we derive from
+/// [ReferenceFileDocument](
+/// https://developer.apple.com/documentation/swiftui/referencefiledocument
+/// )
 /// rather than FileDocument for a struct.
 final class MandArtDocument: ReferenceFileDocument {
 

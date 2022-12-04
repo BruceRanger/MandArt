@@ -10,25 +10,25 @@ The resulting images are suitable for printing on online use.
 
 Check out the articles below - or try out a tutorial to get started.
 
-![Example](mandart01.png)
+![Example](mandart.png)
 
 ## Topics
 
 ### Getting Started
 
-- <doc:GettingStarted>
+- <doc:A01-GettingStarted>
 
-### About the Inputs
+### Setting Inputs
 
-- <doc:SettingInputs>
+- <doc:A02-SettingInputs>
 
-### Challenges
+### Printing Challenges
 
-- <doc:Challenges>
+- <doc:A03-Challenges>
 
 ### More About the Math
 
-- <doc:MoreAboutTheMath>
+- <doc:A04-MoreAboutTheMath>
 
 ## Tutorials
 

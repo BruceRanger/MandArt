@@ -6,10 +6,6 @@
 
 import SwiftUI
 
-/// The main entry point for MandArt.
-///
-///  Click the button to open a picture document.
-///
 @main
 struct MandArtApp: App {
 
@@ -25,9 +21,9 @@ struct MandArtApp: App {
                 NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
                 NSDocumentController.shared.newDocument("default.json")
             }
-            .frame(width: 600, height: 500,alignment: .center)
-            .frame(minWidth: 400, maxWidth: .infinity,
-                   minHeight: 300, maxHeight: .infinity)
+            .frame(width: 500, height: 400,alignment: .center)
+            .frame(minWidth: 300, maxWidth: .infinity,
+                   minHeight: 200, maxHeight: .infinity)
         }
 
         DocumentGroup(newDocument: { MandArtDocument() }) { configuration in
@@ -35,24 +31,29 @@ struct MandArtApp: App {
         }
         .commands {
             // use CommandGroup to modify built-in menu behavior
+            //CommandGroup(replacing: .help) {
+                // what needs to go here?
+            //}
 
             // we don't need the pasteboard (cut/copy/paste/delete_
-           CommandGroup(replacing: .pasteboard) { }
+            CommandGroup(replacing: .pasteboard) { }
 
             // we don't need start dictation or emoji and symbols
 
             // we want to enable undo redo
-           // CommandGroup(replacing: .undoRedo) {}
+            // CommandGroup(replacing: .undoRedo) {}
 
 
             // we can add a new menu before the window option
             // like so
-//            CommandMenu("About") {
-//                Button(action: {
-//                }) {
-//                    Text("Test")
-//                }
-//            }
+            //            CommandMenu("About") {
+            //                Button(action: {
+            //                }) {
+            //                    Text("Test")
+            //                }
+            //            }
         }
     }
 }
+
+ 

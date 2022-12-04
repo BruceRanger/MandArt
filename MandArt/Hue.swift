@@ -8,6 +8,15 @@
 import Foundation
 import SwiftUI
 
+
+
+/// Hue is a **sorted color** used in a MandArt image.
+/// It includes the user-specified sort order,
+/// the individual r, g, and b files, and a
+/// [Color](https://developer.apple.com/documentation/swiftui/color)
+/// object for use with a
+/// [ColorPicker](https://developer.apple.com/documentation/swiftui/colorpicker)
+/// .
 class Hue: Codable, Identifiable, ObservableObject {
     var id = UUID()
     var num: Int =  1
