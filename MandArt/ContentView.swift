@@ -744,6 +744,9 @@ struct ContentView: View {
         return formatter
     }
 
+
+    /// Calculated variable for the image aspect ratio.
+    /// Uses user-specified image height and width.
     private var aspectRatio: String{
         let h : Double = Double(doc.picdef.imageHeight)
         let w : Double = Double(doc.picdef.imageWidth)
