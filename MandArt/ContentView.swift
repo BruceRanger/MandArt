@@ -17,6 +17,10 @@ struct ContentView: View {
 
     let instructionBackgroundColor = Color.green.opacity(0.5)
     let inputWidth: Double = 290
+    enum ColorListChoice {
+        case inputs, estimatedPrintPreview, optimizedForPrinter
+    }
+    @State private var choice : ColorListChoice = .inputs
 
     @StateObject var errdef = ErrorViewModel()
     @State private var testColor = Color.red
@@ -151,10 +155,23 @@ struct ContentView: View {
     /// - Returns: An optional CGImage or nil
     func getImage() -> CGImage? {
         var colors: [[Double]] = []
-        doc.picdef.hues.forEach{hue in
-            let arr: [Double] = [hue.r, hue.g, hue.b]
-            colors.insert(arr, at: colors.endIndex)
-        }
+
+        switch choice {
+            case .inputs :
+                doc.picdef.hues.forEach{hue in
+                    let arr: [Double] = [hue.r, hue.g, hue.b]
+                    colors.insert(arr, at: colors.endIndex)}
+
+            case .estimatedPrintPreview :                doc.picdef.huesEstimatedPrintPreview.forEach{hue in
+                let arr: [Double] = [hue.r, hue.g, hue.b]
+                colors.insert(arr, at: colors.endIndex)}
+
+            case .optimizedForPrinter :
+                doc.picdef.huesOptimizedForPrinter.forEach{hue in
+                    let arr: [Double] = [hue.r, hue.g, hue.b]
+                    colors.insert(arr, at: colors.endIndex)}
+           }
+
         let imageWidth: Int = doc.picdef.imageWidth
         let imageHeight: Int = doc.picdef.imageHeight
         let nColors: Int = doc.picdef.nColors
@@ -442,10 +459,10 @@ struct ContentView: View {
     }
 
     var body: some View {
-        
+
         let image: CGImage = getImage()!
         let img = Image(image, scale: 1.0, label: Text("Test"))
-        
+
         HStack{ // instructions on left, picture on right
                 // left side with user stuff
                 // spacing is between VStacks
@@ -453,46 +470,60 @@ struct ContentView: View {
                 Text("MandArt")
                     .font(.title)
                     .padding(.top)
-                HStack {
-                    VStack {
-                        Button("Zoom In") {
-                            readyForPicture()
-                            zoomIn()
+                Group {
+                    HStack {
+                        VStack {
+                            Button("Zoom In") {
+                                readyForPicture()
+                                zoomIn()
+                            }
+                        }
+                        VStack {
+                            Button("Zoom Out") {
+                                readyForPicture()
+                                zoomOut()
+                            }
                         }
                     }
-                    VStack {
-                        Button("Zoom Out") {
-                            readyForPicture()
-                            zoomOut()
+                    HStack {
+                        VStack {
+                            Button("Pause to change values") {
+                                drawIt = false
+                                drawGradient = false
+                            }
+                        }
+                        VStack {
+                            Button("Resume") {readyForPicture()}
                         }
                     }
-                }
-                HStack {
-                    VStack {
-                        Button("Pause to change values") {
-                            drawIt = false
-                            drawGradient = false
+                    Divider()
+                    HStack{
+                        Text("Enter left color #:")
+                        TextField("leftNumber",value: $doc.picdef.leftNumber,
+                                  formatter: ContentView.intMaxColorsFormatter)
+                        .frame(maxWidth: 30)
+                        .foregroundColor(leftGradientIsValid ? .primary : .red)
+                        Text("to "+String(rightGradientColor))
+                    }
+                    HStack {
+                        VStack {
+                            Button("Make a gradient") {readyForGradient()}
+                        }
+                        VStack {
+                            Button("Resume") {readyForPicture()}
                         }
                     }
+                    Divider()
                     VStack {
-                        Button("Resume") {readyForPicture()}
-                    }
-                }
-                Divider()
-                HStack{
-                    Text("Enter left color #:")
-                    TextField("leftNumber",value: $doc.picdef.leftNumber,
-                              formatter: ContentView.intMaxColorsFormatter)
-                    .frame(maxWidth: 30)
-                    .foregroundColor(leftGradientIsValid ? .primary : .red)
-                    Text("to "+String(rightGradientColor))
-                }
-                HStack {
-                    VStack {
-                        Button("Make a gradient") {readyForGradient()}
-                    }
-                    VStack {
-                        Button("Resume") {readyForPicture()}
+                        Picker(selection: $choice,
+                               label: Text("Display:")) {
+                            Text("Inputs").tag(ColorListChoice.inputs)
+                            Text("Estimated Print Preview").tag(
+                                ColorListChoice.estimatedPrintPreview)
+                            Text("Optimized For Printer").tag(
+                                ColorListChoice.optimizedForPrinter
+                            )
+                        }.pickerStyle(.radioGroup)
                     }
                 }
                 Divider()
@@ -782,7 +813,7 @@ struct ContentView: View {
         let newCenter: Double = doc.picdef.xC - diff
         return newCenter
     }
-    
+
     /// Returns the new y to be the picture center y when user drags in the picture.
     /// - Parameter tap: information about the drag
     /// - Returns: Double new center y
@@ -827,56 +858,8 @@ struct ContentView: View {
 
     /// Function to validate all colors in the picdef
     fileprivate func validateColors() {
-        let colors = doc.picdef.hues
-        colors.forEach { hue in
-            let r = hue.r
-            let g = hue.g
-            let b = hue.b
-            let info:UnprintableColorInfo? = getUnprintableColorInfo(r:r,g:g,b:b)
-            if info != nil {
-//                showInvalidColor(
-//                    title:info.title,
-//                    message: info.message,
-//                    suggestion:info.suggestion)
-            }
-        }
+        // TODO: communicate with user
     }
-
-    private struct UnprintableColorInfo {
-        var r:Double = 0.0
-        var g:Double = 0.0
-        var b:Double = 0.0
-        var title:String = "Caution"
-        var message:String = "This color may not print as it appears onscreen."
-        var suggestion:String = ""
-    }
-
-    /// Function to get unprintable color information for a single r, g, b
-    /// - Parameters:
-    ///   - r: r  Double
-    ///   - g: g Double
-    ///   - b: b Double
-    /// - Returns: UnprintableColorInfo or nil (if printable)
-        private func getUnprintableColorInfo(r:Double, g:Double, b:Double) -> UnprintableColorInfo? {
-            let strR:String = String(format: "%03d", Int(r))
-            let strG:String = String(format: "%03d", Int(g))
-            let strB:String = String(format: "%03d", Int(b))
-            let lookupString:String = strR + "-"+strG + "-"+strB
-            print("lookup", lookupString)
-
-            // let's look up this color
-            // if we find it, we'll send back some info,
-            // if it's not listed, we'll send nil and all is well
-            if let response:String = UnprintableColors[lookupString] {
-                var info = UnprintableColorInfo(r:r,g:g,b:b)
-                info.suggestion = response
-                print ("info.suggestion for ",lookupString,":", info.suggestion)
-                return info
-            }
-            else {
-                return nil
-            }
-        }
 
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {

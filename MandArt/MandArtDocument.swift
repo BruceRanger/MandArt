@@ -82,7 +82,7 @@ final class MandArtDocument: ReferenceFileDocument {
     func saveImage(tag : String) -> Bool {
         print("saving image with tag=",tag)
         let endCount = tag.count-6
-        let uniqueEnough = tag[0..<endCount]
+        let uniqueEnough = tag[0..<endCount] // see string extension
         let fn:String = "mandart-" + uniqueEnough + ".png"
         print("Saving Image as ", fn)
         let allocator : CFAllocator = kCFAllocatorDefault

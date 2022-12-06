@@ -35,12 +35,16 @@ struct PictureDefinition: Codable, Identifiable {
         Hue(num:5, r:0.0, g:0.0, b:255.0),
         Hue(num:6, r:0.0, g:255.0, b:255.0),
     ]
+    var huesEstimatedPrintPreview: [Hue] = []
+    var huesOptimizedForPrinter: [Hue] = []
 
 
     /// Initialize with an array of Hues (sorted rgbs)
     /// - Parameter hues: an array of hues
     init(hues:[Hue]){
         self.hues = hues
+        self.huesEstimatedPrintPreview = getHuesEstimatedPrintPreview(inHues: hues)
+        self.huesOptimizedForPrinter = getHuesOptimizedForPrinter(inHues:hues)
     }
 
 
@@ -96,6 +100,73 @@ struct PictureDefinition: Codable, Identifiable {
             self.nColors = nColors
             self.leftNumber = leftNumber
             self.hues = hues
+            self.huesEstimatedPrintPreview = getHuesEstimatedPrintPreview(inHues:hues)
+            self.huesOptimizedForPrinter = getHuesOptimizedForPrinter(inHues:hues)
         }
+
+    private func getHueFromLookupResponse(response: String, sortOrder: Int) -> Hue {
+        // response is in format "000-000-000" need to get r / g / b
+        let rStr: String = response[0..<3]
+        let gStr: String = response[4..<7]
+        let bStr: String = response[9..<12]
+        print(rStr, gStr, bStr)
+        let red: Double = Double(rStr)!
+        let green: Double = Double(gStr)!
+        let blue: Double = Double(bStr)!
+        print(red, green, blue)
+        return Hue(num:sortOrder, r:red, g:green, b:blue)
+    }
+
+    /// Calculate the way the input set of colors will likely appear when printed.
+    /// - Parameter inHues: inHues array of Hues the user input
+    /// - Returns: an array of Hues that simiulate the way the inputs will likely look when printed
+    private func getHuesEstimatedPrintPreview(inHues:[Hue]) -> [Hue]{
+        var outHues:[Hue] = [Hue]()
+        for inHue in inHues {
+            let strR:String = String(format: "%03d", Int(inHue.r))
+            let strG:String = String(format: "%03d", Int(inHue.g))
+            let strB:String = String(format: "%03d", Int(inHue.b))
+            let lookupString:String = strR + "-"+strG + "-"+strB
+            print("lookup", lookupString)
+            let response = LookupEstimatedPrintColor[lookupString]
+            if response == nil {
+                // its good - use as is
+                outHues.append(inHue)
+            }
+            else {
+                // use the response to make a hue and append that
+                let previewHue:Hue = getHueFromLookupResponse(response:response!, sortOrder: inHue.num)
+                outHues.append(previewHue)
+            }
+        }
+        return outHues
+    }
+
+
+    /// Calculate an optimized list of colors that will work better for printing
+    /// - Parameter inHues: inHues array of Hues the user input
+    /// - Returns: an array of Hues optimized for printing (may want to send this png to the printer)
+    private func getHuesOptimizedForPrinter(inHues:[Hue]) -> [Hue]{
+        var outHues:[Hue] = [Hue]()
+        for inHue in inHues {
+            let strR:String = String(format: "%03d", Int(inHue.r))
+            let strG:String = String(format: "%03d", Int(inHue.g))
+            let strB:String = String(format: "%03d", Int(inHue.b))
+            let lookupString:String = strR + "-"+strG + "-"+strB
+            print("lookup", lookupString)
+            let response = LookupOptimizedForPrintColor[lookupString]
+            if response == nil {
+                // its good - use as is
+                outHues.append(inHue)
+            }
+            else {
+                // use the response to make a hue and append that
+                let optimizedHue:Hue = getHueFromLookupResponse(response:response!, sortOrder:inHue.num)
+                outHues.append(optimizedHue)
+            }
+        }
+        return outHues
+    }
+
 
 }
