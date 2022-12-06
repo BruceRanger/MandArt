@@ -66,7 +66,10 @@ final class MandArtDocument: ReferenceFileDocument {
         print ("print the image too")
         let modDate = fileWrapper.fileAttributes["NSFileModificationDate"]
         let uniqueString = stringFromAny(modDate)
-        let isSaved = saveImage(tag: uniqueString)
+        let success = saveImage(tag: uniqueString)
+        if (!success){
+        print ("Error saving file. Should show this to the user.")
+        }
         return fileWrapper
     }
 
