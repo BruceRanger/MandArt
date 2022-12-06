@@ -18,6 +18,7 @@
 		882BAED72934167D003ACB0B /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 882BAED62934167D003ACB0B /* default.json */; };
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
 		882BAEE92937C71A003ACB0B /* ErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */; };
+		887BFAC3293F6FA300CC6510 /* UnprintableColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887BFAC2293F6FA300CC6510 /* UnprintableColors.swift */; };
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		882BAED62934167D003ACB0B /* default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = default.json; sourceTree = "<group>"; };
 		882BAED829346C92003ACB0B /* Hue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hue.swift; sourceTree = "<group>"; };
 		882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModel.swift; sourceTree = "<group>"; };
+		887BFAC2293F6FA300CC6510 /* UnprintableColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnprintableColors.swift; sourceTree = "<group>"; };
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
 		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				6A3AEC1026F879F500D7E31A /* Assets.xcassets */,
 				6A3AEC1826F879F500D7E31A /* Info.plist */,
 				882BAED62934167D003ACB0B /* default.json */,
+				887BFAC2293F6FA300CC6510 /* UnprintableColors.swift */,
 			);
 			path = MandArt;
 			sourceTree = SOURCE_ROOT;
@@ -167,6 +170,7 @@
 				882BAEE92937C71A003ACB0B /* ErrorViewModel.swift in Sources */,
 				8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
+				887BFAC3293F6FA300CC6510 /* UnprintableColors.swift in Sources */,
 				8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

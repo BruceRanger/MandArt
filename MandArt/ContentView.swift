@@ -649,6 +649,8 @@ struct ContentView: View {
 
                         Button("Add Color") {doc.addHue()}
                         Text("")
+                        Button("Validate Colors") {validateColors()}
+                        Text("")
                     } // end colors group
 
                 } // end scroll bar
@@ -744,7 +746,6 @@ struct ContentView: View {
         return formatter
     }
 
-
     /// Calculated variable for the image aspect ratio.
     /// Uses user-specified image height and width.
     private var aspectRatio: String{
@@ -768,12 +769,6 @@ struct ContentView: View {
             return doc.picdef.leftNumber + 1
         }
         return 1
-
-
-    }
-
-    func deleteColorEntry(at offsets: IndexSet){
-        //colorEntries.remove(atOffsets: offsets)
     }
 
     /// Returns the new x to be the picture center x when user drags in the picture.
@@ -829,6 +824,59 @@ struct ContentView: View {
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
+
+    /// Function to validate all colors in the picdef
+    fileprivate func validateColors() {
+        let colors = doc.picdef.hues
+        colors.forEach { hue in
+            let r = hue.r
+            let g = hue.g
+            let b = hue.b
+            let info:UnprintableColorInfo? = getUnprintableColorInfo(r:r,g:g,b:b)
+            if info != nil {
+//                showInvalidColor(
+//                    title:info.title,
+//                    message: info.message,
+//                    suggestion:info.suggestion)
+            }
+        }
+    }
+
+    private struct UnprintableColorInfo {
+        var r:Double = 0.0
+        var g:Double = 0.0
+        var b:Double = 0.0
+        var title:String = "Caution"
+        var message:String = "This color may not print as it appears onscreen."
+        var suggestion:String = ""
+    }
+
+    /// Function to get unprintable color information for a single r, g, b
+    /// - Parameters:
+    ///   - r: r  Double
+    ///   - g: g Double
+    ///   - b: b Double
+    /// - Returns: UnprintableColorInfo or nil (if printable)
+        private func getUnprintableColorInfo(r:Double, g:Double, b:Double) -> UnprintableColorInfo? {
+            let strR:String = String(format: "%03d", Int(r))
+            let strG:String = String(format: "%03d", Int(g))
+            let strB:String = String(format: "%03d", Int(b))
+            let lookupString:String = strR + "-"+strG + "-"+strB
+            print("lookup", lookupString)
+
+            // let's look up this color
+            // if we find it, we'll send back some info,
+            // if it's not listed, we'll send nil and all is well
+            if let response:String = UnprintableColors[lookupString] {
+                var info = UnprintableColorInfo(r:r,g:g,b:b)
+                info.suggestion = response
+                print ("info.suggestion for ",lookupString,":", info.suggestion)
+                return info
+            }
+            else {
+                return nil
+            }
+        }
 
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
