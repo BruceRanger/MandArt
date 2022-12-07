@@ -17,7 +17,7 @@ struct MandArtApp: App {
 
             // In some action at the end of this scene flow
             // just close current window and open new document
-            Button("View Sample Art") {
+            Button("Get Started") {
                 NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
                 NSDocumentController.shared.newDocument("default.json")
             }
