@@ -109,12 +109,53 @@ struct PictureDefinition: Codable, Identifiable {
         let rStr: String = response[0..<3]
         let gStr: String = response[4..<7]
         let bStr: String = response[9..<12]
-        print(rStr, gStr, bStr)
         let red: Double = Double(rStr)!
         let green: Double = Double(gStr)!
         let blue: Double = Double(bStr)!
-        print(red, green, blue)
         return Hue(num:sortOrder, r:red, g:green, b:blue)
+    }
+
+
+    /// Convert from a precise R G B double (0-255)
+    ///  To a general bucketed value (0, 34, 68, 102, 136, 170, 204, 238, 255)
+    /// - Parameter preciseValue: preciseValue a double from 0 to 255
+    /// - Returns: a bucketed Double equal or less than the precise value
+    fileprivate func getBucketColorDouble(preciseValue: Double) -> Double {
+        var bucketValue : Double = 0.0
+        switch preciseValue {
+            case 0..<34:
+                bucketValue = 0
+            case 34..<68:
+                bucketValue = 34
+            case 68..<102:
+                bucketValue = 68
+            case 102..<136:
+                bucketValue = 102
+            case 136..<170:
+                bucketValue = 136
+            case 170..<204:
+                bucketValue = 170
+            case 204..<238:
+                bucketValue = 204
+            case 238..<255:
+                bucketValue = 238
+            case 255:
+                bucketValue = 255
+            default:
+                fatalError()
+        }
+        return bucketValue
+    }
+
+    fileprivate func getLookupStringFromHue(hue: Hue) -> String {
+        let bucketR : Double = getBucketColorDouble(preciseValue:hue.r)
+        let bucketG : Double = getBucketColorDouble(preciseValue:hue.g)
+        let bucketB : Double = getBucketColorDouble(preciseValue:hue.b)
+        let strR:String = String(format: "%03d", Int(bucketR))
+        let strG:String = String(format: "%03d", Int(bucketG))
+        let strB:String = String(format: "%03d", Int(bucketB))
+        let lookupString:String = strR + "-"+strG + "-"+strB
+        return lookupString
     }
 
     /// Calculate the way the input set of colors will likely appear when printed.
@@ -123,11 +164,7 @@ struct PictureDefinition: Codable, Identifiable {
     private func getHuesEstimatedPrintPreview(inHues:[Hue]) -> [Hue]{
         var outHues:[Hue] = [Hue]()
         for inHue in inHues {
-            let strR:String = String(format: "%03d", Int(inHue.r))
-            let strG:String = String(format: "%03d", Int(inHue.g))
-            let strB:String = String(format: "%03d", Int(inHue.b))
-            let lookupString:String = strR + "-"+strG + "-"+strB
-            print("lookup", lookupString)
+            let lookupString:String = getLookupStringFromHue(hue:inHue)
             let response = LookupEstimatedPrintColor[lookupString]
             if response == nil {
                 // its good - use as is
@@ -149,11 +186,7 @@ struct PictureDefinition: Codable, Identifiable {
     private func getHuesOptimizedForPrinter(inHues:[Hue]) -> [Hue]{
         var outHues:[Hue] = [Hue]()
         for inHue in inHues {
-            let strR:String = String(format: "%03d", Int(inHue.r))
-            let strG:String = String(format: "%03d", Int(inHue.g))
-            let strB:String = String(format: "%03d", Int(inHue.b))
-            let lookupString:String = strR + "-"+strG + "-"+strB
-            print("lookup", lookupString)
+            let lookupString:String = getLookupStringFromHue(hue:inHue)
             let response = LookupOptimizedForPrintColor[lookupString]
             if response == nil {
                 // its good - use as is

@@ -631,6 +631,7 @@ struct ContentView: View {
                             Text("Number of colors")
                             TextField("nColors",value: $doc.picdef.nColors, formatter: ContentView.cgUnboundFormatter)
                                 .frame(maxWidth: 80)
+                                .disabled(true)
                         }
                     }
                     Group{
