@@ -108,7 +108,7 @@ struct PictureDefinition: Codable, Identifiable {
         // response is in format "000-000-000" need to get r / g / b
         let rStr: String = response[0..<3]
         let gStr: String = response[4..<7]
-        let bStr: String = response[9..<12]
+        let bStr: String = response[8..<11]
         let red: Double = Double(rStr)!
         let green: Double = Double(gStr)!
         let blue: Double = Double(bStr)!
