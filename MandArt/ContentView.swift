@@ -651,7 +651,7 @@ struct ContentView: View {
                                         index:i,newValue:newValue)
                                 }
 
-                            ColorPicker("\(hue.num)", selection: $hue.color,supportsOpacity: false)
+                            ColorPicker("", selection: $hue.color,supportsOpacity: false)
                                 .onChange(of: hue.color) { newColor in
                                     let i = hue.num-1
                                     doc.updateHueWithColorPick(
