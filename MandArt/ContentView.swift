@@ -665,6 +665,7 @@ struct ContentView: View {
                             .onMove { indices, hue in
                                 doc.picdef.hues.move(fromOffsets: indices,
                                                    toOffset: hue)
+                                updateHueNums()
                             }
                         } // end list
 
@@ -848,6 +849,14 @@ struct ContentView: View {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         return documentsDirectory
+    }
+
+
+    /// Update hue nums after moving
+    fileprivate func updateHueNums() {
+        for (index, _) in $doc.picdef.hues.enumerated() {
+            doc.picdef.hues[index].num = index + 1
+        }
     }
 
     /// Function to validate all colors in the picdef
