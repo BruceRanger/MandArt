@@ -170,7 +170,7 @@ struct ContentView: View {
                 doc.picdef.huesOptimizedForPrinter.forEach{hue in
                     let arr: [Double] = [hue.r, hue.g, hue.b]
                     colors.insert(arr, at: colors.endIndex)}
-           }
+        }
 
         let imageWidth: Int = doc.picdef.imageWidth
         let imageHeight: Int = doc.picdef.imageHeight
@@ -467,24 +467,10 @@ struct ContentView: View {
                 // left side with user stuff
                 // spacing is between VStacks
             VStack(alignment: .center, spacing: 10){
-                Text("MandArt")
-                    .font(.title)
-                    .padding(.top)
-                Group {
-                    HStack {
-                        VStack {
-                            Button("Zoom In") {
-                                readyForPicture()
-                                zoomIn()
-                            }
-                        }
-                        VStack {
-                            Button("Zoom Out") {
-                                readyForPicture()
-                                zoomOut()
-                            }
-                        }
-                    }
+
+                Group { // non scroll group at top
+                    Text("MandArt")
+                        .font(.title)
                     HStack {
                         VStack {
                             Button("Pause to change values") {
@@ -492,45 +478,50 @@ struct ContentView: View {
                                 drawGradient = false
                             }
                         }
-                        VStack {
-                            Button("Resume") {readyForPicture()}
-                        }
+                        VStack {Button("Resume") {readyForPicture()}}
                     }
-                    Divider()
-                    HStack{
-                        Text("Enter left color #:")
-                        TextField("leftNumber",value: $doc.picdef.leftNumber,
-                                  formatter: ContentView.intMaxColorsFormatter)
-                        .frame(maxWidth: 30)
-                        .foregroundColor(leftGradientIsValid ? .primary : .red)
-                        Text("to "+String(rightGradientColor))
-                    }
-                    HStack {
-                        VStack {
-                            Button("Make a gradient") {readyForGradient()}
-                        }
-                        VStack {
-                            Button("Resume") {readyForPicture()}
-                        }
-                    }
-                    Divider()
-                    VStack {
-                        Picker(selection: $choice,
-                               label: Text("Display:")) {
-                            Text("Inputs").tag(ColorListChoice.inputs)
-                            Text("Estimated Print Preview").tag(
-                                ColorListChoice.estimatedPrintPreview)
-                            Text("Optimized For Printer").tag(
-                                ColorListChoice.optimizedForPrinter
-                            )
-                        }.pickerStyle(.radioGroup)
-                    }
-                }
+                } // end non scroll group at top
+
                 Divider()
-                Text("Enter MandArt inputs below")
-                Divider()
+
                 ScrollView(showsIndicators: true) {
-                    Group{
+
+                    Group {  // scroll group
+                        HStack {
+                            VStack {Button("Zoom In") {zoomIn()}}
+                            VStack {Button("Zoom Out") {zoomOut()}}
+                        }
+                        HStack{
+                            Text("Enter left color #:")
+                            TextField("leftNumber",value: $doc.picdef.leftNumber,
+                                      formatter: ContentView.intMaxColorsFormatter)
+                            .frame(maxWidth: 30)
+                            .foregroundColor(leftGradientIsValid ? .primary : .red)
+                            Text("to "+String(rightGradientColor))
+                        }
+                        HStack {
+                            VStack {
+                                Button("Make a gradient") {readyForGradient()}
+                            }
+                            VStack {
+                                Button("Resume") {readyForPicture()}
+                            }
+                        }
+                        Divider()
+                        VStack {
+                            Picker(selection: $choice,
+                                   label: Text("Display:")) {
+                                Text("Inputs").tag(ColorListChoice.inputs)
+                                Text("Estimated Print Preview").tag(
+                                    ColorListChoice.estimatedPrintPreview)
+                                Text("Optimized For Printer").tag(
+                                    ColorListChoice.optimizedForPrinter
+                                )
+                            }.pickerStyle(.radioGroup)
+                        }
+                    }
+                    Divider()
+                    Group{  // 1 in scrollbar
                         HStack {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center X")
@@ -547,9 +538,9 @@ struct ContentView: View {
                                     .frame(maxWidth:120)
                             }
                         }
-                    }
+                    } // end group 1 in scrollbar
                     Divider()
-                    Group{
+                    Group{ // start group 2 in scrollbar
                         HStack {
                             VStack {
                                 Text("scale:")
@@ -624,68 +615,70 @@ struct ContentView: View {
                                     .frame(maxWidth: 80)
                             }
                         }
-                    }
-                    Divider()
-                    HStack {
-                        VStack{
-                            Text("Number of colors")
-                            TextField("nColors",value: $doc.picdef.nColors, formatter: ContentView.cgUnboundFormatter)
-                                .frame(maxWidth: 80)
-                                .disabled(true)
-                        }
-                    }
-                    Group{
-                        Divider()
-                        ForEach($doc.picdef.hues, id:\.num) { $hue in
-                            HStack{
-                                TextField("number",value: $hue.num, formatter: ContentView.cgUnboundFormatter)
-                                    .disabled(true)
-                                    .frame(maxWidth: 50)
-                                TextField("r",value: $hue.r, formatter: ContentView.cg255Formatter)
-                                    .onChange(of: hue.r) { newValue in
-                                        let i = hue.num-1
-                                        doc.updateHueWithColorNumberR(
-                                            index:i,newValue:newValue)
-                                    }
-                                TextField("g",value: $hue.g, formatter: ContentView.cg255Formatter)
-                                    .onChange(of: hue.g) { newValue in
-                                        let i = hue.num-1
-                                        doc.updateHueWithColorNumberG(
-                                            index:i,newValue:newValue)
-                                    }
-                                TextField("b",value: $hue.b, formatter: ContentView.cg255Formatter)
-                                    .onChange(of: hue.b) { newValue in
-                                        let i = hue.num-1
-                                        doc.updateHueWithColorNumberB(
-                                            index:i,newValue:newValue)
-                                    }
-
-                                ColorPicker("\(hue.num)", selection: $hue.color,supportsOpacity: false)
-                                    .onChange(of: hue.color) { newColor in
-                                        let i = hue.num-1
-                                        doc.updateHueWithColorPick(
-                                            index:i,newColorPick:newColor)
-                                    }
-                                Button {
-                                    let i = hue.num-1
-                                    doc.deleteHue(index:i)
-                                    readyForPicture()
-                                } label: {
-                                    Image(systemName: "trash")
-                                }
-                                .padding(.trailing,5)
-                                .help("Delete "+"\(hue.num)")
-                            }
-                        } // end foreach
-                          // .onDelete(perform: doc.deleteHue(index:$0))
-
-                        Button("Add Color") {doc.addHue()}
-                        Text("")
-                        Button("Validate Colors") {validateColors()}
-                        Text("")
-                    } // end colors group
+                    } // end group 2 in scrollbar
 
                 } // end scroll bar
+                Divider()
+
+                        List{
+                            ForEach($doc.picdef.hues, id:\.num) { $hue in
+                                HStack{
+                                    TextField("number",value: $hue.num, formatter: ContentView.cgUnboundFormatter)
+                                        .disabled(true)
+                                        .frame(maxWidth: 50)
+                                    TextField("r",value: $hue.r, formatter: ContentView.cg255Formatter)
+                                        .onChange(of: hue.r) { newValue in
+                                            let i = hue.num-1
+                                            doc.updateHueWithColorNumberR(
+                                                index:i,newValue:newValue)
+                                        }
+                                    TextField("g",value: $hue.g, formatter: ContentView.cg255Formatter)
+                                        .onChange(of: hue.g) { newValue in
+                                            let i = hue.num-1
+                                            doc.updateHueWithColorNumberG(
+                                                index:i,newValue:newValue)
+                                        }
+                                    TextField("b",value: $hue.b, formatter: ContentView.cg255Formatter)
+                                        .onChange(of: hue.b) { newValue in
+                                            let i = hue.num-1
+                                            doc.updateHueWithColorNumberB(
+                                                index:i,newValue:newValue)
+                                        }
+
+                                    ColorPicker("\(hue.num)", selection: $hue.color,supportsOpacity: false)
+                                        .onChange(of: hue.color) { newColor in
+                                            let i = hue.num-1
+                                            doc.updateHueWithColorPick(
+                                                index:i,newColorPick:newColor)
+                                        }
+                                    Button {
+                                        let i = hue.num-1
+                                        doc.deleteHue(index:i)
+                                        readyForPicture()
+                                    } label: {
+                                        Image(systemName: "trash")
+                                    }
+                                    .padding(.trailing,5)
+                                    .help("Delete "+"\(hue.num)")
+                                }
+                            } // end foreach
+                            .onMove { indices, hue in
+                                doc.picdef.hues.move(fromOffsets: indices,
+                                                   toOffset: hue)
+                            }
+                        } // end list
+
+                    HStack {
+                        VStack {
+                            Button("Add Color") {doc.addHue()}
+                        }
+                        VStack {
+                            Button("Validate Colors") {validateColors()}
+                        }
+                    }
+                    .padding(2)
+               
+
             } // end VStack for user instructions
             .background(instructionBackgroundColor)
             .frame(width:inputWidth)
@@ -862,6 +855,10 @@ struct ContentView: View {
         // TODO: communicate with user
     }
 
+    fileprivate func moveHue(from source: IndexSet, to destination: Int) {
+        doc.picdef.hues.move(fromOffsets: source, toOffset: destination)
+    }
+
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
         // trigger a state change
@@ -881,11 +878,13 @@ struct ContentView: View {
 
     /// Multiplies scale by 2.0.
     func zoomIn(){
+        readyForPicture()
         doc.picdef.scale = doc.picdef.scale * 2.0
     }
 
     /// Divides scale by 2.0.
     func zoomOut(){
+        readyForPicture()
         doc.picdef.scale = doc.picdef.scale / 2.0
     }
 }

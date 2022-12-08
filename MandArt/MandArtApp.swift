@@ -21,7 +21,7 @@ struct MandArtApp: App {
                 NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
                 NSDocumentController.shared.newDocument("default.json")
             }
-            .frame(width: 500, height: 400,alignment: .center)
+            .frame(width: 800, height: 600,alignment: .center)
             .frame(minWidth: 300, maxWidth: .infinity,
                    minHeight: 200, maxHeight: .infinity)
         }
