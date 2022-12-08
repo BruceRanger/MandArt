@@ -654,6 +654,7 @@ struct ContentView: View {
                                     Button {
                                         let i = hue.num-1
                                         doc.deleteHue(index:i)
+                                        updateHueNums()
                                         readyForPicture()
                                     } label: {
                                         Image(systemName: "trash")
@@ -852,7 +853,7 @@ struct ContentView: View {
     }
 
 
-    /// Update hue nums after moving
+    /// Update hue nums after moviing or deleting
     fileprivate func updateHueNums() {
         for (index, _) in $doc.picdef.hues.enumerated() {
             doc.picdef.hues[index].num = index + 1
