@@ -16,6 +16,8 @@ struct ContentView: View {
     @EnvironmentObject var doc: MandArtDocument
 
     let instructionBackgroundColor = Color.green.opacity(0.5)
+    let instructionBackgroundColorLite = Color.green.opacity(0.6)
+
     let inputWidth: Double = 290
     enum ColorListChoice {
         case inputs, estimatedPrintPreview, optimizedForPrinter
@@ -473,12 +475,20 @@ struct ContentView: View {
                         .font(.title)
                     HStack {
                         VStack {
-                            Button("Pause to change values") {
+                            Button("Pause") {
                                 drawIt = false
                                 drawGradient = false
                             }
+                            .help("Pause to change values.")
                         }
                         VStack {Button("Resume") {readyForPicture()}}
+                            .help("Redraw picture.")
+
+                        VStack {Button("+") {zoomIn()}}
+                            .help("Zoom in.")
+
+                        VStack {Button("-") {zoomOut()}}                            .help("Zoom out.")
+
                     }
                 } // end non scroll group at top
 
@@ -487,10 +497,7 @@ struct ContentView: View {
                 ScrollView(showsIndicators: true) {
 
                     Group {  // scroll group
-                        HStack {
-                            VStack {Button("Zoom In") {zoomIn()}}
-                            VStack {Button("Zoom Out") {zoomOut()}}
-                        }
+
                         HStack{
                             Text("Enter left color #:")
                             TextField("leftNumber",value: $doc.picdef.leftNumber,
@@ -618,68 +625,71 @@ struct ContentView: View {
                     } // end group 2 in scrollbar
 
                 } // end scroll bar
-                Divider()
 
-                        List{
-                            ForEach($doc.picdef.hues, id:\.num) { $hue in
-                                HStack{
-                                    TextField("number",value: $hue.num, formatter: ContentView.cgUnboundFormatter)
-                                        .disabled(true)
-                                        .frame(maxWidth: 50)
-                                    TextField("r",value: $hue.r, formatter: ContentView.cg255Formatter)
-                                        .onChange(of: hue.r) { newValue in
-                                            let i = hue.num-1
-                                            doc.updateHueWithColorNumberR(
-                                                index:i,newValue:newValue)
-                                        }
-                                    TextField("g",value: $hue.g, formatter: ContentView.cg255Formatter)
-                                        .onChange(of: hue.g) { newValue in
-                                            let i = hue.num-1
-                                            doc.updateHueWithColorNumberG(
-                                                index:i,newValue:newValue)
-                                        }
-                                    TextField("b",value: $hue.b, formatter: ContentView.cg255Formatter)
-                                        .onChange(of: hue.b) { newValue in
-                                            let i = hue.num-1
-                                            doc.updateHueWithColorNumberB(
-                                                index:i,newValue:newValue)
-                                        }
-
-                                    ColorPicker("\(hue.num)", selection: $hue.color,supportsOpacity: false)
-                                        .onChange(of: hue.color) { newColor in
-                                            let i = hue.num-1
-                                            doc.updateHueWithColorPick(
-                                                index:i,newColorPick:newColor)
-                                        }
-                                    Button {
-                                        let i = hue.num-1
-                                        doc.deleteHue(index:i)
-                                        updateHueNums()
-                                        readyForPicture()
-                                    } label: {
-                                        Image(systemName: "trash")
-                                    }
-                                    .padding(.trailing,5)
-                                    .help("Delete "+"\(hue.num)")
+                List{
+                    ForEach($doc.picdef.hues, id:\.num) { $hue in
+                        HStack{
+                            TextField("number",value: $hue.num, formatter: ContentView.cgUnboundFormatter)
+                                .disabled(true)
+                                .frame(maxWidth: 50)
+                            TextField("r",value: $hue.r, formatter: ContentView.cg255Formatter)
+                                .onChange(of: hue.r) { newValue in
+                                    let i = hue.num-1
+                                    doc.updateHueWithColorNumberR(
+                                        index:i,newValue:newValue)
                                 }
-                            } // end foreach
-                            .onMove { indices, hue in
-                                doc.picdef.hues.move(fromOffsets: indices,
-                                                   toOffset: hue)
-                                updateHueNums()
-                            }
-                        } // end list
+                            TextField("g",value: $hue.g, formatter: ContentView.cg255Formatter)
+                                .onChange(of: hue.g) { newValue in
+                                    let i = hue.num-1
+                                    doc.updateHueWithColorNumberG(
+                                        index:i,newValue:newValue)
+                                }
+                            TextField("b",value: $hue.b, formatter: ContentView.cg255Formatter)
+                                .onChange(of: hue.b) { newValue in
+                                    let i = hue.num-1
+                                    doc.updateHueWithColorNumberB(
+                                        index:i,newValue:newValue)
+                                }
 
-                    HStack {
-                        VStack {
-                            Button("Add Color") {doc.addHue()}
+                            ColorPicker("\(hue.num)", selection: $hue.color,supportsOpacity: false)
+                                .onChange(of: hue.color) { newColor in
+                                    let i = hue.num-1
+                                    doc.updateHueWithColorPick(
+                                        index:i,newColorPick:newColor)
+                                }
+                            Button {
+                                let i = hue.num-1
+                                doc.deleteHue(index:i)
+                                updateHueNums()
+                                readyForPicture()
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                            .padding(.trailing,5)
+                            .help("Delete "+"\(hue.num)")
                         }
-                        VStack {
-                            Button("Validate Colors") {validateColors()}
-                        }
+                        .listRowBackground(instructionBackgroundColor)
+                    } // end foreach
+                    .onMove { indices, hue in
+                        doc.picdef.hues.move(fromOffsets: indices,
+                                             toOffset: hue)
+                        updateHueNums()
                     }
-                    .padding(2)
-               
+
+                } // end list
+
+
+                HStack {
+                    VStack {
+                        Button("Add Color") {doc.addHue()}
+                            .padding([.bottom],2)
+                    }
+                    VStack {
+                        Button("Validate Colors") {validateColors()}
+                            .padding([.bottom],2)
+                    }
+                }
+
 
             } // end VStack for user instructions
             .background(instructionBackgroundColor)
