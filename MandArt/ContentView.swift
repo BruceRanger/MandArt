@@ -501,7 +501,7 @@ struct ContentView: View {
                         HStack{
                             Text("Enter left color #:")
                             TextField("leftNumber",value: $doc.picdef.leftNumber,
-                                      formatter: ContentView.intMaxColorsFormatter)
+                                      formatter: ContentView.cgIintMaxColorsFormatter)
                             .frame(maxWidth: 30)
                             .foregroundColor(leftGradientIsValid ? .primary : .red)
                             Text("to "+String(rightGradientColor))
@@ -533,14 +533,18 @@ struct ContentView: View {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center X")
                                 Text("Between -2 and 2")
-                                TextField("X",value: $doc.picdef.xC, formatter: ContentView.cgFormatter)
+                                TextField("Number",value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .padding(4)
                                     .frame(maxWidth:120)
                             }
                             VStack {
                                 Text("Enter center Y")
                                 Text("Between -2 and 2")
-                                TextField("Y",value: $doc.picdef.yC, formatter: ContentView.cgFormatter)
+                                TextField("Number",value: $doc.picdef.yC, formatter: ContentView.cgDecimalAbs2Formatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .padding(4)
                                     .frame(maxWidth:120)
                             }
@@ -551,17 +555,23 @@ struct ContentView: View {
                         HStack {
                             VStack {
                                 Text("scale:")
-                                TextField("Scale",value: $doc.picdef.scale, formatter: ContentView.cgUnboundFormatter)
+                                TextField("Scale",value: $doc.picdef.scale, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth:100)
                             }
                             VStack {
                                 Text("iMax:")
-                                TextField("iMax",value: $doc.picdef.iMax, formatter: ContentView.cgUnboundFormatter)
+                                TextField("iMax",value: $doc.picdef.iMax, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 60)
                             }
                             VStack {
                                 Text("rSqLimit:")
-                                TextField("rSqLimit",value: $doc.picdef.rSqLimit, formatter: ContentView.cgUnboundFormatter)
+                                TextField("rSqLimit",value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 60)
                             }
                         }
@@ -570,13 +580,18 @@ struct ContentView: View {
                             VStack {
                                 Text("Image")
                                 Text("width, px:")
-                                TextField("imageWidth",value: $doc.picdef.imageWidth, formatter: ContentView.cgUnboundFormatter)
+                                TextField("imageWidth",value: $doc.picdef.imageWidth, formatter: ContentView.cgIntPositiveFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
+
                             }
                             VStack {
                                 Text("Image")
                                 Text("height, px:")
-                                TextField("imageHeightStart",value: $doc.picdef.imageHeight, formatter: ContentView.cgUnboundFormatter)
+                                TextField("imageHeightStart",value: $doc.picdef.imageHeight, formatter: ContentView.cgIntPositiveFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
                             VStack {
@@ -590,17 +605,23 @@ struct ContentView: View {
                         HStack{
                             VStack {
                                 Text("bE:")
-                                TextField("bE",value: $doc.picdef.bE,formatter: ContentView.cgUnboundFormatter)
+                                TextField("bE",value: $doc.picdef.bE,formatter: ContentView.cgDecimalUnboundFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
                             VStack {
                                 Text("eE:")
-                                TextField("eE",value: $doc.picdef.eE, formatter: ContentView.cgUnboundFormatter)
+                                TextField("eE",value: $doc.picdef.eE, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
                             VStack {
                                 Text("theta:")
-                                TextField("theta",value: $doc.picdef.theta, formatter: ContentView.cgUnboundFormatter)
+                                TextField("theta",value: $doc.picdef.theta, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
                         }
@@ -608,17 +629,23 @@ struct ContentView: View {
                         HStack {
                             VStack {
                                 Text("nImage:")
-                                TextField("nImage",value: $doc.picdef.nImage, formatter: ContentView.cgUnboundFormatter)
+                                TextField("nImage",value: $doc.picdef.nImage, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
                             VStack {
                                 Text("dFIterMin:")
-                                TextField("dFIterMin",value: $doc.picdef.dFIterMin, formatter: ContentView.cgUnboundFormatter)
+                                TextField("dFIterMin",value: $doc.picdef.dFIterMin, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
                             VStack {
                                 Text("nBlocks:")
-                                TextField("nBlocks",value: $doc.picdef.nBlocks, formatter: ContentView.cgUnboundFormatter)
+                                TextField("nBlocks",value: $doc.picdef.nBlocks, formatter: ContentView.cgIntNBlocksFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
                         }
@@ -629,7 +656,7 @@ struct ContentView: View {
                 List{
                     ForEach($doc.picdef.hues, id:\.num) { $hue in
                         HStack{
-                            TextField("number",value: $hue.num, formatter: ContentView.cgUnboundFormatter)
+                            TextField("number",value: $hue.num, formatter: ContentView.cgDecimalUnboundFormatter)
                                 .disabled(true)
                                 .frame(maxWidth: 50)
                             TextField("r",value: $hue.r, formatter: ContentView.cg255Formatter)
@@ -750,19 +777,27 @@ struct ContentView: View {
         return formatter
     }
 
-    static var cgFormatter: NumberFormatter {
+    static var cgDecimalAbs2Formatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 8
-        formatter.maximum = 4.0
-        formatter.minimum = -4.0
+        formatter.maximum = 2.0
+        formatter.minimum = -2.0
         return formatter
     }
 
-    static var cgUnboundFormatter: NumberFormatter {
+    static var cgDecimalUnboundFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 8
+        return formatter
+    }
+
+    static var cgIntPositiveFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.minimum = 1
+        formatter.maximum = 10000
+        formatter.maximumFractionDigits = 0
         return formatter
     }
 
@@ -774,12 +809,20 @@ struct ContentView: View {
         return formatter
     }
 
-    static var intMaxColorsFormatter: NumberFormatter {
+    static var cgIintMaxColorsFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.minimum = 1
         formatter.maximum = 20
         formatter.minimumIntegerDigits = 1
         formatter.maximumIntegerDigits = 2
+        return formatter
+    }
+
+    static var cgIntNBlocksFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.minimum = 1
+        formatter.maximum = 2000
+        formatter.minimumIntegerDigits = 1
         return formatter
     }
 
@@ -873,6 +916,11 @@ struct ContentView: View {
     /// Function to validate all colors in the picdef
     fileprivate func validateColors() {
         // TODO: communicate with user
+    }
+
+    /// Function to validate X or Y input
+    fileprivate func validateX() -> Bool{
+        return true;
     }
 
     fileprivate func moveHue(from source: IndexSet, to destination: Int) {
