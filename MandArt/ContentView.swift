@@ -851,7 +851,7 @@ struct ContentView: View {
         return 1
     }
 
-    /// Returns the new x to be the picture center x when user drags in the picture.
+ /*   /// Returns the new x to be the picture center x when user drags in the picture.
     /// - Parameter tap: information about the drag
     /// - Returns: Double new center x
     private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
@@ -873,29 +873,45 @@ struct ContentView: View {
         let diff = moved / doc.picdef.scale
         let newCenter = doc.picdef.yC + diff
         return newCenter
-    }
-
-/*    /// Returns the new x to be the picture center x when user clicks on the picture.
-    /// - Parameter tap: information about the tap
-    /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
-    private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-        let start = tap.startLocation.x
-        let w:Double = Double(doc.picdef.imageWidth)
-        let diff = (start - w/2.0) / doc.picdef.scale
-        let newCenter: Double = doc.picdef.xC + diff
-        return newCenter
-    }
-
-    /// Returns the new y to be the picture center y when user clicks on the picture.
-    /// - Parameter tap: information about the tap
-    /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
-    private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-        let start = tap.startLocation.y
-        let h:Double = Double(doc.picdef.imageHeight)
-        let diff = ((h - start) - h/2.0) / doc.picdef.scale
-        let newCenter: Double = (doc.picdef.yC + diff)
-        return newCenter
     }   */
+    
+    /// Returns the new x to be the picture center x when user drags in the picture.
+    /// - Parameter tap: information about the drag
+    /// - Returns: Double new center x
+    private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
+        let startX = tap.startLocation.x
+        let startY = tap.startLocation.y
+        let endX = tap.location.x
+        let endY = tap.location.y
+        let movedX = endX - startX
+        let movedY = endY - startY
+        let thetaDegrees:Double = Double(doc.picdef.theta)
+        let thetaRadians = -3.14159*thetaDegrees/180    // change sign since positive angle is clockwise
+        let diffX = movedX / doc.picdef.scale
+        let diffY = movedY / doc.picdef.scale
+        let dCenterX = diffY*sin(thetaRadians) + diffX*cos(thetaRadians)
+        let newCenter: Double = doc.picdef.xC - dCenterX
+        return newCenter
+    }
+    
+    /// Returns the new y to be the picture center y when user drags in the picture.
+    /// - Parameter tap: information about the drag
+    /// - Returns: Double new center y
+    private func getCenterYFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
+        let startX = tap.startLocation.x
+        let startY = tap.startLocation.y
+        let endX = tap.location.x
+        let endY = tap.location.y
+        let movedX = endX - startX
+        let movedY = endY - startY
+        let thetaDegrees:Double = Double(doc.picdef.theta)
+        let thetaRadians = -3.14159*thetaDegrees/180    // change sign since positive angle is clockwise
+        let diffX = movedX / doc.picdef.scale
+        let diffY = movedY / doc.picdef.scale
+        let dCenterY = diffY*cos(thetaRadians) - diffX*sin(thetaRadians)
+        let newCenter: Double = doc.picdef.yC + dCenterY
+        return newCenter
+    }
     
     /// Returns the new x to be the picture center x when user clicks on the picture.
     /// - Parameter tap: information about the tap
