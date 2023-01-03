@@ -906,10 +906,10 @@ struct ContentView: View {
         let w:Double = Double(doc.picdef.imageWidth)
         let h:Double = Double(doc.picdef.imageHeight)
         let thetaDegrees:Double = Double(doc.picdef.theta)
-        let thetaRadians = 3.14159*thetaDegrees/180
+        let thetaRadians = -3.14159*thetaDegrees/180    // change sign since positive angle is clockwise
         let diffX = (startX - w/2.0) / doc.picdef.scale
         let diffY = ((h - startY) - h/2.0) / doc.picdef.scale
-        let dCenterX = diffY*sin(thetaRadians + diffX*cos(thetaRadians))
+        let dCenterX = diffY*sin(thetaRadians) + diffX*cos(thetaRadians)
         let newCenter: Double = doc.picdef.xC + dCenterX
         return newCenter
     }
@@ -923,10 +923,10 @@ struct ContentView: View {
         let w:Double = Double(doc.picdef.imageWidth)
         let h:Double = Double(doc.picdef.imageHeight)
         let thetaDegrees:Double = Double(doc.picdef.theta)
-        let thetaRadians = 3.14159*thetaDegrees/180
+        let thetaRadians = -3.14159*thetaDegrees/180    // change sign since positive angle is clockwise
         let diffX = (startX - w/2.0) / doc.picdef.scale
         let diffY = ((h - startY) - h/2.0) / doc.picdef.scale
-        let dCenterY = diffY*cos(thetaRadians - diffX*sin(thetaRadians))
+        let dCenterY = diffY*cos(thetaRadians) - diffX*sin(thetaRadians)
         let newCenter: Double = doc.picdef.yC + dCenterY
         return newCenter
     }
