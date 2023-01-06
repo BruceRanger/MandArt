@@ -187,9 +187,9 @@ struct ContentView: View {
         else if drawGradient == true && leftGradientIsValid {
             return getGradientImage(imageWidth, imageHeight, nColors, &colors)
         }
-        else if drawColors == true {
+   /*     else if drawColors == true {
             return getColorImage(imageWidth, imageHeight, fIterMin, nColors, iMax, &colors)
-        }
+        }   */
         return nil
     }
 
@@ -463,7 +463,7 @@ struct ContentView: View {
         return contextImage
     }
     
-    /// Function to create and return a user-colored MandArt bitmap
+ /*   /// Function to create and return a user-colored MandArt bitmap
     /// - Parameters:
     ///   - colors: array of colors
     /// - Returns: optional CGImage with the colored bitmap or nil
@@ -731,7 +731,7 @@ struct ContentView: View {
         // stash picture in global var for saving
         contextImageGlobal = contextImage
         return contextImage
-    }
+    }   */
 
     var body: some View {
 
@@ -1254,7 +1254,7 @@ struct ContentView: View {
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
         // trigger a state change
-        drawIt = !drawIt
+   //     drawIt = !drawIt
         drawIt = false
         drawGradient = true
     }
@@ -1262,7 +1262,7 @@ struct ContentView: View {
     /// Get the app ready to draw colors.
     fileprivate func readyForColors() {
         // trigger a state change
-        drawIt = !drawIt
+   //     drawIt = !drawIt
         drawIt = false
         drawGradient = false
         drawColors = true
@@ -1271,7 +1271,7 @@ struct ContentView: View {
     /// Get the app ready to draw a MandArt picture.
     fileprivate func readyForPicture() {
         // trigger a state change
-        drawIt = !drawIt    // toggles drawIt
+  //      drawIt = !drawIt    // toggles drawIt
         drawIt = true
         drawGradient = false
         drawColors = false
