@@ -35,7 +35,7 @@ struct ContentView: View {
     @State private var dragOffset = CGSize.zero
     @State private var drawIt = true
     @State private var drawGradient = false
-    @State private var drawColors = false
+//    @State private var drawColors = false
 
     /// Function to create and return a gradient bitmap
     /// - Parameters:
@@ -751,7 +751,7 @@ struct ContentView: View {
                             Button("Pause") {
                                 drawIt = false
                                 drawGradient = false
-                                drawColors = false
+                     //           drawColors = false
                             }
                             .help("Pause to change values.")
                         }
@@ -1265,7 +1265,7 @@ struct ContentView: View {
    //     drawIt = !drawIt
         drawIt = false
         drawGradient = false
-        drawColors = true
+  //      drawColors = true
     }
 
     /// Get the app ready to draw a MandArt picture.
@@ -1274,7 +1274,7 @@ struct ContentView: View {
   //      drawIt = !drawIt    // toggles drawIt
         drawIt = true
         drawGradient = false
-        drawColors = false
+  //      drawColors = false
     }
 
 
