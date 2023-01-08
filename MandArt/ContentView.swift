@@ -12,7 +12,7 @@ import Foundation   // trig functions
 // Declare global variables first (outside the ContentView struct)
 var contextImageGlobal: CGImage?
 var startFile = "default.json"
-var xGlobal = Double() // this will work
+var fIterGlobal = [[Double]]()
 
 struct ContentView: View {
     @EnvironmentObject var doc: MandArtDocument
@@ -40,7 +40,7 @@ struct ContentView: View {
     @State private var dragOffset = CGSize.zero
     @State private var drawIt = true
     @State private var drawGradient = false
-//    @State private var drawColors = false
+    @State private var drawColors = false
 
     /// Function to create and return a gradient bitmap
     /// - Parameters:
@@ -183,9 +183,13 @@ struct ContentView: View {
         let imageWidth: Int = doc.picdef.imageWidth
         let imageHeight: Int = doc.picdef.imageHeight
 
-        let fIterMin: Double = doc.picdef.dFIterMin
+        let dFIterMin: Double = doc.picdef.dFIterMin
         let nColors: Int = doc.picdef.nColors
         let iMax: Double = doc.picdef.iMax
+        
+        let bE: Double = doc.picdef.bE
+        let eE: Double = doc.picdef.eE
+        let nBlocks: Int = doc.picdef.nBlocks
 
         if drawIt {
             return getPictureImage(&colors)
@@ -193,9 +197,9 @@ struct ContentView: View {
         else if drawGradient == true && leftGradientIsValid {
             return getGradientImage(imageWidth, imageHeight, nColors, &colors)
         }
-   /*     else if drawColors == true {
-            return getColorImage(imageWidth, imageHeight, fIterMin, nColors, iMax, &colors)
-        }   */
+        else if drawColors == true {
+            return getColorImage(&colors)
+        }
         return nil
     }
 
@@ -213,7 +217,7 @@ struct ContentView: View {
         let xC: Double = doc.picdef.xC
         let yC: Double = doc.picdef.yC
         let theta: Double = doc.picdef.theta  // in degrees
-        let dIterMin: Double = doc.picdef.dFIterMin
+        let dFIterMin: Double = doc.picdef.dFIterMin
         let pi: Double = 3.14159
         let thetaR: Double = pi*theta/180.0  // R for Radians
         let rSqLimit: Double = doc.picdef.rSqLimit
@@ -301,6 +305,8 @@ struct ContentView: View {
             }    // end first for v
 
         }    // end first for u
+        
+        fIterGlobal = fIter
 
         for u in 0...imageWidth - 1 {
 
@@ -308,8 +314,6 @@ struct ContentView: View {
             fIterTop[u] = fIter[u][imageHeight - 1]
 
         }    // end second for u
-        
-        xGlobal = 4.0  // now we can update xGlobal
 
         fIterMinLeft = fIter[0].min()!
         fIterMinRight = fIter[imageWidth - 1].min()!
@@ -318,7 +322,7 @@ struct ContentView: View {
         fIterMins = [fIterMinLeft, fIterMinRight, fIterMinBottom, fIterMinTop]
         fIterMin = fIterMins.min()!
 
-        fIterMin = fIterMin - dIterMin
+        fIterMin = fIterMin - dFIterMin
 
         // Now we need to generate a bitmap image.
 
@@ -471,131 +475,48 @@ struct ContentView: View {
         return contextImage
     }
     
- /*   /// Function to create and return a user-colored MandArt bitmap
+    /// Function to create and return a user-colored MandArt bitmap
     /// - Parameters:
     ///   - colors: array of colors
     /// - Returns: optional CGImage with the colored bitmap or nil
-    fileprivate func getColorImage(_ imageWidth: Int, _ imageHeight: Int,_ fIterMin: Double, _ nColors: Int, _ iMax:Double,_ fIter: inout [[Double]], _ colors: inout [[Double]]) -> CGImage? {
+    fileprivate func getColorImage(_ colors: inout [[Double]]) -> CGImage? {
         // draws image
         let imageHeight: Int = doc.picdef.imageHeight
         let imageWidth: Int = doc.picdef.imageWidth
-   //     let iMax: Double = doc.picdef.iMax
-   //     let scale: Double = doc.picdef.scale
-   //     let xC: Double = doc.picdef.xC
-   //     let yC: Double = doc.picdef.yC
-   //     let theta: Double = doc.picdef.theta  // in degrees
-        let dIterMin: Double = doc.picdef.dFIterMin
-   //     let pi: Double = 3.14159
-   //     let thetaR: Double = pi*theta/180.0  // R for Radians
-   //     let rSqLimit: Double = doc.picdef.rSqLimit
-        
-        var contextImage: CGImage
-   //     var rSq: Double = 0.0
-   //     var rSqMax: Double = 0.0
-   //     var x0: Double = 0.0
-   //     var y0: Double = 0.0
-   //     var dX: Double = 0.0
-   //     var dY: Double = 0.0
-   //     var xx: Double = 0.0
-   //     var yy: Double = 0.0
-   //     var xTemp: Double = 0.0
-   //     var iter: Double = 0.0
-   //     var dIter: Double = 0.0
-   //     var gGML: Double = 0.0
-   //     var gGL: Double = 0.0
-   //     var fIter = [[Double]](repeating: [Double](repeating: 0.0, count: imageHeight), count: imageWidth)
-   //     var fIterMinLeft: Double = 0.0
-   //     var fIterMinRight: Double = 0.0
-   //    var fIterBottom = [Double](repeating: 0.0, count: imageWidth)
-   //     var fIterTop = [Double](repeating: 0.0, count: imageWidth)
-   //     var fIterMinBottom: Double = 0.0
-   //     var fIterMinTop: Double = 0.0
-   //     var fIterMins = [Double](repeating: 0.0, count: 4)
-        let fIterMin: Double = 0.0
-        var fIterMinColor: Double = 0.0
-   //     var p: Double = 0.0
-   //     var test1: Double = 0.0
-   //     var test2: Double = 0.0
-        
-   //     rSqMax = 1.01*(rSqLimit + 2)*(rSqLimit + 2)
-   //     gGML = log( log(rSqMax) ) - log(log(rSqLimit) )
-    //    gGL = log(log(rSqLimit) )
-        
-   /*     for u in 0...imageWidth - 1 {
-            
-            for v in 0...imageHeight - 1 {
-                
-                dX = (Double(u) - Double(imageWidth/2))/scale
-                dY = (Double(v) - Double(imageHeight/2))/scale
-                
-                x0 = xC + dX*cos(thetaR) - dY*sin(thetaR)
-                y0 = yC + dX*sin(thetaR) + dY*cos(thetaR)
-                
-                xx = x0
-                yy = y0
-                rSq = xx*xx + yy*yy
-                iter = 0.0
-                
-                p = sqrt((xx - 0.25)*(xx - 0.25) + yy*yy)
-                test1 = p - 2.0*p*p + 0.25
-                test2 = (xx + 1.0)*(xx + 1.0) + yy*yy
-                
-                if xx < test1 || test2 < 0.0625 {
-                    fIter[u][v] = iMax  // black
-                    iter = iMax  // black
-                }   //end if
-                
-                else {
-                    for i in 1...Int(iMax) {
-                        if rSq >= rSqLimit{
-                            break
-                        }
-                        
-                        xTemp = xx*xx - yy*yy + x0
-                        yy = 2*xx*yy + y0
-                        xx = xTemp
-                        rSq = xx*xx + yy*yy
-                        iter = Double(i)
-                    }
-                }   //end else
-                
-                if iter < iMax {
-                    
-                    dIter = Double(-(  log( log(rSq) ) - gGL  )/gGML)
-                    
-                    fIter[u][v] = iter + dIter
-                }   //end if
-                
-                else {
-                    fIter[u][v] = iter
-                }   //end else
-                
-            }    // end first for v
-            
-        }    // end first for u */
-        
-   /*     for u in 0...imageWidth - 1 {
-            
-            fIterBottom[u] = fIter[u][0]
-            fIterTop[u] = fIter[u][imageHeight - 1]
-            
-        }    // end second for u    */
-        
-  //      fIterMinLeft = fIter[0].min()!
-  //      fIterMinRight = fIter[imageWidth - 1].min()!
-  //      fIterMinBottom = fIterBottom.min()!
-  //      fIterMinTop = fIterTop.min()!
-  //      fIterMins = [fIterMinLeft, fIterMinRight, fIterMinBottom, fIterMinTop]
-  //      fIterMin = fIterMins.min()!
-        
-        fIterMinColor = fIterMin - dIterMin
-        
-        // Now we need to generate a bitmap image.
-        
+        let iMax: Double = doc.picdef.iMax
+        let dFIterMin: Double = doc.picdef.dFIterMin
         let nBlocks: Int = doc.picdef.nBlocks
         let nColors: Int = doc.picdef.nColors
         let bE: Double = doc.picdef.bE
         let eE: Double = doc.picdef.eE
+        
+        var contextImage: CGImage
+        var fIterMinLeft: Double = 0.0
+        var fIterMinRight: Double = 0.0
+        var fIterBottom = [Double](repeating: 0.0, count: imageWidth)
+        var fIterTop = [Double](repeating: 0.0, count: imageWidth)
+        var fIterMinBottom: Double = 0.0
+        var fIterMinTop: Double = 0.0
+        var fIterMins = [Double](repeating: 0.0, count: 4)
+        var fIterMin: Double = 0.0
+        
+        for u in 0...imageWidth - 1 {
+            
+            fIterBottom[u] = fIterGlobal[u][0]
+            fIterTop[u] = fIterGlobal[u][imageHeight - 1]
+            
+        }    // end second for u
+        
+        fIterMinLeft = fIterGlobal[0].min()!
+        fIterMinRight = fIterGlobal[imageWidth - 1].min()!
+        fIterMinBottom = fIterBottom.min()!
+        fIterMinTop = fIterTop.min()!
+        fIterMins = [fIterMinLeft, fIterMinRight, fIterMinBottom, fIterMinTop]
+        fIterMin = fIterMins.min()!
+        
+        fIterMin = fIterMin - dFIterMin
+        
+        // Now we need to generate a bitmap image.
         
         var dE: Double = 0.0
         var fNBlocks: Double = 0.0
@@ -679,7 +600,7 @@ struct ContentView: View {
                 // calculate the offset of the pixel
                 let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
                 
-                if fIter[u][v] >= iMax  {               //black
+                if fIterGlobal[u][v] >= iMax  {               //black
                     pixelAddress.pointee = UInt8(0)         //red
                     (pixelAddress + 1).pointee = UInt8(0)   //green
                     (pixelAddress + 2).pointee = UInt8(0)   //blue
@@ -688,7 +609,7 @@ struct ContentView: View {
                 }   // end if
                 
                 else    {
-                    h = fIter[u][v] - fIterMin
+                    h = fIterGlobal[u][v] - fIterMin
                     
                     for block in 0...nBlocks {
                         
@@ -739,7 +660,7 @@ struct ContentView: View {
         // stash picture in global var for saving
         contextImageGlobal = contextImage
         return contextImage
-    }   */
+    }
 
     var body: some View {
 
@@ -759,7 +680,7 @@ struct ContentView: View {
                             Button("Pause") {
                                 drawIt = false
                                 drawGradient = false
-                     //           drawColors = false
+                                drawColors = false
                             }
                             .help("Pause to change values.")
                         }
@@ -796,6 +717,16 @@ struct ContentView: View {
                                 Button("Resume") {readyForPicture()}
                             }
                         }
+                        
+                        HStack {
+                            VStack {
+                                Button("Color the image") {readyForColors()}
+                            }
+                            VStack {
+                                Button("Resume") {readyForPicture()}
+                            }
+                        }
+                        
                         Divider()
                         VStack {
                             Picker(selection: $choice,
@@ -1273,7 +1204,7 @@ struct ContentView: View {
    //     drawIt = !drawIt
         drawIt = false
         drawGradient = false
-  //      drawColors = true
+        drawColors = true
     }
 
     /// Get the app ready to draw a MandArt picture.
@@ -1282,7 +1213,7 @@ struct ContentView: View {
   //      drawIt = !drawIt    // toggles drawIt
         drawIt = true
         drawGradient = false
-  //      drawColors = false
+        drawColors = false
     }
 
 

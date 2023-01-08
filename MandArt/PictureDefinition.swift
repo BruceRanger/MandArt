@@ -24,7 +24,7 @@ struct PictureDefinition: Codable, Identifiable {
     var eE: Double =  15.0
     var theta: Double =  0.0
     var nImage: Int = 0
-    var dFIterMin: Double =  10.0
+    var dFIterMin: Double = 0.0
     var nColors: Int = 6
     var leftNumber: Int = 1
     var hues: [Hue] = [
