@@ -9,8 +9,10 @@
 import SwiftUI      // views
 import Foundation   // trig functions
 
+// Declare global variables first (outside the ContentView struct)
 var contextImageGlobal: CGImage?
 var startFile = "default.json"
+var xGlobal = Double() // this will work
 
 struct ContentView: View {
     @EnvironmentObject var doc: MandArtDocument
@@ -23,7 +25,7 @@ struct ContentView: View {
         case inputs, estimatedPrintPreview, optimizedForPrinter
     }
     
-    var xGlobal = Double()
+    // var xGlobal = Double()  // move up above the View
     
     @State private var choice : ColorListChoice = .inputs
 
@@ -180,6 +182,7 @@ struct ContentView: View {
 
         let imageWidth: Int = doc.picdef.imageWidth
         let imageHeight: Int = doc.picdef.imageHeight
+
         let fIterMin: Double = doc.picdef.dFIterMin
         let nColors: Int = doc.picdef.nColors
         let iMax: Double = doc.picdef.iMax
@@ -306,7 +309,7 @@ struct ContentView: View {
 
         }    // end second for u
         
-        xGlobal = 4.0
+        xGlobal = 4.0  // now we can update xGlobal
 
         fIterMinLeft = fIter[0].min()!
         fIterMinRight = fIter[imageWidth - 1].min()!
