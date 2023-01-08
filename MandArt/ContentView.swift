@@ -22,6 +22,9 @@ struct ContentView: View {
     enum ColorListChoice {
         case inputs, estimatedPrintPreview, optimizedForPrinter
     }
+    
+    var xGlobal = Double()
+    
     @State private var choice : ColorListChoice = .inputs
 
     @StateObject var errdef = ErrorViewModel()
@@ -302,6 +305,8 @@ struct ContentView: View {
             fIterTop[u] = fIter[u][imageHeight - 1]
 
         }    // end second for u
+        
+        xGlobal = 4.0
 
         fIterMinLeft = fIter[0].min()!
         fIterMinRight = fIter[imageWidth - 1].min()!
