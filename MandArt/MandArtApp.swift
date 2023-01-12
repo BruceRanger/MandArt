@@ -13,13 +13,17 @@ struct MandArtApp: App {
     ///  It creates a WindowGroup and DocumentGroup.
     var body: some Scene {
 
-        WindowGroup("Welcome to MandArt") {
+        // get everything we can from MandMath (Swift-only) first
+        let defaultFileName = MandMath.getDefaultDocumentName()
+        let windowGroupName = MandMath.getWindowGroupName()
+        let openingButtonText = MandMath.getOpeningButtonText()
 
+        WindowGroup(windowGroupName) {
             // In some action at the end of this scene flow
             // just close current window and open new document
-            Button("Get Started") {
+            Button(openingButtonText) {
                 NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
-                NSDocumentController.shared.newDocument("default.json")
+                NSDocumentController.shared.newDocument(defaultFileName)
             }
             .frame(minWidth: 300, maxWidth: .infinity,
                    minHeight: 200, maxHeight: .infinity)
@@ -37,20 +41,6 @@ struct MandArtApp: App {
             // we don't need the pasteboard (cut/copy/paste/delete_
             CommandGroup(replacing: .pasteboard) { }
 
-            // we don't need start dictation or emoji and symbols
-
-            // we want to enable undo redo
-            // CommandGroup(replacing: .undoRedo) {}
-
-
-            // we can add a new menu before the window option
-            // like so
-            //            CommandMenu("About") {
-            //                Button(action: {
-            //                }) {
-            //                    Text("Test")
-            //                }
-            //            }
         }
     }
 }

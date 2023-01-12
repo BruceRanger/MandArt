@@ -19,9 +19,6 @@
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
 		882BAEE92937C71A003ACB0B /* ErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */; };
 		88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88511CB22948B3FF009B5CF6 /* MandMath.swift */; };
-		887BFAC3293F6FA300CC6510 /* UnprintableColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887BFAC2293F6FA300CC6510 /* UnprintableColors.swift */; };
-		887BFAC5293FDAF400CC6510 /* LookupEstimatedPrintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887BFAC4293FDAF400CC6510 /* LookupEstimatedPrintColor.swift */; };
-		887BFAC7293FDB1300CC6510 /* LookupOptimizedForPrintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887BFAC6293FDB1300CC6510 /* LookupOptimizedForPrintColor.swift */; };
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
 /* End PBXBuildFile section */
 
@@ -40,9 +37,6 @@
 		882BAED829346C92003ACB0B /* Hue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hue.swift; sourceTree = "<group>"; };
 		882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModel.swift; sourceTree = "<group>"; };
 		88511CB22948B3FF009B5CF6 /* MandMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandMath.swift; sourceTree = "<group>"; };
-		887BFAC2293F6FA300CC6510 /* UnprintableColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnprintableColors.swift; sourceTree = "<group>"; };
-		887BFAC4293FDAF400CC6510 /* LookupEstimatedPrintColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookupEstimatedPrintColor.swift; sourceTree = "<group>"; };
-		887BFAC6293FDB1300CC6510 /* LookupOptimizedForPrintColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookupOptimizedForPrintColor.swift; sourceTree = "<group>"; };
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
 		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
@@ -94,9 +88,6 @@
 				6A3AEC1026F879F500D7E31A /* Assets.xcassets */,
 				6A3AEC1826F879F500D7E31A /* Info.plist */,
 				882BAED62934167D003ACB0B /* default.json */,
-				887BFAC2293F6FA300CC6510 /* UnprintableColors.swift */,
-				887BFAC4293FDAF400CC6510 /* LookupEstimatedPrintColor.swift */,
-				887BFAC6293FDB1300CC6510 /* LookupOptimizedForPrintColor.swift */,
 			);
 			path = MandArt;
 			sourceTree = SOURCE_ROOT;
@@ -174,14 +165,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				882BAED929346C92003ACB0B /* Hue.swift in Sources */,
-				887BFAC7293FDB1300CC6510 /* LookupOptimizedForPrintColor.swift in Sources */,
 				889E3F24293AE0B6009944AC /* Documentation.docc in Sources */,
 				6A3AEC0F26F879E700D7E31A /* ContentView.swift in Sources */,
 				882BAEE92937C71A003ACB0B /* ErrorViewModel.swift in Sources */,
 				8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */,
-				887BFAC5293FDAF400CC6510 /* LookupEstimatedPrintColor.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
-				887BFAC3293F6FA300CC6510 /* UnprintableColors.swift in Sources */,
 				88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */,
 				8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */,
 			);
@@ -313,6 +301,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_ENTITLEMENTS = MandArt/MandArt.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
@@ -351,6 +340,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_ENTITLEMENTS = MandArt/MandArtRelease.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;

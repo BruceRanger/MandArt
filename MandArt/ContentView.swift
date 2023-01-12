@@ -9,26 +9,28 @@
 import SwiftUI      // views
 import Foundation   // trig functions
 
+// File / Project Settings / Per-user project settings / derived data
+// set to project-relative path DerivedData
+// now I can see the intermediate build products.
+
 // Declare global variables first (outside the ContentView struct)
 var contextImageGlobal: CGImage?
-var startFile = "default.json"
 var fIterGlobal = [[Double]]()
 
 struct ContentView: View {
-    @EnvironmentObject var doc: MandArtDocument
 
+    // TODO:  move non-SwiftUI functions and logic into MandMath
+    // Get everything we can from MandMath (Swift-only)
+    let defaultFileName = MandMath.getDefaultDocumentName()
+    let printableColorList = MandMath.getPrintableColorList()
+
+    // the remaining content should all require SwiftUI
+    @EnvironmentObject var doc: MandArtDocument
     let instructionBackgroundColor = Color.green.opacity(0.5)
     let instructionBackgroundColorLite = Color.green.opacity(0.6)
 
     let inputWidth: Double = 290
-    enum ColorListChoice {
-        case inputs, estimatedPrintPreview, optimizedForPrinter
-    }
     
-    // var xGlobal = Double()  // move up above the View
-    
-    @State private var choice : ColorListChoice = .inputs
-
     @StateObject var errdef = ErrorViewModel()
     @State private var testColor = Color.red
     @State private var tapX: Double = 0.0
@@ -164,32 +166,20 @@ struct ContentView: View {
     func getImage() -> CGImage? {
         var colors: [[Double]] = []
 
-        switch choice {
-            case .inputs :
-                doc.picdef.hues.forEach{hue in
-                    let arr: [Double] = [hue.r, hue.g, hue.b]
-                    colors.insert(arr, at: colors.endIndex)}
-
-            case .estimatedPrintPreview :                doc.picdef.huesEstimatedPrintPreview.forEach{hue in
-                let arr: [Double] = [hue.r, hue.g, hue.b]
-                colors.insert(arr, at: colors.endIndex)}
-
-            case .optimizedForPrinter :
-                doc.picdef.huesOptimizedForPrinter.forEach{hue in
-                    let arr: [Double] = [hue.r, hue.g, hue.b]
-                    colors.insert(arr, at: colors.endIndex)}
-        }
+        doc.picdef.hues.forEach{hue in
+            let arr: [Double] = [hue.r, hue.g, hue.b]
+            colors.insert(arr, at: colors.endIndex)}
 
         let imageWidth: Int = doc.picdef.imageWidth
         let imageHeight: Int = doc.picdef.imageHeight
 
-        let dFIterMin: Double = doc.picdef.dFIterMin
+        // let dFIterMin: Double = doc.picdef.dFIterMin
         let nColors: Int = doc.picdef.nColors
-        let iMax: Double = doc.picdef.iMax
+        // let iMax: Double = doc.picdef.iMax
         
-        let bE: Double = doc.picdef.bE
-        let eE: Double = doc.picdef.eE
-        let nBlocks: Int = doc.picdef.nBlocks
+        // let bE: Double = doc.picdef.bE
+        // let eE: Double = doc.picdef.eE
+        // let nBlocks: Int = doc.picdef.nBlocks
 
         if drawIt {
             return getPictureImage(&colors)
@@ -726,19 +716,7 @@ struct ContentView: View {
                                 Button("Resume") {readyForPicture()}
                             }
                         }
-                        
-                        Divider()
-                        VStack {
-                            Picker(selection: $choice,
-                                   label: Text("Display:")) {
-                                Text("Inputs").tag(ColorListChoice.inputs)
-                                Text("Estimated Print Preview").tag(
-                                    ColorListChoice.estimatedPrintPreview)
-                                Text("Optimized For Printer").tag(
-                                    ColorListChoice.optimizedForPrinter
-                                )
-                            }.pickerStyle(.radioGroup)
-                        }
+
                     }
                     Divider()
                     Group{  // 1 in scrollbar
@@ -1186,22 +1164,19 @@ struct ContentView: View {
         return true;
     }
 
+    /// Function to move an ordered color (hue) from one place to another in the list
     fileprivate func moveHue(from source: IndexSet, to destination: Int) {
         doc.picdef.hues.move(fromOffsets: source, toOffset: destination)
     }
 
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
-        // trigger a state change
-   //     drawIt = !drawIt
         drawIt = false
         drawGradient = true
     }
     
     /// Get the app ready to draw colors.
     fileprivate func readyForColors() {
-        // trigger a state change
-   //     drawIt = !drawIt
         drawIt = false
         drawGradient = false
         drawColors = true
@@ -1209,8 +1184,6 @@ struct ContentView: View {
 
     /// Get the app ready to draw a MandArt picture.
     fileprivate func readyForPicture() {
-        // trigger a state change
-  //      drawIt = !drawIt    // toggles drawIt
         drawIt = true
         drawGradient = false
         drawColors = false
