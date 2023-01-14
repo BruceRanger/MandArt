@@ -53,6 +53,7 @@ struct MandMath {
 // down here at the end for readability
 let printableColorList = [
     [0,73,36],
+    [0,73,73],
     [],
     [255,255,255]
 ]
