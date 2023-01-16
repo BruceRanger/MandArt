@@ -17,6 +17,25 @@ import Foundation   // trig functions
 var contextImageGlobal: CGImage?
 var fIterGlobal = [[Double]]()
 
+/*
+struct ImageColorPicker: View {
+    @State private var image: Image
+    @State private var selectedColor = Color.white
+    
+    var body: some View {
+        Image(uiImage: image)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .onTapGesture {
+                let location = gesture.location
+                // here you can use Core Image or Core Graphics to get the color at the location
+                let color = image.getColorAt(location)
+                self.selectedColor = color
+            }
+    }
+}   */
+
+
 struct ContentView: View {
 
     // TODO:  move non-SwiftUI functions and logic into MandMath
