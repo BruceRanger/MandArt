@@ -62,6 +62,17 @@ struct ContentView: View {
     @State private var drawIt = true
     @State private var drawGradient = false
     @State private var drawColors = false
+ //   @State private var showScreenColors = false
+ //   @State private var showPrintColors = false
+ //   @State private var imageScreen: Image
+ //   @State private var imagePrint: Image
+    
+ /*   func showScreenColors(){
+        imageScreen
+            .resizable
+    //        .scaledToFit()
+        imageScreen = Image("Screen colors")
+    }   */
 
     /// Function to create and return a gradient bitmap
     /// - Parameters:
@@ -699,7 +710,8 @@ struct ContentView: View {
                         VStack {Button("+") {zoomIn()}}
                             .help("Zoom in.")
 
-                        VStack {Button("-") {zoomOut()}}                            .help("Zoom out.")
+                        VStack {Button("-") {zoomOut()}}
+                            .help("Zoom out.")
 
                     }
                 } // end non scroll group at top
@@ -735,6 +747,23 @@ struct ContentView: View {
                                 Button("Resume") {readyForPicture()}
                             }
                         }
+                        
+                 /*       HStack {
+                            VStack {
+                                Button("Show screen colors") {showScreenColors()}
+                            }
+                            VStack {
+                                Button("Resume") {readyForPicture()}
+                            }   */
+                        
+              /*          HStack {
+                            VStack {
+                                Button("Show print colors") {readyForPrintColors()}
+                            }
+                            VStack {
+                                Button("Resume") {readyForPicture()}
+                            }
+                        }   */
 
                     }
                     Divider()
