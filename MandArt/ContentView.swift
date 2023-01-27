@@ -64,7 +64,7 @@ struct ContentView: View {
     @State private var drawColors = false
  //   @State private var showScreenColors = false
  //   @State private var showPrintColors = false
- //   @State private var imageScreen: Image
+    @State /*private*/ var imageScreen: Image
  //   @State private var imagePrint: Image
     
  /*   func showScreenColors(){
@@ -748,13 +748,19 @@ struct ContentView: View {
                             }
                         }
                         
-                 /*       HStack {
+                        HStack {
                             VStack {
-                                Button("Show screen colors") {showScreenColors()}
-                            }
+                                Button("Show screen colors") {
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                }
+                                .onAppear(perform: showScreenColors())
+                                }
                             VStack {
                                 Button("Resume") {readyForPicture()}
-                            }   */
+                            }
+                        }
                         
               /*          HStack {
                             VStack {
@@ -766,7 +772,9 @@ struct ContentView: View {
                         }   */
 
                     }
+                    
                     Divider()
+                    
                     Group{  // 1 in scrollbar
                         HStack {
                             VStack { // each input has a vertical container with a Text label & TextField for data
@@ -814,7 +822,9 @@ struct ContentView: View {
                                     .frame(maxWidth: 60)
                             }
                         }
+                        
                         Divider()
+                        
                         HStack {
                             VStack {
                                 Text("Image")
@@ -840,7 +850,9 @@ struct ContentView: View {
                                     .padding(1)
                             }
                         }
+                        
                         Divider()
+                        
                         HStack{
                             VStack {
                                 Text("bE:")
@@ -864,7 +876,9 @@ struct ContentView: View {
                                     .frame(maxWidth: 80)
                             }
                         }
+                        
                         Divider()
+                        
                         HStack {
                             VStack {
                                 Text("nImage:")
@@ -1221,6 +1235,10 @@ struct ContentView: View {
     fileprivate func readyForGradient() {
         drawIt = false
         drawGradient = true
+    }
+    
+    func showScreenColors(){
+        imageScreen = Image("Screen colors")
     }
     
     /// Get the app ready to draw colors.
