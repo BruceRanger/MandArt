@@ -62,17 +62,14 @@ struct ContentView: View {
     @State private var drawIt = true
     @State private var drawGradient = false
     @State private var drawColors = false
+    @State private var activeDisplayState = ActiveDisplayChoice.MandArt
 
- //   @State private var imageScreen: Image?
-    @State private var imageScreen = Image("Screen colors")
- //   @State private var imagePrint: Image
-    
- /*   func showScreenColors(){
-        imageScreen
-            .resizable
-    //        .scaledToFit()
-        imageScreen = Image("Screen colors")
-    }   */
+    enum ActiveDisplayChoice {
+        case MandArt
+        case Gradient
+        case ScreenColors
+        case PrintColors
+    }
 
     /// Function to create and return a gradient bitmap
     /// - Parameters:
@@ -682,14 +679,18 @@ struct ContentView: View {
         return contextImage
     }
 
+    // To swap a GeometryReader for an Image on button click in SwiftUI,
+    // you can use a state variable to keep track of
+    // what should be displayed,
+    // and change this state variable when buttons are pressed.
     var body: some View {
 
-        let image: CGImage = getImage()!
-        let img = Image(image, scale: 1.0, label: Text("Test"))
+
 
         HStack{ // instructions on left, picture on right
-                // left side with user stuff
-                // spacing is between VStacks
+                // Left (first) VStack is left side with user stuff
+                // Right (second) VStack is for mandart, gradient, or colors
+                // Sspacing is between VStacks
             VStack(alignment: .center, spacing: 10){
 
                 Group { // non scroll group at top
@@ -715,22 +716,13 @@ struct ContentView: View {
 
                     }
                     
-         /*           HStack {
-                        VStack {
-                            Button("Show screen colors") {
-                                image?
-                                    .resizable()
-                                    .scaledToFit()
-                            }
-                            .onAppear(perform: showScreenColors())
-                        }   */
-                    
+
                     HStack {
                         VStack {
                             Button("Show screen colors") {showScreenColors()}
                             
                             VStack {
-                                Button("Resume") {readyForPicture()}
+                                Button("Resume") {showMandArtBitMap()}
                             }
                         }
                     }
@@ -985,13 +977,40 @@ struct ContentView: View {
             .frame(width:inputWidth)
             .padding(10)
             .errorAlert(error: $errdef.errorCustomObject)
-            GeometryReader {
-                geometry in
-                ZStack(alignment: .topLeading) {
-                    Text("")
-                    img.gesture(self.tapGesture)
+            VStack {
+                if activeDisplayState == ActiveDisplayChoice.MandArt {
+                    let image: CGImage = getImage()!
+                    let img = Image(image, scale: 1.0, label: Text("Test"))
+                    GeometryReader {
+                        geometry in
+                        ZStack(alignment: .topLeading) {
+                            Text("")
+                            img.gesture(self.tapGesture)
+                        }
+                    }
                 }
-            } // end GeoReader
+                else if activeDisplayState == ActiveDisplayChoice.Gradient {
+                    let image: CGImage = getImage()!
+                    let img = Image(image, scale: 1.0, label: Text("Test"))
+                    GeometryReader {
+                        geometry in
+                        ZStack(alignment: .topLeading) {
+                            Text("")
+                            img.gesture(self.tapGesture)
+                        }
+                    }
+                }
+                else if activeDisplayState == ActiveDisplayChoice.ScreenColors {
+                    Image("Screen colors")
+                        .resizable()
+                        .scaledToFit()
+                }
+                else if activeDisplayState == ActiveDisplayChoice.PrintColors {
+                    Image("Print colors")
+                        .resizable()
+                        .scaledToFit()
+                }
+            } // end right side (picture space)
         } // end HStack
     } // end view body
 
@@ -1260,11 +1279,8 @@ struct ContentView: View {
             .scaledToFit()
     }   */
     
-    fileprivate func showScreenColors() -> Image {
-   //     imageScreen = Image("Screen colors")
-     //       .resizable()
-    //        .scaledToFit()
-        return imageScreen
+    fileprivate func showScreenColors()  {
+        activeDisplayState = ActiveDisplayChoice.ScreenColors
     }
     
     /// Get the app ready to draw colors.
@@ -1272,6 +1288,11 @@ struct ContentView: View {
         drawIt = false
         drawGradient = false
         drawColors = true
+    }
+
+    fileprivate func showMandArtBitMap() {
+        activeDisplayState = ActiveDisplayChoice.MandArt
+        readyForPicture()
     }
 
     /// Get the app ready to draw a MandArt picture.
