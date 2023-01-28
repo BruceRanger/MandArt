@@ -62,9 +62,9 @@ struct ContentView: View {
     @State private var drawIt = true
     @State private var drawGradient = false
     @State private var drawColors = false
- //   @State private var showScreenColors = false
- //   @State private var showPrintColors = false
-    @State /*private*/ var imageScreen: Image
+
+ //   @State private var imageScreen: Image?
+    @State private var imageScreen = Image("Screen colors")
  //   @State private var imagePrint: Image
     
  /*   func showScreenColors(){
@@ -714,6 +714,27 @@ struct ContentView: View {
                             .help("Zoom out.")
 
                     }
+                    
+         /*           HStack {
+                        VStack {
+                            Button("Show screen colors") {
+                                image?
+                                    .resizable()
+                                    .scaledToFit()
+                            }
+                            .onAppear(perform: showScreenColors())
+                        }   */
+                    
+                    HStack {
+                        VStack {
+                            Button("Show screen colors") {showScreenColors()}
+                            
+                            VStack {
+                                Button("Resume") {readyForPicture()}
+                            }
+                        }
+                    }
+                    
                 } // end non scroll group at top
 
                 Divider()
@@ -748,19 +769,7 @@ struct ContentView: View {
                             }
                         }
                         
-                        HStack {
-                            VStack {
-                                Button("Show screen colors") {
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                }
-                                .onAppear(perform: showScreenColors())
-                                }
-                            VStack {
-                                Button("Resume") {readyForPicture()}
-                            }
-                        }
+                       
                         
               /*          HStack {
                             VStack {
@@ -1237,8 +1246,25 @@ struct ContentView: View {
         drawGradient = true
     }
     
-    func showScreenColors(){
+ /*   fileprivate func showScreenColors() {
+        imageScreen?
+            .resizable()
+            .scaledToFit()
+        
         imageScreen = Image("Screen colors")
+    }   */
+    
+ /*   fileprivate func showScreenColors() {
+        imageScreen
+            .resizable()
+            .scaledToFit()
+    }   */
+    
+    fileprivate func showScreenColors() -> Image {
+   //     imageScreen = Image("Screen colors")
+     //       .resizable()
+    //        .scaledToFit()
+        return imageScreen
     }
     
     /// Get the app ready to draw colors.
