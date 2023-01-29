@@ -793,13 +793,21 @@ struct ContentView: View {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center X")
                                 Text("Between -2 and 2")
+                       /*         TextField("Number", text: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
+                             //       .keyboardType(.numberPad)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .onAccept {
+                                        // process inputNumber when the user presses return
+                                        print("Number entered: \(self.doc.picdef.xC)")
+                                    }   */
+                                
                                 TextField("Number",value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .padding(4)
                                     .frame(maxWidth:120)
-            //                        .onCommit{print"doc.picdef.xC"}
                             }
+                            
                             VStack {
                                 Text("Enter center Y")
                                 Text("Between -2 and 2")
@@ -809,7 +817,9 @@ struct ContentView: View {
                                     .padding(4)
                                     .frame(maxWidth:120)
                             }
+                            
                         }
+                        
                     } // end group 1 in scrollbar
                     Divider()
                     Group{ // start group 2 in scrollbar
