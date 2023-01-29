@@ -722,10 +722,20 @@ struct ContentView: View {
                     HStack {
                         VStack {
                             Button("Show screen colors") {showScreenColors()}
+                        }
                             
-                            VStack {
-                                Button("Resume") {showMandArtBitMap()}
-                            }
+                        VStack {
+                            Button("Resume") {showMandArtBitMap()}
+                        }
+                    }
+                    
+                    HStack {
+                        VStack {
+                            Button("Show print colors") {showPrintColors()}
+                        }
+                        
+                        VStack {
+                            Button("Resume") {showMandArtBitMap()}
                         }
                     }
                     
@@ -1299,6 +1309,10 @@ struct ContentView: View {
     
     fileprivate func showScreenColors()  {
         activeDisplayState = ActiveDisplayChoice.ScreenColors
+    }
+    
+    fileprivate func showPrintColors()  {
+        activeDisplayState = ActiveDisplayChoice.PrintColors
     }
     
     /// Get the app ready to draw colors.
