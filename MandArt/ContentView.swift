@@ -66,7 +66,9 @@ struct ContentView: View {
 
     enum ActiveDisplayChoice {
         case MandArt
+  //      case Pause
         case Gradient
+        case Color
         case ScreenColors
         case PrintColors
     }
@@ -786,6 +788,7 @@ struct ContentView: View {
                                     .multilineTextAlignment(.trailing)
                                     .padding(4)
                                     .frame(maxWidth:120)
+            //                        .onCommit{print"doc.picdef.xC"}
                             }
                             VStack {
                                 Text("Enter center Y")
@@ -989,22 +992,37 @@ struct ContentView: View {
                         }
                     }
                 }
+                
                 else if activeDisplayState == ActiveDisplayChoice.Gradient {
-                    let image: CGImage = getImage()!
-                    let img = Image(image, scale: 1.0, label: Text("Test"))
+        //            let image: CGImage = getImage()!
+       //             let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
                             Text("")
-                            img.gesture(self.tapGesture)
+               //             img.gesture(self.tapGesture)
                         }
                     }
                 }
+                
+                else if activeDisplayState == ActiveDisplayChoice.Color {
+                    //            let image: CGImage = getImage()!
+                    //             let img = Image(image, scale: 1.0, label: Text("Test"))
+                    GeometryReader {
+                        geometry in
+                        ZStack(alignment: .topLeading) {
+                            Text("")
+                            //             img.gesture(self.tapGesture)
+                        }
+                    }
+                }
+                
                 else if activeDisplayState == ActiveDisplayChoice.ScreenColors {
                     Image("Screen colors")
                         .resizable()
                         .scaledToFit()
                 }
+                
                 else if activeDisplayState == ActiveDisplayChoice.PrintColors {
                     Image("Print colors")
                         .resizable()
