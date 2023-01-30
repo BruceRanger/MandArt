@@ -269,8 +269,8 @@ struct ContentView: View {
         var test2: Double = 0.0
 
         rSqMax = 1.01*(rSqLimit + 2)*(rSqLimit + 2)
-        gGML = log( log(rSqMax) ) - log(log(rSqLimit) )
-        gGL = log(log(rSqLimit) )
+        gGML = log( log(rSqMax) ) - log( log(rSqLimit) )
+        gGL = log( log(rSqLimit) )
 
         for u in 0...imageWidth - 1 {
 
@@ -364,6 +364,9 @@ struct ContentView: View {
 
         var h: Double = 0.0
         var xX: Double = 0.0
+        var yY: Double = 0.0
+        
+        yY = 0.5
 
         for i in 0...nBlocks {
             blockBound[i] = bE*Double(i) + dE*pow(Double(i), eE)
@@ -448,6 +451,14 @@ struct ContentView: View {
                         block0 = block
 
                         if h >= blockBound[block] && h < blockBound[block + 1]   {
+                            
+                            if (h - blockBound[block])/(blockBound[block + 1] - blockBound[block]) <= yY {
+                                h = blockBound[block]
+                            }
+                            
+                            else {
+                                h = blockBound[block] + ((h - blockBound[block]) - yY*(blockBound[block + 1] - blockBound[block]))/(1 - yY)
+                            }
 
                             xX = (h - blockBound[block])/(blockBound[block + 1] - blockBound[block])
 
@@ -471,8 +482,11 @@ struct ContentView: View {
                             (pixelAddress + 2).pointee = UInt8(color)   // B
 
                             (pixelAddress + 3).pointee = UInt8(255)     //alpha
+                            
                         }
+
                     }
+
                     // IMPORTANT:
                     // there is no type checking here and it is up to you to make sure that the
                     // address indexes do not go beyond the memory allocated for the buffer
@@ -481,6 +495,8 @@ struct ContentView: View {
             } //end for u
 
         } //end for v
+        
+  /*      print(blockBound[0], blockBound[1], blockBound[2], blockBound[3], blockBound[4], blockBound[5], blockBound[6], blockBound[7], blockBound[8], blockBound[9], blockBound[10], blockBound[11], blockBound[12], blockBound[13], blockBound[14], blockBound[15], blockBound[16], blockBound[17], blockBound[18], blockBound[19], blockBound[20], blockBound[21], blockBound[22], blockBound[23], blockBound[24], blockBound[25], blockBound[26], blockBound[27], blockBound[28], blockBound[29], blockBound[30], blockBound[31], blockBound[32], blockBound[33], blockBound[34], blockBound[35], blockBound[36], blockBound[37], blockBound[38], blockBound[39], blockBound[40], blockBound[41], blockBound[42], blockBound[43], blockBound[44], blockBound[45], blockBound[46], blockBound[47], blockBound[48], blockBound[9], blockBound[50], blockBound[51], blockBound[52], blockBound[53], blockBound[54], blockBound[55], blockBound[56], blockBound[57], blockBound[58], blockBound[59])  */
 
         // convert the context into an image - this is what the function will return
         contextImage = context.makeImage()!
@@ -801,12 +817,42 @@ struct ContentView: View {
                                         print("Number entered: \(self.doc.picdef.xC)")
                                     }   */
                                 
+                      /*          TextField("Number",value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .padding(4)
+                                    .frame(maxWidth:120)    */
+                                
                                 TextField("Number",value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .padding(4)
                                     .frame(maxWidth:120)
-                            }
+                           /*         .onAccept {
+                                        // process inputNumber when the user presses return
+                                        print("Hello")
+                                    }   */
+                                
+               /*                 struct ContentView: View {
+                                    @State private var inputNumber = ""
+                                    @State private var isEditing = false
+                                    
+                                    var body: some View {
+                                        TextField("Number", text: $inputNumber, onEditingChanged: { isEditing in
+                                            self.isEditing = isEditing
+                                        })
+                                        .keyboardType(.numberPad)
+                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                        .onTapGesture {
+                                            if !self.isEditing {
+                                                // process inputNumber when the user finishes editing and taps outside the text field
+                                                print("Number entered: \(self.inputNumber)")
+                                            }
+                                        }
+                                    }
+                                }   */
+                                
+                            } // end VStack
                             
                             VStack {
                                 Text("Enter center Y")
