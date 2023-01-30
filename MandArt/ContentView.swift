@@ -793,15 +793,16 @@ struct ContentView: View {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center X")
                                 Text("Between -2 and 2")
-                       /*         TextField("Number", text: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
-                             //       .keyboardType(.numberPad)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                                    .onAccept {
-                                        // process inputNumber when the user presses return
-                                        print("Number entered: \(self.doc.picdef.xC)")
-                                    }   */
-                                
-                                TextField("Number",value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
+                                let xcBinding = Binding(
+                                    get: { self.doc.picdef.xC ?? 0.0 },
+                                    set: {
+                                        if let x = Double(String(format:"%.8f", $0)) {
+                                            self.doc.picdef.xC = x
+                                        }
+                                    })
+                                TextField("Number",value: xcBinding, formatter: ContentView.cgDecimalAbs2Formatter,
+                                          onCommit: {})
+                                   // .keyboardType(.decimalPad)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .padding(4)
@@ -1100,6 +1101,7 @@ struct ContentView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 8
+       // formatter.minimumFractionDigits = 8
         formatter.maximum = 2.0
         formatter.minimum = -2.0
         return formatter
