@@ -717,20 +717,24 @@ struct ContentView: View {
                     HStack {
                         VStack {
                             Button("Show screen colors") {showScreenColors()}
+                                .help("Show 512 colors that look good on the screen.")
                         }
                             
                         VStack {
                             Button("Resume") {showMandArtBitMap()}
+                                .help("Redraw picture.")
                         }
                     }
                     
                     HStack {
                         VStack {
                             Button("Show print colors") {showPrintColors()}
+                                .help("Show 292 colors that should print well.")
                         }
                         
                         VStack {
                             Button("Resume") {showMandArtBitMap()}
+                                .help("Redraw picture.")
                         }
                     }
                     
@@ -748,23 +752,29 @@ struct ContentView: View {
                                       formatter: ContentView.cgIintMaxColorsFormatter)
                             .frame(maxWidth: 30)
                             .foregroundColor(leftGradientIsValid ? .primary : .red)
+                            .help("Select the color # for the left side of a gradient.")
                             Text("to "+String(rightGradientColor))
                         }
                         HStack {
                             VStack {
                                 Button("Make a gradient") {readyForGradient()}
+                                    .help("Draw a gradient between two adjoining colors.")
                             }
                             VStack {
                                 Button("Resume") {readyForPicture()}
+                                    .help("Redraw picture.")
                             }
                         }
                         
                         HStack {
                             VStack {
                                 Button("Color the image") {readyForColors()}
+                                    .help("Color the image using the existing iteration data.")
                             }
+                            
                             VStack {
                                 Button("Resume") {readyForPicture()}
+                                    .help("Redraw picture.")
                             }
                         }
 
@@ -776,6 +786,7 @@ struct ContentView: View {
                         HStack {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center X")
+                                    .help("Enter the X coordinate for the center of the image.")
                                 Text("Between -2 and 2")
                                 
                                 TextField("Number",value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
@@ -788,6 +799,7 @@ struct ContentView: View {
                             
                             VStack {
                                 Text("Enter center Y")
+                                    .help("Enter the Y coordinate for the center of the image.")
                                 Text("Between -2 and 2")
                                 TextField("Number",value: $doc.picdef.yC, formatter: ContentView.cgDecimalAbs2Formatter)
                                     .textFieldStyle(.roundedBorder)
@@ -804,20 +816,25 @@ struct ContentView: View {
                         HStack {
                             VStack {
                                 Text("scale:")
+                                    .help("Enter the magnification of the image.")
                                 TextField("Scale",value: $doc.picdef.scale, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth:100)
                             }
+                            
                             VStack {
                                 Text("iMax:")
+                                    .help("Enter the maximum number of iterations for a given point in the image.")
                                 TextField("iMax",value: $doc.picdef.iMax, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 60)
                             }
+                            
                             VStack {
                                 Text("rSqLimit:")
+                                    .help("Enter the minimum value for the square of the distance from the origin of the Mandelbrot coordinate system.")
                                 TextField("rSqLimit",value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
@@ -830,23 +847,27 @@ struct ContentView: View {
                         HStack {
                             VStack {
                                 Text("Image")
+                                    .help("Enter the width, in pixels, of the image.")
                                 Text("width, px:")
                                 TextField("imageWidth",value: $doc.picdef.imageWidth, formatter: ContentView.cgIntPositiveFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
-
                             }
+                            
                             VStack {
                                 Text("Image")
+                                    .help("Enter the height, in pixels, of the image.")
                                 Text("height, px:")
                                 TextField("imageHeightStart",value: $doc.picdef.imageHeight, formatter: ContentView.cgIntPositiveFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
+                            
                             VStack {
                                 Text("Aspect")
+                                    .help("Calculated vale of image width over image height.")
                                 Text("ratio:")
                                 Text("\(aspectRatio)")
                                     .padding(1)
@@ -858,20 +879,25 @@ struct ContentView: View {
                         HStack{
                             VStack {
                                 Text("bE:")
+                                    .help("Enter the value for the color spacing near the edges of the image.")
                                 TextField("bE",value: $doc.picdef.bE,formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
+                            
                             VStack {
                                 Text("eE:")
+                                    .help("Enter the value for the color spacing away from the edges of the image.")
                                 TextField("eE",value: $doc.picdef.eE, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
+                            
                             VStack {
                                 Text("theta:")
+                                    .help("Enter the angle to rotate the image clockwise, in degrees.")
                                 TextField("theta",value: $doc.picdef.theta, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
@@ -884,13 +910,16 @@ struct ContentView: View {
                         HStack {
                             VStack {
                                 Text("nImage:")
+                                    .help("Enter the number to be applied to a saved image.")
                                 TextField("nImage",value: $doc.picdef.nImage, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
+                            
                             VStack {
                                 Text("dFIterMin:")
+                                    .help("Enter a value for the change in the minimum number of iterations in the image.")
                                 TextField("dFIterMin",value: $doc.picdef.dFIterMin, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
