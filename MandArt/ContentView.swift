@@ -17,25 +17,6 @@ import Foundation   // trig functions
 var contextImageGlobal: CGImage?
 var fIterGlobal = [[Double]]()
 
-/*
-struct ImageColorPicker: View {
-    @State private var image: Image
-    @State private var selectedColor = Color.white
-    
-    var body: some View {
-        Image(uiImage: image)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .onTapGesture {
-                let location = gesture.location
-                // here you can use Core Image or Core Graphics to get the color at the location
-                let color = image.getColorAt(location)
-                self.selectedColor = color
-            }
-    }
-}   */
-
-
 struct ContentView: View {
 
     // TODO:  move non-SwiftUI functions and logic into MandMath
@@ -66,7 +47,6 @@ struct ContentView: View {
 
     enum ActiveDisplayChoice {
         case MandArt
-  //      case Pause
         case Gradient
         case Color
         case ScreenColors
@@ -201,14 +181,7 @@ struct ContentView: View {
 
         let imageWidth: Int = doc.picdef.imageWidth
         let imageHeight: Int = doc.picdef.imageHeight
-
-        // let dFIterMin: Double = doc.picdef.dFIterMin
         let nColors: Int = doc.picdef.nColors
-        // let iMax: Double = doc.picdef.iMax
-        
-        // let bE: Double = doc.picdef.bE
-        // let eE: Double = doc.picdef.eE
-        // let nBlocks: Int = doc.picdef.nBlocks
 
         if drawIt {
             return getPictureImage(&colors)
@@ -367,9 +340,6 @@ struct ContentView: View {
 
         var h: Double = 0.0
         var xX: Double = 0.0
- //       var yY: Double = 0.0
-        
- //       yY = 0.5
 
         for i in 0...nBlocks {
             blockBound[i] = bE*Double(i) + dE*pow(Double(i), eE)
@@ -498,8 +468,6 @@ struct ContentView: View {
             } //end for u
 
         } //end for v
-        
-  /*      print(blockBound[0], blockBound[1], blockBound[2], blockBound[3], blockBound[4], blockBound[5], blockBound[6], blockBound[7], blockBound[8], blockBound[9], blockBound[10], blockBound[11], blockBound[12], blockBound[13], blockBound[14], blockBound[15], blockBound[16], blockBound[17], blockBound[18], blockBound[19], blockBound[20], blockBound[21], blockBound[22], blockBound[23], blockBound[24], blockBound[25], blockBound[26], blockBound[27], blockBound[28], blockBound[29], blockBound[30], blockBound[31], blockBound[32], blockBound[33], blockBound[34], blockBound[35], blockBound[36], blockBound[37], blockBound[38], blockBound[39], blockBound[40], blockBound[41], blockBound[42], blockBound[43], blockBound[44], blockBound[45], blockBound[46], blockBound[47], blockBound[48], blockBound[9], blockBound[50], blockBound[51], blockBound[52], blockBound[53], blockBound[54], blockBound[55], blockBound[56], blockBound[57], blockBound[58], blockBound[59])  */
 
         // convert the context into an image - this is what the function will return
         contextImage = context.makeImage()!
@@ -527,7 +495,9 @@ struct ContentView: View {
         let nColors: Int = doc.picdef.nColors
         let bE: Double = doc.picdef.bE
         let eE: Double = doc.picdef.eE
-        let yY: Double = doc.picdef.yY
+        var yY: Double = doc.picdef.yY
+        
+        if(yY==1.0) {yY = yY - 1.0e-10}
         
         var contextImage: CGImage
         var fIterMinLeft: Double = 0.0
@@ -656,6 +626,14 @@ struct ContentView: View {
                         
                         if h >= blockBound[block] && h < blockBound[block + 1]   {
                             
+                            if (h - blockBound[block])/(blockBound[block + 1] - blockBound[block]) <= yY {
+                                h = blockBound[block]
+                            }
+                            
+                            else {
+                                h = blockBound[block] + ((h - blockBound[block]) - yY*(blockBound[block + 1] - blockBound[block]))/(1 - yY)
+                            }
+                            
                             xX = (h - blockBound[block])/(blockBound[block + 1] - blockBound[block])
                             
                             while block0 > nColors - 1 {
@@ -707,8 +685,6 @@ struct ContentView: View {
     // and change this state variable when buttons are pressed.
     var body: some View {
 
-
-
         HStack{ // instructions on left, picture on right
                 // Left (first) VStack is left side with user stuff
                 // Right (second) VStack is for mandart, gradient, or colors
@@ -738,7 +714,6 @@ struct ContentView: View {
 
                     }
                     
-
                     HStack {
                         VStack {
                             Button("Show screen colors") {showScreenColors()}
@@ -792,17 +767,6 @@ struct ContentView: View {
                                 Button("Resume") {readyForPicture()}
                             }
                         }
-                        
-                       
-                        
-              /*          HStack {
-                            VStack {
-                                Button("Show print colors") {readyForPrintColors()}
-                            }
-                            VStack {
-                                Button("Resume") {readyForPicture()}
-                            }
-                        }   */
 
                     }
                     
@@ -813,48 +777,12 @@ struct ContentView: View {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center X")
                                 Text("Between -2 and 2")
-                       /*         TextField("Number", text: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
-                             //       .keyboardType(.numberPad)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                                    .onAccept {
-                                        // process inputNumber when the user presses return
-                                        print("Number entered: \(self.doc.picdef.xC)")
-                                    }   */
-                                
-                      /*          TextField("Number",value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .padding(4)
-                                    .frame(maxWidth:120)    */
                                 
                                 TextField("Number",value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .padding(4)
                                     .frame(maxWidth:120)
-                           /*         .onAccept {
-                                        // process inputNumber when the user presses return
-                                        print("Hello")
-                                    }   */
-                                
-               /*                 struct ContentView: View {
-                                    @State private var inputNumber = ""
-                                    @State private var isEditing = false
-                                    
-                                    var body: some View {
-                                        TextField("Number", text: $inputNumber, onEditingChanged: { isEditing in
-                                            self.isEditing = isEditing
-                                        })
-                                        .keyboardType(.numberPad)
-                                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                                        .onTapGesture {
-                                            if !self.isEditing {
-                                                // process inputNumber when the user finishes editing and taps outside the text field
-                                                print("Number entered: \(self.inputNumber)")
-                                            }
-                                        }
-                                    }
-                                }   */
                                 
                             } // end VStack
                             
@@ -1077,25 +1005,20 @@ struct ContentView: View {
                 }
                 
                 else if activeDisplayState == ActiveDisplayChoice.Gradient {
-        //            let image: CGImage = getImage()!
-       //             let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
                             Text("")
-               //             img.gesture(self.tapGesture)
                         }
                     }
                 }
                 
                 else if activeDisplayState == ActiveDisplayChoice.Color {
-                    //            let image: CGImage = getImage()!
-                    //             let img = Image(image, scale: 1.0, label: Text("Test"))
+
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
                             Text("")
-                            //             img.gesture(self.tapGesture)
                         }
                     }
                 }
@@ -1232,30 +1155,6 @@ struct ContentView: View {
         }
         return 1
     }
-
- /*   /// Returns the new x to be the picture center x when user drags in the picture.
-    /// - Parameter tap: information about the drag
-    /// - Returns: Double new center x
-    private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-        let start = tap.startLocation.x
-        let end = tap.location.x
-        let moved = end - start
-        let diff = moved / doc.picdef.scale
-        let newCenter: Double = doc.picdef.xC - diff
-        return newCenter
-    }
-
-    /// Returns the new y to be the picture center y when user drags in the picture.
-    /// - Parameter tap: information about the drag
-    /// - Returns: Double new center y
-    private func getCenterYFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-        let start = tap.startLocation.y
-        let end = tap.location.y
-        let moved = end - start
-        let diff = moved / doc.picdef.scale
-        let newCenter = doc.picdef.yC + diff
-        return newCenter
-    }   */
     
     /// Returns the new x to be the picture center x when user drags in the picture.
     /// - Parameter tap: information about the drag
@@ -1366,20 +1265,6 @@ struct ContentView: View {
         drawGradient = true
     }
     
- /*   fileprivate func showScreenColors() {
-        imageScreen?
-            .resizable()
-            .scaledToFit()
-        
-        imageScreen = Image("Screen colors")
-    }   */
-    
- /*   fileprivate func showScreenColors() {
-        imageScreen
-            .resizable()
-            .scaledToFit()
-    }   */
-    
     fileprivate func showScreenColors()  {
         activeDisplayState = ActiveDisplayChoice.ScreenColors
     }
@@ -1434,7 +1319,6 @@ extension View {
     }
 }
 
-
 /// Handle validation feedback and local alerts
 ///  Based on
 ///  https://www.avanderlee.com/swiftui/error-alert-presenting/
@@ -1454,8 +1338,3 @@ struct LocalizedAlertError: LocalizedError {
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView(document: .constant(MandArtDocument()))
-//    }
-//}
