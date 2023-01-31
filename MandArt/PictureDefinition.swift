@@ -22,6 +22,7 @@ struct PictureDefinition: Codable, Identifiable {
     var nBlocks: Int =  60
     var bE: Double =  5.0
     var eE: Double =  15.0
+    var yY: Double =  0.0
     var theta: Double =  0.0
     var nImage: Int = 0
     var dFIterMin: Double = 0.0
@@ -75,6 +76,7 @@ struct PictureDefinition: Codable, Identifiable {
         nBlocks: Int,
         bE: Double,
         eE: Double,
+        yY: Double,
         theta: Double,
         nImage: Int,
         dFIterMin: Double,
@@ -92,6 +94,7 @@ struct PictureDefinition: Codable, Identifiable {
             self.nBlocks = nBlocks
             self.bE = bE
             self.eE = eE
+            self.yY = yY
             self.theta = theta
             self.nImage = nImage
             self.dFIterMin = dFIterMin

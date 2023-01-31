@@ -349,6 +349,9 @@ struct ContentView: View {
         let nColors: Int = doc.picdef.nColors
         let bE: Double = doc.picdef.bE
         let eE: Double = doc.picdef.eE
+        var yY: Double = doc.picdef.yY
+        
+        if(yY==1.0) {yY = yY - 1.0e-10}
 
         var dE: Double = 0.0
         var fNBlocks: Double = 0.0
@@ -364,9 +367,9 @@ struct ContentView: View {
 
         var h: Double = 0.0
         var xX: Double = 0.0
-        var yY: Double = 0.0
+ //       var yY: Double = 0.0
         
-        yY = 0.5
+ //       yY = 0.5
 
         for i in 0...nBlocks {
             blockBound[i] = bE*Double(i) + dE*pow(Double(i), eE)
@@ -524,6 +527,7 @@ struct ContentView: View {
         let nColors: Int = doc.picdef.nColors
         let bE: Double = doc.picdef.bE
         let eE: Double = doc.picdef.eE
+        let yY: Double = doc.picdef.yY
         
         var contextImage: CGImage
         var fIterMinLeft: Double = 0.0
@@ -971,6 +975,19 @@ struct ContentView: View {
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                             }
+                        }
+                        
+                        Divider()
+                        
+                        HStack {
+                            VStack {
+                                Text("yY:")
+                                TextField("yY",value: $doc.picdef.yY, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 80)
+                            }
+                            
                         }
                     } // end group 2 in scrollbar
 
