@@ -695,6 +695,10 @@ struct ContentView: View {
                     Text("MandArt")
                         .font(.title)
                     HStack {
+                        
+                        VStack {Button("Draw picture") {showMandArtBitMap()}}
+                                .help("Draw the picture.")
+                        
                         VStack {
                             Button("Pause") {
                                 drawIt = false
@@ -703,8 +707,8 @@ struct ContentView: View {
                             }
                             .help("Pause to change values.")
                         }
-                        VStack {Button("Resume") {readyForPicture()}}
-                            .help("Redraw picture.")
+                        
+                        
 
                         VStack {Button("+") {zoomIn()}}
                             .help("Zoom in by a factor of two.")
@@ -719,23 +723,12 @@ struct ContentView: View {
                             Button("Show screen colors") {showScreenColors()}
                                 .help("Show 512 colors that look good on the screen.")
                         }
-                            
-                        VStack {
-                            Button("Resume") {showMandArtBitMap()}
-                                .help("Redraw picture.")
-                        }
-                    }
-                    
-                    HStack {
+
                         VStack {
                             Button("Show print colors") {showPrintColors()}
                                 .help("Show 292 colors that should print well.")
                         }
-                        
-                        VStack {
-                            Button("Resume") {showMandArtBitMap()}
-                                .help("Redraw picture.")
-                        }
+
                     }
                     
                 } // end non scroll group at top
@@ -760,22 +753,12 @@ struct ContentView: View {
                                 Button("Make a gradient") {readyForGradient()}
                                     .help("Draw a gradient between two adjoining colors.")
                             }
-                            VStack {
-                                Button("Resume") {readyForPicture()}
-                                    .help("Redraw picture.")
-                            }
-                        }
-                        
-                        HStack {
+
                             VStack {
                                 Button("Color the image") {readyForColors()}
                                     .help("Color the image using the existing iteration data.")
                             }
-                            
-                            VStack {
-                                Button("Resume") {readyForPicture()}
-                                    .help("Redraw picture.")
-                            }
+
                         }
 
                     }
@@ -1330,6 +1313,11 @@ struct ContentView: View {
     fileprivate func showMandArtBitMap() {
         activeDisplayState = ActiveDisplayChoice.MandArt
         readyForPicture()
+    }
+    
+    fileprivate func showGradient() {
+        activeDisplayState = ActiveDisplayChoice.Gradient
+        readyForGradient()
     }
 
     /// Get the app ready to draw a MandArt picture.
