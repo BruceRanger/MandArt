@@ -60,10 +60,11 @@ struct ContentView: View {
     ///   - nColors: int number of the left hand color, starting with 1 (not 0)
     ///   - colors: array of colors (for the whole picture)
     /// - Returns: optional CGImage with the bitmap or nil
-    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nColors: Int, _ colors: inout [[Double]]) -> CGImage? {
+    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int, _ nColors: Int,         _ colors: inout [[Double]]) -> CGImage? {
 
         var gradientImage: CGImage
         let leftNumber: Int = doc.picdef.leftNumber
+        print("leftNumber", leftNumber)
         var rightNumber: Int = 0
         var color: Double = 0.0
 
@@ -183,15 +184,24 @@ struct ContentView: View {
         let imageHeight: Int = doc.picdef.imageHeight
         let nColors: Int = doc.picdef.nColors
 
-        if drawIt {
+        if drawIt == true {
+    //        print("drawIt is ", drawIt)
             return getPictureImage(&colors)
         }
+        
         else if drawGradient == true && leftGradientIsValid {
+     //       print("drawIt is ", drawIt)
+     //       print("drawGradient is ", drawGradient)
             return getGradientImage(imageWidth, imageHeight, nColors, &colors)
         }
+        
         else if drawColors == true {
+            print("drawIt is ", drawIt)
+            print("drawGradient is ", drawGradient)
+            print("drawColors is ", drawColors)
             return getColorImage(&colors)
         }
+        
         return nil
     }
 
@@ -708,14 +718,35 @@ struct ContentView: View {
                             .help("Pause to change values.")
                         }
                         
-                        
-
                         VStack {Button("+") {zoomIn()}}
                             .help("Zoom in by a factor of two.")
 
                         VStack {Button("-") {zoomOut()}}
                             .help("Zoom out by a factot of two.")
-
+                    }
+                    
+                   
+                    
+                    HStack{
+                        Text("Enter left color #:")
+                        TextField("leftNumber",value: $doc.picdef.leftNumber,
+                                  formatter: ContentView.cgIintMaxColorsFormatter)
+                        .frame(maxWidth: 30)
+                        .foregroundColor(leftGradientIsValid ? .primary : .red)
+                        .help("Select the color # for the left side of a gradient.")
+                        Text("to "+String(rightGradientColor))
+                    }
+                    
+                    HStack {
+                        VStack {
+                            Button("Make a gradient") {showGradient()}
+                                .help("Draw a gradient between two adjoining colors.")
+                        }
+                        
+                        VStack {
+                            Button("Color the image") {readyForColors()}
+                                .help("Color the image using the existing iteration data.")
+                        }
                     }
                     
                     HStack {
@@ -723,12 +754,12 @@ struct ContentView: View {
                             Button("Show screen colors") {showScreenColors()}
                                 .help("Show 512 colors that look good on the screen.")
                         }
-
+                        
                         VStack {
                             Button("Show print colors") {showPrintColors()}
                                 .help("Show 292 colors that should print well.")
                         }
-
+                        
                     }
                     
                 } // end non scroll group at top
@@ -737,34 +768,6 @@ struct ContentView: View {
 
                 ScrollView(showsIndicators: true) {
 
-                    Group {  // scroll group
-
-                        HStack{
-                            Text("Enter left color #:")
-                            TextField("leftNumber",value: $doc.picdef.leftNumber,
-                                      formatter: ContentView.cgIintMaxColorsFormatter)
-                            .frame(maxWidth: 30)
-                            .foregroundColor(leftGradientIsValid ? .primary : .red)
-                            .help("Select the color # for the left side of a gradient.")
-                            Text("to "+String(rightGradientColor))
-                        }
-                        HStack {
-                            VStack {
-                                Button("Make a gradient") {readyForGradient()}
-                                    .help("Draw a gradient between two adjoining colors.")
-                            }
-
-                            VStack {
-                                Button("Color the image") {readyForColors()}
-                                    .help("Color the image using the existing iteration data.")
-                            }
-
-                        }
-
-                    }
-                    
-                    Divider()
-                    
                     Group{  // 1 in scrollbar
                         HStack {
                             VStack { // each input has a vertical container with a Text label & TextField for data
@@ -1034,6 +1037,8 @@ struct ContentView: View {
                 }
                 
                 else if activeDisplayState == ActiveDisplayChoice.Gradient {
+                    let image: CGImage = getImage()!
+       //             let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
@@ -1043,7 +1048,8 @@ struct ContentView: View {
                 }
                 
                 else if activeDisplayState == ActiveDisplayChoice.Color {
-
+                    let image: CGImage = getImage()!
+        //            let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
@@ -1288,11 +1294,27 @@ struct ContentView: View {
     fileprivate func moveHue(from source: IndexSet, to destination: Int) {
         doc.picdef.hues.move(fromOffsets: source, toOffset: destination)
     }
+    
+    /// Get the app ready to draw a MandArt picture.
+    fileprivate func readyForPicture() {
+        drawIt = true
+        /*     drawGradient = false
+         drawColors = false  */
+    }
 
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
         drawIt = false
+  //      print("drawGradient is ", drawGradient)
         drawGradient = true
+   //     print("drawGradient is ", drawGradient)
+    }
+    
+    /// Get the app ready to draw colors.
+    fileprivate func readyForColors() {
+        drawIt = false
+        drawGradient = false
+        drawColors = true
     }
     
     fileprivate func showScreenColors()  {
@@ -1303,12 +1325,7 @@ struct ContentView: View {
         activeDisplayState = ActiveDisplayChoice.PrintColors
     }
     
-    /// Get the app ready to draw colors.
-    fileprivate func readyForColors() {
-        drawIt = false
-        drawGradient = false
-        drawColors = true
-    }
+    
 
     fileprivate func showMandArtBitMap() {
         activeDisplayState = ActiveDisplayChoice.MandArt
@@ -1317,15 +1334,11 @@ struct ContentView: View {
     
     fileprivate func showGradient() {
         activeDisplayState = ActiveDisplayChoice.Gradient
+        print(ActiveDisplayChoice.Gradient)
         readyForGradient()
     }
 
-    /// Get the app ready to draw a MandArt picture.
-    fileprivate func readyForPicture() {
-        drawIt = true
-        drawGradient = false
-        drawColors = false
-    }
+    
 
 
     /// Multiplies scale by 2.0.
