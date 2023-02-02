@@ -58,14 +58,22 @@ struct ContentView: View {
     /// - Parameters:
     ///   - imageHeight: Int bitmap image height in pixels
     ///   - imageWidth: Int bitmap image width in pixels
-    ///   - nColors: int number of the left hand color, starting with 1 (not 0)
+    ///   - nLeft: int number of the left hand color, starting with 1 (not 0)
     ///   - colors: array of colors (for the whole picture)
     /// - Returns: optional CGImage with the bitmap or nil
-    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nColors: Int, _ colors: inout [[Double]]) -> CGImage? {
+    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nLeft: Int, _ colors: inout [[Double]]) -> CGImage? {
 
         var gradientImage: CGImage
-        let leftNumber: Int = doc.picdef.leftNumber
-        var rightNumber: Int = 0
+        let leftNumber: Int = nLeft
+        var rightNumber: Int = leftNumber + 1
+        
+        if leftNumber == colors.count {
+            print("colors.count",colors.count)
+            rightNumber = 1
+        }
+        print("left number =", leftNumber)
+        print("right number =", rightNumber)
+        
         var color: Double = 0.0
 
         var xGradient: Double = 0.0
@@ -133,12 +141,6 @@ struct ContentView: View {
                 // calculate the offset of the pixel
                 let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
 
-                rightNumber = leftNumber + 1
-
-                if leftNumber == nColors {
-                    rightNumber = 1
-                }
-
                 xGradient = Double(u)/Double(width)
 
                 color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
@@ -191,7 +193,7 @@ struct ContentView: View {
         // let eE: Double = doc.picdef.eE
         // let nBlocks: Int = doc.picdef.nBlocks
 
-        if drawIt {
+        if activeDisplayState == ActiveDisplayChoice.MandArt && drawIt {
             return getPictureImage(&colors)
         }
         else if drawGradient == true && leftGradientIsValid {
