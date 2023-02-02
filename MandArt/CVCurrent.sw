@@ -47,7 +47,6 @@ struct ContentView: View {
 
     enum ActiveDisplayChoice {
         case MandArt
-        //      case Pause
         case Gradient
         case Color
         case ScreenColors
@@ -58,13 +57,14 @@ struct ContentView: View {
     /// - Parameters:
     ///   - imageHeight: Int bitmap image height in pixels
     ///   - imageWidth: Int bitmap image width in pixels
-    ///   - nColors: int number of the left hand color, starting with 1 (not 0)
+    ///   - nLeft: int number of the left hand color, starting with 1 (not 0)
     ///   - colors: array of colors (for the whole picture)
     /// - Returns: optional CGImage with the bitmap or nil
-    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nColors: Int, _ colors: inout [[Double]]) -> CGImage? {
+    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int, _ nLeftColor: Int,         _ colors: inout [[Double]]) -> CGImage? {
 
         var gradientImage: CGImage
         let leftNumber: Int = doc.picdef.leftNumber
+        print("leftNumber", leftNumber)
         var rightNumber: Int = 0
         var color: Double = 0.0
 
@@ -135,7 +135,7 @@ struct ContentView: View {
 
                 rightNumber = leftNumber + 1
 
-                if leftNumber == nColors {
+                if leftNumber == nLeftColor {
                     rightNumber = 1
                 }
 
@@ -182,21 +182,21 @@ struct ContentView: View {
 
         let imageWidth: Int = doc.picdef.imageWidth
         let imageHeight: Int = doc.picdef.imageHeight
-
-        // let dFIterMin: Double = doc.picdef.dFIterMin
         let nColors: Int = doc.picdef.hues.count
-        // let iMax: Double = doc.picdef.iMax
+        let nLeft: Int = doc.picdef.left
 
-        // let bE: Double = doc.picdef.bE
-        // let eE: Double = doc.picdef.eE
-        // let nBlocks: Int = doc.picdef.nBlocks
-
-        if drawIt {
+        if drawIt == true {
+            //        print("drawIt is ", drawIt)
             return getPictureImage(&colors)
         }
+
         else if drawGradient == true && leftGradientIsValid {
-            return getGradientImage(imageWidth, imageHeight, doc.picdef.leftNumber, &colors)
+            //       print("drawIt is ", drawIt)
+            //       print("drawGradient is ", drawGradient)
+            return getGradientImage(imageWidth, imageHeight, nLeft, &colors)
         }
+
+
         else if drawColors == true {
             print("drawIt is ", drawIt)
             print("drawGradient is ", drawGradient)
@@ -254,8 +254,8 @@ struct ContentView: View {
         var test2: Double = 0.0
 
         rSqMax = 1.01*(rSqLimit + 2)*(rSqLimit + 2)
-        gGML = log( log(rSqMax) ) - log(log(rSqLimit) )
-        gGL = log(log(rSqLimit) )
+        gGML = log( log(rSqMax) ) - log( log(rSqLimit) )
+        gGL = log( log(rSqLimit) )
 
         for u in 0...imageWidth - 1 {
 
@@ -734,82 +734,82 @@ struct ContentView: View {
                         .help("Zoom out by a factot of two.")
                     }
 
+                    HStack{
+                        Text("Enter left color #:")
+                        TextField("leftNumber",value: $doc.picdef.leftNumber,
+                                  formatter: ContentView.cgIintMaxColorsFormatter)
+                        .frame(maxWidth: 30)
+                        .foregroundColor(leftGradientIsValid ? .primary : .red)
+                        .help("Select the color # for the left side of a gradient.")
+
+                        Text("to "+String(rightGradientColor))
+                    }
+
+                    HStack {
+                        VStack {
+                            Button("Make a gradient") {showGradient()}
+                                .help("Draw a gradient between two adjoining colors.")
+                        }
+
+                        VStack {
+                            Button("Color the image") {readyForColors()}
+                                .help("Color the image using the existing iteration data.")
+                        }
+                    }
+
                     HStack {
                         VStack {
                             Button("Show screen colors") {showScreenColors()}
-                            .help("Show 512 colors that look good on the screen.")
+                                .help("Show 512 colors that look good on the screen.")
                         }
 
                         VStack {
                             Button("Show print colors") {showPrintColors()}
-                            .help("Show 292 colors that should print well.")
+                                .help("Show 292 colors that should print well.")
                         }
+
                     }
 
                 } // end non scroll group at top
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 Divider()
 
                 ScrollView(showsIndicators: true) {
-
-                    Group {  // scroll group
-
-                        HStack{
-                            Text("Enter left color #:")
-                            TextField("leftNumber",value: $doc.picdef.leftNumber,
-                                      formatter: ContentView.cgIintMaxColorsFormatter)
-                            .frame(maxWidth: 30)
-                            .foregroundColor(leftGradientIsValid ? .primary : .red)
-                           .help("Select the color # for the left side of a gradient.")
-
-                            Text("to "+String(rightGradientColor))
-                        }
-                        HStack {
-                            VStack {
-                                Button("Make a gradient") {readyForGradient()}
-                            .help("Draw a gradient between two adjoining colors.")
-                            }
-
-                            VStack {
-                                Button("Color the image") {readyForColors()}
-                                    .help("Color the image using the existing iteration data.")
-                            }
-                        }
-
-                        HStack {
-                            VStack {
-                                Button("Color the image") {readyForColors()}
-                            }
-                            VStack {
-                                Button("Resume") {readyForPicture()}
-                            }
-                        }
-
-                        HStack {
-                            VStack {
-                                Button("Show screen colors") {showScreenColors()}
-                                    .help("Show 512 colors that look good on the screen.")
-                            }
-
-                            VStack {
-                                Button("Show print colors") {showPrintColors()}
-                                    .help("Show 292 colors that should print well.")
-                            }
-
-                        }
-
-                        /*          HStack {
-                         VStack {
-                         Button("Show print colors") {readyForPrintColors()}
-                         }
-                         VStack {
-                         Button("Resume") {readyForPicture()}
-                         }
-                         }   */
-
-                    }
-
-                    Divider()
 
                     Group{  // 1 in scrollbar
                         HStack {
@@ -887,8 +887,8 @@ struct ContentView: View {
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
                                     .help("Enter the width, in pixels, of the image.")
-
                             }
+
                             VStack {
                                 Text("Image")
 
@@ -1076,7 +1076,7 @@ struct ContentView: View {
                 }
 
                 else if activeDisplayState == ActiveDisplayChoice.Gradient {
-                    //            let image: CGImage = getImage()!
+                    let image: CGImage = getImage()!
                     //             let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
@@ -1087,8 +1087,8 @@ struct ContentView: View {
                 }
 
                 else if activeDisplayState == ActiveDisplayChoice.Color {
-                    //            let image: CGImage = getImage()!
-                    //             let img = Image(image, scale: 1.0, label: Text("Test"))
+                    let image: CGImage = getImage()!
+                    //            let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
@@ -1231,30 +1231,6 @@ struct ContentView: View {
         return 1
     }
 
-    /*   /// Returns the new x to be the picture center x when user drags in the picture.
-     /// - Parameter tap: information about the drag
-     /// - Returns: Double new center x
-     private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-     let start = tap.startLocation.x
-     let end = tap.location.x
-     let moved = end - start
-     let diff = moved / doc.picdef.scale
-     let newCenter: Double = doc.picdef.xC - diff
-     return newCenter
-     }
-
-     /// Returns the new y to be the picture center y when user drags in the picture.
-     /// - Parameter tap: information about the drag
-     /// - Returns: Double new center y
-     private func getCenterYFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-     let start = tap.startLocation.y
-     let end = tap.location.y
-     let moved = end - start
-     let diff = moved / doc.picdef.scale
-     let newCenter = doc.picdef.yC + diff
-     return newCenter
-     }   */
-
     /// Returns the new x to be the picture center x when user drags in the picture.
     /// - Parameter tap: information about the drag
     /// - Returns: Double new center x
@@ -1343,10 +1319,10 @@ struct ContentView: View {
         }
     }
 
-    /// Function to validate all colors in the picdef
-    fileprivate func validateColors() {
-        // TODO: communicate with user
-    }
+    /*   /// Function to validate all colors in the picdef
+     fileprivate func validateColors() {
+     // TODO: communicate with user
+     }   */
 
     /// Function to validate X or Y input
     fileprivate func validateX() -> Bool{
@@ -1358,32 +1334,19 @@ struct ContentView: View {
         doc.picdef.hues.move(fromOffsets: source, toOffset: destination)
     }
 
+    /// Get the app ready to draw a MandArt picture.
+    fileprivate func readyForPicture() {
+        drawIt = true
+        /*     drawGradient = false
+         drawColors = false  */
+    }
+
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
         drawIt = false
+        //      print("drawGradient is ", drawGradient)
         drawGradient = true
-    }
-
-    /*   fileprivate func showScreenColors() {
-     imageScreen?
-     .resizable()
-     .scaledToFit()
-
-     imageScreen = Image("Screen colors")
-     }   */
-
-    /*   fileprivate func showScreenColors() {
-     imageScreen
-     .resizable()
-     .scaledToFit()
-     }   */
-
-    fileprivate func showScreenColors()  {
-        activeDisplayState = ActiveDisplayChoice.ScreenColors
-    }
-
-    fileprivate func showPrintColors()  {
-        activeDisplayState = ActiveDisplayChoice.PrintColors
+        //     print("drawGradient is ", drawGradient)
     }
 
     /// Get the app ready to draw colors.
@@ -1393,17 +1356,28 @@ struct ContentView: View {
         drawColors = true
     }
 
+    fileprivate func showScreenColors()  {
+        activeDisplayState = ActiveDisplayChoice.ScreenColors
+    }
+
+    fileprivate func showPrintColors()  {
+        activeDisplayState = ActiveDisplayChoice.PrintColors
+    }
+
+
+
     fileprivate func showMandArtBitMap() {
         activeDisplayState = ActiveDisplayChoice.MandArt
         readyForPicture()
     }
 
-    /// Get the app ready to draw a MandArt picture.
-    fileprivate func readyForPicture() {
-        drawIt = true
-        drawGradient = false
-        drawColors = false
+    fileprivate func showGradient() {
+        activeDisplayState = ActiveDisplayChoice.Gradient
+        print(ActiveDisplayChoice.Gradient)
+        readyForGradient()
     }
+
+
 
 
     /// Multiplies scale by 2.0.
@@ -1432,7 +1406,6 @@ extension View {
     }
 }
 
-
 /// Handle validation feedback and local alerts
 ///  Based on
 ///  https://www.avanderlee.com/swiftui/error-alert-presenting/
@@ -1451,9 +1424,3 @@ struct LocalizedAlertError: LocalizedError {
         underlyingError = localizedError
     }
 }
-
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView(document: .constant(MandArtDocument()))
-//    }
-//}
