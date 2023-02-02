@@ -331,7 +331,7 @@ struct ContentView: View {
         // Now we need to generate a bitmap image.
 
         let nBlocks: Int = doc.picdef.nBlocks
-        let nColors: Int = doc.picdef.nColors
+        let nColors: Int = doc.picdef.hues.count
         let bE: Double = doc.picdef.bE
         let eE: Double = doc.picdef.eE
         var yY: Double = doc.picdef.yY
@@ -504,7 +504,7 @@ struct ContentView: View {
         let iMax: Double = doc.picdef.iMax
         let dFIterMin: Double = doc.picdef.dFIterMin
         let nBlocks: Int = doc.picdef.nBlocks
-        let nColors: Int = doc.picdef.nColors
+        let nColors: Int = doc.picdef.hues.count
         let bE: Double = doc.picdef.bE
         let eE: Double = doc.picdef.eE
         var yY: Double = doc.picdef.yY
@@ -1225,7 +1225,7 @@ struct ContentView: View {
     }
 
     private var rightGradientColor: Int{
-        if leftGradientIsValid && doc.picdef.leftNumber < doc.picdef.nColors {
+        if leftGradientIsValid && doc.picdef.leftNumber < doc.picdef.hues.count {
             return doc.picdef.leftNumber + 1
         }
         return 1
