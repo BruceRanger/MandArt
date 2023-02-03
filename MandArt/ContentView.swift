@@ -68,11 +68,11 @@ struct ContentView: View {
         var rightNumber: Int = leftNumber + 1
         
         if leftNumber == colors.count {
-            print("colors.count",colors.count)
+   //         print("colors.count",colors.count)
             rightNumber = 1
         }
-        print("left number =", leftNumber)
-        print("right number =", rightNumber)
+  //      print("left number =", leftNumber)
+  //      print("right number =", rightNumber)
         
         var color: Double = 0.0
 
@@ -176,6 +176,7 @@ struct ContentView: View {
     /// Gets an image to display on the right side of the app
     /// - Returns: An optional CGImage or nil
     func getImage() -> CGImage? {
+        print(4)
         var colors: [[Double]] = []
 
         doc.picdef.hues.forEach{hue in
@@ -194,15 +195,15 @@ struct ContentView: View {
         // let nBlocks: Int = doc.picdef.nBlocks
 
         if activeDisplayState == ActiveDisplayChoice.MandArt && drawIt {
+            print(1)
             return getPictureImage(&colors)
         }
+        
         else if drawGradient == true && leftGradientIsValid {
             return getGradientImage(imageWidth, imageHeight, doc.picdef.leftNumber, &colors)
         }
+        
         else if drawColors == true {
-            print("drawIt is ", drawIt)
-            print("drawGradient is ", drawGradient)
-            print("drawColors is ", drawColors)
             return getColorImage(&colors)
         }
 
@@ -782,9 +783,9 @@ struct ContentView: View {
                             VStack {
                                 Button("Color the image") {readyForColors()}
                             }
-                            VStack {
+                 /*           VStack {
                                 Button("Resume") {readyForPicture()}
-                            }
+                            }   */
                         }
 
                         HStack {
@@ -1058,12 +1059,12 @@ struct ContentView: View {
 
                 }
 
-
             } // end VStack for user instructions
             .background(instructionBackgroundColor)
             .frame(width:inputWidth)
             .padding(10)
             .errorAlert(error: $errdef.errorCustomObject)
+            
             VStack {
                 if activeDisplayState == ActiveDisplayChoice.MandArt {
                     let image: CGImage = getImage()!
@@ -1078,7 +1079,7 @@ struct ContentView: View {
                 }
 
                 else if activeDisplayState == ActiveDisplayChoice.Gradient {
-                    //            let image: CGImage = getImage()!
+                                let image: CGImage = getImage()!
                     //             let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
@@ -1397,16 +1398,16 @@ struct ContentView: View {
 
     fileprivate func showMandArtBitMap() {
         activeDisplayState = ActiveDisplayChoice.MandArt
+        print(3)
         readyForPicture()
     }
 
     /// Get the app ready to draw a MandArt picture.
     fileprivate func readyForPicture() {
         drawIt = true
-        drawGradient = false
-        drawColors = false
+ //       drawGradient = false
+ //       drawColors = false
     }
-
 
     /// Multiplies scale by 2.0.
     func zoomIn(){
