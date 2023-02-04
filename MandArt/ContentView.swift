@@ -54,124 +54,7 @@ struct ContentView: View {
         case PrintColors
     }
 
-    /// Function to create and return a gradient bitmap
-    /// - Parameters:
-    ///   - imageHeight: Int bitmap image height in pixels
-    ///   - imageWidth: Int bitmap image width in pixels
-    ///   - nLeft: int number of the left hand color, starting with 1 (not 0)
-    ///   - colors: array of colors (for the whole picture)
-    /// - Returns: optional CGImage with the bitmap or nil
-    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nLeft: Int, _ colors: inout [[Double]]) -> CGImage? {
 
-        var gradientImage: CGImage
-        let leftNumber: Int = nLeft
-        var rightNumber: Int = leftNumber + 1
-        
-        if leftNumber == colors.count {
-   //         print("colors.count",colors.count)
-            rightNumber = 1
-        }
-  //      print("left number =", leftNumber)
-  //      print("right number =", rightNumber)
-        
-        var color: Double = 0.0
-
-        var xGradient: Double = 0.0
-
-        // set up CG parameters
-        let bitsPerComponent: Int = 8   // for UInt8
-        let componentsPerPixel: Int = 4  // RGBA = 4 components
-        let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
-        let bytesPerRow: Int = imageWidth * bytesPerPixel
-        let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
-
-        // Allocate data for the raster buffer.  I'm using UInt8 so that I can
-        // address individual RGBA components easily.
-        let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
-
-        // Create a CGBitmapContext for drawing and converting into an image for display
-        let context: CGContext =
-        CGContext(data: rasterBufferPtr,
-                  width: imageWidth,
-                  height: imageHeight,
-                  bitsPerComponent: bitsPerComponent,
-                  bytesPerRow: bytesPerRow,
-                  space: CGColorSpace(name:CGColorSpace.sRGB)!,
-                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
-
-        // use CG to draw into the context
-        // you can use any of the CG drawing routines for drawing into this context
-        // here we will just erase the contents of the CGBitmapContext as the
-        // raster buffer just contains random uninitialized data at this point.
-        context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
-        context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
-        context.fillPath()
-
-        // in addition to using any of the CG drawing routines, you can draw yourself
-        // by accessing individual pixels in the raster image.
-        // here we'll draw a square one pixel at a time.
-        let xStarting: Int = 0
-        let yStarting: Int = 0
-        let width: Int = imageWidth
-        let height: Int = imageHeight
-
-        // iterate over all of the rows for the entire height of the square
-        for v in 0...(height - 1) {
-
-            // calculate the offset to the row of pixels in the raster buffer
-            // assume the origin is at the bottom left corner of the raster image.
-            // note, you could also use the top left, but GC uses the bottom left
-            // so this method keeps your drawing and CG in sync in case you wanted
-            // to use the CG methods for drawing too.
-            //
-            // note, you could do this calculation all together inside of the xoffset
-            // loop, but it's a small optimization to pull this part out and do it here
-            // instead of every time through.
-            let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
-
-            // iterate over all of the pixels in this row
-            for u in 0...(width - 1) {
-
-                // calculate the horizontal offset to the pixel in the row
-                let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
-
-                // sum the horixontal and vertical offsets to get the pixel offset
-                let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
-
-                // calculate the offset of the pixel
-                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
-
-                xGradient = Double(u)/Double(width)
-
-                color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
-                pixelAddress.pointee = UInt8(color)         // R
-
-                color = colors[leftNumber-1][1] + xGradient*(colors[rightNumber - 1][1] - colors[leftNumber-1][1])
-                (pixelAddress + 1).pointee = UInt8(color)   // G
-
-                color = colors[leftNumber-1][2] + xGradient*(colors[rightNumber - 1][2] - colors[leftNumber-1][2])
-                (pixelAddress + 2).pointee = UInt8(color)   // B
-
-                (pixelAddress + 3).pointee = UInt8(255)     //alpha
-
-
-                // IMPORTANT:
-                // there is no type checking here and it is up to you to make sure that the
-                // address indexes do not go beyond the memory allocated for the buffer
-
-            } //end for u
-
-        } //end for v
-
-        // convert the context into an image - this is what the function will return
-        gradientImage = context.makeImage()!
-
-        // no automatic deallocation for the raster data
-        // you need to manage that yourself
-        rasterBufferPtr.deallocate()
-
-        return gradientImage
-    }
 
     /// Gets an image to display on the right side of the app
     /// - Returns: An optional CGImage or nil
@@ -187,7 +70,7 @@ struct ContentView: View {
         let imageHeight: Int = doc.picdef.imageHeight
 
         // let dFIterMin: Double = doc.picdef.dFIterMin
-        let nColors: Int = doc.picdef.hues.count
+ //       let nColors: Int = doc.picdef.hues.count
         // let iMax: Double = doc.picdef.iMax
 
         // let bE: Double = doc.picdef.bE
@@ -199,13 +82,20 @@ struct ContentView: View {
             return getPictureImage(&colors)
         }
         
-        else if drawGradient == true && leftGradientIsValid {
+        else if activeDisplayState == ActiveDisplayChoice.Gradient && drawGradient == true && leftGradientIsValid {
+            print(7)
             return getGradientImage(imageWidth, imageHeight, doc.picdef.leftNumber, &colors)
         }
+        
+  /*      else if drawGradient == true && leftGradientIsValid {
+            return getGradientImage(imageWidth, imageHeight, doc.picdef.leftNumber, &colors)
+        }   */
         
         else if drawColors == true {
             return getColorImage(&colors)
         }
+        
+        print (11)
 
         return nil
     }
@@ -495,6 +385,132 @@ struct ContentView: View {
         contextImageGlobal = contextImage
         return contextImage
     }
+    
+    /// Function to create and return a gradient bitmap
+    /// - Parameters:
+    ///   - imageHeight: Int bitmap image height in pixels
+    ///   - imageWidth: Int bitmap image width in pixels
+    ///   - nLeft: int number of the left hand color, starting with 1 (not 0)
+    ///   - colors: array of colors (for the whole picture)
+    /// - Returns: optional CGImage with the bitmap or nil
+    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nLeft: Int, _ colors: inout [[Double]]) -> CGImage? {
+        
+        print(9)
+        
+        var gradientImage: CGImage
+        let leftNumber: Int = nLeft
+        print(nLeft)
+        var rightNumber: Int = leftNumber + 1
+        
+        print(leftNumber, rightNumber)
+        
+        if leftNumber == colors.count {
+            //         print("colors.count",colors.count)
+            rightNumber = 1
+        }
+        //      print("left number =", leftNumber)
+        //      print("right number =", rightNumber)
+        
+        var color: Double = 0.0
+        
+        var xGradient: Double = 0.0
+        
+        // set up CG parameters
+        let bitsPerComponent: Int = 8   // for UInt8
+        let componentsPerPixel: Int = 4  // RGBA = 4 components
+        let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
+        let bytesPerRow: Int = imageWidth * bytesPerPixel
+        let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
+        
+        // Allocate data for the raster buffer.  I'm using UInt8 so that I can
+        // address individual RGBA components easily.
+        let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
+        
+        // Create a CGBitmapContext for drawing and converting into an image for display
+        let context: CGContext =
+        CGContext(data: rasterBufferPtr,
+                  width: imageWidth,
+                  height: imageHeight,
+                  bitsPerComponent: bitsPerComponent,
+                  bytesPerRow: bytesPerRow,
+                  space: CGColorSpace(name:CGColorSpace.sRGB)!,
+                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        
+        // use CG to draw into the context
+        // you can use any of the CG drawing routines for drawing into this context
+        // here we will just erase the contents of the CGBitmapContext as the
+        // raster buffer just contains random uninitialized data at this point.
+        context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
+        context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
+        context.fillPath()
+        
+        // in addition to using any of the CG drawing routines, you can draw yourself
+        // by accessing individual pixels in the raster image.
+        // here we'll draw a square one pixel at a time.
+        let xStarting: Int = 0
+        let yStarting: Int = 0
+        let width: Int = imageWidth
+        let height: Int = imageHeight
+        
+        // iterate over all of the rows for the entire height of the square
+        for v in 0...(height - 1) {
+            
+            // calculate the offset to the row of pixels in the raster buffer
+            // assume the origin is at the bottom left corner of the raster image.
+            // note, you could also use the top left, but GC uses the bottom left
+            // so this method keeps your drawing and CG in sync in case you wanted
+            // to use the CG methods for drawing too.
+            //
+            // note, you could do this calculation all together inside of the xoffset
+            // loop, but it's a small optimization to pull this part out and do it here
+            // instead of every time through.
+            let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
+            
+            // iterate over all of the pixels in this row
+            for u in 0...(width - 1) {
+                
+                // calculate the horizontal offset to the pixel in the row
+                let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
+                
+                // sum the horixontal and vertical offsets to get the pixel offset
+                let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
+                
+                // calculate the offset of the pixel
+                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+                
+                xGradient = Double(u)/Double(width)
+                
+                color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
+                pixelAddress.pointee = UInt8(color)         // R
+                
+                color = colors[leftNumber-1][1] + xGradient*(colors[rightNumber - 1][1] - colors[leftNumber-1][1])
+                (pixelAddress + 1).pointee = UInt8(color)   // G
+                
+                color = colors[leftNumber-1][2] + xGradient*(colors[rightNumber - 1][2] - colors[leftNumber-1][2])
+                (pixelAddress + 2).pointee = UInt8(color)   // B
+                
+                (pixelAddress + 3).pointee = UInt8(255)     //alpha
+                
+                
+                // IMPORTANT:
+                // there is no type checking here and it is up to you to make sure that the
+                // address indexes do not go beyond the memory allocated for the buffer
+                
+            } //end for u
+            
+        } //end for v
+        
+        // convert the context into an image - this is what the function will return
+        gradientImage = context.makeImage()!
+        
+        // no automatic deallocation for the raster data
+        // you need to manage that yourself
+        rasterBufferPtr.deallocate()
+        
+        print(10)
+        
+        return gradientImage
+    }
 
     /// Function to create and return a user-colored MandArt bitmap
     /// - Parameters:
@@ -769,7 +785,8 @@ struct ContentView: View {
                         }
                         HStack {
                             VStack {
-                                Button("Make a gradient") {readyForGradient()}
+                                Button("Make a gradient") {showGradient()}
+            //                    Button("Make a gradient") {readyForGradient()}
                             .help("Draw a gradient between two adjoining colors.")
                             }
 
@@ -777,15 +794,6 @@ struct ContentView: View {
                                 Button("Color the image") {readyForColors()}
                                     .help("Color the image using the existing iteration data.")
                             }
-                        }
-
-                        HStack {
-                            VStack {
-                                Button("Color the image") {readyForColors()}
-                            }
-                 /*           VStack {
-                                Button("Resume") {readyForPicture()}
-                            }   */
                         }
 
                         HStack {
@@ -1068,34 +1076,34 @@ struct ContentView: View {
             VStack {
                 if activeDisplayState == ActiveDisplayChoice.MandArt {
                     let image: CGImage = getImage()!
-                    let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
-                            Text("")
-                            img.gesture(self.tapGesture)
+                            Text("A")
+                            Image(image, scale: 1.0, label: Text("Test")).gesture(self.tapGesture)
                         }
                     }
                 }
 
                 else if activeDisplayState == ActiveDisplayChoice.Gradient {
                                 let image: CGImage = getImage()!
-                    //             let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
-                            Text("")
+                            Text("B")
+                            Image(image, scale: 1.0, label: Text("Test"))
                         }
                     }
                 }
 
                 else if activeDisplayState == ActiveDisplayChoice.Color {
-                    //            let image: CGImage = getImage()!
-                    //             let img = Image(image, scale: 1.0, label: Text("Test"))
+                                let image: CGImage = getImage()!
+          //                       let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
-                            Text("")
+                            Text("C")
+                            Image(image, scale: 1.0, label: Text("Test"))
                         }
                     }
                 }
@@ -1361,26 +1369,6 @@ struct ContentView: View {
         doc.picdef.hues.move(fromOffsets: source, toOffset: destination)
     }
 
-    /// Get the app ready to draw a gradient.
-    fileprivate func readyForGradient() {
-        drawIt = false
-        drawGradient = true
-    }
-
-    /*   fileprivate func showScreenColors() {
-     imageScreen?
-     .resizable()
-     .scaledToFit()
-
-     imageScreen = Image("Screen colors")
-     }   */
-
-    /*   fileprivate func showScreenColors() {
-     imageScreen
-     .resizable()
-     .scaledToFit()
-     }   */
-
     fileprivate func showScreenColors()  {
         activeDisplayState = ActiveDisplayChoice.ScreenColors
     }
@@ -1401,12 +1389,26 @@ struct ContentView: View {
         print(3)
         readyForPicture()
     }
+    
+    fileprivate func showGradient() {
+        activeDisplayState = ActiveDisplayChoice.Gradient
+        print(8)
+        readyForGradient()
+    }
 
     /// Get the app ready to draw a MandArt picture.
     fileprivate func readyForPicture() {
+        print(5)
         drawIt = true
- //       drawGradient = false
- //       drawColors = false
+        print(drawIt, drawGradient)
+    }
+    
+    /// Get the app ready to draw a gradient.
+    fileprivate func readyForGradient() {
+        print(6)
+        drawIt = false
+        drawGradient = true
+        print(drawIt, drawGradient)
     }
 
     /// Multiplies scale by 2.0.
