@@ -59,7 +59,6 @@ struct ContentView: View {
     /// Gets an image to display on the right side of the app
     /// - Returns: An optional CGImage or nil
     func getImage() -> CGImage? {
-        print(4)
         var colors: [[Double]] = []
 
         doc.picdef.hues.forEach{hue in
@@ -69,33 +68,17 @@ struct ContentView: View {
         let imageWidth: Int = doc.picdef.imageWidth
         let imageHeight: Int = doc.picdef.imageHeight
 
-        // let dFIterMin: Double = doc.picdef.dFIterMin
- //       let nColors: Int = doc.picdef.hues.count
-        // let iMax: Double = doc.picdef.iMax
-
-        // let bE: Double = doc.picdef.bE
-        // let eE: Double = doc.picdef.eE
-        // let nBlocks: Int = doc.picdef.nBlocks
-
         if activeDisplayState == ActiveDisplayChoice.MandArt && drawIt {
-            print(1)
             return getPictureImage(&colors)
         }
         
         else if activeDisplayState == ActiveDisplayChoice.Gradient && drawGradient == true && leftGradientIsValid {
-            print(7)
             return getGradientImage(imageWidth, imageHeight, doc.picdef.leftNumber, &colors)
         }
-        
-  /*      else if drawGradient == true && leftGradientIsValid {
-            return getGradientImage(imageWidth, imageHeight, doc.picdef.leftNumber, &colors)
-        }   */
         
         else if drawColors == true {
             return getColorImage(&colors)
         }
-        
-        print (11)
 
         return nil
     }
@@ -395,21 +378,13 @@ struct ContentView: View {
     /// - Returns: optional CGImage with the bitmap or nil
     fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nLeft: Int, _ colors: inout [[Double]]) -> CGImage? {
         
-        print(9)
-        
         var gradientImage: CGImage
         let leftNumber: Int = nLeft
-        print(nLeft)
         var rightNumber: Int = leftNumber + 1
-        
-        print(leftNumber, rightNumber)
-        
+                
         if leftNumber == colors.count {
-            //         print("colors.count",colors.count)
             rightNumber = 1
         }
-        //      print("left number =", leftNumber)
-        //      print("right number =", rightNumber)
         
         var color: Double = 0.0
         
@@ -506,8 +481,6 @@ struct ContentView: View {
         // no automatic deallocation for the raster data
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
-        
-        print(10)
         
         return gradientImage
     }
@@ -764,63 +737,48 @@ struct ContentView: View {
                             .help("Show 292 colors that should print well.")
                         }
                     }
+                    
+                    HStack{
+                        Text("Enter left color #:")
+                        TextField("leftNumber",value: $doc.picdef.leftNumber,
+                                  formatter: ContentView.cgIintMaxColorsFormatter)
+                        .frame(maxWidth: 30)
+                        .foregroundColor(leftGradientIsValid ? .primary : .red)
+                        .help("Select the color # for the left side of a gradient.")
+                        
+                        Text("to "+String(rightGradientColor))
+                    }
+                    
+                    HStack {
+                        VStack {
+                            Button("Make a gradient") {showGradient()}
+                                .help("Draw a gradient between two adjoining colors.")
+                        }
+                        
+                        VStack {
+                            Button("Color the image") {readyForColors()}
+                                .help("Color the image using the existing iteration data.")
+                        }
+                    }
+                    
+                    HStack {
+                        VStack {
+                            Button("Show screen colors") {showScreenColors()}
+                                .help("Show 512 colors that look good on the screen.")
+                        }
+                        
+                        VStack {
+                            Button("Show print colors") {showPrintColors()}
+                                .help("Show 292 colors that should print well.")
+                        }
+                        
+                    }
 
                 } // end non scroll group at top
 
                 Divider()
 
                 ScrollView(showsIndicators: true) {
-
-                    Group {  // scroll group
-
-                        HStack{
-                            Text("Enter left color #:")
-                            TextField("leftNumber",value: $doc.picdef.leftNumber,
-                                      formatter: ContentView.cgIintMaxColorsFormatter)
-                            .frame(maxWidth: 30)
-                            .foregroundColor(leftGradientIsValid ? .primary : .red)
-                           .help("Select the color # for the left side of a gradient.")
-
-                            Text("to "+String(rightGradientColor))
-                        }
-                        HStack {
-                            VStack {
-                                Button("Make a gradient") {showGradient()}
-            //                    Button("Make a gradient") {readyForGradient()}
-                            .help("Draw a gradient between two adjoining colors.")
-                            }
-
-                            VStack {
-                                Button("Color the image") {readyForColors()}
-                                    .help("Color the image using the existing iteration data.")
-                            }
-                        }
-
-                        HStack {
-                            VStack {
-                                Button("Show screen colors") {showScreenColors()}
-                                    .help("Show 512 colors that look good on the screen.")
-                            }
-
-                            VStack {
-                                Button("Show print colors") {showPrintColors()}
-                                    .help("Show 292 colors that should print well.")
-                            }
-
-                        }
-
-                        /*          HStack {
-                         VStack {
-                         Button("Show print colors") {readyForPrintColors()}
-                         }
-                         VStack {
-                         Button("Resume") {readyForPicture()}
-                         }
-                         }   */
-
-                    }
-
-                    Divider()
 
                     Group{  // 1 in scrollbar
                         HStack {
@@ -852,7 +810,7 @@ struct ContentView: View {
                         }
 
                     } // end group 1 in scrollbar
-                    Divider()
+                    
                     Group{ // start group 2 in scrollbar
                         HStack {
                             VStack {
@@ -885,8 +843,6 @@ struct ContentView: View {
                                     .help("Enter the minimum value for the square of the distance from the origin of the Mandelbrot coordinate system. A larger value will increase the resolution, but slow down the calculation.")
                             }
                         }
-
-                        Divider()
 
                         HStack {
                             VStack {
@@ -921,8 +877,6 @@ struct ContentView: View {
                             }
                         }
 
-                        Divider()
-
                         HStack{
                             VStack {
                                 Text("bE:")
@@ -955,8 +909,6 @@ struct ContentView: View {
                             }
                         }
 
-                        Divider()
-
                         HStack {
                             VStack {
                                 Text("nImage:")
@@ -987,8 +939,6 @@ struct ContentView: View {
                                     .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
                             }
                         }
-
-                        Divider()
 
                         HStack {
                             VStack {
@@ -1079,7 +1029,6 @@ struct ContentView: View {
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
-                            Text("A")
                             Image(image, scale: 1.0, label: Text("Test")).gesture(self.tapGesture)
                         }
                     }
@@ -1090,7 +1039,6 @@ struct ContentView: View {
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
-                            Text("B")
                             Image(image, scale: 1.0, label: Text("Test"))
                         }
                     }
@@ -1098,11 +1046,9 @@ struct ContentView: View {
 
                 else if activeDisplayState == ActiveDisplayChoice.Color {
                                 let image: CGImage = getImage()!
-          //                       let img = Image(image, scale: 1.0, label: Text("Test"))
                     GeometryReader {
                         geometry in
                         ZStack(alignment: .topLeading) {
-                            Text("C")
                             Image(image, scale: 1.0, label: Text("Test"))
                         }
                     }
@@ -1386,29 +1332,23 @@ struct ContentView: View {
 
     fileprivate func showMandArtBitMap() {
         activeDisplayState = ActiveDisplayChoice.MandArt
-        print(3)
         readyForPicture()
     }
     
     fileprivate func showGradient() {
         activeDisplayState = ActiveDisplayChoice.Gradient
-        print(8)
         readyForGradient()
     }
 
     /// Get the app ready to draw a MandArt picture.
     fileprivate func readyForPicture() {
-        print(5)
         drawIt = true
-        print(drawIt, drawGradient)
     }
     
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
-        print(6)
         drawIt = false
         drawGradient = true
-        print(drawIt, drawGradient)
     }
 
     /// Multiplies scale by 2.0.
