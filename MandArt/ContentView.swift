@@ -378,6 +378,12 @@ struct ContentView: View {
     /// - Returns: optional CGImage with the bitmap or nil
     fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nLeft: Int, _ colors: inout [[Double]]) -> CGImage? {
         
+        var yY: Double = doc.picdef.yY
+        
+        if(yY==1.0) {yY = yY - 1.0e-10}
+        
+  //      var uU: Double = 0.0
+        
         var gradientImage: CGImage
         let leftNumber: Int = nLeft
         var rightNumber: Int = leftNumber + 1
@@ -452,6 +458,14 @@ struct ContentView: View {
                 
                 // calculate the offset of the pixel
                 let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+                
+   //             h = blockBound[block] + ((h - blockBound[block]) - yY*(blockBound[block + 1] - blockBound[block]))/(1 - yY)
+                
+    //            uU = Double(u)
+                
+    //            uU = 0.0 + ((uU - 0.0) - yY*(Double(width) - 0.0))/(1 - yY)
+                
+    //             xX = (h - blockBound[block])/(blockBound[block + 1] - blockBound[block])
                 
                 xGradient = Double(u)/Double(width)
                 
