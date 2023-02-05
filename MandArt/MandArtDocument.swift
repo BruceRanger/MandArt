@@ -112,35 +112,30 @@ final class MandArtDocument: ReferenceFileDocument {
         }
     }
 
-    ///Yes, you may need to adjust your project settings
-    ///to have the proper entitlements to access the user's picturesDirectory folder.
-    ///To do this, go to your project's Signing & Capabilities tab
-    ///and enable the Files and Folders capability for your app.
+    /// Yes, you may need to adjust your project settings
+    /// to have the proper entitlements to access the user's picturesDirectory folder.
+    /// To do this, go to your project's Signing & Capabilities tab
+    /// and enable the Files and Folders capability for your app.
 
-    ///Once you've done that, you'll be able to access the user's picturesDirectory
-    ///folder and save files there.
-    ///Keep in mind that this capability only applies to apps running on
-    ///macOS 11.0 or later.
-    ///For earlier versions of macOS,
-    ///you'll need to use the app's sandbox container's picturesDirectory folder.
+    /// Once you've done that, you'll be able to access the user's picturesDirectory
+    /// folder and save files there.
+    /// Keep in mind that this capability only applies to apps running on
+    /// macOS 11.0 or later.
+    /// For earlier versions of macOS,
+    /// you'll need to use the app's sandbox container's picturesDirectory folder.
     ///
-    func saveImageUserDirectory(_ image: CGImage!, fileName:String){
-        DispatchQueue.main.sync {
-            let savePanel = NSOpenPanel()
+    func saveImageUserDirectory(_ image: CGImage!, fileName: String) {
+        DispatchQueue.main.async {
+            let savePanel = NSSavePanel()
             savePanel.title = "Choose Directory for MandArt image"
-            savePanel.allowsMultipleSelection = false
-            savePanel.canChooseDirectories = true
+            savePanel.nameFieldStringValue = fileName
             savePanel.canCreateDirectories = true
-            print("Before savePanel.begin")
-            savePanel.begin { (result) -> Void in
-                if result == NSApplication.ModalResponse.OK {
-                    guard let selectedURL = savePanel.urls.first else { return }
-                    let fileURL = selectedURL.appendingPathComponent(fileName)
-                    let dest = CGImageDestinationCreateWithURL(fileURL as CFURL, kUTTypeJPEG, 1, nil)
-                    print("4")
+            savePanel.begin { result in
+                if result == .OK, let url = savePanel.url {
+                    let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypeJPEG, 1, nil)
                     CGImageDestinationAddImage(dest!, image, nil)
                     if CGImageDestinationFinalize(dest!) {
-                        print("Image saved successfully to \(fileURL)")
+                        print("Image saved successfully to \(url)")
                     } else {
                         print("Error saving image")
                     }
@@ -149,7 +144,6 @@ final class MandArtDocument: ReferenceFileDocument {
             print("After savePanel.begin")
         }
     }
-
 
     /// Create a snapshot of the current state of the document for serialization
     ///  while the live self remains editiable by the user
