@@ -6,12 +6,10 @@
 import SwiftUI
 
 struct OpeningView: View {
-
     let defaultFileName = MandMath.getDefaultDocumentName()
 
     var body: some View {
-
-        VStack{
+        VStack {
             Text("Use the MandArt Menu:")
                 .padding(10)
 
