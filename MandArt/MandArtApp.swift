@@ -38,3 +38,18 @@ struct MandArtApp: App {
  Format your code: To format a single file, run the following command in the terminal: swiftformat <file-name>.swift To format an entire directory, run the following command: swiftformat <directory-name>
 
  */
+
+/*
+
+ SwiftLint is a tool that helps enforce Swift style and conventions. Here's how you can use it:
+
+ Install SwiftLint: You can install SwiftLint using Homebrew, by running the following command in the terminal: brew install swiftlint
+
+ Lint your code: To lint a single file, run the following command in the terminal: swiftlint lint <file-name>.swift To lint an entire directory, run the following command: swiftlint lint <directory-name>
+
+ Customize lint rules: SwiftLint has a number of customizable rules that can be used to enforce specific coding conventions and standards. You can specify these rules by creating a .swiftlint.yml configuration file in your project's root directory or by passing them as command-line arguments.
+
+ Integrating with Xcode: SwiftLint can be easily integrated with Xcode to automatically check and enforce coding style in real-time. To do this, you can add a new "Run Script" phase to your Xcode project and call the swiftlint command with the appropriate arguments.
+
+ That's it! SwiftLint will now enforce the specified lint rules and conventions, helping you maintain a consistent and high-quality codebase.
+ */
