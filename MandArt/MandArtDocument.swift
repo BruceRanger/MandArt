@@ -3,7 +3,8 @@
 //  MandArt
 //
 //  See:
-//  https://www.hackingwithswift.com/quick-start/swiftui/how-to-create-a-document-based-app-using-filedocument-and-documentgroup
+//  https://www.hackingwithswift.com/quick-start/swiftui/
+//  how-to-create-a-document-based-app-using-filedocument-and-documentgroup
 //
 
 import SwiftUI
@@ -59,7 +60,9 @@ final class MandArtDocument: ReferenceFileDocument {
     ///   - snapshot: snapshot of the current state
     ///   - configuration: write config
     /// - Returns: a fileWrapper
-    func fileWrapper(snapshot: PictureDefinition, configuration _: WriteConfiguration) throws -> FileWrapper {
+    func fileWrapper(
+        snapshot: PictureDefinition,
+        configuration _: WriteConfiguration) throws -> FileWrapper {
         let data = try JSONEncoder().encode(snapshot)
         let fileWrapper = FileWrapper(regularFileWithContents: data)
         print("print the image too")
