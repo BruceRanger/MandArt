@@ -9,6 +9,7 @@
 import SwiftUI      // views
 import Foundation   // trig functions
 
+
 // File / Project Settings / Per-user project settings / derived data
 // set to project-relative path DerivedData
 // now I can see the intermediate build products.
@@ -26,6 +27,7 @@ struct ContentView: View {
 
     // the remaining content should all require SwiftUI
     @EnvironmentObject var doc: MandArtDocument
+
     let instructionBackgroundColor = Color.green.opacity(0.5)
     let instructionBackgroundColorLite = Color.green.opacity(0.6)
 
@@ -44,6 +46,7 @@ struct ContentView: View {
     @State private var drawGradient = false
     @State private var drawColors = false
     @State private var activeDisplayState = ActiveDisplayChoice.MandArt
+    @State private var stringYC: String = ""
 
     enum ActiveDisplayChoice {
         case MandArt
@@ -54,11 +57,12 @@ struct ContentView: View {
         case PrintColors
     }
 
-
+   
 
     /// Gets an image to display on the right side of the app
     /// - Returns: An optional CGImage or nil
     func getImage() -> CGImage? {
+
         var colors: [[Double]] = []
 
         doc.picdef.hues.forEach{hue in
@@ -697,6 +701,7 @@ struct ContentView: View {
         return contextImage
     }
 
+
     // To swap a GeometryReader for an Image on button click in SwiftUI,
     // you can use a state variable to keep track of
     // what should be displayed,
@@ -800,7 +805,6 @@ struct ContentView: View {
                                 Text("Enter center X")
 
                                 Text("Between -2 and 2")
-
                                 TextField("Number",value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
@@ -812,16 +816,36 @@ struct ContentView: View {
 
                             VStack {
                                 Text("Enter center Y")
-                                Text("Between -2 and 2")
-                                TextField("Number",value: $doc.picdef.yC, formatter: ContentView.cgDecimalAbs2Formatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .padding(4)
-                                    .frame(maxWidth:120)
-                                    .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
-                            }
 
-                        }
+                                Text("Between -2 and 2")
+
+                                TextField("0.08442",
+                                          text: $stringYC  )
+                                .textFieldStyle(.roundedBorder)
+                                .multilineTextAlignment(.trailing)
+                                .padding(4)
+                                .frame(maxWidth:120)
+                                .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
+                                .onSubmit {
+                                    let f = NumberFormatter()
+                                    f.numberStyle = .decimal
+                                    f.maximumFractionDigits = 8
+                                    f.minimumFractionDigits = 8
+                                    f.isPartialStringValidationEnabled = false
+                                    if let d = f.number(from: stringYC)?.doubleValue {
+                                        if d >= -2.00000000 && d <= 2.00000000 {
+                                            self.doc.picdef.yC = d
+                                        } else {
+                                            print("error, invalid YC")
+                                        }
+                                    } else {
+                                        print("error, invalid format for YC")
+                                    }
+                                } // end method
+
+                            } // end VStack
+
+                        }  // end HStack
 
                     } // end group 1 in scrollbar
                     
@@ -1118,6 +1142,28 @@ struct ContentView: View {
 
     // HELPER FUNCTIONS AND PRIVATE VARIABLES DOWN HERE......
 
+    /*
+
+     In general, both the text and the value properties of a TextField in SwiftUI will update after each character is entered by the user. This allows you to access the updated value of the text field in real-time as the user is entering text, and to respond to changes in the text field's contents as needed.
+
+     For example, if you have a TextField bound to a String property using the text property, you can observe changes to the text field's contents in real-time, and perform actions such as filtering a list of items or making API requests as the user types. Similarly, if you have a TextField bound to an Int or Double property using the value property and a formatter, you can use the updated value of the text field to perform calculations or validate user input in real-time as the user enters text.
+
+     You can use a Binding<String> with a custom NumberFormatter and the isPartialFormatter property set to true to wait until all characters have been entered, then apply the NumberFormatter:
+
+
+     The isPartialStringValidationEnabled property of a NumberFormatter in Swift is a Boolean value that determines whether the formatter should validate partial strings as the user enters text into a text field.
+
+     When isPartialStringValidationEnabled is set to true, the formatter will validate each partial string entered by the user and apply the appropriate formatting as the user types. This can be useful if you want to enforce a specific format for the number entered by the user, or if you want to immediately display errors if the user enters an invalid character.
+
+     When isPartialStringValidationEnabled is set to false, the formatter will only validate the final string entered by the user, after the user has finished entering the value. This can be useful if you want to allow the user to enter a partial value without immediately validating it, or if you want to provide more lenient validation and only enforce the desired format once the user has finished entering the value.
+
+     The value of isPartialStringValidationEnabled will depend on your specific use case and how you want to handle user input in your app.
+
+
+
+
+     */
+
     static var cg255Formatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -1130,8 +1176,9 @@ struct ContentView: View {
     static var cgDecimalAbs2Formatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
+        formatter.isPartialStringValidationEnabled = true
         formatter.maximumFractionDigits = 8
-        // formatter.minimumFractionDigits = 8
+        formatter.minimumFractionDigits = 8
         formatter.maximum = 2.0
         formatter.minimum = -2.0
         return formatter
