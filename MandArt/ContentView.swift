@@ -9,7 +9,6 @@
 import SwiftUI      // views
 import Foundation   // trig functions
 
-
 // File / Project Settings / Per-user project settings / derived data
 // set to project-relative path DerivedData
 // now I can see the intermediate build products.
@@ -57,15 +56,13 @@ struct ContentView: View {
         case PrintColors
     }
 
-   
-
     /// Gets an image to display on the right side of the app
     /// - Returns: An optional CGImage or nil
     func getImage() -> CGImage? {
 
         var colors: [[Double]] = []
 
-        doc.picdef.hues.forEach{hue in
+        doc.picdef.hues.forEach {hue in
             let arr: [Double] = [hue.r, hue.g, hue.b]
             colors.insert(arr, at: colors.endIndex)}
 
@@ -74,19 +71,14 @@ struct ContentView: View {
 
         if activeDisplayState == ActiveDisplayChoice.MandArt && drawIt {
             return getPictureImage(&colors)
-        }
-        
-        else if activeDisplayState == ActiveDisplayChoice.Gradient && drawGradient == true && leftGradientIsValid {
+        } else if activeDisplayState == ActiveDisplayChoice.Gradient && drawGradient == true && leftGradientIsValid {
             return getGradientImage(imageWidth, imageHeight, doc.picdef.leftNumber, &colors)
-        }
-        
-        else if drawColors == true {
+        } else if drawColors == true {
             return getColorImage(&colors)
         }
 
         return nil
     }
-
 
     /// Function to create and return a user-created MandArt bitmap
     /// - Parameters:
@@ -159,11 +151,11 @@ struct ContentView: View {
                 if xx < test1 || test2 < 0.0625 {
                     fIter[u][v] = iMax  // black
                     iter = iMax  // black
-                }   //end if
+                }   // end if
 
                 else {
                     for i in 1...Int(iMax) {
-                        if rSq >= rSqLimit{
+                        if rSq >= rSqLimit {
                             break
                         }
 
@@ -173,18 +165,18 @@ struct ContentView: View {
                         rSq = xx*xx + yy*yy
                         iter = Double(i)
                     }
-                }   //end else
+                }   // end else
 
                 if iter < iMax {
 
                     dIter = Double(-(  log( log(rSq) ) - gGL  )/gGML)
 
                     fIter[u][v] = iter + dIter
-                }   //end if
+                }   // end if
 
                 else {
                     fIter[u][v] = iter
-                }   //end else
+                }   // end else
 
             }    // end first for v
 
@@ -216,7 +208,7 @@ struct ContentView: View {
         let eE: Double = doc.picdef.eE
         var yY: Double = doc.picdef.yY
 
-        if(yY==1.0) {yY = yY - 1.0e-10}
+        if yY==1.0 {yY = yY - 1.0e-10}
 
         var dE: Double = 0.0
         var fNBlocks: Double = 0.0
@@ -255,7 +247,7 @@ struct ContentView: View {
                   height: imageHeight,
                   bitsPerComponent: bitsPerComponent,
                   bytesPerRow: bytesPerRow,
-                  space: CGColorSpace(name:CGColorSpace.sRGB)!,
+                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
                   bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
         // use CG to draw into the context
@@ -298,13 +290,13 @@ struct ContentView: View {
                 let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
 
                 // calculate the offset of the pixel
-                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+                let pixelAddress: UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
 
-                if fIter[u][v] >= iMax  {               //black
-                    pixelAddress.pointee = UInt8(0)         //red
-                    (pixelAddress + 1).pointee = UInt8(0)   //green
-                    (pixelAddress + 2).pointee = UInt8(0)   //blue
-                    (pixelAddress + 3).pointee = UInt8(255) //alpha
+                if fIter[u][v] >= iMax {               // black
+                    pixelAddress.pointee = UInt8(0)         // red
+                    (pixelAddress + 1).pointee = UInt8(0)   // green
+                    (pixelAddress + 2).pointee = UInt8(0)   // blue
+                    (pixelAddress + 3).pointee = UInt8(255) // alpha
 
                 }   // end if
 
@@ -315,13 +307,11 @@ struct ContentView: View {
 
                         block0 = block
 
-                        if h >= blockBound[block] && h < blockBound[block + 1]   {
+                        if h >= blockBound[block] && h < blockBound[block + 1] {
 
                             if (h - blockBound[block])/(blockBound[block + 1] - blockBound[block]) <= yY {
                                 h = blockBound[block]
-                            }
-
-                            else {
+                            } else {
                                 h = blockBound[block] + ((h - blockBound[block]) - yY*(blockBound[block + 1] - blockBound[block]))/(1 - yY)
                             }
 
@@ -346,7 +336,7 @@ struct ContentView: View {
                             color = colors[block0][2] + xX*(colors[block1][2] - colors[block0][2])
                             (pixelAddress + 2).pointee = UInt8(color)   // B
 
-                            (pixelAddress + 3).pointee = UInt8(255)     //alpha
+                            (pixelAddress + 3).pointee = UInt8(255)     // alpha
 
                         }
 
@@ -355,11 +345,11 @@ struct ContentView: View {
                     // IMPORTANT:
                     // there is no type checking here and it is up to you to make sure that the
                     // address indexes do not go beyond the memory allocated for the buffer
-                } //end else
+                } // end else
 
-            } //end for u
+            } // end for u
 
-        } //end for v
+        } // end for v
 
         // convert the context into an image - this is what the function will return
         contextImage = context.makeImage()!
@@ -372,7 +362,7 @@ struct ContentView: View {
         contextImageGlobal = contextImage
         return contextImage
     }
-    
+
     /// Function to create and return a gradient bitmap
     /// - Parameters:
     ///   - imageHeight: Int bitmap image height in pixels
@@ -380,37 +370,37 @@ struct ContentView: View {
     ///   - nLeft: int number of the left hand color, starting with 1 (not 0)
     ///   - colors: array of colors (for the whole picture)
     /// - Returns: optional CGImage with the bitmap or nil
-    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int,_ nLeft: Int, _ colors: inout [[Double]]) -> CGImage? {
-        
+    fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int, _ nLeft: Int, _ colors: inout [[Double]]) -> CGImage? {
+
         var yY: Double = doc.picdef.yY
-        
-        if(yY==1.0) {yY = yY - 1.0e-10}
-        
+
+        if yY==1.0 {yY = yY - 1.0e-10}
+
   //      var uU: Double = 0.0
-        
+
         var gradientImage: CGImage
         let leftNumber: Int = nLeft
         var rightNumber: Int = leftNumber + 1
-                
+
         if leftNumber == colors.count {
             rightNumber = 1
         }
-        
+
         var color: Double = 0.0
-        
+
         var xGradient: Double = 0.0
-        
+
         // set up CG parameters
         let bitsPerComponent: Int = 8   // for UInt8
         let componentsPerPixel: Int = 4  // RGBA = 4 components
         let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
         let bytesPerRow: Int = imageWidth * bytesPerPixel
         let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
-        
+
         // Allocate data for the raster buffer.  I'm using UInt8 so that I can
         // address individual RGBA components easily.
         let rasterBufferPtr: UnsafeMutablePointer<UInt8> = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
-        
+
         // Create a CGBitmapContext for drawing and converting into an image for display
         let context: CGContext =
         CGContext(data: rasterBufferPtr,
@@ -418,9 +408,9 @@ struct ContentView: View {
                   height: imageHeight,
                   bitsPerComponent: bitsPerComponent,
                   bytesPerRow: bytesPerRow,
-                  space: CGColorSpace(name:CGColorSpace.sRGB)!,
+                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
                   bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
-        
+
         // use CG to draw into the context
         // you can use any of the CG drawing routines for drawing into this context
         // here we will just erase the contents of the CGBitmapContext as the
@@ -428,7 +418,7 @@ struct ContentView: View {
         context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)   // white
         context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
         context.fillPath()
-        
+
         // in addition to using any of the CG drawing routines, you can draw yourself
         // by accessing individual pixels in the raster image.
         // here we'll draw a square one pixel at a time.
@@ -436,10 +426,10 @@ struct ContentView: View {
         let yStarting: Int = 0
         let width: Int = imageWidth
         let height: Int = imageHeight
-        
+
         // iterate over all of the rows for the entire height of the square
         for v in 0...(height - 1) {
-            
+
             // calculate the offset to the row of pixels in the raster buffer
             // assume the origin is at the bottom left corner of the raster image.
             // note, you could also use the top left, but GC uses the bottom left
@@ -450,56 +440,55 @@ struct ContentView: View {
             // loop, but it's a small optimization to pull this part out and do it here
             // instead of every time through.
             let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow*(Int(yStarting)+v+1))
-            
+
             // iterate over all of the pixels in this row
             for u in 0...(width - 1) {
-                
+
                 // calculate the horizontal offset to the pixel in the row
                 let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
-                
+
                 // sum the horixontal and vertical offsets to get the pixel offset
                 let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
-                
+
                 // calculate the offset of the pixel
-                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
-                
+                let pixelAddress: UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+
    //             h = blockBound[block] + ((h - blockBound[block]) - yY*(blockBound[block + 1] - blockBound[block]))/(1 - yY)
-                
+
     //            uU = Double(u)
-                
+
     //            uU = 0.0 + ((uU - 0.0) - yY*(Double(width) - 0.0))/(1 - yY)
-                
+
     //             xX = (h - blockBound[block])/(blockBound[block + 1] - blockBound[block])
-                
+
                 xGradient = Double(u)/Double(width)
-                
+
                 color = colors[leftNumber-1][0] + xGradient*(colors[rightNumber - 1][0] - colors[leftNumber-1][0])
                 pixelAddress.pointee = UInt8(color)         // R
-                
+
                 color = colors[leftNumber-1][1] + xGradient*(colors[rightNumber - 1][1] - colors[leftNumber-1][1])
                 (pixelAddress + 1).pointee = UInt8(color)   // G
-                
+
                 color = colors[leftNumber-1][2] + xGradient*(colors[rightNumber - 1][2] - colors[leftNumber-1][2])
                 (pixelAddress + 2).pointee = UInt8(color)   // B
-                
-                (pixelAddress + 3).pointee = UInt8(255)     //alpha
-                
-                
+
+                (pixelAddress + 3).pointee = UInt8(255)     // alpha
+
                 // IMPORTANT:
                 // there is no type checking here and it is up to you to make sure that the
                 // address indexes do not go beyond the memory allocated for the buffer
-                
-            } //end for u
-            
-        } //end for v
-        
+
+            } // end for u
+
+        } // end for v
+
         // convert the context into an image - this is what the function will return
         gradientImage = context.makeImage()!
-        
+
         // no automatic deallocation for the raster data
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
-        
+
         return gradientImage
     }
 
@@ -519,7 +508,7 @@ struct ContentView: View {
         let eE: Double = doc.picdef.eE
         var yY: Double = doc.picdef.yY
 
-        if(yY==1.0) {yY = yY - 1.0e-10}
+        if yY==1.0 {yY = yY - 1.0e-10}
 
         var contextImage: CGImage
         var fIterMinLeft: Double = 0.0
@@ -586,7 +575,7 @@ struct ContentView: View {
                   height: imageHeight,
                   bitsPerComponent: bitsPerComponent,
                   bytesPerRow: bytesPerRow,
-                  space: CGColorSpace(name:CGColorSpace.sRGB)!,
+                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
                   bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
         // use CG to draw into the context
@@ -629,13 +618,13 @@ struct ContentView: View {
                 let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
 
                 // calculate the offset of the pixel
-                let pixelAddress:UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
+                let pixelAddress: UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
 
-                if fIterGlobal[u][v] >= iMax  {               //black
-                    pixelAddress.pointee = UInt8(0)         //red
-                    (pixelAddress + 1).pointee = UInt8(0)   //green
-                    (pixelAddress + 2).pointee = UInt8(0)   //blue
-                    (pixelAddress + 3).pointee = UInt8(255) //alpha
+                if fIterGlobal[u][v] >= iMax {               // black
+                    pixelAddress.pointee = UInt8(0)         // red
+                    (pixelAddress + 1).pointee = UInt8(0)   // green
+                    (pixelAddress + 2).pointee = UInt8(0)   // blue
+                    (pixelAddress + 3).pointee = UInt8(255) // alpha
 
                 }   // end if
 
@@ -646,13 +635,11 @@ struct ContentView: View {
 
                         block0 = block
 
-                        if h >= blockBound[block] && h < blockBound[block + 1]   {
+                        if h >= blockBound[block] && h < blockBound[block + 1] {
 
                             if (h - blockBound[block])/(blockBound[block + 1] - blockBound[block]) <= yY {
                                 h = blockBound[block]
-                            }
-
-                            else {
+                            } else {
                                 h = blockBound[block] + ((h - blockBound[block]) - yY*(blockBound[block + 1] - blockBound[block]))/(1 - yY)
                             }
 
@@ -677,17 +664,17 @@ struct ContentView: View {
                             color = colors[block0][2] + xX*(colors[block1][2] - colors[block0][2])
                             (pixelAddress + 2).pointee = UInt8(color)   // B
 
-                            (pixelAddress + 3).pointee = UInt8(255)     //alpha
+                            (pixelAddress + 3).pointee = UInt8(255)     // alpha
                         }
                     }
                     // IMPORTANT:
                     // there is no type checking here and it is up to you to make sure that the
                     // address indexes do not go beyond the memory allocated for the buffer
-                } //end else
+                } // end else
 
-            } //end for u
+            } // end for u
 
-        } //end for v
+        } // end for v
 
         // convert the context into an image - this is what the function will return
         contextImage = context.makeImage()!
@@ -701,18 +688,17 @@ struct ContentView: View {
         return contextImage
     }
 
-
     // To swap a GeometryReader for an Image on button click in SwiftUI,
     // you can use a state variable to keep track of
     // what should be displayed,
     // and change this state variable when buttons are pressed.
     var body: some View {
 
-        HStack{ // instructions on left, picture on right
+        HStack { // instructions on left, picture on right
                 // Left (first) VStack is left side with user stuff
                 // Right (second) VStack is for mandart, gradient, or colors
                 // Sspacing is between VStacks
-            VStack(alignment: .center, spacing: 10){
+            VStack(alignment: .center, spacing: 10) {
 
                 Group { // non scroll group at top
                     Text("MandArt")
@@ -756,41 +742,41 @@ struct ContentView: View {
                             .help("Show 292 colors that should print well.")
                         }
                     }
-                    
-                    HStack{
+
+                    HStack {
                         Text("Enter left color #:")
-                        TextField("leftNumber",value: $doc.picdef.leftNumber,
+                        TextField("leftNumber", value: $doc.picdef.leftNumber,
                                   formatter: ContentView.cgIintMaxColorsFormatter)
                         .frame(maxWidth: 30)
                         .foregroundColor(leftGradientIsValid ? .primary : .red)
                         .help("Select the color # for the left side of a gradient.")
-                        
+
                         Text("to "+String(rightGradientColor))
                     }
-                    
+
                     HStack {
                         VStack {
                             Button("Make a gradient") {showGradient()}
                                 .help("Draw a gradient between two adjoining colors.")
                         }
-                        
+
                         VStack {
                             Button("Color the image") {readyForColors()}
                                 .help("Color the image using the existing iteration data.")
                         }
                     }
-                    
+
                     HStack {
                         VStack {
                             Button("Show screen colors") {showScreenColors()}
                                 .help("Show 512 colors that look good on the screen.")
                         }
-                        
+
                         VStack {
                             Button("Show print colors") {showPrintColors()}
                                 .help("Show 292 colors that should print well.")
                         }
-                        
+
                     }
 
                 } // end non scroll group at top
@@ -799,17 +785,17 @@ struct ContentView: View {
 
                 ScrollView(showsIndicators: true) {
 
-                    Group{  // 1 in scrollbar
+                    Group {  // 1 in scrollbar
                         HStack {
                             VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center X")
 
                                 Text("Between -2 and 2")
-                                TextField("Number",value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
+                                TextField("Number", value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .padding(4)
-                                    .frame(maxWidth:120)
+                                    .frame(maxWidth: 120)
                                     .help("Enter the X value in the Mandelbrot coordinate system for the center of the image.")
 
                             } // end VStack
@@ -824,7 +810,7 @@ struct ContentView: View {
                                 .textFieldStyle(.roundedBorder)
                                 .multilineTextAlignment(.trailing)
                                 .padding(4)
-                                .frame(maxWidth:120)
+                                .frame(maxWidth: 120)
                                 .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
                                 .onSubmit {
                                     let f = NumberFormatter()
@@ -848,23 +834,23 @@ struct ContentView: View {
                         }  // end HStack
 
                     } // end group 1 in scrollbar
-                    
-                    Group{ // start group 2 in scrollbar
+
+                    Group { // start group 2 in scrollbar
                         HStack {
                             VStack {
                                 Text("scale:")
 
-                                TextField("Scale",value: $doc.picdef.scale, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("Scale", value: $doc.picdef.scale, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth:100)
+                                    .frame(maxWidth: 100)
                                     .help("Enter the magnification of the image.")
                             }
 
                             VStack {
                                 Text("iMax:")
 
-                                TextField("iMax",value: $doc.picdef.iMax, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("iMax", value: $doc.picdef.iMax, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 60)
@@ -874,7 +860,7 @@ struct ContentView: View {
                             VStack {
                                 Text("rSqLimit:")
 
-                                TextField("rSqLimit",value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("rSqLimit", value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 60)
@@ -887,7 +873,7 @@ struct ContentView: View {
                                 Text("Image")
 
                                 Text("width, px:")
-                                TextField("imageWidth",value: $doc.picdef.imageWidth, formatter: ContentView.cgIntPositiveFormatter)
+                                TextField("imageWidth", value: $doc.picdef.imageWidth, formatter: ContentView.cgIntPositiveFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -898,7 +884,7 @@ struct ContentView: View {
                                 Text("Image")
 
                                 Text("height, px:")
-                                TextField("imageHeightStart",value: $doc.picdef.imageHeight, formatter: ContentView.cgIntPositiveFormatter)
+                                TextField("imageHeightStart", value: $doc.picdef.imageHeight, formatter: ContentView.cgIntPositiveFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -915,11 +901,11 @@ struct ContentView: View {
                             }
                         }
 
-                        HStack{
+                        HStack {
                             VStack {
                                 Text("bE:")
 
-                                TextField("bE",value: $doc.picdef.bE,formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("bE", value: $doc.picdef.bE, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -929,7 +915,7 @@ struct ContentView: View {
                             VStack {
                                 Text("eE:")
 
-                                TextField("eE",value: $doc.picdef.eE, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("eE", value: $doc.picdef.eE, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -939,7 +925,7 @@ struct ContentView: View {
                             VStack {
                                 Text("theta:")
 
-                                TextField("theta",value: $doc.picdef.theta, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("theta", value: $doc.picdef.theta, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -951,7 +937,7 @@ struct ContentView: View {
                             VStack {
                                 Text("nImage:")
 
-                                TextField("nImage",value: $doc.picdef.nImage, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("nImage", value: $doc.picdef.nImage, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -961,7 +947,7 @@ struct ContentView: View {
                             VStack {
                                 Text("dFIterMin:")
 
-                                TextField("dFIterMin",value: $doc.picdef.dFIterMin, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("dFIterMin", value: $doc.picdef.dFIterMin, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -970,7 +956,7 @@ struct ContentView: View {
                             VStack {
                                 Text("nBlocks:")
 
-                                TextField("nBlocks",value: $doc.picdef.nBlocks, formatter: ContentView.cgIntNBlocksFormatter)
+                                TextField("nBlocks", value: $doc.picdef.nBlocks, formatter: ContentView.cgIntNBlocksFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -982,7 +968,7 @@ struct ContentView: View {
                             VStack {
                                 Text("yY:")
 
-                                TextField("yY",value: $doc.picdef.yY, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("yY", value: $doc.picdef.yY, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -994,46 +980,46 @@ struct ContentView: View {
 
                 } // end scroll bar
 
-                List{
-                    ForEach($doc.picdef.hues, id:\.num) { $hue in
-                        HStack{
-                            TextField("number",value: $hue.num, formatter: ContentView.cgDecimalUnboundFormatter)
+                List {
+                    ForEach($doc.picdef.hues, id: \.num) { $hue in
+                        HStack {
+                            TextField("number", value: $hue.num, formatter: ContentView.cgDecimalUnboundFormatter)
                                 .disabled(true)
                                 .frame(maxWidth: 50)
-                            TextField("r",value: $hue.r, formatter: ContentView.cg255Formatter)
+                            TextField("r", value: $hue.r, formatter: ContentView.cg255Formatter)
                                 .onChange(of: hue.r) { newValue in
                                     let i = hue.num-1
                                     doc.updateHueWithColorNumberR(
-                                        index:i,newValue:newValue)
+                                        index: i, newValue: newValue)
                                 }
-                            TextField("g",value: $hue.g, formatter: ContentView.cg255Formatter)
+                            TextField("g", value: $hue.g, formatter: ContentView.cg255Formatter)
                                 .onChange(of: hue.g) { newValue in
                                     let i = hue.num-1
                                     doc.updateHueWithColorNumberG(
-                                        index:i,newValue:newValue)
+                                        index: i, newValue: newValue)
                                 }
-                            TextField("b",value: $hue.b, formatter: ContentView.cg255Formatter)
+                            TextField("b", value: $hue.b, formatter: ContentView.cg255Formatter)
                                 .onChange(of: hue.b) { newValue in
                                     let i = hue.num-1
                                     doc.updateHueWithColorNumberB(
-                                        index:i,newValue:newValue)
+                                        index: i, newValue: newValue)
                                 }
 
-                            ColorPicker("", selection: $hue.color,supportsOpacity: false)
+                            ColorPicker("", selection: $hue.color, supportsOpacity: false)
                                 .onChange(of: hue.color) { newColor in
                                     let i = hue.num-1
                                     doc.updateHueWithColorPick(
-                                        index:i,newColorPick:newColor)
+                                        index: i, newColorPick: newColor)
                                 }
                             Button {
                                 let i = hue.num-1
-                                doc.deleteHue(index:i)
+                                doc.deleteHue(index: i)
                                 updateHueNums()
                                 readyForPicture()
                             } label: {
                                 Image(systemName: "trash")
                             }
-                            .padding(.trailing,5)
+                            .padding(.trailing, 5)
                             .help("Delete "+"\(hue.num)")
                         }
                         .listRowBackground(instructionBackgroundColor)
@@ -1046,59 +1032,50 @@ struct ContentView: View {
 
                 } // end list
 
-
                 HStack {
                     VStack {
                         Button("Add Color") {doc.addHue()}
-                            .padding([.bottom],2)
+                            .padding([.bottom], 2)
                     }
 
                 }
 
             } // end VStack for user instructions
             .background(instructionBackgroundColor)
-            .frame(width:inputWidth)
+            .frame(width: inputWidth)
             .padding(10)
             .errorAlert(error: $errdef.errorCustomObject)
-            
+
             VStack {
                 if activeDisplayState == ActiveDisplayChoice.MandArt {
                     let image: CGImage = getImage()!
                     GeometryReader {
-                        geometry in
+                        _ in
                         ZStack(alignment: .topLeading) {
                             Image(image, scale: 1.0, label: Text("Test")).gesture(self.tapGesture)
                         }
                     }
-                }
-
-                else if activeDisplayState == ActiveDisplayChoice.Gradient {
+                } else if activeDisplayState == ActiveDisplayChoice.Gradient {
                                 let image: CGImage = getImage()!
                     GeometryReader {
-                        geometry in
+                        _ in
                         ZStack(alignment: .topLeading) {
                             Image(image, scale: 1.0, label: Text("Test"))
                         }
                     }
-                }
-
-                else if activeDisplayState == ActiveDisplayChoice.Color {
+                } else if activeDisplayState == ActiveDisplayChoice.Color {
                                 let image: CGImage = getImage()!
                     GeometryReader {
-                        geometry in
+                        _ in
                         ZStack(alignment: .topLeading) {
                             Image(image, scale: 1.0, label: Text("Test"))
                         }
                     }
-                }
-
-                else if activeDisplayState == ActiveDisplayChoice.ScreenColors {
+                } else if activeDisplayState == ActiveDisplayChoice.ScreenColors {
                     Image("Screen colors")
                         .resizable()
                         .scaledToFit()
-                }
-
-                else if activeDisplayState == ActiveDisplayChoice.PrintColors {
+                } else if activeDisplayState == ActiveDisplayChoice.PrintColors {
                     Image("Print colors")
                         .resizable()
                         .scaledToFit()
@@ -1119,7 +1096,7 @@ struct ContentView: View {
             }
             .onEnded { tap in
                 // only respond to taps if this is a picture not gradient
-                if (drawIt == true) {
+                if drawIt == true {
                     // if we haven't moved very much, treat it as a tap event
                     if self.moved < 1 && self.moved > -1 {
                         doc.picdef.xC = getCenterXFromTap(tap)
@@ -1226,10 +1203,10 @@ struct ContentView: View {
 
     /// Calculated variable for the image aspect ratio.
     /// Uses user-specified image height and width.
-    private var aspectRatio: String{
-        let h : Double = Double(doc.picdef.imageHeight)
-        let w : Double = Double(doc.picdef.imageWidth)
-        let ratioDouble: Double = max (h/w, w/h)
+    private var aspectRatio: String {
+        let h: Double = Double(doc.picdef.imageHeight)
+        let w: Double = Double(doc.picdef.imageWidth)
+        let ratioDouble: Double = max(h/w, w/h)
         let ratioString = String(format: "%.2f", ratioDouble)
         return ratioString
     }
@@ -1242,7 +1219,7 @@ struct ContentView: View {
         return isValid
     }
 
-    private var rightGradientColor: Int{
+    private var rightGradientColor: Int {
         if leftGradientIsValid && doc.picdef.leftNumber < doc.picdef.nColors {
             return doc.picdef.leftNumber + 1
         }
@@ -1283,7 +1260,7 @@ struct ContentView: View {
         let endY = tap.location.y
         let movedX = endX - startX
         let movedY = endY - startY
-        let thetaDegrees:Double = Double(doc.picdef.theta)
+        let thetaDegrees: Double = Double(doc.picdef.theta)
         let thetaRadians = -3.14159*thetaDegrees/180    // change sign since positive angle is clockwise
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
@@ -1302,7 +1279,7 @@ struct ContentView: View {
         let endY = tap.location.y
         let movedX = endX - startX
         let movedY = endY - startY
-        let thetaDegrees:Double = Double(doc.picdef.theta)
+        let thetaDegrees: Double = Double(doc.picdef.theta)
         let thetaRadians = -3.14159*thetaDegrees/180    // change sign since positive angle is clockwise
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
@@ -1317,9 +1294,9 @@ struct ContentView: View {
     private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
-        let w:Double = Double(doc.picdef.imageWidth)
-        let h:Double = Double(doc.picdef.imageHeight)
-        let thetaDegrees:Double = Double(doc.picdef.theta)
+        let w: Double = Double(doc.picdef.imageWidth)
+        let h: Double = Double(doc.picdef.imageHeight)
+        let thetaDegrees: Double = Double(doc.picdef.theta)
         let thetaRadians = -3.14159*thetaDegrees/180    // change sign since positive angle is clockwise
         let diffX = (startX - w/2.0) / doc.picdef.scale
         let diffY = ((h - startY) - h/2.0) / doc.picdef.scale
@@ -1334,9 +1311,9 @@ struct ContentView: View {
     private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
-        let w:Double = Double(doc.picdef.imageWidth)
-        let h:Double = Double(doc.picdef.imageHeight)
-        let thetaDegrees:Double = Double(doc.picdef.theta)
+        let w: Double = Double(doc.picdef.imageWidth)
+        let h: Double = Double(doc.picdef.imageHeight)
+        let thetaDegrees: Double = Double(doc.picdef.theta)
         let thetaRadians = -3.14159*thetaDegrees/180    // change sign since positive angle is clockwise
         let diffX = (startX - w/2.0) / doc.picdef.scale
         let diffY = ((h - startY) - h/2.0) / doc.picdef.scale
@@ -1353,7 +1330,6 @@ struct ContentView: View {
         return documentsDirectory
     }
 
-
     /// Update hue nums after moviing or deleting
     fileprivate func updateHueNums() {
         for (index, _) in $doc.picdef.hues.enumerated() {
@@ -1367,8 +1343,8 @@ struct ContentView: View {
     }
 
     /// Function to validate X or Y input
-    fileprivate func validateX() -> Bool{
-        return true;
+    fileprivate func validateX() -> Bool {
+        return true
     }
 
     /// Function to move an ordered color (hue) from one place to another in the list
@@ -1376,11 +1352,11 @@ struct ContentView: View {
         doc.picdef.hues.move(fromOffsets: source, toOffset: destination)
     }
 
-    fileprivate func showScreenColors()  {
+    fileprivate func showScreenColors() {
         activeDisplayState = ActiveDisplayChoice.ScreenColors
     }
 
-    fileprivate func showPrintColors()  {
+    fileprivate func showPrintColors() {
         activeDisplayState = ActiveDisplayChoice.PrintColors
     }
 
@@ -1395,7 +1371,7 @@ struct ContentView: View {
         activeDisplayState = ActiveDisplayChoice.MandArt
         readyForPicture()
     }
-    
+
     fileprivate func showGradient() {
         activeDisplayState = ActiveDisplayChoice.Gradient
         readyForGradient()
@@ -1405,7 +1381,7 @@ struct ContentView: View {
     fileprivate func readyForPicture() {
         drawIt = true
     }
-    
+
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
         drawIt = false
@@ -1413,13 +1389,13 @@ struct ContentView: View {
     }
 
     /// Multiplies scale by 2.0.
-    func zoomIn(){
+    func zoomIn() {
         readyForPicture()
         doc.picdef.scale = doc.picdef.scale * 2.0
     }
 
     /// Divides scale by 2.0.
-    func zoomOut(){
+    func zoomOut() {
         readyForPicture()
         doc.picdef.scale = doc.picdef.scale / 2.0
     }
@@ -1437,7 +1413,6 @@ extension View {
         }
     }
 }
-
 
 /// Handle validation feedback and local alerts
 ///  Based on
@@ -1458,8 +1433,8 @@ struct LocalizedAlertError: LocalizedError {
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
+// struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ContentView(document: .constant(MandArtDocument()))
 //    }
-//}
+// }

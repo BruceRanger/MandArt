@@ -6,10 +6,8 @@
 
 import Foundation
 
-
 /// A reusable error view model for communicating with the user.
 final class ErrorViewModel: ObservableObject {
-
 
     /// An enumeration of the local errors possible in MandArt
     enum ErrorCustomEnum: LocalizedError {

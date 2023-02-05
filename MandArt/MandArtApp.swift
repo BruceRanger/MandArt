@@ -31,25 +31,62 @@ struct MandArtApp: App {
 
 /*
 
- SwiftFormat is a command-line tool that can be used to format your Swift code. Here's how you can use it:
+ SwiftFormat is a command-line tool that can be used to format your Swift code.
+ Here's how you can use it:
 
- Install SwiftFormat: You can install SwiftFormat using Homebrew, by running the following command in the terminal: brew install swiftformat
+ Install SwiftFormat using Homebrew, by running the following command
+ in the terminal:
 
- Format your code: To format a single file, run the following command in the terminal: swiftformat <file-name>.swift To format an entire directory, run the following command: swiftformat <directory-name>
+ brew install swiftformat
+
+ Format your code: To format a single file,
+ run the following command in the terminal:
+
+ swiftformat <file-name>.swift
+
+ To format an entire directory, run the following command:
+
+ swiftformat <directory-name>
 
  */
 
 /*
 
- SwiftLint is a tool that helps enforce Swift style and conventions. Here's how you can use it:
+ SwiftLint is a tool that helps enforce Swift style and conventions.
+ Here's how you can use it:
 
- Install SwiftLint: You can install SwiftLint using Homebrew, by running the following command in the terminal: brew install swiftlint
+ Install SwiftLint using Homebrew,
+ by running the following command in the terminal:
 
- Lint your code: To lint a single file, run the following command in the terminal: swiftlint lint <file-name>.swift To lint an entire directory, run the following command: swiftlint lint <directory-name>
+ brew install swiftlint
 
- Customize lint rules: SwiftLint has a number of customizable rules that can be used to enforce specific coding conventions and standards. You can specify these rules by creating a .swiftlint.yml configuration file in your project's root directory or by passing them as command-line arguments.
+ Lint your code:
+ To lint a single file, run the following command in the terminal:
 
- Integrating with Xcode: SwiftLint can be easily integrated with Xcode to automatically check and enforce coding style in real-time. To do this, you can add a new "Run Script" phase to your Xcode project and call the swiftlint command with the appropriate arguments.
+ swiftlint lint <file-name>.swift
 
- That's it! SwiftLint will now enforce the specified lint rules and conventions, helping you maintain a consistent and high-quality codebase.
+ To lint an entire directory, run the following command:
+
+ swiftlint lint <directory-name>
+
+ Customize lint rules:
+ SwiftLint has a number of customizable rules
+ that can be used to enforce specific coding conventions and standards.
+ You can specify these rules by creating a .swiftlint.yml configuration
+ file in your project's root directory or
+ by passing them as command-line arguments.
+
+ Integrating with Xcode:
+ SwiftLint can be easily integrated with Xcode to automatically
+ check and enforce coding style in real-time.
+ To do this, you can add a new "Run Script" phase
+ to your Xcode project and call the swiftlint command
+ with the appropriate arguments.
+
+ SwiftLint will enforce the specified lint rules and conventions,
+ helping you maintain a consistent and high-quality codebase.
+
+ To lint and fix, run:
+
+ swiftlint --fix && swiftlint MandArtApp.swift
  */

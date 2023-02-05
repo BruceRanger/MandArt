@@ -39,7 +39,7 @@ final class MandArtDocument: ReferenceFileDocument {
             Hue(num: 3, r: 255.0, g: 0.0, b: 0.0),
             Hue(num: 4, r: 255.0, g: 0.0, b: 255.0),
             Hue(num: 5, r: 0.0, g: 0.0, b: 255.0),
-            Hue(num: 6, r: 0.0, g: 255.0, b: 255.0),
+            Hue(num: 6, r: 0.0, g: 255.0, b: 255.0)
         ]
         picdef = PictureDefinition(hues: hues)
     }
