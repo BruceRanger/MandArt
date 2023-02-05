@@ -28,3 +28,13 @@ struct MandArtApp: App {
         }
     }
 }
+
+/*
+
+ SwiftFormat is a command-line tool that can be used to format your Swift code. Here's how you can use it:
+
+ Install SwiftFormat: You can install SwiftFormat using Homebrew, by running the following command in the terminal: brew install swiftformat
+
+ Format your code: To format a single file, run the following command in the terminal: swiftformat <file-name>.swift To format an entire directory, run the following command: swiftformat <directory-name>
+
+ */
