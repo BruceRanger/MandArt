@@ -15,7 +15,6 @@ import Foundation
 
 let windowGroupName: String = "Welcome to MandArt"
 let defaultFileName: String = "default.json"
-let openingButtonText: String = "Get Started"
 
 struct MandMath {
 
@@ -35,12 +34,6 @@ struct MandMath {
     /// - Returns: a simple window group title  (e.g. "Welcome to MandArt")
     static func getWindowGroupName() -> String {
         return windowGroupName
-    }
-
-    /// Returns the text to show on the opening button
-    /// - Returns: simple text (e.g., "Get Started")
-    static func getOpeningButtonText() -> String {
-        return openingButtonText
     }
 
     /// Return a list for printable colors, each element is [r,g,b]
