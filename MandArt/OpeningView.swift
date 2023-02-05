@@ -24,14 +24,17 @@ struct OpeningView: View {
             Text("Or click here to open an example.")
                 .padding(10)
 
-            Text("When done, click 'File/Save'.")
+            Text("After changing a value, hit RETURN.")
+                .padding(10)
+
+            Text("When done editing, click 'File/Save'.")
                 .padding(10)
         }
         .foregroundColor(.white)
         .font(.largeTitle)
         .frame(
-            minWidth: 400,
-            minHeight: 300
+            minWidth: 500,
+            minHeight: 400
         )
         .background(LinearGradient(gradient: Gradient(colors: [.red, .orange]), startPoint: .leading, endPoint: .trailing))
         .onTapGesture {
