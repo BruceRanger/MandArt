@@ -59,5 +59,9 @@
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.graphics-design</string>
+	<key>NSPicturesUsageDescription</key>
+	<string>Permission to save MandArt to Pictures directory</string>
 </dict>
 </plist>

@@ -9,6 +9,9 @@
 
 import SwiftUI
 import UniformTypeIdentifiers
+import CoreGraphics
+import ImageIO
+import AppKit // uikit for mobile, appkit for Mac
 
 /// A utility class to work with files for saving and sharing your art.
 /// Includes logic for adding, deleting, and reordering colors.
@@ -104,9 +107,49 @@ final class MandArtDocument: ReferenceFileDocument {
             destination = destinationAttempt.unsafelyUnwrapped
             CGImageDestinationAddImage(destination, contextImageGlobal!, nil)
             CGImageDestinationFinalize(destination)
+            saveImageUserDirectory(contextImageGlobal!, fileName: fn)
             return true
         }
     }
+
+    ///Yes, you may need to adjust your project settings
+    ///to have the proper entitlements to access the user's picturesDirectory folder.
+    ///To do this, go to your project's Signing & Capabilities tab
+    ///and enable the Files and Folders capability for your app.
+
+    ///Once you've done that, you'll be able to access the user's picturesDirectory
+    ///folder and save files there.
+    ///Keep in mind that this capability only applies to apps running on
+    ///macOS 11.0 or later.
+    ///For earlier versions of macOS,
+    ///you'll need to use the app's sandbox container's picturesDirectory folder.
+    ///
+    func saveImageUserDirectory(_ image: CGImage!, fileName:String){
+        DispatchQueue.main.sync {
+            let savePanel = NSOpenPanel()
+            savePanel.title = "Choose Directory for MandArt image"
+            savePanel.allowsMultipleSelection = false
+            savePanel.canChooseDirectories = true
+            savePanel.canCreateDirectories = true
+            print("Before savePanel.begin")
+            savePanel.begin { (result) -> Void in
+                if result == NSApplication.ModalResponse.OK {
+                    guard let selectedURL = savePanel.urls.first else { return }
+                    let fileURL = selectedURL.appendingPathComponent(fileName)
+                    let dest = CGImageDestinationCreateWithURL(fileURL as CFURL, kUTTypeJPEG, 1, nil)
+                    print("4")
+                    CGImageDestinationAddImage(dest!, image, nil)
+                    if CGImageDestinationFinalize(dest!) {
+                        print("Image saved successfully to \(fileURL)")
+                    } else {
+                        print("Error saving image")
+                    }
+                }
+            }
+            print("After savePanel.begin")
+        }
+    }
+
 
     /// Create a snapshot of the current state of the document for serialization
     ///  while the live self remains editiable by the user
