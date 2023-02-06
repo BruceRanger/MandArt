@@ -32,7 +32,6 @@ struct ContentView: View {
 
     let inputWidth: Double = 290
 
-    @StateObject var errdef = ErrorViewModel()
     @State private var testColor = Color.red
     @State private var tapX: Double = 0.0
     @State private var tapY: Double = 0.0
@@ -1006,7 +1005,6 @@ struct ContentView: View {
             .background(instructionBackgroundColor)
             .frame(width: inputWidth)
             .padding(10)
-            .errorAlert(error: $errdef.errorCustomObject)
 
             VStack {
                 if activeDisplayState == ActiveDisplayChoice.MandArt {
@@ -1360,44 +1358,3 @@ struct ContentView: View {
    
 }
 
-@available(macOS 10.15, *)
-extension View {
-
-    @available(macOS 10.15, *)
-    func errorAlert(error: Binding<Error?>, buttonTitle: String = "OK") -> some View {
-        let localizedAlertError = LocalizedAlertError(error: error.wrappedValue)
-        return alert(isPresented: .constant(localizedAlertError != nil), error: localizedAlertError) { _ in
-            Button(buttonTitle) {
-                error.wrappedValue = nil
-            }
-        } message: { error in
-            Text(error.recoverySuggestion ?? "")
-        }
-    }
-}
-
-/// Handle validation feedback and local alerts
-///  Based on
-///  https://www.avanderlee.com/swiftui/error-alert-presenting/
-///
-struct LocalizedAlertError: LocalizedError {
-    let underlyingError: LocalizedError
-    var errorDescription: String? {
-        underlyingError.errorDescription
-    }
-
-    var recoverySuggestion: String? {
-        underlyingError.recoverySuggestion
-    }
-
-    init?(error: Error?) {
-        guard let localizedError = error as? LocalizedError else { return nil }
-        underlyingError = localizedError
-    }
-}
-
-// struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView(document: .constant(MandArtDocument()))
-//    }
-// }
