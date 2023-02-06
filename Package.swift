@@ -1,4 +1,4 @@
-//
+// swift-tools-version: 5.7
 //  Package.swift
 //  MandArt
 //
@@ -6,15 +6,32 @@
 //  Does not compile with the Main Project
 //
 
-//import PackageDescription
-//
-//let package = Package(
-//    // name, platforms, products, etc.
-//    dependencies: [
-//        // other dependencies
-//        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
-//    ],
-//    targets: [
-//        // targets
-//    ]
-//)
+/*
+import PackageDescription
+
+let package = Package(
+    name: "MandArt",
+    products: [
+        // Products define the executables and libraries a package produces, and make them visible to other packages.
+        .library(
+            name: "MandArt",
+            targets: ["MandArt"]),
+    ],
+    // name, platforms, products, etc.
+    dependencies: [
+        // other dependencies
+        .package(
+            url: "https://github.com/apple/swift-docc-plugin",
+            from: "1.1.0"),
+    ],
+    targets: [
+        // targets
+        .target(
+            name: "MandArt",
+            dependencies: []),
+        .testTarget(
+            name: "MandArtTests",
+            dependencies: ["MandArt"]),
+    ]
+)
+*/

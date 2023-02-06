@@ -27,7 +27,7 @@ Documentation is hosted at:
 Process Reference
 
 - [Install Plugin](https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin)
-- [Make Docs](https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin/publishing-to-github-pages/)
+- [Publishing to GitHub Pages](https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin/publishing-to-github-pages/)
 
 1. XCode menu: Product / Build Documentation. 
 1. Right-click on Workspace Documentation for the package (MandArt) / export.
@@ -37,10 +37,10 @@ Process Reference
 In Terminal, open in the MandArt source folder run
 
 ```
-swift package --allow-writing-to-directory /docs \
-    generate-documentation --target MandArt \
+swift package generate-documentation --allow-writing-to-directory ./docs \
+    --target MandArt \
     --disable-indexing \
     --transform-for-static-hosting \
     --hosting-base-path https://denisecase.github.io/MandArt-Docs/ \
-    --output-path /docs 
+    --output-path ./docs 
 ```

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6A3AEC0F26F879E700D7E31A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3AEC0E26F879E700D7E31A /* ContentView.swift */; };
 		6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A3AEC1026F879F500D7E31A /* Assets.xcassets */; };
-		8806E111293A4FF4005F5CB4 /* MandArtUITests in Resources */ = {isa = PBXBuildFile; fileRef = 8806E10F293A4FF4005F5CB4 /* MandArtUITests */; };
 		8806E112293A4FF4005F5CB4 /* MandArtTests in Resources */ = {isa = PBXBuildFile; fileRef = 8806E110293A4FF4005F5CB4 /* MandArtTests */; };
 		8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E113293A5011005F5CB4 /* MandArtApp.swift */; };
 		8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E114293A5011005F5CB4 /* MandArtDocument.swift */; };
@@ -28,8 +27,7 @@
 		6A3AEC0E26F879E700D7E31A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6A3AEC1026F879F500D7E31A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A3AEC1826F879F500D7E31A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8806E10F293A4FF4005F5CB4 /* MandArtUITests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MandArtUITests; sourceTree = SOURCE_ROOT; };
-		8806E110293A4FF4005F5CB4 /* MandArtTests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MandArtTests; sourceTree = SOURCE_ROOT; };
+		8806E110293A4FF4005F5CB4 /* MandArtTests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = MandArtTests; path = Tests/MandArtTests; sourceTree = SOURCE_ROOT; };
 		8806E113293A5011005F5CB4 /* MandArtApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandArtApp.swift; sourceTree = "<group>"; };
 		8806E114293A5011005F5CB4 /* MandArtDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandArtDocument.swift; sourceTree = "<group>"; };
 		881B2B69293CE2A200037032 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
@@ -42,6 +40,8 @@
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
 		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88A171632991280600A85AED /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		88A1716A29913A9700A85AED /* MandArtUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandArtUITests.swift; sourceTree = "<group>"; };
+		88A1716B29913A9700A85AED /* MandArtUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandArtUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,6 +59,8 @@
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
+				88A1716829913A6C00A85AED /* Tests */,
+				88A1716629913A0800A85AED /* Sources */,
 				88A171632991280600A85AED /* Package.swift */,
 				881B2B69293CE2A200037032 /* Credits.rtf */,
 				889E3F23293AE0B6009944AC /* Documentation.docc */,
@@ -80,22 +82,53 @@
 			children = (
 				889E3F22293A7733009944AC /* MandArtRelease.entitlements */,
 				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
-				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
-				8865ED78299026E6006E9EC6 /* OpeningView.swift */,
-				88511CB22948B3FF009B5CF6 /* MandMath.swift */,
-				8806E113293A5011005F5CB4 /* MandArtApp.swift */,
-				8806E114293A5011005F5CB4 /* MandArtDocument.swift */,
-				8806E110293A4FF4005F5CB4 /* MandArtTests */,
-				8806E10F293A4FF4005F5CB4 /* MandArtUITests */,
-				882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */,
-				882BAED2293409FE003ACB0B /* PictureDefinition.swift */,
-				882BAED829346C92003ACB0B /* Hue.swift */,
 				6A3AEC1026F879F500D7E31A /* Assets.xcassets */,
 				6A3AEC1826F879F500D7E31A /* Info.plist */,
 				882BAED62934167D003ACB0B /* default.json */,
 			);
 			path = MandArt;
 			sourceTree = SOURCE_ROOT;
+		};
+		88A1716629913A0800A85AED /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				88A1716729913A1E00A85AED /* MandArt */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		88A1716729913A1E00A85AED /* MandArt */ = {
+			isa = PBXGroup;
+			children = (
+				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
+				8806E113293A5011005F5CB4 /* MandArtApp.swift */,
+				8806E114293A5011005F5CB4 /* MandArtDocument.swift */,
+				882BAED2293409FE003ACB0B /* PictureDefinition.swift */,
+				882BAED829346C92003ACB0B /* Hue.swift */,
+				88511CB22948B3FF009B5CF6 /* MandMath.swift */,
+				882BAEE82937C71A003ACB0B /* ErrorViewModel.swift */,
+				8865ED78299026E6006E9EC6 /* OpeningView.swift */,
+			);
+			path = MandArt;
+			sourceTree = "<group>";
+		};
+		88A1716829913A6C00A85AED /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				88A1716929913A9700A85AED /* MandArtUITests */,
+				8806E110293A4FF4005F5CB4 /* MandArtTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		88A1716929913A9700A85AED /* MandArtUITests */ = {
+			isa = PBXGroup;
+			children = (
+				88A1716A29913A9700A85AED /* MandArtUITests.swift */,
+				88A1716B29913A9700A85AED /* MandArtUITestsLaunchTests.swift */,
+			);
+			path = MandArtUITests;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -162,7 +195,6 @@
 				882BAED72934167D003ACB0B /* default.json in Resources */,
 				8806E112293A4FF4005F5CB4 /* MandArtTests in Resources */,
 				6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */,
-				8806E111293A4FF4005F5CB4 /* MandArtUITests in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +272,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -296,7 +328,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -331,6 +363,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 0.1.0;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "Bruce-Johnson.MandArt";
@@ -369,6 +402,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MARKETING_VERSION = 0.1.0;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "Bruce-Johnson.MandArt";
