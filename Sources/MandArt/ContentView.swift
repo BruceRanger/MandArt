@@ -370,8 +370,6 @@ struct ContentView: View {
 
         var color = 0.0
 
-        var xGradient = 0.0
-
         // set up CG parameters
         let bitsPerComponent = 8 // for UInt8
         let componentsPerPixel = 4 // RGBA = 4 components
@@ -432,14 +430,6 @@ struct ContentView: View {
 
                 // calculate the offset of the pixel
                 let pixelAddress: UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
-
-                //             h = blockBound[block] + ((h - blockBound[block]) - yY*(blockBound[block + 1] - blockBound[block]))/(1 - yY)
-
-                //            uU = Double(u)
-
-                //            uU = 0.0 + ((uU - 0.0) - yY*(Double(width) - 0.0))/(1 - yY)
-
-                //             xX = (h - blockBound[block])/(blockBound[block + 1] - blockBound[block])
 
                 if Double(u) <= yY*Double(width) {color = colors[leftNumber-1][0]}
                 else{
@@ -831,6 +821,7 @@ struct ContentView: View {
                                     .frame(maxWidth: 80)
                                     .help("Enter the width, in pixels, of the image.")
                             }
+                            
                             VStack {
                                 Text("Image")
 
@@ -904,6 +895,7 @@ struct ContentView: View {
                                     .frame(maxWidth: 80)
                                     .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
                             }
+                            
                             VStack {
                                 Text("nBlocks:")
 
@@ -964,6 +956,7 @@ struct ContentView: View {
                                         index: i, newColorPick: newColor
                                     )
                                 }
+                            
                             Button {
                                 let i = hue.num - 1
                                 doc.deleteHue(index: i)
@@ -1343,6 +1336,5 @@ struct ContentView: View {
         doc.picdef.scale = doc.picdef.scale / 2.0
     }
 
-   
 }
 
