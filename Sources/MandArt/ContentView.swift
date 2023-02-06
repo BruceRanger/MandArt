@@ -773,34 +773,16 @@ struct ContentView: View {
                                     .help("Enter the X value in the Mandelbrot coordinate system for the center of the image.")
                             } // end VStack
 
-                            VStack {
+                            VStack { // each input has a vertical container with a Text label & TextField for data
                                 Text("Enter center Y")
-
+                                
                                 Text("Between -2 and 2")
-
-                                TextField("0.08442",
-                                          text: $stringYC)
+                                TextField("Number", value: $doc.picdef.yC, formatter: ContentView.cgDecimalAbs2Formatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .padding(4)
                                     .frame(maxWidth: 120)
                                     .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
-                                    .onSubmit {
-                                        let f = NumberFormatter()
-                                        f.numberStyle = .decimal
-                                        f.maximumFractionDigits = 8
-                                        f.minimumFractionDigits = 8
-                                        f.isPartialStringValidationEnabled = false
-                                        if let d = f.number(from: stringYC)?.doubleValue {
-                                            if d >= -2.00000000 && d <= 2.00000000 {
-                                                self.doc.picdef.yC = d
-                                            } else {
-                                                print("error, invalid YC")
-                                            }
-                                        } else {
-                                            print("error, invalid format for YC")
-                                        }
-                                    } // end method
                             } // end VStack
                         } // end HStack
                     } // end group 1 in scrollbar
@@ -1117,7 +1099,6 @@ struct ContentView: View {
         formatter.numberStyle = .decimal
         formatter.isPartialStringValidationEnabled = true
         formatter.maximumFractionDigits = 8
-        formatter.minimumFractionDigits = 8
         formatter.maximum = 2.0
         formatter.minimum = -2.0
         return formatter
