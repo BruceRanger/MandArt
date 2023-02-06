@@ -441,18 +441,25 @@ struct ContentView: View {
 
                 //             xX = (h - blockBound[block])/(blockBound[block + 1] - blockBound[block])
 
-                xGradient = Double(u) / Double(width)
-
-                color = colors[leftNumber - 1][0] + xGradient * (colors[rightNumber - 1][0] - colors[leftNumber - 1][0])
-                pixelAddress.pointee = UInt8(color) // R
-
-                color = colors[leftNumber - 1][1] + xGradient * (colors[rightNumber - 1][1] - colors[leftNumber - 1][1])
-                (pixelAddress + 1).pointee = UInt8(color) // G
-
-                color = colors[leftNumber - 1][2] + xGradient * (colors[rightNumber - 1][2] - colors[leftNumber - 1][2])
-                (pixelAddress + 2).pointee = UInt8(color) // B
-
-                (pixelAddress + 3).pointee = UInt8(255) // alpha
+                if Double(u) <= yY*Double(width) {color = colors[leftNumber-1][0]}
+                else{
+                    color =  colors[leftNumber-1][0] + (colors[rightNumber - 1][0] - colors[leftNumber-1][0])*(Double(u) - yY*Double(width))/(Double(width) - yY*Double(width))
+                }
+                pixelAddress.pointee = UInt8(color)         // R
+                
+                if Double(u) <= yY*Double(width) {color = colors[leftNumber-1][1]}
+                else{
+                    color =  colors[leftNumber-1][1] + (colors[rightNumber - 1][1] - colors[leftNumber-1][1])*(Double(u) - yY*Double(width))/(Double(width) - yY*Double(width))
+                }
+                (pixelAddress + 1).pointee = UInt8(color)   // G
+                
+                if Double(u) <= yY*Double(width) {color = colors[leftNumber-1][2]}
+                else{
+                    color =  colors[leftNumber-1][2] + (colors[rightNumber - 1][2] - colors[leftNumber-1][2])*(Double(u) - yY*Double(width))/(Double(width) - yY*Double(width))
+                }
+                (pixelAddress + 2).pointee = UInt8(color)   // B
+                
+                (pixelAddress + 3).pointee = UInt8(255)     //alpha
 
                 // IMPORTANT:
                 // there is no type checking here and it is up to you to make sure that the
