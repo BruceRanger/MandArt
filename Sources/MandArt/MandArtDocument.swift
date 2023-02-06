@@ -22,7 +22,7 @@ import AppKit // uikit for mobile, appkit for Mac
 /// )
 /// rather than FileDocument for a struct.
 ///
-@available(macOS 11.0, *)
+@available(macOS 12.0, *)
 final class MandArtDocument: ReferenceFileDocument {
     // tell the system we support only reading / writing json files
     static var readableContentTypes = [UTType.json]
@@ -86,7 +86,7 @@ final class MandArtDocument: ReferenceFileDocument {
     /// For earlier versions of macOS,
     /// you'll need to use the app's sandbox container's picturesDirectory folder.
     ///
-    @available(macOS 11.0, *)
+    @available(macOS 12.0, *)
     func saveImageUserDirectory()  {
         DispatchQueue.main.async {
                 let docName = "json"
@@ -115,7 +115,7 @@ final class MandArtDocument: ReferenceFileDocument {
     ///  while the live self remains editiable by the user
     /// - Parameter contentType: the standard type we use
     /// - Returns: picture definition
-    @available(macOS 11.0, *)
+    @available(macOS 12.0, *)
     func snapshot(contentType _: UTType) throws -> PictureDefinition {
         return picdef // return the current state
     }
@@ -132,7 +132,7 @@ final class MandArtDocument: ReferenceFileDocument {
 }
 
 // Provide operations on the MandArt document.
-@available(macOS 11.0, *)
+@available(macOS 12.0, *)
 extension MandArtDocument {
     /// Adds a new default hue, and registers an undo action.
     func addHue(undoManager: UndoManager? = nil) {
@@ -274,7 +274,7 @@ extension MandArtDocument {
 
 // Helper utility
 // Extending String functionality so we can use indexes to get substrings
-@available(macOS 10.15, *)
+@available(macOS 12.0, *)
 extension String {
     subscript(_ range: CountableRange<Int>) -> String {
         let start = index(startIndex, offsetBy: max(0, range.lowerBound))

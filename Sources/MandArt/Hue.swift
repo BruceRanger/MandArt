@@ -14,7 +14,7 @@ import SwiftUI
 /// [Color](https://developer.apple.com/documentation/swiftui/color)
 /// object for use with a
 /// [ColorPicker](https://developer.apple.com/documentation/swiftui/colorpicker)
-@available(macOS 11.0, *)
+@available(macOS 12.0, *)
 class Hue: Codable, Identifiable, ObservableObject {
     var id = UUID()
     var num: Int = 1
@@ -54,7 +54,7 @@ class Hue: Codable, Identifiable, ObservableObject {
     }
 }
 
-@available(macOS 11.0, *)
+@available(macOS 12.0, *)
 extension Hue: Equatable {
     static func == (lhs: Hue, rhs: Hue) -> Bool {
         lhs.id == rhs.id &&
@@ -73,7 +73,7 @@ extension Hue: Equatable {
 // http://brunowernimont.me/howtos/make-swiftui-color-codable
 //
 
-@available(macOS 11.0, *)
+@available(macOS 12.0, *)
 private extension Color {
     #if os(macOS)
         typealias SystemColor = NSColor

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 /// The use input information defining a MandArt picture.
-@available(macOS 11.0, *)
+@available(macOS 12.0, *)
 struct PictureDefinition: Codable, Identifiable {
     var id = UUID()
     var xC: Double = -0.74725
