@@ -37,10 +37,10 @@ Process Reference
 In Terminal, open in the MandArt source folder run
 
 ```
-swift package generate-documentation --allow-writing-to-directory ./docs \
+swift package generate-documentation \
     --target MandArt \
     --disable-indexing \
     --transform-for-static-hosting \
     --hosting-base-path https://denisecase.github.io/MandArt-Docs/ \
-    --output-path ./docs 
+
 ```

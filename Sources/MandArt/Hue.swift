@@ -120,14 +120,20 @@ extension Color: Codable {
 
     @available(macOS 10.15, *)
     public func encode(to encoder: Encoder) throws {
-        guard let colorComponents = colorComponents else {
-            return
+        if #available(macOS 12.0, *) {
+            guard let colorComponents = colorComponents else {
+                return
+            }
+
+            var container = encoder.container(keyedBy: CodingKeys.self)
+
+
+            try container.encode(colorComponents.red, forKey: .red)
+            try container.encode(colorComponents.green, forKey: .green)
+            try container.encode(colorComponents.blue, forKey: .blue)
+        } else {
+            print("ERROR: This app requires macOS 12 and higher")
         }
 
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(colorComponents.red, forKey: .red)
-        try container.encode(colorComponents.green, forKey: .green)
-        try container.encode(colorComponents.blue, forKey: .blue)
     }
 }
