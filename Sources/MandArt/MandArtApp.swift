@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(macOS 11.0, *)
 @main
 struct MandArtApp: App {
     let windowGroupName = MandMath.getWindowGroupName()

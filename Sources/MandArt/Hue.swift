@@ -14,7 +14,7 @@ import SwiftUI
 /// [Color](https://developer.apple.com/documentation/swiftui/color)
 /// object for use with a
 /// [ColorPicker](https://developer.apple.com/documentation/swiftui/colorpicker)
-/// .
+@available(macOS 11.0, *)
 class Hue: Codable, Identifiable, ObservableObject {
     var id = UUID()
     var num: Int = 1
@@ -54,6 +54,7 @@ class Hue: Codable, Identifiable, ObservableObject {
     }
 }
 
+@available(macOS 11.0, *)
 extension Hue: Equatable {
     static func == (lhs: Hue, rhs: Hue) -> Bool {
         lhs.id == rhs.id &&
@@ -72,6 +73,7 @@ extension Hue: Equatable {
 // http://brunowernimont.me/howtos/make-swiftui-color-codable
 //
 
+@available(macOS 11.0, *)
 private extension Color {
     #if os(macOS)
         typealias SystemColor = NSColor
@@ -100,7 +102,9 @@ private extension Color {
     }
 }
 
+@available(macOS 10.15, *)
 extension Color: Codable {
+
     enum CodingKeys: String, CodingKey {
         case red, green, blue
     }
@@ -114,6 +118,7 @@ extension Color: Codable {
         self.init(red: r, green: g, blue: b)
     }
 
+    @available(macOS 10.15, *)
     public func encode(to encoder: Encoder) throws {
         guard let colorComponents = colorComponents else {
             return

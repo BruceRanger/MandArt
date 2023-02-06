@@ -17,6 +17,7 @@ import SwiftUI // views
 var contextImageGlobal: CGImage?
 var fIterGlobal = [[Double]]()
 
+@available(macOS 12.0, *)
 struct ContentView: View {
     // TODO: move non-SwiftUI functions and logic into MandMath
     // Get everything we can from MandMath (Swift-only)
