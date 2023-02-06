@@ -6,7 +6,7 @@
 //  Does not compile with the Main Project
 //
 
-/*
+
 import PackageDescription
 
 let package = Package(
@@ -34,4 +34,4 @@ let package = Package(
             dependencies: ["MandArt"]),
     ]
 )
-*/
+

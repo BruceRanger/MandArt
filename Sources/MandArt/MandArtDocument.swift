@@ -68,49 +68,9 @@ final class MandArtDocument: ReferenceFileDocument {
         configuration _: WriteConfiguration) throws -> FileWrapper {
         let data = try JSONEncoder().encode(snapshot)
         let fileWrapper = FileWrapper(regularFileWithContents: data)
-        print("print the image too")
-        let modDate = fileWrapper.fileAttributes["NSFileModificationDate"]
-        let uniqueString = stringFromAny(modDate)
-        let success = saveImage(tag: uniqueString)
-        if !success {
-            print("Error saving file. Should show this to the user.")
-        }
         return fileWrapper
     }
 
-    /// Save custom user MandArt as a .png file.
-    ///  To find it after saving, search your machine for mandart
-    ///  It will be named mandart-datetime.png
-    /// - Parameter tag: unique string of datatime saved
-    /// - Returns: a Bool true if successful, false if not
-    func saveImage(tag: String) -> Bool {
-        print("saving image with tag=", tag)
-        let endCount = tag.count - 6
-        let uniqueEnough = tag[0 ..< endCount] // see string extension
-        let fn = "mandart-" + uniqueEnough + ".png"
-        print("Saving Image as ", fn)
-        let allocator: CFAllocator = kCFAllocatorDefault
-        let filePath: CFString = fn as NSString
-        let pathStyle = CFURLPathStyle.cfurlWindowsPathStyle
-        let isDirectory = false
-        let url: CFURL = CFURLCreateWithFileSystemPath(allocator, filePath, pathStyle, isDirectory)
-        print("Saving Image to ", url)
-        //  file:///Users/denisecase/Library/Containers/Bruce-Johnson.MandArt/Data/
-        let imageType: CFString = kUTTypePNG
-        let count = 1
-        let options: CFDictionary? = nil
-        var destination: CGImageDestination
-        let destinationAttempt: CGImageDestination? = CGImageDestinationCreateWithURL(url, imageType, count, options)
-        if destinationAttempt == nil {
-            return false
-        } else {
-            destination = destinationAttempt.unsafelyUnwrapped
-            CGImageDestinationAddImage(destination, contextImageGlobal!, nil)
-            CGImageDestinationFinalize(destination)
-            saveImageUserDirectory(contextImageGlobal!, fileName: fn)
-            return true
-        }
-    }
 
     /// Yes, you may need to adjust your project settings
     /// to have the proper entitlements to access the user's picturesDirectory folder.
@@ -124,24 +84,28 @@ final class MandArtDocument: ReferenceFileDocument {
     /// For earlier versions of macOS,
     /// you'll need to use the app's sandbox container's picturesDirectory folder.
     ///
-    func saveImageUserDirectory(_ image: CGImage!, fileName: String) {
+    ///
+    func saveImageUserDirectory()  {
         DispatchQueue.main.async {
-            let savePanel = NSSavePanel()
-            savePanel.title = "Choose Directory for MandArt image"
-            savePanel.nameFieldStringValue = fileName
-            savePanel.canCreateDirectories = true
-            savePanel.begin { result in
-                if result == .OK, let url = savePanel.url {
-                    let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypeJPEG, 1, nil)
-                    CGImageDestinationAddImage(dest!, image, nil)
-                    if CGImageDestinationFinalize(dest!) {
-                        print("Image saved successfully to \(url)")
-                    } else {
-                        print("Error saving image")
+                let docName = "json"
+                    let fn = "mandart-from-" + docName + ".png"
+
+                    let image = contextImageGlobal!
+                    let savePanel = NSSavePanel()
+                    savePanel.title = "Choose Directory for MandArt image"
+                    savePanel.nameFieldStringValue = fn
+                    savePanel.canCreateDirectories = true
+                    savePanel.begin { result in
+                        if result == .OK, let url = savePanel.url {
+                            let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypeJPEG, 1, nil)
+                            CGImageDestinationAddImage(dest!, image, nil)
+                            if CGImageDestinationFinalize(dest!) {
+                                print("Image saved successfully to \(url)")
+                            } else {
+                                print("Error saving image")
+                            }
+                        }
                     }
-                }
-            }
-            print("After savePanel.begin")
         }
     }
 
@@ -319,3 +283,4 @@ extension String {
         return String(self[start...])
     }
 }
+

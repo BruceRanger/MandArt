@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+@available(macOS 10.15, *)
 struct OpeningView: View {
     let defaultFileName = MandMath.getDefaultDocumentName()
 

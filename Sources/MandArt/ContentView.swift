@@ -694,6 +694,11 @@ struct ContentView: View {
                             Button("-") { zoomOut() }
                         }
                         .help("Zoom out by a factot of two.")
+
+                        VStack {
+                            Button("🌅") { doc.saveImageUserDirectory() }
+                        }
+                        .help("Save MandArt image file.")
                     }
 
                     HStack {
@@ -1350,10 +1355,14 @@ struct ContentView: View {
         readyForPicture()
         doc.picdef.scale = doc.picdef.scale / 2.0
     }
+
+   
 }
 
 @available(macOS 10.15, *)
 extension View {
+
+    @available(macOS 10.15, *)
     func errorAlert(error: Binding<Error?>, buttonTitle: String = "OK") -> some View {
         let localizedAlertError = LocalizedAlertError(error: error.wrappedValue)
         return alert(isPresented: .constant(localizedAlertError != nil), error: localizedAlertError) { _ in
