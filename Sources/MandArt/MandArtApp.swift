@@ -15,13 +15,32 @@ struct MandArtApp: App {
     /// The body of the app; kicks off the opening page.
     ///  It creates a WindowGroup and DocumentGroup.
     var body: some Scene {
+
+        // get everything we can from MandMath (Swift-only) first
+        let defaultFileName = MandMath.getDefaultDocumentName()
+        let windowGroupName = MandMath.getWindowGroupName()
+
         WindowGroup(windowGroupName) {
-            OpeningView()
+            // In some action at the end of this scene flow
+            // just close current window and open new document
+            Button("Welcome to MandArt") {
+                NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
+                NSDocumentController.shared.newDocument(defaultFileName)
+            }
+            .frame(minWidth: 300, maxWidth: .infinity,
+                   minHeight: 200, maxHeight: .infinity)
         }
 
-        let defdoc = MandArtDocument()
-        DocumentGroup(newDocument: { defdoc }) { _ in
-            ContentView().environmentObject(defdoc)
+//        WindowGroup(windowGroupName) {
+//            OpeningView()
+//        }
+
+//        let defdoc = MandArtDocument()
+//        DocumentGroup(newDocument: { defdoc }) { _ in
+//            ContentView().environmentObject(defdoc)
+//        }
+        DocumentGroup(newDocument: { MandArtDocument() }) { configuration in
+            ContentView()
         }
         .commands {
             // we don't need the pasteboard (cut/copy/paste/delete_

@@ -68,11 +68,17 @@ final class MandArtDocument: ReferenceFileDocument {
     func fileWrapper(
         snapshot: PictureDefinition,
         configuration _: WriteConfiguration) throws -> FileWrapper {
-        let data = try JSONEncoder().encode(snapshot)
-        let fileWrapper = FileWrapper(regularFileWithContents: data)
-        return fileWrapper
-    }
-
+            let data = try JSONEncoder().encode(snapshot)
+            let fileWrapper = FileWrapper(regularFileWithContents: data)
+            print("print the image too")
+            let modDate = fileWrapper.fileAttributes["NSFileModificationDate"]
+            let uniqueString = stringFromAny(modDate)
+//            let success = saveImage(tag: uniqueString)
+//            if !success {
+//                print("Error saving file. Should show this to the user.")
+//            }
+            return fileWrapper
+        }
 
     /// Yes, you may need to adjust your project settings
     /// to have the proper entitlements to access the user's picturesDirectory folder.
