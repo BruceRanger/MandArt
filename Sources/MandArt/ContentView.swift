@@ -87,10 +87,10 @@ struct ContentView: View {
         // draws image
         let imageHeight: Int = doc.picdef.imageHeight
         let imageWidth: Int = doc.picdef.imageWidth
-        let iMax: Double = doc.picdef.iMax
+        let iterationsMax: Double = doc.picdef.iterationsMax
         let scale: Double = doc.picdef.scale
-        let xC: Double = doc.picdef.xC
-        let yC: Double = doc.picdef.yC
+        let xCenter: Double = doc.picdef.xCenter
+        let yCenter: Double = doc.picdef.yCenter
         let theta: Double = doc.picdef.theta // in degrees
         let dFIterMin: Double = doc.picdef.dFIterMin
         let pi = 3.14159
@@ -133,8 +133,8 @@ struct ContentView: View {
                 dX = (Double(u) - Double(imageWidth / 2)) / scale
                 dY = (Double(v) - Double(imageHeight / 2)) / scale
 
-                x0 = xC + dX * cos(thetaR) - dY * sin(thetaR)
-                y0 = yC + dX * sin(thetaR) + dY * cos(thetaR)
+                x0 = xCenter + dX * cos(thetaR) - dY * sin(thetaR)
+                y0 = yCenter + dX * sin(thetaR) + dY * cos(thetaR)
 
                 xx = x0
                 yy = y0
@@ -146,12 +146,12 @@ struct ContentView: View {
                 test2 = (xx + 1.0) * (xx + 1.0) + yy * yy
 
                 if xx < test1 || test2 < 0.0625 {
-                    fIter[u][v] = iMax // black
-                    iter = iMax // black
+                    fIter[u][v] = iterationsMax // black
+                    iter = iterationsMax // black
                 } // end if
 
                 else {
-                    for i in 1 ... Int(iMax) {
+                    for i in 1 ... Int(iterationsMax) {
                         if rSq >= rSqLimit {
                             break
                         }
@@ -164,7 +164,7 @@ struct ContentView: View {
                     }
                 } // end else
 
-                if iter < iMax {
+                if iter < iterationsMax {
                     dIter = Double(-(log(log(rSq)) - gGL) / gGML)
 
                     fIter[u][v] = iter + dIter
@@ -196,13 +196,13 @@ struct ContentView: View {
 
         let nBlocks: Int = doc.picdef.nBlocks
         let nColors: Int = doc.picdef.hues.count
-        let bE: Double = doc.picdef.bE
-        let eE: Double = doc.picdef.eE
+        let spacingColorNear: Double = doc.picdef.spacingColorNear
+        let spacingColorFar: Double = doc.picdef.spacingColorFar
         var yY: Double = doc.picdef.yY
 
         if yY == 1.0 { yY = yY - 1.0e-10 }
 
-        var dE = 0.0
+        var spacingColorMid = 0.0
         var fNBlocks = 0.0
         var color = 0.0
         var block0 = 0
@@ -210,7 +210,7 @@ struct ContentView: View {
 
         fNBlocks = Double(nBlocks)
 
-        dE = (iMax - fIterMin - fNBlocks * bE) / pow(fNBlocks, eE)
+        spacingColorMid = (iterationsMax - fIterMin - fNBlocks * spacingColorNear) / pow(fNBlocks, spacingColorFar)
 
         var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
 
@@ -218,7 +218,7 @@ struct ContentView: View {
         var xX = 0.0
 
         for i in 0 ... nBlocks {
-            blockBound[i] = bE * Double(i) + dE * pow(Double(i), eE)
+            blockBound[i] = spacingColorNear * Double(i) + spacingColorMid * pow(Double(i), spacingColorFar)
         }
 
         // set up CG parameters
@@ -282,7 +282,7 @@ struct ContentView: View {
                 // calculate the offset of the pixel
                 let pixelAddress: UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
 
-                if fIter[u][v] >= iMax { // black
+                if fIter[u][v] >= iterationsMax { // black
                     pixelAddress.pointee = UInt8(0) // red
                     (pixelAddress + 1).pointee = UInt8(0) // green
                     (pixelAddress + 2).pointee = UInt8(0) // blue
@@ -475,12 +475,12 @@ struct ContentView: View {
         // draws image
         let imageHeight: Int = doc.picdef.imageHeight
         let imageWidth: Int = doc.picdef.imageWidth
-        let iMax: Double = doc.picdef.iMax
+        let iterationsMax: Double = doc.picdef.iterationsMax
         let dFIterMin: Double = doc.picdef.dFIterMin
         let nBlocks: Int = doc.picdef.nBlocks
         let nColors: Int = doc.picdef.hues.count
-        let bE: Double = doc.picdef.bE
-        let eE: Double = doc.picdef.eE
+        let spacingColorNear: Double = doc.picdef.spacingColorNear
+        let spacingColorFar: Double = doc.picdef.spacingColorFar
         var yY: Double = doc.picdef.yY
 
         if yY == 1.0 { yY = yY - 1.0e-10 }
@@ -511,7 +511,7 @@ struct ContentView: View {
 
         // Now we need to generate a bitmap image.
 
-        var dE = 0.0
+        var spacingColorMid = 0.0
         var fNBlocks = 0.0
         var color = 0.0
         var block0 = 0
@@ -519,7 +519,7 @@ struct ContentView: View {
 
         fNBlocks = Double(nBlocks)
 
-        dE = (iMax - fIterMin - fNBlocks * bE) / pow(fNBlocks, eE)
+        spacingColorMid = (iterationsMax - fIterMin - fNBlocks * spacingColorNear) / pow(fNBlocks, spacingColorFar)
 
         var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
 
@@ -527,7 +527,7 @@ struct ContentView: View {
         var xX = 0.0
 
         for i in 0 ... nBlocks {
-            blockBound[i] = bE * Double(i) + dE * pow(Double(i), eE)
+            blockBound[i] = spacingColorNear * Double(i) + spacingColorMid * pow(Double(i), spacingColorFar)
         }
 
         // set up CG parameters
@@ -591,7 +591,7 @@ struct ContentView: View {
                 // calculate the offset of the pixel
                 let pixelAddress: UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
 
-                if fIterGlobal[u][v] >= iMax { // black
+                if fIterGlobal[u][v] >= iterationsMax { // black
                     pixelAddress.pointee = UInt8(0) // red
                     (pixelAddress + 1).pointee = UInt8(0) // green
                     (pixelAddress + 2).pointee = UInt8(0) // blue
@@ -755,7 +755,7 @@ struct ContentView: View {
                                 Text("Enter center X")
 
                                 Text("Between -2 and 2")
-                                TextField("Number", value: $doc.picdef.xC, formatter: ContentView.cgDecimalAbs2Formatter)
+                                TextField("Number", value: $doc.picdef.xCenter, formatter: ContentView.cgDecimalAbs2Formatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .padding(4)
@@ -767,7 +767,7 @@ struct ContentView: View {
                                 Text("Enter center Y")
                                 
                                 Text("Between -2 and 2")
-                                TextField("Number", value: $doc.picdef.yC, formatter: ContentView.cgDecimalAbs2Formatter)
+                                TextField("Number", value: $doc.picdef.yCenter, formatter: ContentView.cgDecimalAbs2Formatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .padding(4)
@@ -790,9 +790,9 @@ struct ContentView: View {
                             }
 
                             VStack {
-                                Text("iMax:")
+                                Text("iterationsMax:")
 
-                                TextField("iMax", value: $doc.picdef.iMax, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("iterationsMax", value: $doc.picdef.iterationsMax, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 60)
@@ -845,9 +845,9 @@ struct ContentView: View {
 
                         HStack {
                             VStack {
-                                Text("bE:")
+                                Text("spacing ColorNear:")
 
-                                TextField("bE", value: $doc.picdef.bE, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("spacing ColorNear", value: $doc.picdef.spacingColorNear, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -855,9 +855,9 @@ struct ContentView: View {
                             }
 
                             VStack {
-                                Text("eE:")
+                                Text("spacing ColorFar:")
 
-                                TextField("eE", value: $doc.picdef.eE, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("spacing ColorFar", value: $doc.picdef.spacingColorFar, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 80)
@@ -1041,14 +1041,14 @@ struct ContentView: View {
                 if drawIt == true {
                     // if we haven't moved very much, treat it as a tap event
                     if self.moved < 1 && self.moved > -1 {
-                        doc.picdef.xC = getCenterXFromTap(tap)
-                        doc.picdef.yC = getCenterYFromTap(tap)
+                        doc.picdef.xCenter = getCenterXFromTap(tap)
+                        doc.picdef.yCenter = getCenterYFromTap(tap)
                         readyForPicture()
                     }
                     // if we have moved a lot, treat it as a drag event
                     else {
-                        doc.picdef.xC = getCenterXFromDrag(tap)
-                        doc.picdef.yC = getCenterYFromDrag(tap)
+                        doc.picdef.xCenter = getCenterXFromDrag(tap)
+                        doc.picdef.yCenter = getCenterYFromDrag(tap)
                         readyForPicture()
                     }
                     // reset tap event states
@@ -1170,7 +1170,7 @@ struct ContentView: View {
      let end = tap.location.x
      let moved = end - start
      let diff = moved / doc.picdef.scale
-     let newCenter: Double = doc.picdef.xC - diff
+     let newCenter: Double = doc.picdef.xCenter - diff
      return newCenter
      }
 
@@ -1182,7 +1182,7 @@ struct ContentView: View {
      let end = tap.location.y
      let moved = end - start
      let diff = moved / doc.picdef.scale
-     let newCenter = doc.picdef.yC + diff
+     let newCenter = doc.picdef.yCenter + diff
      return newCenter
      }   */
 
@@ -1201,7 +1201,7 @@ struct ContentView: View {
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
         let dCenterX = diffY * sin(thetaRadians) + diffX * cos(thetaRadians)
-        let newCenter: Double = doc.picdef.xC - dCenterX
+        let newCenter: Double = doc.picdef.xCenter - dCenterX
         return newCenter
     }
 
@@ -1220,7 +1220,7 @@ struct ContentView: View {
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
         let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
-        let newCenter: Double = doc.picdef.yC + dCenterY
+        let newCenter: Double = doc.picdef.yCenter + dCenterY
         return newCenter
     }
 
@@ -1237,7 +1237,7 @@ struct ContentView: View {
         let diffX = (startX - w / 2.0) / doc.picdef.scale
         let diffY = ((h - startY) - h / 2.0) / doc.picdef.scale
         let dCenterX = diffY * sin(thetaRadians) + diffX * cos(thetaRadians)
-        let newCenter: Double = doc.picdef.xC + dCenterX
+        let newCenter: Double = doc.picdef.xCenter + dCenterX
         return newCenter
     }
 
@@ -1254,7 +1254,7 @@ struct ContentView: View {
         let diffX = (startX - w / 2.0) / doc.picdef.scale
         let diffY = ((h - startY) - h / 2.0) / doc.picdef.scale
         let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
-        let newCenter: Double = doc.picdef.yC + dCenterY
+        let newCenter: Double = doc.picdef.yCenter + dCenterY
         return newCenter
     }
 

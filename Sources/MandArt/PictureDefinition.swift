@@ -12,16 +12,16 @@ import SwiftUI
 @available(macOS 12.0, *)
 struct PictureDefinition: Codable, Identifiable {
     var id = UUID()
-    var xC: Double = -0.74725
-    var yC: Double = 0.08442
+    var xCenter: Double = -0.74725
+    var yCenter: Double = 0.08442
     var scale: Double = 2_880_000.0
-    var iMax: Double = 10000.0
+    var iterationsMax: Double = 10000.0
     var rSqLimit: Double = 400.0
     var imageWidth: Int = 1200
     var imageHeight: Int = 1000
     var nBlocks: Int = 60
-    var bE: Double = 5.0
-    var eE: Double = 15.0
+    var spacingColorNear: Double = 5.0
+    var spacingColorFar: Double = 15.0
     var yY: Double = 0.0
     var theta: Double = 0.0
     var nImage: Int = 0
@@ -47,16 +47,16 @@ struct PictureDefinition: Codable, Identifiable {
 
     /// Initialize by setting everything.
     /// - Parameters:
-    ///   - xC: <#xC description#>
-    ///   - yC: <#yC description#>
+    ///   - xCenter: xCenter description
+    ///   - yCenter: yC descriptionyCenter
     ///   - scale: <#scale description#>
-    ///   - iMax: <#iMax description#>
+    ///   - : <# description#>
     ///   - rSqLimit: <#rSqLimit description#>
     ///   - imageWidth: <#imageWidth description#>
     ///   - imageHeight: <#imageHeight description#>
     ///   - nBlocks: <#nBlocks description#>
-    ///   - bE: <#bE description#>
-    ///   - eE: <#eE description#>
+    ///   - spacingColorNear: spacingColorNear description
+    ///   - spacingColorFar: spacingColorFar description
     ///   - theta: <#theta description#>
     ///   - nImage: <#nImage description#>
     ///   - dFIterMin: <#dFIterMin description#>
@@ -64,16 +64,16 @@ struct PictureDefinition: Codable, Identifiable {
     ///   - leftNumber: <#leftNumber description#>
     ///   - hues: <#hues description#>
     init(
-        xC: Double,
-        yC: Double,
+        xCenter: Double,
+        yCenter: Double,
         scale: Double,
-        iMax: Double,
+        iterationsMax: Double,
         rSqLimit: Double,
         imageWidth: Int,
         imageHeight: Int,
         nBlocks: Int,
-        bE: Double,
-        eE: Double,
+        spacingColorNear: Double,
+        spacingColorFar: Double,
         yY: Double,
         theta: Double,
         nImage: Int,
@@ -82,16 +82,16 @@ struct PictureDefinition: Codable, Identifiable {
         leftNumber: Int,
         hues: [Hue]
     ) {
-        self.xC = xC
-        self.yC = yC
+        self.xCenter = xCenter
+        self.yCenter = yCenter
         self.scale = scale
-        self.iMax = iMax
+        self.iterationsMax = iterationsMax
         self.rSqLimit = rSqLimit
         self.imageWidth = imageWidth
         self.imageHeight = imageHeight
         self.nBlocks = nBlocks
-        self.bE = bE
-        self.eE = eE
+        self.spacingColorNear = spacingColorNear
+        self.spacingColorFar = spacingColorFar
         self.yY = yY
         self.theta = theta
         self.nImage = nImage
