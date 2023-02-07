@@ -44,3 +44,7 @@ swift package generate-documentation \
     --hosting-base-path https://denisecase.github.io/MandArt-Docs/ \
 
 ```
+
+Available at: 
+
+<MandArt/.build/plugins/Swift-DocC/outputs/MandArt.doccarchive>
