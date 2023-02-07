@@ -80,6 +80,39 @@ final class MandArtDocument: ReferenceFileDocument {
             return fileWrapper
         }
 
+    /// Save custom user MandArt as a .png file.
+    ///  To find it after saving, search your machine for mandart
+    ///  It will be named mandart-datetime.png
+    /// - Parameter tag: unique string of datatime saved
+    /// - Returns: a Bool true if successful, false if not
+    func saveImage(tag : String) throws -> Bool {
+        let data =  try JSONEncoder().encode(self.picdef)
+        let fileWrapper = FileWrapper(regularFileWithContents: data)
+        let docname = "from-current-json"
+        let fn:String = "mandart-" + docname + ".png"
+        let allocator : CFAllocator = kCFAllocatorDefault
+        let filePath: CFString = fn as NSString
+        let pathStyle: CFURLPathStyle = CFURLPathStyle.cfurlWindowsPathStyle
+        let isDirectory: Bool = false
+        let url : CFURL = CFURLCreateWithFileSystemPath(allocator, filePath, pathStyle, isDirectory)
+        print("Saving Image to ",url)
+        //  file:///Users/denisecase/Library/Containers/Bruce-Johnson.MandArt/Data/
+        let imageType: CFString = kUTTypePNG
+        let count: Int = 1
+        let options: CFDictionary? = nil
+        var destination: CGImageDestination
+        let destinationAttempt: CGImageDestination?  = CGImageDestinationCreateWithURL(url, imageType, count, options)
+        if (destinationAttempt == nil) {
+            return false
+        }
+        else {
+            destination = destinationAttempt.unsafelyUnwrapped
+            CGImageDestinationAddImage(destination,contextImageGlobal!, nil);
+            CGImageDestinationFinalize(destination)
+            return true
+        }
+    }
+
     /// Yes, you may need to adjust your project settings
     /// to have the proper entitlements to access the user's picturesDirectory folder.
     /// To do this, go to your project's Signing & Capabilities tab
@@ -95,25 +128,24 @@ final class MandArtDocument: ReferenceFileDocument {
     @available(macOS 12.0, *)
     func saveImageUserDirectory()  {
         DispatchQueue.main.async {
-                let docName = "json"
-                    let fn = "mandart-from-" + docName + ".png"
-
-                    let image = contextImageGlobal!
-                    let savePanel = NSSavePanel()
-                    savePanel.title = "Choose Directory for MandArt image"
-                    savePanel.nameFieldStringValue = fn
-                    savePanel.canCreateDirectories = true
-                    savePanel.begin { result in
-                        if result == .OK, let url = savePanel.url {
-                            let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypeJPEG, 1, nil)
-                            CGImageDestinationAddImage(dest!, image, nil)
-                            if CGImageDestinationFinalize(dest!) {
-                                print("Image saved successfully to \(url)")
-                            } else {
-                                print("Error saving image")
-                            }
-                        }
+            let docname = "current-json"
+            let fn = "mandart-from-" + docname + ".png"
+            let image = contextImageGlobal!
+            let savePanel = NSSavePanel()
+            savePanel.title = "Choose Directory for MandArt image"
+            savePanel.nameFieldStringValue = fn
+            savePanel.canCreateDirectories = true
+            savePanel.begin { result in
+            if result == .OK, let url = savePanel.url {
+                let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypeJPEG, 1, nil)
+                    CGImageDestinationAddImage(dest!, image, nil)
+                    if CGImageDestinationFinalize(dest!) {
+                        print("Image saved successfully to \(url)")
+                    } else {
+                        print("Error saving image")
                     }
+                }
+            }
         }
     }
 
