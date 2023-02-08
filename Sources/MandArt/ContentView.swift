@@ -463,6 +463,9 @@ struct ContentView: View {
         // no automatic deallocation for the raster data
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
+        
+        // stash picture in global var for saving
+        contextImageGlobal = gradientImage
 
         return gradientImage
     }
@@ -695,7 +698,7 @@ struct ContentView: View {
                         VStack {
                             Button("🌅") {
                                 // first, make we're ready with a MandArt
-                                showMandArtBitMap()
+                                // showMandArtBitMap()
                                 // then, save the picture from the JSON
                                 doc.saveImagePictureFromJSONDocument()
                             }

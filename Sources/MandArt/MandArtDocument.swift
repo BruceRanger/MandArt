@@ -85,7 +85,9 @@ final class MandArtDocument: ReferenceFileDocument {
     func saveImagePictureFromJSONDocument()  {
         print("Saving image from JSON file:", self.jsonDocumentName)
         let justname = self.jsonDocumentName.replacingOccurrences(of: ".json", with: "")
-        let fn = "mandart-from-" + justname + ".png"
+  //      let fn = "mandart-from-" + justname + ".png"
+        let fn = justname + ".png"
+
 
         var data: Data
         do {
