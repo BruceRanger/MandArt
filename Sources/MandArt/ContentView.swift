@@ -19,6 +19,7 @@ var fIterGlobal = [[Double]]()
 
 @available(macOS 12.0, *)
 struct ContentView: View {
+
     // TODO: move non-SwiftUI functions and logic into MandMath
     // Get everything we can from MandMath (Swift-only)
     let defaultFileName = MandMath.getDefaultDocumentName()
@@ -44,7 +45,6 @@ struct ContentView: View {
     @State private var drawGradient = false
     @State private var drawColors = false
     @State private var activeDisplayState = ActiveDisplayChoice.MandArt
-    @State private var stringYC: String = ""
 
     enum ActiveDisplayChoice {
         case MandArt
@@ -690,10 +690,15 @@ struct ContentView: View {
                         VStack {
                             Button("-") { zoomOut() }
                         }
-                        .help("Zoom out by a factot of two.")
+                        .help("Zoom out by a factor of two.")
 
                         VStack {
-                            Button("🌅") { doc.saveImageUserDirectory() }
+                            Button("🌅") {
+                                // first, make we're ready with a MandArt
+                                showMandArtBitMap()
+                                // then, save the picture from the JSON
+                                doc.saveImagePictureFromJSONDocument()
+                            }
                         }
                         .help("Save MandArt image file.")
                     }

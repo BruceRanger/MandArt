@@ -24,6 +24,8 @@ import AppKit // uikit for mobile, appkit for Mac
 ///
 @available(macOS 12.0, *)
 final class MandArtDocument: ReferenceFileDocument {
+    var jsonDocumentName: String = "unknowndocname"
+
     // tell the system we support only reading / writing json files
     static var readableContentTypes = [UTType.json]
 
@@ -48,7 +50,7 @@ final class MandArtDocument: ReferenceFileDocument {
             Hue(num: 6, r: 0.0, g: 255.0, b: 255.0)
         ]
         picdef = PictureDefinition(hues: hues)
-    }
+     }
 
     /// Initialize a document with our picdef property
     /// - Parameter configuration: config
@@ -58,87 +60,54 @@ final class MandArtDocument: ReferenceFileDocument {
             throw CocoaError(.fileReadCorruptFile)
         }
         picdef = try JSONDecoder().decode(PictureDefinition.self, from: data)
+        self.jsonDocumentName = configuration.file.filename!
+        print("Opening JSON file = ", self.jsonDocumentName)
     }
 
-    /// Save the picture definittion document to file.
+
+
+    /// Save the activve picture definittion data to a file.
     /// - Parameters:
     ///   - snapshot: snapshot of the current state
     ///   - configuration: write config
     /// - Returns: a fileWrapper
     func fileWrapper(
         snapshot: PictureDefinition,
-        configuration _: WriteConfiguration) throws -> FileWrapper {
+        configuration: WriteConfiguration) throws -> FileWrapper {
             let data = try JSONEncoder().encode(snapshot)
             let fileWrapper = FileWrapper(regularFileWithContents: data)
-            print("print the image too")
-            let modDate = fileWrapper.fileAttributes["NSFileModificationDate"]
-            let uniqueString = stringFromAny(modDate)
-//            let success = saveImage(tag: uniqueString)
-//            if !success {
-//                print("Error saving file. Should show this to the user.")
-//            }
+            print("In fileWrapper function, saving jsonDocumentName=", self.jsonDocumentName)
             return fileWrapper
         }
 
-    /// Save custom user MandArt as a .png file.
-    ///  To find it after saving, search your machine for mandart
-    ///  It will be named mandart-datetime.png
-    /// - Parameter tag: unique string of datatime saved
-    /// - Returns: a Bool true if successful, false if not
-    func saveImage(tag : String) throws -> Bool {
-        let data =  try JSONEncoder().encode(self.picdef)
-        let fileWrapper = FileWrapper(regularFileWithContents: data)
-        let docname = "from-current-json"
-        let fn:String = "mandart-" + docname + ".png"
-        let allocator : CFAllocator = kCFAllocatorDefault
-        let filePath: CFString = fn as NSString
-        let pathStyle: CFURLPathStyle = CFURLPathStyle.cfurlWindowsPathStyle
-        let isDirectory: Bool = false
-        let url : CFURL = CFURLCreateWithFileSystemPath(allocator, filePath, pathStyle, isDirectory)
-        print("Saving Image to ",url)
-        //  file:///Users/denisecase/Library/Containers/Bruce-Johnson.MandArt/Data/
-        let imageType: CFString = kUTTypePNG
-        let count: Int = 1
-        let options: CFDictionary? = nil
-        var destination: CGImageDestination
-        let destinationAttempt: CGImageDestination?  = CGImageDestinationCreateWithURL(url, imageType, count, options)
-        if (destinationAttempt == nil) {
-            return false
-        }
-        else {
-            destination = destinationAttempt.unsafelyUnwrapped
-            CGImageDestinationAddImage(destination,contextImageGlobal!, nil);
-            CGImageDestinationFinalize(destination)
-            return true
-        }
-    }
 
-    /// Yes, you may need to adjust your project settings
-    /// to have the proper entitlements to access the user's picturesDirectory folder.
-    /// To do this, go to your project's Signing & Capabilities tab
-    /// and enable the Files and Folders capability for your app.
-
-    /// Once you've done that, you'll be able to access the user's picturesDirectory
-    /// folder and save files there.
-    /// Keep in mind that this capability only applies to apps running on
-    /// macOS 11.0 or later.
-    /// For earlier versions of macOS,
-    /// you'll need to use the app's sandbox container's picturesDirectory folder.
-    ///
     @available(macOS 12.0, *)
-    func saveImageUserDirectory()  {
-        DispatchQueue.main.async {
-            let docname = "current-json"
-            let fn = "mandart-from-" + docname + ".png"
-            let image = contextImageGlobal!
-            let savePanel = NSSavePanel()
-            savePanel.title = "Choose Directory for MandArt image"
-            savePanel.nameFieldStringValue = fn
-            savePanel.canCreateDirectories = true
-            savePanel.begin { result in
+    func saveImagePictureFromJSONDocument()  {
+        print("Saving image from JSON file:", self.jsonDocumentName)
+        let justname = self.jsonDocumentName.replacingOccurrences(of: ".json", with: "")
+        let fn = "mandart-from-" + justname + ".png"
+
+        var data: Data
+        do {
+            data =  try JSONEncoder().encode(self.picdef)
+        } catch {
+            print("!!error encoding self.picdef")
+            exit(1)
+        }
+        let fileWrapper = FileWrapper(regularFileWithContents: data)
+        // trigger state from this window / json document to get a current img
+        self.picdef.imageHeight = self.picdef.imageHeight + 1
+        self.picdef.imageHeight = self.picdef.imageHeight - 1
+
+        let currImage = contextImageGlobal!
+        let savePanel = NSSavePanel()
+        savePanel.title = "Choose Directory for MandArt image"
+        savePanel.nameFieldStringValue = fn
+        savePanel.canCreateDirectories = true
+        savePanel.begin { result in
             if result == .OK, let url = savePanel.url {
                 let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypeJPEG, 1, nil)
-                    CGImageDestinationAddImage(dest!, image, nil)
+                    CGImageDestinationAddImage(dest!, currImage, nil)
                     if CGImageDestinationFinalize(dest!) {
                         print("Image saved successfully to \(url)")
                     } else {
@@ -146,7 +115,6 @@ final class MandArtDocument: ReferenceFileDocument {
                     }
                 }
             }
-        }
     }
 
     /// Create a snapshot of the current state of the document for serialization
@@ -155,7 +123,7 @@ final class MandArtDocument: ReferenceFileDocument {
     /// - Returns: picture definition
     @available(macOS 12.0, *)
     func snapshot(contentType _: UTType) throws -> PictureDefinition {
-        return picdef // return the current state
+        return self.picdef // return the current state
     }
 
     /// Helper function to return a String from an Any?
@@ -326,4 +294,6 @@ extension String {
         return String(self[start...])
     }
 }
+
+
 

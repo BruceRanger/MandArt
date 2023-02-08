@@ -31,14 +31,6 @@ struct MandArtApp: App {
                    minHeight: 200, maxHeight: .infinity)
         }
 
-//        WindowGroup(windowGroupName) {
-//            OpeningView()
-//        }
-
-//        let defdoc = MandArtDocument()
-//        DocumentGroup(newDocument: { defdoc }) { _ in
-//            ContentView().environmentObject(defdoc)
-//        }
         DocumentGroup(newDocument: { MandArtDocument() }) { configuration in
             ContentView()
         }
