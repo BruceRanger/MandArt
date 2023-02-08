@@ -66,7 +66,7 @@ final class MandArtDocument: ReferenceFileDocument {
 
 
 
-    /// Save the activve picture definittion data to a file.
+    /// Save the active picture definittion data to a file.
     /// - Parameters:
     ///   - snapshot: snapshot of the current state
     ///   - configuration: write config
@@ -76,6 +76,8 @@ final class MandArtDocument: ReferenceFileDocument {
         configuration: WriteConfiguration) throws -> FileWrapper {
             let data = try JSONEncoder().encode(snapshot)
             let fileWrapper = FileWrapper(regularFileWithContents: data)
+            let fn = fileWrapper.filename
+            print("When saving a new /unamed file, the json file name is ", fn)
             print("In fileWrapper function, saving jsonDocumentName=", self.jsonDocumentName)
             return fileWrapper
         }
