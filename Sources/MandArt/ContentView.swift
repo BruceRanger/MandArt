@@ -28,8 +28,9 @@ struct ContentView: View {
     // the remaining content should all require SwiftUI
     @EnvironmentObject var doc: MandArtDocument
 
-    let instructionBackgroundColor = Color.green.opacity(0.5)
-    let instructionBackgroundColorLite = Color.green.opacity(0.6)
+    let instructionBackgroundColor = Color.green.opacity(0.50)
+    let instructionBackgroundColorMid = Color.yellow.opacity(0.55)
+    let instructionBackgroundColorLite = Color.green.opacity(0.60)
 
     let inputWidth: Double = 290
 
@@ -662,376 +663,545 @@ struct ContentView: View {
     // what should be displayed,
     // and change this state variable when buttons are pressed.
     var body: some View {
-        HStack { // instructions on left, picture on right
-            // Left (first) VStack is left side with user stuff
-            // Right (second) VStack is for mandart, gradient, or colors
-            // Sspacing is between VStacks
-            VStack(alignment: .center, spacing: 10) {
-                Group { // non scroll group at top
-                    Text("MandArt")
-                        .font(.title)
-                    HStack {
-                        VStack {
-                            Button("Draw picture") { showMandArtBitMap() }
-                        }
-                        .help("Draw the picture.")
 
-                        VStack {
+        GeometryReader { geometry in
+            // access the screen size
+            let screenSize = geometry.size
+            let screenHeight = round(screenSize.height)
+            let screenWidth = round(screenSize.width)
+            let screenHeightStr = String(format: "%.0f",screenHeight)
+            let screenWidthStr = String(format: "%.0f",screenWidth)
+
+            HStack { // instructions on left, picture on right
+                     // Left (first) VStack is left side with user stuff
+                     // Right (second) VStack is for mandart, gradient, or colors
+                     // Sspacing is between VStacks (the two columns)
+
+
+                // FIRST COLUMN - VSTACK IS FOR INSTRUCTIONS
+
+
+                VStack(alignment: .center, spacing: 10) {
+
+                    Text("MandArt \(screenWidthStr) x \(screenHeightStr)")
+
+                    //  GROUP 1 BASICS
+
+                    Group {
+
+                        HStack {
+
+                            Button("Draw pic") { showMandArtBitMap() }
+                                .help("Draw the picture.")
+
+                            Button("Color pic") { readyForColors() }
+                                .help("Color the image using the existing iteration data.")
+
                             Button("Pause") {
                                 drawIt = false
                                 drawGradient = false
                                 drawColors = false
                             }
                             .help("Pause to change values.")
-                        }
 
-                        VStack {
-                            Button("+") { zoomIn() }
-                        }
-                        .help("Zoom in by a factor of two.")
-
-                        VStack {
-                            Button("-") { zoomOut() }
-                        }
-                        .help("Zoom out by a factor of two.")
-
-                        VStack {
                             Button("🌅") {
-                                // first, make we're ready with a MandArt
-                                // showMandArtBitMap()
-                                // then, save the picture from the JSON
                                 doc.saveImagePictureFromJSONDocument()
                             }
-                        }
-                        .help("Save MandArt image file.")
-                    }
-
-                    HStack {
-                        VStack {
-                            Button("Show screen colors") { showScreenColors() }
-                                .help("Show 512 colors that look good on the screen.")
+                            .help("Save MandArt image file.")
                         }
 
-                        VStack {
-                            Button("Show print colors") { showPrintColors() }
-                                .help("Show 292 colors that should print well.")
-                        }
-                    }
+                        Divider()
 
-                    HStack {
-                        Text("Enter left color #:")
-                        TextField("leftNumber", value: $doc.picdef.leftNumber,
-                                  formatter: ContentView.cgIintMaxColorsFormatter)
-                            .frame(maxWidth: 30)
-                            .foregroundColor(leftGradientIsValid ? .primary : .red)
-                            .help("Select the color # for the left side of a gradient.")
+                    }  // END GROUP 1 Basics
 
-                        Text("to " + String(rightGradientColor))
-                    }
 
-                    HStack {
-                        VStack {
-                            Button("Make a gradient") { showGradient() }
-                                .help("Draw a gradient between two adjoining colors.")
-                        }
+                    // Start Scroll Bar
 
-                        VStack {
-                            Button("Color the image") { readyForColors() }
-                                .help("Color the image using the existing iteration data.")
-                        }
-                    }
 
-                    HStack {
-                        VStack {
-                            Button("Show screen colors") { showScreenColors() }
-                                .help("Show 512 colors that look good on the screen.")
-                        }
+                    ScrollView(showsIndicators: true) {
 
-                        VStack {
-                            Button("Show print colors") { showPrintColors() }
-                                .help("Show 292 colors that should print well.")
-                        }
-                    }
-                } // end non scroll group at top
 
-                Divider()
+                        //  GROUP 2 IMAGE SIZE
 
-                ScrollView(showsIndicators: true) {
-                    Group { // 1 in scrollbar
-                        HStack {
-                            VStack { // each input has a vertical container with a Text label & TextField for data
-                                Text("Enter center X")
+                        Group {
 
-                                Text("Between -2 and 2")
-                                TextField("Number", value: $doc.picdef.xCenter, formatter: ContentView.cgDecimalAbs2Formatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .padding(4)
-                                    .frame(maxWidth: 120)
-                                    .help("Enter the X value in the Mandelbrot coordinate system for the center of the image.")
-                            } // end VStack
+                            //  Show Row (HStack) of Image Size  Next
 
-                            VStack { // each input has a vertical container with a Text label & TextField for data
-                                Text("Enter center Y")
-                                
-                                Text("Between -2 and 2")
-                                TextField("Number", value: $doc.picdef.yCenter, formatter: ContentView.cgDecimalAbs2Formatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .padding(4)
-                                    .frame(maxWidth: 120)
-                                    .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
-                            } // end VStack
-                        } // end HStack
-                    } // end group 1 in scrollbar
+                            HStack {
+                                VStack {
+                                    Text("Image")
 
-                    Group { // start group 2 in scrollbar
-                        HStack {
-                            VStack {
-                                Text("scale:")
+                                    Text("width, px:")
+                                    TextField("imageWidth", value: $doc.picdef.imageWidth, formatter: ContentView.cgIntPositiveFormatter)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 80)
+                                        .help("Enter the width, in pixels, of the image.")
+                                }
 
-                                TextField("Scale", value: $doc.picdef.scale, formatter: ContentView.cgDecimalUnboundFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 100)
-                                    .help("Enter the magnification of the image.")
+                                VStack {
+                                    Text("Image")
+
+                                    Text("height, px:")
+                                    TextField("imageHeightStart", value: $doc.picdef.imageHeight, formatter: ContentView.cgIntPositiveFormatter)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 80)
+                                        .help("Enter the height, in pixels, of the image.")
+                                }
+
+                                VStack {
+                                    Text("Aspect")
+                                    Text("ratio:")
+
+                                    Text("\(aspectRatio)")
+                                        .padding(1)
+                                        .help("Calculated value of image width over image height.")
+                                }
                             }
 
-                            VStack {
-                                Text("iterationsMax:")
+                            Divider()
+                        } // END GROUP 2 IMAGE SIZE
+
+
+                        //  GROUP 3 X, Y and Scale
+
+                        Group {
+
+                            //  Show Row (HStack) of X, Y
+
+                            HStack {
+                                VStack { // each input has a vertical container with a Text label & TextField for data
+                                    Text("Enter center X")
+
+                                    Text("Between -2 and 2")
+                                    TextField("Number", value: $doc.picdef.xCenter, formatter: ContentView.cgDecimalAbs2Formatter)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .padding(4)
+                                        .frame(maxWidth: 120)
+                                        .help("Enter the X value in the Mandelbrot coordinate system for the center of the image.")
+                                }
+
+                                VStack { // each input has a vertical container with a Text label & TextField for data
+                                    Text("Enter center Y")
+
+                                    Text("Between -2 and 2")
+                                    TextField("Number", value: $doc.picdef.yCenter, formatter: ContentView.cgDecimalAbs2Formatter)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .padding(4)
+                                        .frame(maxWidth: 120)
+                                        .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
+                                }
+                            } // end HStack for XY
+
+
+                            //  Show Row (HStack) of Scale Next
+
+                            HStack {
+
+                                VStack {
+                                    Text("Rotate (º)")
+
+                                    TextField("theta", value: $doc.picdef.theta, formatter: ContentView.cgRotationThetaFormatter)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 50)
+                                        .help("Enter the angle to rotate the image clockwise, in degrees.")
+                                }
+
+
+                                VStack{
+                                    Text("Scale")
+                                    TextField("Scale", value: $doc.picdef.scale, formatter: ContentView.cgDecimalUnboundFormatter)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 100)
+                                        .help("Enter the magnification of the image.")
+                                }
+                                VStack{
+                                    Text("Zoom")
+
+                                    HStack {
+
+                                        Button("+") { zoomIn() }
+                                            .help("Zoom in by a factor of two.")
+
+                                        Button("-") { zoomOut() }
+                                            .help("Zoom out by a factor of two.")
+
+                                    }
+                                }
+
+                            }
+
+                            Divider()
+
+                            HStack {
+                                Text("Smoothing (max interations):")
 
                                 TextField("iterationsMax", value: $doc.picdef.iterationsMax, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 60)
                                     .help("Enter the maximum number of iterations for a given point in the image. A larger value will increase the resolution, but slow down the calculation.")
-                            }
+                                    .frame(maxWidth: 70)
 
-                            VStack {
-                                Text("rSqLimit:")
+                            }
+                            .padding(.horizontal)
+
+                            HStack {
+
+                                Text("Smoothing (rSqLimit):")
 
                                 TextField("rSqLimit", value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter)
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 60)
                                     .help("Enter the minimum value for the square of the distance from the origin of the Mandelbrot coordinate system. A larger value will increase the resolution, but slow down the calculation.")
-                            }
-                        }
 
-                        HStack {
-                            VStack {
-                                Text("Image")
-
-                                Text("width, px:")
-                                TextField("imageWidth", value: $doc.picdef.imageWidth, formatter: ContentView.cgIntPositiveFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter the width, in pixels, of the image.")
-                            }
-                            
-                            VStack {
-                                Text("Image")
-
-                                Text("height, px:")
-                                TextField("imageHeightStart", value: $doc.picdef.imageHeight, formatter: ContentView.cgIntPositiveFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter the height, in pixels, of the image.")
                             }
 
-                            VStack {
-                                Text("Aspect")
-                                Text("ratio:")
+                            Divider()
 
-                                Text("\(aspectRatio)")
-                                    .padding(1)
-                                    .help("Calculated value of image width over image height.")
-                            }
-                        }
+                            HStack {
 
-                        HStack {
-                            VStack {
-                                Text("spacing ColorNear:")
+                                Text("Hold fraction (yY)")
 
-                                TextField("spacing ColorNear", value: $doc.picdef.spacingColorNear, formatter: ContentView.cgDecimalUnboundFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter the value for the color spacing near the edges of the image.")
                             }
 
-                            VStack {
-                                Text("spacing ColorFar:")
-
-                                TextField("spacing ColorFar", value: $doc.picdef.spacingColorFar, formatter: ContentView.cgDecimalUnboundFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter the value for the color spacing away from the edges of the image.")
-                            }
-
-                            VStack {
-                                Text("theta:")
-
-                                TextField("theta", value: $doc.picdef.theta, formatter: ContentView.cgDecimalUnboundFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter the angle to rotate the image clockwise, in degrees.")
-                            }
-                        }
-
-                        HStack {
-                            VStack {
-                                Text("nImage:")
-
-                                TextField("nImage", value: $doc.picdef.nImage, formatter: ContentView.cgDecimalUnboundFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter the number to be applied to a saved image.")
-                            }
-
-                            VStack {
-                                Text("dFIterMin:")
-
-                                TextField("dFIterMin", value: $doc.picdef.dFIterMin, formatter: ContentView.cgDecimalUnboundFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
-                            }
-                            
-                            VStack {
-                                Text("nBlocks:")
-
-                                TextField("nBlocks", value: $doc.picdef.nBlocks, formatter: ContentView.cgIntNBlocksFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
-                            }
-                        }
-
-                        HStack {
-                            VStack {
-                                Text("yY:")
-
-                                TextField("yY", value: $doc.picdef.yY, formatter: ContentView.cgDecimalUnboundFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
+                            HStack {
+                                Text("0")
+                                Slider(value: $doc.picdef.yY, in: 0...1, step: 0.1)
                                     .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
-                            }
-                        }
-                    } // end group 2 in scrollbar
-                } // end scroll bar
+                                Text("1")
+                                // Text("\(String(format: "%.2f", doc.picdef.yY))")
 
-                List {
-                    ForEach($doc.picdef.hues, id: \.num) { $hue in
-                        HStack {
-                            TextField("number", value: $hue.num, formatter: ContentView.cgDecimalUnboundFormatter)
-                                .disabled(true)
+                                TextField("yY", value: $doc.picdef.yY,
+                                          formatter: ContentView.cgDecimalUnboundFormatter)
+                                .textFieldStyle(.roundedBorder)
+                                .multilineTextAlignment(.trailing)
                                 .frame(maxWidth: 50)
-                            TextField("r", value: $hue.r, formatter: ContentView.cg255Formatter)
-                                .onChange(of: hue.r) { newValue in
-                                    let i = hue.num - 1
-                                    doc.updateHueWithColorNumberR(
-                                        index: i, newValue: newValue
-                                    )
-                                }
-                            TextField("g", value: $hue.g, formatter: ContentView.cg255Formatter)
-                                .onChange(of: hue.g) { newValue in
-                                    let i = hue.num - 1
-                                    doc.updateHueWithColorNumberG(
-                                        index: i, newValue: newValue
-                                    )
-                                }
-                            TextField("b", value: $hue.b, formatter: ContentView.cg255Formatter)
-                                .onChange(of: hue.b) { newValue in
-                                    let i = hue.num - 1
-                                    doc.updateHueWithColorNumberB(
-                                        index: i, newValue: newValue
-                                    )
-                                }
-
-                            ColorPicker("", selection: $hue.color, supportsOpacity: false)
-                                .onChange(of: hue.color) { newColor in
-                                    let i = hue.num - 1
-                                    doc.updateHueWithColorPick(
-                                        index: i, newColorPick: newColor
-                                    )
-                                }
-                            
-                            Button {
-                                let i = hue.num - 1
-                                doc.deleteHue(index: i)
-                                updateHueNums()
-                                readyForPicture()
-                            } label: {
-                                Image(systemName: "trash")
+                                .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
                             }
-                            .padding(.trailing, 5)
-                            .help("Delete " + "\(hue.num)")
-                        }
-                        .listRowBackground(instructionBackgroundColor)
-                    } // end foreach
-                    .onMove { indices, hue in
-                        doc.picdef.hues.move(fromOffsets: indices,
-                                             toOffset: hue)
-                        updateHueNums()
-                    }
-                } // end list
+                            .padding(.horizontal)
 
-                HStack {
-                    VStack {
-                        Button("Add Color") { doc.addHue() }
-                            .padding([.bottom], 2)
+
+                            Divider()
+
+                        } // END GROUP 3 X, Y, SCALE
+
+
+                        // GROUP 4 - GRADIENT
+
+                        Group {
+
+                            //  Show Row (HStack) of Gradient Content Next
+
+                            HStack {
+
+                                Text("Draw gradient from color")
+
+                                TextField("leftNumber", value: $doc.picdef.leftNumber,
+                                          formatter: ContentView.cgIintMaxColorsFormatter,
+                                          onCommit: {
+                                    // do something when text field loses focus
+                                    showGradient()
+                                })
+                                .frame(maxWidth: 30)
+                                .foregroundColor(leftGradientIsValid ? .primary : .red)
+                                .help("Select the color number for the left side of a gradient.")
+
+                                Text("to " + String(rightGradientColor))
+                                    .help("The color # for the right side of a gradient.")
+
+                                Button("Go") { showGradient() }
+                                    .help("Draw a gradient between two adjoining colors.")
+
+
+                            }
+
+
+                            Divider()
+
+                        } // END GROUP 4 - GRADIENT
+
+
+
+
+
+                        // GROUP 5 - COLOR TUNING
+
+                        Group {
+
+                            HStack {
+
+                                Text("Coloring Options")
+                            }
+
+                            Divider()
+
+                            HStack {
+
+                                VStack {
+                                    Text("Spacing")
+                                    Text("far from MiniMand")
+                                    Text("near to edge")
+
+                                    TextField("spacing ColorNear", value: $doc.picdef.spacingColorNear, formatter: ContentView.cgDecimalUnboundFormatter)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 80)
+                                        .help("Enter the value for the color spacing near the edges of the image, awwy from MiniMand.")
+                                }
+
+                                VStack {
+                                    Text("Spacing")
+                                    Text("near to MiniMand")
+                                    Text("far from edge")
+
+                                    TextField("spacing ColorFar", value: $doc.picdef.spacingColorFar, formatter: ContentView.cgDecimalUnboundFormatter)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 80)
+                                        .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
+                                }
+
+
+                            }
+
+                            HStack {
+
+
+                                VStack {
+                                    Text("dFIterMin:")
+
+                                    TextField("dFIterMin", value: $doc.picdef.dFIterMin, formatter: ContentView.cgDecimalUnboundFormatter)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 80)
+                                        .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
+                                }
+
+                                VStack {
+                                    Text("nBlocks:")
+
+                                    TextField("nBlocks", value: $doc.picdef.nBlocks, formatter: ContentView.cgIntNBlocksFormatter)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 80)
+                                        .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
+                                }
+                            }
+
+
+                        }  // end color tuning group
+
+
+                    } // end scroll bar
+
+
+
+
+                    // GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
+
+
+
+                    Group {
+
+                        Divider()
+
+                        
+                        HStack {
+
+
+                            Button("Screen Colors") { showScreenColors() }
+                                .help("Show 512 colors that look good on the screen.")
+
+                            Button("Print Colors") { showPrintColors() }
+                                .help("Show 292 colors that should print well.")
+
+                            Button("+") { doc.addHue() }
+                                .help("Add a new color.")
+                                .padding([.bottom], 2)
+                        }
+
+
+
+                    }
+
+                    // END GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
+
+                    Group {
+                        Text("Ordered List of Colors")
+
+                        List {
+                            ForEach($doc.picdef.hues, id: \.num) { $hue in
+                                HStack {
+                                    TextField("number", value: $hue.num, formatter: ContentView.cgDecimalUnboundFormatter)
+                                        .disabled(true)
+                                        .frame(maxWidth: 50)
+                                    TextField("r", value: $hue.r, formatter: ContentView.cg255Formatter)
+                                        .onChange(of: hue.r) { newValue in
+                                            let i = hue.num - 1
+                                            doc.updateHueWithColorNumberR(
+                                                index: i, newValue: newValue
+                                            )
+                                        }
+                                    TextField("g", value: $hue.g, formatter: ContentView.cg255Formatter)
+                                        .onChange(of: hue.g) { newValue in
+                                            let i = hue.num - 1
+                                            doc.updateHueWithColorNumberG(
+                                                index: i, newValue: newValue
+                                            )
+                                        }
+                                    TextField("b", value: $hue.b, formatter: ContentView.cg255Formatter)
+                                        .onChange(of: hue.b) { newValue in
+                                            let i = hue.num - 1
+                                            doc.updateHueWithColorNumberB(
+                                                index: i, newValue: newValue
+                                            )
+                                        }
+
+                                    ColorPicker("", selection: $hue.color, supportsOpacity: false)
+                                        .onChange(of: hue.color) { newColor in
+                                            let i = hue.num - 1
+                                            doc.updateHueWithColorPick(
+                                                index: i, newColorPick: newColor
+                                            )
+                                        }
+
+                                    Button {
+                                        let i = hue.num - 1
+                                        doc.deleteHue(index: i)
+                                        updateHueNums()
+                                        readyForPicture()
+                                    } label: {
+                                        Image(systemName: "trash")
+                                    }
+                                    .padding(.trailing, 5)
+                                    .help("Delete " + "\(hue.num)")
+                                }
+                                .listRowBackground(instructionBackgroundColor)
+
+                            } // end foreach
+                            .onMove { indices, hue in
+                                doc.picdef.hues.move(fromOffsets: indices,
+                                                     toOffset: hue)
+                                updateHueNums()
+                            }
+                        } // end list
+
+                    }
+
+
+
+
+                } // end VStack for user instructions - Below refers to the 2 cols
+                .background(instructionBackgroundColor)
+                .frame(width: inputWidth)
+                .padding(5)
+
+
+                // SECOND COLUMN - VSTACK - IS FOR IMAGES
+
+                // RIGHT COLUMN IS FOR IMAGES......................
+
+
+                // SMALL SCREENS MAY NEED SCROLL BARS
+
+                GeometryReader { geometry in
+                    if geometry.size.height < 1200 {
+                        ScrollView {
+                            VStack {
+                                if activeDisplayState == ActiveDisplayChoice.MandArt {
+                                    let image: CGImage = getImage()!
+                                    GeometryReader {
+                                        _ in
+                                        ZStack(alignment: .topLeading) {
+                                            Image(image, scale: 1.0, label: Text("Test")).gesture(self.tapGesture)
+                                        }
+                                    }
+                                } else if activeDisplayState == ActiveDisplayChoice.Gradient {
+                                    let image: CGImage = getImage()!
+                                    GeometryReader {
+                                        _ in
+                                        ZStack(alignment: .topLeading) {
+                                            Image(image, scale: 1.0, label: Text("Test"))
+                                        }
+                                    }
+                                } else if activeDisplayState == ActiveDisplayChoice.Color {
+                                    let image: CGImage = getImage()!
+                                    GeometryReader {
+                                        _ in
+                                        ZStack(alignment: .topLeading) {
+                                            Image(image, scale: 1.0, label: Text("Test"))
+                                        }
+                                    }
+                                } else if activeDisplayState == ActiveDisplayChoice.ScreenColors {
+                                    Image("Screen colors")
+                                        .resizable()
+                                        .scaledToFit()
+                                } else if activeDisplayState == ActiveDisplayChoice.PrintColors {
+                                    Image("Print colors")
+                                        .resizable()
+                                        .scaledToFit()
+                                }
+                            } // end right side (picture space)
+
+
+                        }
+                    } else {
+                        VStack {
+                            if activeDisplayState == ActiveDisplayChoice.MandArt {
+                                let image: CGImage = getImage()!
+                                GeometryReader {
+                                    _ in
+                                    ZStack(alignment: .topLeading) {
+                                        Image(image, scale: 1.0, label: Text("Test")).gesture(self.tapGesture)
+                                    }
+                                }
+                            } else if activeDisplayState == ActiveDisplayChoice.Gradient {
+                                let image: CGImage = getImage()!
+                                GeometryReader {
+                                    _ in
+                                    ZStack(alignment: .topLeading) {
+                                        Image(image, scale: 1.0, label: Text("Test"))
+                                    }
+                                }
+                            } else if activeDisplayState == ActiveDisplayChoice.Color {
+                                let image: CGImage = getImage()!
+                                GeometryReader {
+                                    _ in
+                                    ZStack(alignment: .topLeading) {
+                                        Image(image, scale: 1.0, label: Text("Test"))
+                                    }
+                                }
+                            } else if activeDisplayState == ActiveDisplayChoice.ScreenColors {
+                                Image("Screen colors")
+                                    .resizable()
+                                    .scaledToFit()
+                            } else if activeDisplayState == ActiveDisplayChoice.PrintColors {
+                                Image("Print colors")
+                                    .resizable()
+                                    .scaledToFit()
+                            }
+                        } // end right side (picture space)
+
+
                     }
                 }
-            } // end VStack for user instructions
+
+
+
+
+            } // end HStack
             .background(instructionBackgroundColor)
-            .frame(width: inputWidth)
-            .padding(10)
 
-            VStack {
-                if activeDisplayState == ActiveDisplayChoice.MandArt {
-                    let image: CGImage = getImage()!
-                    GeometryReader {
-                        _ in
-                        ZStack(alignment: .topLeading) {
-                            Image(image, scale: 1.0, label: Text("Test")).gesture(self.tapGesture)
-                        }
-                    }
-                } else if activeDisplayState == ActiveDisplayChoice.Gradient {
-                    let image: CGImage = getImage()!
-                    GeometryReader {
-                        _ in
-                        ZStack(alignment: .topLeading) {
-                            Image(image, scale: 1.0, label: Text("Test"))
-                        }
-                    }
-                } else if activeDisplayState == ActiveDisplayChoice.Color {
-                    let image: CGImage = getImage()!
-                    GeometryReader {
-                        _ in
-                        ZStack(alignment: .topLeading) {
-                            Image(image, scale: 1.0, label: Text("Test"))
-                        }
-                    }
-                } else if activeDisplayState == ActiveDisplayChoice.ScreenColors {
-                    Image("Screen colors")
-                        .resizable()
-                        .scaledToFit()
-                } else if activeDisplayState == ActiveDisplayChoice.PrintColors {
-                    Image("Print colors")
-                        .resizable()
-                        .scaledToFit()
-                }
-            } // end right side (picture space)
-        } // end HStack
+
+        } // end geometry reader to get screen size
+
+
     } // end view body
 
     var tapGesture: some Gesture {
@@ -1109,6 +1279,13 @@ struct ContentView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 8
+        return formatter
+    }
+
+    static var cgRotationThetaFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.minimum = -359
+        formatter.maximum = 359
         return formatter
     }
 
@@ -1345,4 +1522,3 @@ struct ContentView: View {
     }
 
 }
-

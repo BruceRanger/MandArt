@@ -14,7 +14,7 @@ struct PictureDefinition: Codable, Identifiable {
     var id = UUID()
     var xCenter: Double = -0.74725
     var yCenter: Double = 0.08442
-    var scale: Double = 2_880_000.0
+    var scale: Double = 430.0
     var iterationsMax: Double = 10000.0
     var rSqLimit: Double = 400.0
     var imageWidth: Int = 1200
