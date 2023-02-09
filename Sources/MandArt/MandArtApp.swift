@@ -23,7 +23,7 @@ struct MandArtApp: App {
         WindowGroup(windowGroupName) {
             // In some action at the end of this scene flow
             // just close current window and open new document
-            Button("Welcome to MandArt") {
+            Button("Click to open a sample MandArt") {
                 NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
                 NSDocumentController.shared.newDocument(defaultFileName)
             }
