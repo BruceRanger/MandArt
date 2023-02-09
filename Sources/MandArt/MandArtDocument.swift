@@ -7,11 +7,11 @@
 //  how-to-create-a-document-based-app-using-filedocument-and-documentgroup
 //
 
-import SwiftUI
-import UniformTypeIdentifiers
+import AppKit // uikit for mobile, appkit for Mac
 import CoreGraphics
 import ImageIO
-import AppKit // uikit for mobile, appkit for Mac
+import SwiftUI
+import UniformTypeIdentifiers
 
 /// A utility class to work with files for saving and sharing your art.
 /// Includes logic for adding, deleting, and reordering colors.
@@ -50,7 +50,7 @@ final class MandArtDocument: ReferenceFileDocument {
             Hue(num: 6, r: 0.0, g: 255.0, b: 255.0)
         ]
         picdef = PictureDefinition(hues: hues)
-     }
+    }
 
     /// Initialize a document with our picdef property
     /// - Parameter configuration: config
@@ -60,11 +60,9 @@ final class MandArtDocument: ReferenceFileDocument {
             throw CocoaError(.fileReadCorruptFile)
         }
         picdef = try JSONDecoder().decode(PictureDefinition.self, from: data)
-        self.jsonDocumentName = configuration.file.filename!
-        print("Opening JSON file = ", self.jsonDocumentName)
+        jsonDocumentName = configuration.file.filename!
+        print("Opening JSON file = ", jsonDocumentName)
     }
-
-
 
     /// Save the active picture definittion data to a file.
     /// - Parameters:
@@ -73,35 +71,34 @@ final class MandArtDocument: ReferenceFileDocument {
     /// - Returns: a fileWrapper
     func fileWrapper(
         snapshot: PictureDefinition,
-        configuration: WriteConfiguration) throws -> FileWrapper {
-            let data = try JSONEncoder().encode(snapshot)
-            let fileWrapper = FileWrapper(regularFileWithContents: data)
-            let fn = fileWrapper.filename
-            print("When saving a new /unamed file, the json file name is ", fn)
-            print("In fileWrapper function, saving jsonDocumentName=", self.jsonDocumentName)
-            return fileWrapper
-        }
-
+        configuration _: WriteConfiguration
+    ) throws -> FileWrapper {
+        let data = try JSONEncoder().encode(snapshot)
+        let fileWrapper = FileWrapper(regularFileWithContents: data)
+        let fn = fileWrapper.filename
+        print("When saving a new /unamed file, the json file name is ", fn)
+        print("In fileWrapper function, saving jsonDocumentName=", jsonDocumentName)
+        return fileWrapper
+    }
 
     @available(macOS 12.0, *)
-    func saveImagePictureFromJSONDocument()  {
-        print("Saving image from JSON file:", self.jsonDocumentName)
-        let justname = self.jsonDocumentName.replacingOccurrences(of: ".json", with: "")
-  //      let fn = "mandart-from-" + justname + ".png"
+    func saveImagePictureFromJSONDocument() {
+        print("Saving image from JSON file:", jsonDocumentName)
+        let justname = jsonDocumentName.replacingOccurrences(of: ".json", with: "")
+        //      let fn = "mandart-from-" + justname + ".png"
         let fn = justname + ".png"
-
 
         var data: Data
         do {
-            data =  try JSONEncoder().encode(self.picdef)
+            data = try JSONEncoder().encode(picdef)
         } catch {
             print("!!error encoding self.picdef")
             exit(1)
         }
         let fileWrapper = FileWrapper(regularFileWithContents: data)
         // trigger state from this window / json document to get a current img
-        self.picdef.imageHeight = self.picdef.imageHeight + 1
-        self.picdef.imageHeight = self.picdef.imageHeight - 1
+        picdef.imageHeight = picdef.imageHeight + 1
+        picdef.imageHeight = picdef.imageHeight - 1
 
         let currImage = contextImageGlobal!
         let savePanel = NSSavePanel()
@@ -111,14 +108,14 @@ final class MandArtDocument: ReferenceFileDocument {
         savePanel.begin { result in
             if result == .OK, let url = savePanel.url {
                 let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypeJPEG, 1, nil)
-                    CGImageDestinationAddImage(dest!, currImage, nil)
-                    if CGImageDestinationFinalize(dest!) {
-                        print("Image saved successfully to \(url)")
-                    } else {
-                        print("Error saving image")
-                    }
+                CGImageDestinationAddImage(dest!, currImage, nil)
+                if CGImageDestinationFinalize(dest!) {
+                    print("Image saved successfully to \(url)")
+                } else {
+                    print("Error saving image")
                 }
             }
+        }
     }
 
     /// Create a snapshot of the current state of the document for serialization
@@ -127,7 +124,7 @@ final class MandArtDocument: ReferenceFileDocument {
     /// - Returns: picture definition
     @available(macOS 12.0, *)
     func snapshot(contentType _: UTType) throws -> PictureDefinition {
-        return self.picdef // return the current state
+        return picdef // return the current state
     }
 
     /// Helper function to return a String from an Any?
@@ -298,6 +295,3 @@ extension String {
         return String(self[start...])
     }
 }
-
-
-

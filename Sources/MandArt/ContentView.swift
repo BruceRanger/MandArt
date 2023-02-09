@@ -9,7 +9,6 @@
 import Foundation // trig functions
 import SwiftUI // views
 
-
 // File / Project Settings / Per-user project settings / derived data
 // set to project-relative path DerivedData
 // now I can see the intermediate build products.
@@ -20,7 +19,6 @@ var fIterGlobal = [[Double]]()
 
 @available(macOS 12.0, *)
 struct ContentView: View {
-
     // TODO: move non-SwiftUI functions and logic into MandMath
     // Get everything we can from MandMath (Swift-only)
     let defaultFileName = MandMath.getDefaultDocumentName()
@@ -433,25 +431,22 @@ struct ContentView: View {
                 // calculate the offset of the pixel
                 let pixelAddress: UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
 
-                if Double(u) <= yY*Double(width) {color = colors[leftNumber-1][0]}
-                else{
-                    color =  colors[leftNumber-1][0] + (colors[rightNumber - 1][0] - colors[leftNumber-1][0])*(Double(u) - yY*Double(width))/(Double(width) - yY*Double(width))
+                if Double(u) <= yY * Double(width) { color = colors[leftNumber - 1][0] } else {
+                    color = colors[leftNumber - 1][0] + (colors[rightNumber - 1][0] - colors[leftNumber - 1][0]) * (Double(u) - yY * Double(width)) / (Double(width) - yY * Double(width))
                 }
-                pixelAddress.pointee = UInt8(color)         // R
-                
-                if Double(u) <= yY*Double(width) {color = colors[leftNumber-1][1]}
-                else{
-                    color =  colors[leftNumber-1][1] + (colors[rightNumber - 1][1] - colors[leftNumber-1][1])*(Double(u) - yY*Double(width))/(Double(width) - yY*Double(width))
+                pixelAddress.pointee = UInt8(color) // R
+
+                if Double(u) <= yY * Double(width) { color = colors[leftNumber - 1][1] } else {
+                    color = colors[leftNumber - 1][1] + (colors[rightNumber - 1][1] - colors[leftNumber - 1][1]) * (Double(u) - yY * Double(width)) / (Double(width) - yY * Double(width))
                 }
-                (pixelAddress + 1).pointee = UInt8(color)   // G
-                
-                if Double(u) <= yY*Double(width) {color = colors[leftNumber-1][2]}
-                else{
-                    color =  colors[leftNumber-1][2] + (colors[rightNumber - 1][2] - colors[leftNumber-1][2])*(Double(u) - yY*Double(width))/(Double(width) - yY*Double(width))
+                (pixelAddress + 1).pointee = UInt8(color) // G
+
+                if Double(u) <= yY * Double(width) { color = colors[leftNumber - 1][2] } else {
+                    color = colors[leftNumber - 1][2] + (colors[rightNumber - 1][2] - colors[leftNumber - 1][2]) * (Double(u) - yY * Double(width)) / (Double(width) - yY * Double(width))
                 }
-                (pixelAddress + 2).pointee = UInt8(color)   // B
-                
-                (pixelAddress + 3).pointee = UInt8(255)     //alpha
+                (pixelAddress + 2).pointee = UInt8(color) // B
+
+                (pixelAddress + 3).pointee = UInt8(255) // alpha
 
                 // IMPORTANT:
                 // there is no type checking here and it is up to you to make sure that the
@@ -465,7 +460,7 @@ struct ContentView: View {
         // no automatic deallocation for the raster data
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
-        
+
         // stash picture in global var for saving
         contextImageGlobal = gradientImage
 
@@ -664,39 +659,31 @@ struct ContentView: View {
     // what should be displayed,
     // and change this state variable when buttons are pressed.
     var body: some View {
-
         GeometryReader { geometry in
             // access the screen size
-            let screenSize = geometry.size
-            let screenHeight = round(screenSize.height)
-            let screenWidth = round(screenSize.width)
-            let screenHeightStr = String(format: "%.0f",screenHeight)
-            let screenWidthStr = String(format: "%.0f",screenWidth)
+//            let screenSize = geometry.size
+//            let screenHeight = round(screenSize.height)
+//            let screenWidth = round(screenSize.width)
+//            let screenHeightStr = String(format: "%.0f",screenHeight)
+//            let screenWidthStr = String(format: "%.0f",screenWidth)
 
             HStack(alignment: .top, spacing: 2) {
-
                 // instructions on left, picture on right
                 // Left (first) VStack is left side with user stuff
                 // Right (second) VStack is for mandart, gradient, or colors
                 // Sspacing is between VStacks (the two columns)
 
-
                 // FIRST COLUMN - VSTACK IS FOR INSTRUCTIONS
 
-
                 VStack(alignment: .center, spacing: 5) {
-
-                  //  Text("MandArt \(screenWidthStr) x \(screenHeightStr)")
+                    //  Text("MandArt \(screenWidthStr) x \(screenHeightStr)")
                     Text("MandArt")
                         .font(.title)
-                    
-                    
+
                     //  SECTION 1 GROUP -  BASICS
 
                     Group {
-
                         HStack {
-
                             Button("Draw pic") { showMandArtBitMap() }
                                 .help("Draw the picture.")
 
@@ -717,14 +704,8 @@ struct ContentView: View {
                         }
 
                         Divider()
-
                     } // END SECTION 1 GROUP -  BASICS
                     .fixedSize(horizontal: true, vertical: true)
-
-
-
-
-
 
                     // SECTION 2 - TOP SCROLL BAR
 
@@ -733,12 +714,9 @@ struct ContentView: View {
                     GeometryReader { geometry in
 
                         ScrollView(showsIndicators: true) {
-
-
                             //  GROUP 2 IMAGE SIZE
 
                             Group {
-
                                 //  Show Row (HStack) of Image Size  Next
 
                                 HStack {
@@ -746,7 +724,10 @@ struct ContentView: View {
                                         Text("Image")
 
                                         Text("width, px:")
-                                        TextField("imageWidth", value: $doc.picdef.imageWidth, formatter: ContentView.cgIntPositiveFormatter)
+                                        TextField("imageWidth",
+                                                  value: $doc.picdef.imageWidth,
+                                                  formatter:
+                                                    ContentView.cgIntPositiveFormatter)
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)
@@ -757,7 +738,9 @@ struct ContentView: View {
                                         Text("Image")
 
                                         Text("height, px:")
-                                        TextField("imageHeightStart", value: $doc.picdef.imageHeight, formatter: ContentView.cgIntPositiveFormatter)
+                                        TextField("imageHeightStart",
+                                                  value: $doc.picdef.imageHeight,
+                                                  formatter: ContentView.cgIntPositiveFormatter)
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)
@@ -777,11 +760,9 @@ struct ContentView: View {
                                 Divider()
                             } // END GROUP 2 IMAGE SIZE
 
-
                             //  GROUP 3 X, Y and Scale
 
                             Group {
-
                                 //  Show Row (HStack) of X, Y
 
                                 HStack {
@@ -789,19 +770,45 @@ struct ContentView: View {
                                         Text("Enter center X")
 
                                         Text("Between -2 and 2")
-                                        TextField("Number", value: $doc.picdef.xCenter, formatter: ContentView.cgDecimalAbs2Formatter)
-                                            .textFieldStyle(.roundedBorder)
-                                            .multilineTextAlignment(.trailing)
-                                            .padding(4)
-                                            .frame(maxWidth: 120)
-                                            .help("Enter the X value in the Mandelbrot coordinate system for the center of the image.")
+
+                                        TextField("XC",
+                                                  value: $doc.picdef.xCenter,
+                                                  formatter: ContentView.cgDecimalAbs2Formatter
+                                                  // ,onCommit: {
+                                                  // print("committed, will update now")
+                                                  //   showMandArtBitMap()
+                                                  // }
+                                        ) { isStarted in
+                                            if isStarted {
+                                                print("editing XC, pausing updates")
+                                                self.pauseUpdates()
+                                            }
+                                        }
+                                        .onSubmit {
+                                            print("submitted, will update now")
+                                            showMandArtBitMap()
+                                        }
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .padding(4)
+                                        .frame(maxWidth: 120)
+                                        .help("Enter the X value in the Mandelbrot coordinate system for the center of the image.")
                                     }
 
                                     VStack { // each input has a vertical container with a Text label & TextField for data
                                         Text("Enter center Y")
 
                                         Text("Between -2 and 2")
-                                        TextField("Number", value: $doc.picdef.yCenter, formatter: ContentView.cgDecimalAbs2Formatter)
+                                        TextField("YC", value: $doc.picdef.yCenter, formatter: ContentView.cgDecimalAbs2Formatter) { isStarted in
+                                                if isStarted {
+                                                    print("editing YC, pausing updates")
+                                                    self.pauseUpdates()
+                                                }
+                                            }
+                                            .onSubmit {
+                                                print("submitted, will update now")
+                                                showMandArtBitMap()
+                                            }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .padding(4)
@@ -810,23 +817,22 @@ struct ContentView: View {
                                     }
                                 } // end HStack for XY
 
-
                                 //  Show Row (HStack) of Scale Next
 
                                 HStack {
-
                                     VStack {
                                         Text("Rotate (º)")
 
-                                        TextField("theta", value: $doc.picdef.theta, formatter: ContentView.cgRotationThetaFormatter)
+                                        TextField("theta",
+                                                  value: $doc.picdef.theta,
+                                                  formatter: ContentView.cgRotationThetaFormatter)
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 50)
                                             .help("Enter the angle to rotate the image clockwise, in degrees.")
                                     }
 
-
-                                    VStack{
+                                    VStack {
                                         Text("Scale")
                                         TextField("Scale", value: $doc.picdef.scale, formatter: ContentView.cgDecimalUnboundFormatter)
                                             .textFieldStyle(.roundedBorder)
@@ -834,20 +840,17 @@ struct ContentView: View {
                                             .frame(maxWidth: 100)
                                             .help("Enter the magnification of the image.")
                                     }
-                                    VStack{
+                                    VStack {
                                         Text("Zoom")
 
                                         HStack {
-
                                             Button("+") { zoomIn() }
                                                 .help("Zoom in by a factor of two.")
 
                                             Button("-") { zoomOut() }
                                                 .help("Zoom out by a factor of two.")
-
                                         }
                                     }
-
                                 }
 
                                 Divider()
@@ -860,12 +863,10 @@ struct ContentView: View {
                                         .multilineTextAlignment(.trailing)
                                         .help("Enter the maximum number of iterations for a given point in the image. A larger value will increase the resolution, but slow down the calculation.")
                                         .frame(maxWidth: 70)
-
                                 }
                                 .padding(.horizontal)
 
                                 HStack {
-
                                     Text("Smoothing (rSqLimit):")
 
                                     TextField("rSqLimit", value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter)
@@ -873,90 +874,71 @@ struct ContentView: View {
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 60)
                                         .help("Enter the minimum value for the square of the distance from the origin of the Mandelbrot coordinate system. A larger value will increase the resolution, but slow down the calculation.")
-
                                 }
 
                                 Divider()
 
                                 HStack {
-
                                     Text("Hold fraction (yY)")
-
                                 }
 
                                 HStack {
                                     Text("0")
-                                    Slider(value: $doc.picdef.yY, in: 0...1, step: 0.1)
+                                    Slider(value: $doc.picdef.yY, in: 0 ... 1, step: 0.1)
                                         .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
                                     Text("1")
                                     // Text("\(String(format: "%.2f", doc.picdef.yY))")
 
                                     TextField("yY", value: $doc.picdef.yY,
                                               formatter: ContentView.cgDecimalUnboundFormatter)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 50)
-                                    .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 50)
+                                        .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
                                 }
                                 .padding(.horizontal)
 
-
                                 Divider()
-
                             } // END GROUP 3 X, Y, SCALE
-
 
                             // GROUP 4 - GRADIENT
 
                             Group {
-
                                 //  Show Row (HStack) of Gradient Content Next
 
                                 HStack {
-
                                     Text("Draw gradient from color")
 
                                     TextField("leftNumber", value: $doc.picdef.leftNumber,
                                               formatter: ContentView.cgIintMaxColorsFormatter,
                                               onCommit: {
-                                        // do something when text field loses focus
-                                        showGradient()
-                                    })
-                                    .frame(maxWidth: 30)
-                                    .foregroundColor(leftGradientIsValid ? .primary : .red)
-                                    .help("Select the color number for the left side of a gradient.")
+                                                  // do something when text field loses focus
+                                                  showGradient()
+                                              })
+                                              .frame(maxWidth: 30)
+                                              .foregroundColor(leftGradientIsValid ? .primary : .red)
+                                              .help("Select the color number for the left side of a gradient.")
 
                                     Text("to " + String(rightGradientColor))
                                         .help("The color # for the right side of a gradient.")
 
                                     Button("Go") { showGradient() }
                                         .help("Draw a gradient between two adjoining colors.")
-
-
                                 }
 
-
                                 Divider()
-
                             } // END GROUP 4 - GRADIENT
-
-
-
-
 
                             // GROUP 5 - COLOR TUNING
 
                             Group {
-
                                 HStack {
-
                                     Text("Coloring Options")
                                 }
 
                                 Divider()
 
                                 HStack {
-
                                     VStack {
                                         Text("Spacing")
                                         Text("far from MiniMand")
@@ -980,13 +962,9 @@ struct ContentView: View {
                                             .frame(maxWidth: 80)
                                             .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
                                     }
-
-
                                 }
 
                                 HStack {
-
-
                                     VStack {
                                         Text("dFIterMin:")
 
@@ -1007,15 +985,9 @@ struct ContentView: View {
                                             .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
                                     }
                                 }
-
-
-                            }  // end color tuning group
-
-
+                            } // end color tuning group
                         } // end scroll bar
                         .frame(height: geometry.size.height)
-
-
                     } // end top scoll bar geometry reader
                     .frame(
                         minHeight: 200,
@@ -1023,35 +995,19 @@ struct ContentView: View {
                     )
                     .fixedSize(horizontal: false, vertical: false)
 
-
                     // SECTION 3 - GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
 
                     Group {
-
                         Divider()
 
-                        
                         HStack {
-
-
                             Button("Show Screen Colors") { showScreenColors() }
                                 .help("Show 512 colors that look good on the screen.")
 
                             Button("Show Print Colors") { showPrintColors() }
                                 .help("Show 292 colors that should print well.")
-
-
                         }
-
-
-
-
                     } // END GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
-
-
-
-
-
 
                     // SECTION 4 - END GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
 
@@ -1063,11 +1019,9 @@ struct ContentView: View {
                                 .padding([.bottom], 2)
                         }
 
-
                         // Wrap the list in a geometry reader so it will
                         // shrink when items are deleted
                         GeometryReader { geometry in
-
 
                             List {
                                 ForEach($doc.picdef.hues, id: \.num) { $hue in
@@ -1117,109 +1071,81 @@ struct ContentView: View {
                                         .help("Delete " + "\(hue.num)")
                                     }
                                     .listRowBackground(instructionBackgroundColor)
-
                                 } // end foreach
                                 .onMove { indices, hue in
                                     doc.picdef.hues.move(fromOffsets: indices,
                                                          toOffset: hue)
                                     updateHueNums()
                                 }
-
-
                             } // end list
                             .frame(height: geometry.size.height)
-
-
                         } // end color list geometry reader
                         .frame(
                             minHeight: 0,
                             maxHeight: 220
-                           )
+                        )
                         .fixedSize(horizontal: false, vertical: false)
-
                     } // END COLOR LIST GROUP
-
-
-
-
-
-
                 } // end VStack for user instructions - Below refers to the 2 cols
                 .background(instructionBackgroundColor)
                 .frame(width: inputWidth)
                 .padding(5)
 
-
                 // SECOND COLUMN - VSTACK - IS FOR IMAGES
 
                 // RIGHT COLUMN IS FOR IMAGES......................
-
 
                 // SMALL SCREENS MAY NEED SCROLL BARS
 
                 GeometryReader { geometry in
 
-                        ScrollView(showsIndicators: true)  {
-
-                            VStack {
-                                if activeDisplayState == ActiveDisplayChoice.MandArt {
-                                    let image: CGImage = getImage()!
-                                    GeometryReader {
-                                        _ in
-                                        ZStack(alignment: .topLeading) {
-                                            Image(image, scale: 1.0, label: Text("Test"))
-                                                .gesture(self.tapGesture)
-
-                                        }
+                    ScrollView(showsIndicators: true) {
+                        VStack {
+                            if activeDisplayState == ActiveDisplayChoice.MandArt {
+                                let image: CGImage = getImage()!
+                                GeometryReader {
+                                    _ in
+                                    ZStack(alignment: .topLeading) {
+                                        Image(image, scale: 1.0, label: Text("Test"))
+                                            .gesture(self.tapGesture)
                                     }
-                                } else if activeDisplayState == ActiveDisplayChoice.Gradient {
-                                    let image: CGImage = getImage()!
-                                    GeometryReader {
-                                        _ in
-                                        ZStack(alignment: .topLeading) {
-                                            Image(image, scale: 1.0, label: Text("Test"))
-                                        }
-                                    }
-                                } else if activeDisplayState == ActiveDisplayChoice.Color {
-                                    let image: CGImage = getImage()!
-                                    GeometryReader {
-                                        _ in
-                                        ZStack(alignment: .topLeading) {
-                                            Image(image, scale: 1.0, label: Text("Test"))
-                                        }
-                                    }
-                                } else if activeDisplayState == ActiveDisplayChoice.ScreenColors {
-                                    Image("Screen colors")
-                                        .resizable()
-                                        .scaledToFit()
-                                } else if activeDisplayState == ActiveDisplayChoice.PrintColors {
-                                    Image("Print colors")
-                                        .resizable()
-                                        .scaledToFit()
                                 }
-
-
-                            } // end VStack right side (picture space)
-                            .frame(width: geometry.size.width, height: geometry.size.height)
-                            .padding(5)
-
-
-                        }  // end image scroll view
+                            } else if activeDisplayState == ActiveDisplayChoice.Gradient {
+                                let image: CGImage = getImage()!
+                                GeometryReader {
+                                    _ in
+                                    ZStack(alignment: .topLeading) {
+                                        Image(image, scale: 1.0, label: Text("Test"))
+                                    }
+                                }
+                            } else if activeDisplayState == ActiveDisplayChoice.Color {
+                                let image: CGImage = getImage()!
+                                GeometryReader {
+                                    _ in
+                                    ZStack(alignment: .topLeading) {
+                                        Image(image, scale: 1.0, label: Text("Test"))
+                                    }
+                                }
+                            } else if activeDisplayState == ActiveDisplayChoice.ScreenColors {
+                                Image("Screen colors")
+                                    .resizable()
+                                    .scaledToFit()
+                            } else if activeDisplayState == ActiveDisplayChoice.PrintColors {
+                                Image("Print colors")
+                                    .resizable()
+                                    .scaledToFit()
+                            }
+                        } // end VStack right side (picture space)
+                        .frame(width: geometry.size.width, height: geometry.size.height)
                         .padding(5)
-
+                    } // end image scroll view
+                    .padding(5)
                 } // end image geometry reader
                 .padding(5)
-
-
             } // end HStack
             .background(instructionBackgroundColor)
-
-
         } // end geometry reader to get screen size
-
-
     } // end view body
-
 
     var tapGesture: some Gesture {
         DragGesture(minimumDistance: 10, coordinateSpace: .local)
@@ -1250,7 +1176,6 @@ struct ContentView: View {
                     // reset tap event states
                     self.moved = 0
                     self.startTime = nil
-
                 }
             }
     } // end tapGesture
@@ -1347,7 +1272,6 @@ struct ContentView: View {
         }
         return 1
     }
-
 
     /// Returns the new x to be the picture center x when user drags in the picture.
     /// - Parameter tap: information about the drag
@@ -1466,6 +1390,12 @@ struct ContentView: View {
         drawColors = true
     }
 
+    fileprivate func pauseUpdates() {
+        drawIt = false
+        drawGradient = false
+        drawColors = false
+    }
+
     fileprivate func showMandArtBitMap() {
         activeDisplayState = ActiveDisplayChoice.MandArt
         readyForPicture()
@@ -1498,5 +1428,4 @@ struct ContentView: View {
         readyForPicture()
         doc.picdef.scale = doc.picdef.scale / 2.0
     }
-
 }

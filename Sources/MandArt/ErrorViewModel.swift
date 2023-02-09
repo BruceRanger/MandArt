@@ -9,28 +9,26 @@ import Foundation
 /// A reusable error view model for communicating with the user.
 @available(macOS 10.15, *)
 final class ErrorViewModel: ObservableObject {
-
     /// An enumeration of the local errors possible in MandArt
     enum ErrorCustomEnum: LocalizedError {
-
         case leftGradientOutOfRange
         case cannotBeNegative
 
         var errorDescription: String? {
             switch self {
-                case .leftGradientOutOfRange:
-                    return "Left gradient invalid."
-                case .cannotBeNegative:
-                    return "Cannot be negative."
+            case .leftGradientOutOfRange:
+                return "Left gradient invalid."
+            case .cannotBeNegative:
+                return "Cannot be negative."
             }
         }
 
         var recoverySuggestion: String? {
             switch self {
-                case .leftGradientOutOfRange:
-                    return "Please change left gradient to a valid number."
-                case .cannotBeNegative:
-                    return "Please change to a non-negative number."
+            case .leftGradientOutOfRange:
+                return "Please change left gradient to a valid number."
+            case .cannotBeNegative:
+                return "Please change to a non-negative number."
             }
         }
     }
@@ -41,8 +39,8 @@ final class ErrorViewModel: ObservableObject {
     func testErrorBox1() {
         errorCustomObject = ErrorCustomEnum.leftGradientOutOfRange
     }
+
     func testErrorBox2() {
         errorCustomObject = ErrorCustomEnum.cannotBeNegative
-
     }
 }

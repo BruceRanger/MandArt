@@ -104,7 +104,6 @@ private extension Color {
 
 @available(macOS 10.15, *)
 extension Color: Codable {
-
     enum CodingKeys: String, CodingKey {
         case red, green, blue
     }
@@ -127,13 +126,11 @@ extension Color: Codable {
 
             var container = encoder.container(keyedBy: CodingKeys.self)
 
-
             try container.encode(colorComponents.red, forKey: .red)
             try container.encode(colorComponents.green, forKey: .green)
             try container.encode(colorComponents.blue, forKey: .blue)
         } else {
             print("ERROR: This app requires macOS 12 and higher")
         }
-
     }
 }

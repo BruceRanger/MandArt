@@ -7,7 +7,6 @@
 import XCTest
 
 final class MandArtUITestsLaunchTests: XCTestCase {
-
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }

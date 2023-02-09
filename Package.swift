@@ -6,7 +6,6 @@
 //  Does not compile with the Main Project
 //
 
-
 import PackageDescription
 
 let package = Package(
@@ -15,23 +14,26 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "MandArt",
-            targets: ["MandArt"]),
+            targets: ["MandArt"]
+        ),
     ],
     // name, platforms, products, etc.
     dependencies: [
         // other dependencies
         .package(
             url: "https://github.com/apple/swift-docc-plugin",
-            from: "1.1.0"),
+            from: "1.1.0"
+        ),
     ],
     targets: [
         // targets
         .target(
             name: "MandArt",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "MandArtTests",
-            dependencies: ["MandArt"]),
+            dependencies: ["MandArt"]
+        ),
     ]
 )
-

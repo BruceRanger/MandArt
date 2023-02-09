@@ -7,7 +7,6 @@
 import XCTest
 
 final class MandArtTests: XCTestCase {
-
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -30,5 +29,4 @@ final class MandArtTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
 }
