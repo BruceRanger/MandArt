@@ -686,8 +686,11 @@ struct ContentView: View {
 
                 VStack(alignment: .center, spacing: 5) {
 
-                    Text("MandArt \(screenWidthStr) x \(screenHeightStr)")
-
+                  //  Text("MandArt \(screenWidthStr) x \(screenHeightStr)")
+                    Text("MandArt")
+                        .font(.title)
+                    
+                    
                     //  SECTION 1 GROUP -  BASICS
 
                     Group {
@@ -1130,7 +1133,7 @@ struct ContentView: View {
                         } // end color list geometry reader
                         .frame(
                             minHeight: 0,
-                            maxHeight: 200
+                            maxHeight: 220
                            )
                         .fixedSize(horizontal: false, vertical: false)
 
