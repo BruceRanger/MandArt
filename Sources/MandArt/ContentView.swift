@@ -9,6 +9,7 @@
 import Foundation // trig functions
 import SwiftUI // views
 
+
 // File / Project Settings / Per-user project settings / derived data
 // set to project-relative path DerivedData
 // now I can see the intermediate build products.
@@ -672,16 +673,18 @@ struct ContentView: View {
             let screenHeightStr = String(format: "%.0f",screenHeight)
             let screenWidthStr = String(format: "%.0f",screenWidth)
 
-            HStack { // instructions on left, picture on right
-                     // Left (first) VStack is left side with user stuff
-                     // Right (second) VStack is for mandart, gradient, or colors
-                     // Sspacing is between VStacks (the two columns)
+            HStack(alignment: .top, spacing: 2) {
+
+                // instructions on left, picture on right
+                // Left (first) VStack is left side with user stuff
+                // Right (second) VStack is for mandart, gradient, or colors
+                // Sspacing is between VStacks (the two columns)
 
 
                 // FIRST COLUMN - VSTACK IS FOR INSTRUCTIONS
 
 
-                VStack(alignment: .center, spacing: 10) {
+                VStack(alignment: .center, spacing: 5) {
 
                     Text("MandArt \(screenWidthStr) x \(screenHeightStr)")
 
@@ -1011,7 +1014,11 @@ struct ContentView: View {
 
 
                     } // end top scoll bar geometry reader
-
+                    .frame(
+                        minHeight: 200,
+                        maxHeight: .infinity
+                    )
+                    .fixedSize(horizontal: false, vertical: false)
 
 
                     // SECTION 3 - GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
@@ -1117,12 +1124,15 @@ struct ContentView: View {
 
 
                             } // end list
-                            .frame(width: geometry.size.width, height: geometry.size.height,  alignment: .topLeading )
-                            .fixedSize(horizontal: false, vertical: false)
+                            .frame(height: geometry.size.height)
 
 
-                        } // end color list geometery reader
-
+                        } // end color list geometry reader
+                        .frame(
+                            minHeight: 0,
+                            maxHeight: 200
+                           )
+                        .fixedSize(horizontal: false, vertical: false)
 
                     } // END COLOR LIST GROUP
 
@@ -1145,15 +1155,18 @@ struct ContentView: View {
                 // SMALL SCREENS MAY NEED SCROLL BARS
 
                 GeometryReader { geometry in
-                    if geometry.size.height < 1200 {
-                        ScrollView {
+
+                        ScrollView(showsIndicators: true)  {
+
                             VStack {
                                 if activeDisplayState == ActiveDisplayChoice.MandArt {
                                     let image: CGImage = getImage()!
                                     GeometryReader {
                                         _ in
                                         ZStack(alignment: .topLeading) {
-                                            Image(image, scale: 1.0, label: Text("Test")).gesture(self.tapGesture)
+                                            Image(image, scale: 1.0, label: Text("Test"))
+                                                .gesture(self.tapGesture)
+
                                         }
                                     }
                                 } else if activeDisplayState == ActiveDisplayChoice.Gradient {
@@ -1181,52 +1194,18 @@ struct ContentView: View {
                                         .resizable()
                                         .scaledToFit()
                                 }
-                            } // end right side (picture space)
 
 
-                        }
-                    } else {
-                        VStack {
-                            if activeDisplayState == ActiveDisplayChoice.MandArt {
-                                let image: CGImage = getImage()!
-                                GeometryReader {
-                                    _ in
-                                    ZStack(alignment: .topLeading) {
-                                        Image(image, scale: 1.0, label: Text("Test")).gesture(self.tapGesture)
-                                    }
-                                }
-                            } else if activeDisplayState == ActiveDisplayChoice.Gradient {
-                                let image: CGImage = getImage()!
-                                GeometryReader {
-                                    _ in
-                                    ZStack(alignment: .topLeading) {
-                                        Image(image, scale: 1.0, label: Text("Test"))
-                                    }
-                                }
-                            } else if activeDisplayState == ActiveDisplayChoice.Color {
-                                let image: CGImage = getImage()!
-                                GeometryReader {
-                                    _ in
-                                    ZStack(alignment: .topLeading) {
-                                        Image(image, scale: 1.0, label: Text("Test"))
-                                    }
-                                }
-                            } else if activeDisplayState == ActiveDisplayChoice.ScreenColors {
-                                Image("Screen colors")
-                                    .resizable()
-                                    .scaledToFit()
-                            } else if activeDisplayState == ActiveDisplayChoice.PrintColors {
-                                Image("Print colors")
-                                    .resizable()
-                                    .scaledToFit()
-                            }
-                        } // end right side (picture space)
+                            } // end VStack right side (picture space)
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .padding(5)
 
 
-                    }
-                }
+                        }  // end image scroll view
+                        .padding(5)
 
-
+                } // end image geometry reader
+                .padding(5)
 
 
             } // end HStack
@@ -1238,9 +1217,11 @@ struct ContentView: View {
 
     } // end view body
 
+
     var tapGesture: some Gesture {
-        DragGesture(minimumDistance: 0, coordinateSpace: .local)
+        DragGesture(minimumDistance: 10, coordinateSpace: .local)
             .onChanged { value in
+
                 // store distance the touch has moved as a sum of all movements
                 self.moved += value.translation.width + value.translation.height
                 // only set the start time if it's the first event
@@ -1266,29 +1247,12 @@ struct ContentView: View {
                     // reset tap event states
                     self.moved = 0
                     self.startTime = nil
+
                 }
             }
     } // end tapGesture
 
     // HELPER FUNCTIONS AND PRIVATE VARIABLES DOWN HERE......
-
-    /*
-
-     In general, both the text and the value properties of a TextField in SwiftUI will update after each character is entered by the user. This allows you to access the updated value of the text field in real-time as the user is entering text, and to respond to changes in the text field's contents as needed.
-
-     For example, if you have a TextField bound to a String property using the text property, you can observe changes to the text field's contents in real-time, and perform actions such as filtering a list of items or making API requests as the user types. Similarly, if you have a TextField bound to an Int or Double property using the value property and a formatter, you can use the updated value of the text field to perform calculations or validate user input in real-time as the user enters text.
-
-     You can use a Binding<String> with a custom NumberFormatter and the isPartialFormatter property set to true to wait until all characters have been entered, then apply the NumberFormatter:
-
-     The isPartialStringValidationEnabled property of a NumberFormatter in Swift is a Boolean value that determines whether the formatter should validate partial strings as the user enters text into a text field.
-
-     When isPartialStringValidationEnabled is set to true, the formatter will validate each partial string entered by the user and apply the appropriate formatting as the user types. This can be useful if you want to enforce a specific format for the number entered by the user, or if you want to immediately display errors if the user enters an invalid character.
-
-     When isPartialStringValidationEnabled is set to false, the formatter will only validate the final string entered by the user, after the user has finished entering the value. This can be useful if you want to allow the user to enter a partial value without immediately validating it, or if you want to provide more lenient validation and only enforce the desired format once the user has finished entering the value.
-
-     The value of isPartialStringValidationEnabled will depend on your specific use case and how you want to handle user input in your app.
-
-     */
 
     static var cg255Formatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -1381,29 +1345,6 @@ struct ContentView: View {
         return 1
     }
 
-    /*   /// Returns the new x to be the picture center x when user drags in the picture.
-     /// - Parameter tap: information about the drag
-     /// - Returns: Double new center x
-     private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-     let start = tap.startLocation.x
-     let end = tap.location.x
-     let moved = end - start
-     let diff = moved / doc.picdef.scale
-     let newCenter: Double = doc.picdef.xCenter - diff
-     return newCenter
-     }
-
-     /// Returns the new y to be the picture center y when user drags in the picture.
-     /// - Parameter tap: information about the drag
-     /// - Returns: Double new center y
-     private func getCenterYFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-     let start = tap.startLocation.y
-     let end = tap.location.y
-     let moved = end - start
-     let diff = moved / doc.picdef.scale
-     let newCenter = doc.picdef.yCenter + diff
-     return newCenter
-     }   */
 
     /// Returns the new x to be the picture center x when user drags in the picture.
     /// - Parameter tap: information about the drag
