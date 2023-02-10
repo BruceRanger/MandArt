@@ -730,12 +730,12 @@ struct ContentView: View {
                                                     ContentView.cgIntPositiveFormatter)
                                         { isStarted in
                                             if isStarted {
-                                                print("editing imageWidth, pausing updates")
+                            //                    print("editing imageWidth, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
                                         .onSubmit {
-                                            print("submitted, will update now")
+                             //               print("submitted, will update now")
                                             showMandArtBitMap()
                                         }
                                             .textFieldStyle(.roundedBorder)
@@ -753,12 +753,12 @@ struct ContentView: View {
                                                   formatter: ContentView.cgIntPositiveFormatter)
                                         { isStarted in
                                             if isStarted {
-                                                print("editing imageHeight, pausing updates")
+                               //                 print("editing imageHeight, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
                                         .onSubmit {
-                                            print("submitted, will update now")
+                                //            print("submitted, will update now")
                                             showMandArtBitMap()
                                         }
                                             .textFieldStyle(.roundedBorder)
@@ -794,12 +794,12 @@ struct ContentView: View {
                                                   formatter: ContentView.cgDecimalAbs2Formatter
                                         ) { isStarted in
                                             if isStarted {
-                                                print("editing xC, pausing updates")
+                              //                  print("editing xC, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
                                         .onSubmit {
-                                            print("submitted, will update now")
+                               //             print("submitted, will update now")
                                             showMandArtBitMap()
                                         }
                                         .textFieldStyle(.roundedBorder)
@@ -814,12 +814,12 @@ struct ContentView: View {
                                         Text("Between -2 and 2")
                                         TextField("yC", value: $doc.picdef.yCenter, formatter: ContentView.cgDecimalAbs2Formatter) { isStarted in
                                                 if isStarted {
-                                                    print("editing yC, pausing updates")
+                                 //                   print("editing yC, pausing updates")
                                                     self.pauseUpdates()
                                                 }
                                             }
                                             .onSubmit {
-                                                print("submitted, will update now")
+                                   //             print("submitted, will update now")
                                                 showMandArtBitMap()
                                             }
                                             .textFieldStyle(.roundedBorder)
@@ -841,12 +841,12 @@ struct ContentView: View {
                                                   formatter: ContentView.cgRotationThetaFormatter)
                                         { isStarted in
                                             if isStarted {
-                                                print("editing theta, pausing updates")
+                               //                 print("editing theta, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
                                         .onSubmit {
-                                            print("submitted, will update now")
+                                //            print("submitted, will update now")
                                             showMandArtBitMap()
                                         }
                                             .textFieldStyle(.roundedBorder)
@@ -860,12 +860,12 @@ struct ContentView: View {
                                         TextField("Scale", value: $doc.picdef.scale, formatter: ContentView.cgDecimalUnboundFormatter)
                                         { isStarted in
                                             if isStarted {
-                                                print("editing scale, pausing updates")
+                                //                print("editing scale, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
                                         .onSubmit {
-                                            print("submitted, will update now")
+                             //               print("submitted, will update now")
                                             showMandArtBitMap()
                                         }
                                             .textFieldStyle(.roundedBorder)
@@ -894,12 +894,12 @@ struct ContentView: View {
                                     TextField("iterationsMax", value: $doc.picdef.iterationsMax, formatter: ContentView.cgDecimalUnboundFormatter)
                                     { isStarted in
                                         if isStarted {
-                                            print("editing iterationsMax, pausing updates")
+                           //                 print("editing iterationsMax, pausing updates")
                                             self.pauseUpdates()
                                         }
                                     }
                                     .onSubmit {
-                                        print("submitted, will update now")
+                      //                  print("submitted, will update now")
                                         showMandArtBitMap()
                                     }
                                         .textFieldStyle(.roundedBorder)
@@ -914,12 +914,12 @@ struct ContentView: View {
 
                                     TextField("rSqLimit", value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter){ isStarted in
                                         if isStarted {
-                                            print("editing rSqLimit, pausing updates")
+                           //                 print("editing rSqLimit, pausing updates")
                                             self.pauseUpdates()
                                         }
                                     }
                                     .onSubmit {
-                                        print("submitted, will update now")
+                            //            print("submitted, will update now")
                                         showMandArtBitMap()
                                     }
                                         .textFieldStyle(.roundedBorder)
@@ -999,12 +999,12 @@ struct ContentView: View {
                                         TextField("spacingColorFar", value: $doc.picdef.spacingColorFar, formatter: ContentView.cgDecimalUnboundFormatter)
                                         { isStarted in
                                             if isStarted {
-                                                print("editing spacingColorFar, pausing updates")
+                                //                print("editing spacingColorFar, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
                                         .onSubmit {
-                                            print("submitted, will update now")
+                              //              print("submitted, will update now")
                                             showMandArtBitMap()
                                         }
                                             .textFieldStyle(.roundedBorder)
@@ -1020,12 +1020,12 @@ struct ContentView: View {
 
                                         TextField("spacingColorNear", value: $doc.picdef.spacingColorNear, formatter: ContentView.cgDecimalUnboundFormatter){ isStarted in
                                             if isStarted {
-                                                print("editing spacingColorNear, pausing updates")
+                              //                  print("editing spacingColorNear, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
                                         .onSubmit {
-                                            print("submitted, will update now")
+                               //             print("submitted, will update now")
                                             showMandArtBitMap()
                                         }
                                             .textFieldStyle(.roundedBorder)
