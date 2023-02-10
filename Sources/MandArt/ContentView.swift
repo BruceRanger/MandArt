@@ -196,8 +196,8 @@ struct ContentView: View {
 
         let nBlocks: Int = doc.picdef.nBlocks
         let nColors: Int = doc.picdef.hues.count
-        let spacingColorNear: Double = doc.picdef.spacingColorNear
         let spacingColorFar: Double = doc.picdef.spacingColorFar
+        let spacingColorNear: Double = doc.picdef.spacingColorNear
         var yY: Double = doc.picdef.yY
 
         if yY == 1.0 { yY = yY - 1.0e-10 }
@@ -210,7 +210,7 @@ struct ContentView: View {
 
         fNBlocks = Double(nBlocks)
 
-        spacingColorMid = (iterationsMax - fIterMin - fNBlocks * spacingColorNear) / pow(fNBlocks, spacingColorFar)
+        spacingColorMid = (iterationsMax - fIterMin - fNBlocks * spacingColorFar) / pow(fNBlocks, spacingColorNear)
 
         var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
 
@@ -218,7 +218,7 @@ struct ContentView: View {
         var xX = 0.0
 
         for i in 0 ... nBlocks {
-            blockBound[i] = spacingColorNear * Double(i) + spacingColorMid * pow(Double(i), spacingColorFar)
+            blockBound[i] = spacingColorFar * Double(i) + spacingColorMid * pow(Double(i), spacingColorNear)
         }
 
         // set up CG parameters
@@ -479,8 +479,8 @@ struct ContentView: View {
         let dFIterMin: Double = doc.picdef.dFIterMin
         let nBlocks: Int = doc.picdef.nBlocks
         let nColors: Int = doc.picdef.hues.count
-        let spacingColorNear: Double = doc.picdef.spacingColorNear
         let spacingColorFar: Double = doc.picdef.spacingColorFar
+        let spacingColorNear: Double = doc.picdef.spacingColorNear
         var yY: Double = doc.picdef.yY
 
         if yY == 1.0 { yY = yY - 1.0e-10 }
@@ -519,7 +519,7 @@ struct ContentView: View {
 
         fNBlocks = Double(nBlocks)
 
-        spacingColorMid = (iterationsMax - fIterMin - fNBlocks * spacingColorNear) / pow(fNBlocks, spacingColorFar)
+        spacingColorMid = (iterationsMax - fIterMin - fNBlocks * spacingColorFar) / pow(fNBlocks, spacingColorNear)
 
         var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
 
@@ -527,7 +527,7 @@ struct ContentView: View {
         var xX = 0.0
 
         for i in 0 ... nBlocks {
-            blockBound[i] = spacingColorNear * Double(i) + spacingColorMid * pow(Double(i), spacingColorFar)
+            blockBound[i] = spacingColorFar * Double(i) + spacingColorMid * pow(Double(i), spacingColorNear)
         }
 
         // set up CG parameters
@@ -996,7 +996,17 @@ struct ContentView: View {
                                         Text("far from MiniMand")
                                         Text("near to edge")
 
-                                        TextField("spacing ColorNear", value: $doc.picdef.spacingColorNear, formatter: ContentView.cgDecimalUnboundFormatter)
+                                        TextField("spacingColorFar", value: $doc.picdef.spacingColorFar, formatter: ContentView.cgDecimalUnboundFormatter)
+                                        { isStarted in
+                                            if isStarted {
+                                                print("editing spacingColorFar, pausing updates")
+                                                self.pauseUpdates()
+                                            }
+                                        }
+                                        .onSubmit {
+                                            print("submitted, will update now")
+                                            showMandArtBitMap()
+                                        }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)
@@ -1008,7 +1018,16 @@ struct ContentView: View {
                                         Text("near to MiniMand")
                                         Text("far from edge")
 
-                                        TextField("spacing ColorFar", value: $doc.picdef.spacingColorFar, formatter: ContentView.cgDecimalUnboundFormatter)
+                                        TextField("spacingColorNear", value: $doc.picdef.spacingColorNear, formatter: ContentView.cgDecimalUnboundFormatter){ isStarted in
+                                            if isStarted {
+                                                print("editing spacingColorNear, pausing updates")
+                                                self.pauseUpdates()
+                                            }
+                                        }
+                                        .onSubmit {
+                                            print("submitted, will update now")
+                                            showMandArtBitMap()
+                                        }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)

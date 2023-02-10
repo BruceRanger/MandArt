@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-/// The use input information defining a MandArt picture.
+/// The user input information defining a MandArt picture.
 @available(macOS 12.0, *)
 struct PictureDefinition: Codable, Identifiable {
     var id = UUID()
@@ -20,8 +20,8 @@ struct PictureDefinition: Codable, Identifiable {
     var imageWidth: Int = 1100
     var imageHeight: Int = 1000
     var nBlocks: Int = 60
-    var spacingColorNear: Double = 5.0
-    var spacingColorFar: Double = 15.0
+    var spacingColorFar: Double = 5.0
+    var spacingColorNear: Double = 15.0
     var yY: Double = 0.0
     var theta: Double = 0.0
     var nImage: Int = 0
@@ -55,8 +55,8 @@ struct PictureDefinition: Codable, Identifiable {
     ///   - imageWidth: <#imageWidth description#>
     ///   - imageHeight: <#imageHeight description#>
     ///   - nBlocks: <#nBlocks description#>
-    ///   - spacingColorNear: spacingColorNear description
     ///   - spacingColorFar: spacingColorFar description
+    ///   - spacingColorNear: spacingColorNear description
     ///   - theta: <#theta description#>
     ///   - nImage: <#nImage description#>
     ///   - dFIterMin: <#dFIterMin description#>
@@ -72,8 +72,8 @@ struct PictureDefinition: Codable, Identifiable {
         imageWidth: Int,
         imageHeight: Int,
         nBlocks: Int,
-        spacingColorNear: Double,
         spacingColorFar: Double,
+        spacingColorNear: Double,
         yY: Double,
         theta: Double,
         nImage: Int,
@@ -90,8 +90,8 @@ struct PictureDefinition: Codable, Identifiable {
         self.imageWidth = imageWidth
         self.imageHeight = imageHeight
         self.nBlocks = nBlocks
-        self.spacingColorNear = spacingColorNear
         self.spacingColorFar = spacingColorFar
+        self.spacingColorNear = spacingColorNear
         self.yY = yY
         self.theta = theta
         self.nImage = nImage
