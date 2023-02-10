@@ -728,6 +728,16 @@ struct ContentView: View {
                                                   value: $doc.picdef.imageWidth,
                                                   formatter:
                                                     ContentView.cgIntPositiveFormatter)
+                                        { isStarted in
+                                            if isStarted {
+                                                print("editing imageWidth, pausing updates")
+                                                self.pauseUpdates()
+                                            }
+                                        }
+                                        .onSubmit {
+                                            print("submitted, will update now")
+                                            showMandArtBitMap()
+                                        }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)
@@ -741,6 +751,16 @@ struct ContentView: View {
                                         TextField("imageHeightStart",
                                                   value: $doc.picdef.imageHeight,
                                                   formatter: ContentView.cgIntPositiveFormatter)
+                                        { isStarted in
+                                            if isStarted {
+                                                print("editing imageHeight, pausing updates")
+                                                self.pauseUpdates()
+                                            }
+                                        }
+                                        .onSubmit {
+                                            print("submitted, will update now")
+                                            showMandArtBitMap()
+                                        }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)
@@ -763,24 +783,18 @@ struct ContentView: View {
                             //  GROUP 3 X, Y and Scale
 
                             Group {
-                                //  Show Row (HStack) of X, Y
+                                //  Show Row (HStack) of x, y
 
                                 HStack {
                                     VStack { // each input has a vertical container with a Text label & TextField for data
-                                        Text("Enter center X")
-
+                                        Text("Enter center x")
                                         Text("Between -2 and 2")
-
-                                        TextField("XC",
+                                        TextField("xC",
                                                   value: $doc.picdef.xCenter,
                                                   formatter: ContentView.cgDecimalAbs2Formatter
-                                                  // ,onCommit: {
-                                                  // print("committed, will update now")
-                                                  //   showMandArtBitMap()
-                                                  // }
                                         ) { isStarted in
                                             if isStarted {
-                                                print("editing XC, pausing updates")
+                                                print("editing xC, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
@@ -792,16 +806,15 @@ struct ContentView: View {
                                         .multilineTextAlignment(.trailing)
                                         .padding(4)
                                         .frame(maxWidth: 120)
-                                        .help("Enter the X value in the Mandelbrot coordinate system for the center of the image.")
+                                        .help("Enter the x value in the Mandelbrot coordinate system for the center of the image.")
                                     }
 
                                     VStack { // each input has a vertical container with a Text label & TextField for data
-                                        Text("Enter center Y")
-
+                                        Text("Enter center y")
                                         Text("Between -2 and 2")
-                                        TextField("YC", value: $doc.picdef.yCenter, formatter: ContentView.cgDecimalAbs2Formatter) { isStarted in
+                                        TextField("yC", value: $doc.picdef.yCenter, formatter: ContentView.cgDecimalAbs2Formatter) { isStarted in
                                                 if isStarted {
-                                                    print("editing YC, pausing updates")
+                                                    print("editing yC, pausing updates")
                                                     self.pauseUpdates()
                                                 }
                                             }
@@ -826,6 +839,16 @@ struct ContentView: View {
                                         TextField("theta",
                                                   value: $doc.picdef.theta,
                                                   formatter: ContentView.cgRotationThetaFormatter)
+                                        { isStarted in
+                                            if isStarted {
+                                                print("editing theta, pausing updates")
+                                                self.pauseUpdates()
+                                            }
+                                        }
+                                        .onSubmit {
+                                            print("submitted, will update now")
+                                            showMandArtBitMap()
+                                        }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 50)
@@ -835,6 +858,16 @@ struct ContentView: View {
                                     VStack {
                                         Text("Scale")
                                         TextField("Scale", value: $doc.picdef.scale, formatter: ContentView.cgDecimalUnboundFormatter)
+                                        { isStarted in
+                                            if isStarted {
+                                                print("editing scale, pausing updates")
+                                                self.pauseUpdates()
+                                            }
+                                        }
+                                        .onSubmit {
+                                            print("submitted, will update now")
+                                            showMandArtBitMap()
+                                        }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 100)
@@ -859,6 +892,16 @@ struct ContentView: View {
                                     Text("Smoothing (max interations):")
 
                                     TextField("iterationsMax", value: $doc.picdef.iterationsMax, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    { isStarted in
+                                        if isStarted {
+                                            print("editing iterationsMax, pausing updates")
+                                            self.pauseUpdates()
+                                        }
+                                    }
+                                    .onSubmit {
+                                        print("submitted, will update now")
+                                        showMandArtBitMap()
+                                    }
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .help("Enter the maximum number of iterations for a given point in the image. A larger value will increase the resolution, but slow down the calculation.")
@@ -869,7 +912,16 @@ struct ContentView: View {
                                 HStack {
                                     Text("Smoothing (rSqLimit):")
 
-                                    TextField("rSqLimit", value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    TextField("rSqLimit", value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter){ isStarted in
+                                        if isStarted {
+                                            print("editing rSqLimit, pausing updates")
+                                            self.pauseUpdates()
+                                        }
+                                    }
+                                    .onSubmit {
+                                        print("submitted, will update now")
+                                        showMandArtBitMap()
+                                    }
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 60)
@@ -910,11 +962,11 @@ struct ContentView: View {
                                     Text("Draw gradient from color")
 
                                     TextField("leftNumber", value: $doc.picdef.leftNumber,
-                                              formatter: ContentView.cgIintMaxColorsFormatter,
+                                              formatter: ContentView.cgIintMaxColorsFormatter/*,
                                               onCommit: {
                                                   // do something when text field loses focus
                                                   showGradient()
-                                              })
+                                              }*/)
                                               .frame(maxWidth: 30)
                                               .foregroundColor(leftGradientIsValid ? .primary : .red)
                                               .help("Select the color number for the left side of a gradient.")
