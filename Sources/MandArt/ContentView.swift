@@ -889,7 +889,7 @@ struct ContentView: View {
                                 Divider()
 
                                 HStack {
-                                    Text("Smoothing (max interations):")
+                                    Text("Sharpening (interationsMax):")
 
                                     TextField("iterationsMax", value: $doc.picdef.iterationsMax, formatter: ContentView.cgDecimalUnboundFormatter)
                                     { isStarted in
@@ -910,7 +910,7 @@ struct ContentView: View {
                                 .padding(.horizontal)
 
                                 HStack {
-                                    Text("Smoothing (rSqLimit):")
+                                    Text("Color smoothing (rSqLimit):")
 
                                     TextField("rSqLimit", value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter){ isStarted in
                                         if isStarted {
@@ -925,7 +925,7 @@ struct ContentView: View {
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 60)
-                                        .help("Enter the minimum value for the square of the distance from the origin of the Mandelbrot coordinate system. A larger value will increase the resolution, but slow down the calculation.")
+                                        .help("Enter the minimum value for the square of the distance from the origin of the Mandelbrot coordinate system. A larger value will smooth the color gradient, but slow down the calculation.")
                                 }
 
                                 Divider()
@@ -1037,7 +1037,7 @@ struct ContentView: View {
 
                                 HStack {
                                     VStack {
-                                        Text("dFIterMin:")
+                                        Text("Change in minimum iteration:")
 
                                         TextField("dFIterMin", value: $doc.picdef.dFIterMin, formatter: ContentView.cgDecimalUnboundFormatter)
                                             .textFieldStyle(.roundedBorder)
