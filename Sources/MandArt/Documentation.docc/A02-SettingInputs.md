@@ -89,4 +89,4 @@ To emphasize the defined colors over the gradient colors, a slider is provided t
 
 If a value near 1 is chosen, the blocks of colors will show up as solid bands. 
 
-![Fig 5](Picture1.png)
+![Fig 5](Picture5.png)
