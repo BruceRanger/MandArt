@@ -24,7 +24,6 @@ struct ContentView: View {
     // TODO: move non-SwiftUI functions and logic into MandMath
     // Get everything we can from MandMath (Swift-only)
     let defaultFileName = MandMath.getDefaultDocumentName()
-    let printableColorList = MandMath.getPrintableColorList()
 
     // the remaining content should all require SwiftUI
     @EnvironmentObject var doc: MandArtDocument
@@ -1092,7 +1091,12 @@ struct ContentView: View {
 
                     Group {
                         HStack {
-                            Text("Ordered List of Colors")
+                            Button("Verify Colors") {
+                                MandMath.getListPrintabilityOfHues(hues: doc.picdef.hues)
+
+                                MandMath.getCalculatedPrintabilityOfHues(hues:doc.picdef.hues) }
+                                .help("Check for printability.")
+                                .padding([.bottom], 2)
                             Button("Add New Color") { doc.addHue() }
                                 .help("Add a new color.")
                                 .padding([.bottom], 2)
