@@ -8,6 +8,7 @@
 
 import Foundation // trig functions
 import SwiftUI // views
+import AppKit // keypress
 
 // File / Project Settings / Per-user project settings / derived data
 // set to project-relative path DerivedData
@@ -19,6 +20,7 @@ var fIterGlobal = [[Double]]()
 
 @available(macOS 12.0, *)
 struct ContentView: View {
+
     // TODO: move non-SwiftUI functions and logic into MandMath
     // Get everything we can from MandMath (Swift-only)
     let defaultFileName = MandMath.getDefaultDocumentName()
@@ -730,13 +732,16 @@ struct ContentView: View {
                                                     ContentView.cgIntPositiveFormatter)
                                         { isStarted in
                                             if isStarted {
-                            //                    print("editing imageWidth, pausing updates")
+                                                print("editing imageWidth, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
                                         .onSubmit {
-                             //               print("submitted, will update now")
+                                           // triggerTab()
+                                           print("submitted, will update now")
                                             showMandArtBitMap()
+
+
                                         }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
@@ -794,12 +799,13 @@ struct ContentView: View {
                                                   formatter: ContentView.cgDecimalAbs2Formatter
                                         ) { isStarted in
                                             if isStarted {
-                              //                  print("editing xC, pausing updates")
+                                                print("editing xC, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
                                         .onSubmit {
-                               //             print("submitted, will update now")
+                                            print("submitted, will update now")
+                                            print("triggering tab..")
                                             showMandArtBitMap()
                                         }
                                         .textFieldStyle(.roundedBorder)
@@ -1499,4 +1505,25 @@ struct ContentView: View {
         readyForPicture()
         doc.picdef.scale = doc.picdef.scale / 2.0
     }
+
+   func triggerTab(on textField: NSTextField) {
+       print("tab")
+       let keyCode = NSEvent.SpecialKey.tab.rawValue
+       print(keyCode)
+       let keyEvent = NSEvent.keyEvent(with: .keyDown,
+                                       location: NSPoint(),
+                                       modifierFlags: [],
+                                       timestamp: 0,
+                                       windowNumber: 0,
+                                       context: nil,
+                                       characters: "\t",
+                                       charactersIgnoringModifiers: "\t",
+                                       isARepeat: false,
+                                       keyCode: UInt16(keyCode))!
+       textField.window?.sendEvent(keyEvent)
+       print(keyEvent)
+    }
+
+
+
 }
