@@ -29,6 +29,8 @@ struct ContentView: View {
     // the remaining content should all require SwiftUI
     @EnvironmentObject var doc: MandArtDocument
 
+    //@State private var searchText: String = ""
+
     let instructionBackgroundColor = Color.green.opacity(0.50)
     let instructionBackgroundColorMid = Color.yellow.opacity(0.55)
     let instructionBackgroundColorLite = Color.green.opacity(0.60)
@@ -1164,6 +1166,7 @@ struct ContentView: View {
                         .fixedSize(horizontal: false, vertical: false)
                     } // END COLOR LIST GROUP
                 } // end VStack for user instructions - Below refers to the 2 cols
+               // .searchable(text: $searchText)
                 .background(instructionBackgroundColor)
                 .frame(width: inputWidth)
                 .padding(5)

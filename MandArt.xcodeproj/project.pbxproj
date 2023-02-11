@@ -61,7 +61,6 @@
 				88A1716629913A0800A85AED /* Sources */,
 				88A171632991280600A85AED /* Package.swift */,
 				881B2B69293CE2A200037032 /* Credits.rtf */,
-				889E3F23293AE0B6009944AC /* Documentation.docc */,
 				6A3AEC0B26F879E700D7E31A /* MandArt */,
 				6A3AEC0A26F879E700D7E31A /* Products */,
 			);
@@ -98,6 +97,7 @@
 		88A1716729913A1E00A85AED /* MandArt */ = {
 			isa = PBXGroup;
 			children = (
+				889E3F23293AE0B6009944AC /* Documentation.docc */,
 				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
 				8806E113293A5011005F5CB4 /* MandArtApp.swift */,
 				8806E114293A5011005F5CB4 /* MandArtDocument.swift */,

@@ -17,43 +17,11 @@ must be built with Xcode 14.1 and the iOS 16.1 SDK.
 
 - MacOS
 
-## XCode Documentation Generation
-
-1. XCode menu: Product / Build Documentation. 
-1. Right-click on Workspace Documentation for the package (MandArt) / export.
-1. Creates .doccarchive file. 
-1. Xcode / Settings / Locations tab / Command Line tools 14.2
+## XCode Documentation Plugin
 
 Available at: 
 
 <MandArt/.build/plugins/Swift-DocC/outputs/MandArt.doccarchive>
-
-## Plugin Documentation Generation - for MandArt
-
-To create documentatation in this MandArt repo:
-
-In Terminal, open in the root repository folder, run
-
-```
-swift package --allow-writing-to-directory ./docs \
-    generate-documentation --target MandArt --output-path ./docs \
-    --disable-indexing \
-    --transform-for-static-hosting  \
-    --emit-digest \
-    --target MandArt \
-    --hosting-base-path 'MandArt'
-```
-
-Then preview:
-
-```
-swift package --disable-sandbox preview-documentation --target MandArt
-```
-
-========================================
-Starting Local Preview Server
-	 Address: http://localhost:8000/documentation/mandart
-========================================
 
 ## Plugin Documentation Generation - for MandArt-Docs
 
