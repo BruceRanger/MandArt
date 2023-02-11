@@ -51,6 +51,59 @@ enum MandMath {
         return hues.map { isColorInPrintableList(color: $0.color.cgColor!, num: $0.num   ) }
     }
 
+    static func getClosestPrintableColors(hues: [Hue]) -> [Bool] {
+        print("================================================")
+        return hues.map {
+            let closestColors = getPrintableColorsWithMinimumDistance(color: $0.color.cgColor!, num: $0.num)
+            return closestColors.contains { color in MandMath.printableColorList.contains(color) }
+        }
+    }
+
+    static func getPrintableColorsWithMinimumDistance(color: CGColor, num: Int) -> [[Int]] {
+        guard let components = color.components else { return [] }
+        let r = components[0]
+        let g = components[1]
+        let b = components[2]
+
+        let red = Int(round(r * 255.0))
+        let green = Int(round(g * 255.0))
+        let blue = Int(round(b * 255.0))
+
+
+        let rr = padIntToThreeCharacters(number: red)
+        let gg = padIntToThreeCharacters(number: green)
+        let bb = padIntToThreeCharacters(number: blue)
+        print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
+
+        let colorRGB = [red, green, blue]
+
+        let distances = MandMath.printableColorList.map { color -> Int in
+            let rDiff = color[0] - red
+            let gDiff = color[1] - green
+            let bDiff = color[2] - blue
+            return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff
+        }
+
+        let minDistance = distances.min()!
+        let nearest = MandMath.printableColorList.enumerated().filter { index, value -> Bool in
+            let rDiff = value[0] - red
+            let gDiff = value[1] - green
+            let bDiff = value[2] - blue
+            return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff == minDistance
+        }.map { $0.element }
+
+        print("    count of closest:\(nearest.count)")
+        for item in nearest {
+            print("    closest:\(item)\n")
+
+        }
+
+       
+
+        return nearest
+    }
+
+
 
 
     /// Checks a CGColor to see if it is in the printable list.
@@ -64,9 +117,9 @@ enum MandMath {
         let g = components[1]
         let b = components[2]
 
-        let red = Int(r * 255.0)
-        let green = Int(g * 255.0)
-        let blue = Int(b * 255.0)
+        let red = Int(round(r * 255.0))
+        let green = Int(round(g * 255.0))
+        let blue = Int(round(b * 255.0))
         print(num, red, green, blue)
 
         let inList = MandMath.printableColorList.contains([red, green, blue])
@@ -76,6 +129,7 @@ enum MandMath {
         let bb = padIntToThreeCharacters(number: blue)
 
         print("Color Number \(num)(\(rr)-\(gg)-\(bb)): in printable list: ", inList)
+        print("")
         return inList
     }
 
@@ -98,9 +152,9 @@ enum MandMath {
 
         let isPrintable = r >= 0 && r <= 1 && g >= 0 && g <= 1 && b >= 0 && b <= 1
 
-        let red = Int(r * 255.0)
-        let green = Int(g * 255.0)
-        let blue = Int(b * 255.0)
+        let red = Int(round(r * 255.0))
+        let green = Int(round(g * 255.0))
+        let blue = Int(round(b * 255.0))
         print(num, red, green, blue)
 
         let rr = padIntToThreeCharacters(number: red)
@@ -114,7 +168,6 @@ enum MandMath {
     static func padIntToThreeCharacters(number: Int) -> String {
         return String(format: "%03d", number)
     }
-
 
 
 

@@ -1093,8 +1093,7 @@ struct ContentView: View {
                         HStack {
                             Button("Verify Colors") {
                                 MandMath.getListPrintabilityOfHues(hues: doc.picdef.hues)
-
-                                MandMath.getCalculatedPrintabilityOfHues(hues:doc.picdef.hues) }
+                                MandMath.getClosestPrintableColors(hues:doc.picdef.hues) }
                                 .help("Check for printability.")
                                 .padding([.bottom], 2)
                             Button("Add New Color") { doc.addHue() }
