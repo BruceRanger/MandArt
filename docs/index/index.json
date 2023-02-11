@@ -1,0 +1,54 @@
+{
+    "interfaceLanguages": {
+        "swift": [
+            {
+                "children": [
+                    {
+                        "title": "Getting Started",
+                        "type": "groupMarker"
+                    },
+                    {
+                        "path": "\/documentation\/mandart\/a01-gettingstarted",
+                        "title": "Getting Started",
+                        "type": "symbol"
+                    },
+                    {
+                        "title": "Setting Inputs",
+                        "type": "groupMarker"
+                    },
+                    {
+                        "path": "\/documentation\/mandart\/a02-settinginputs",
+                        "title": "Setting Inputs",
+                        "type": "symbol"
+                    },
+                    {
+                        "title": "Printing Challenges",
+                        "type": "groupMarker"
+                    },
+                    {
+                        "path": "\/documentation\/mandart\/a03-challenges",
+                        "title": "Challenges",
+                        "type": "symbol"
+                    },
+                    {
+                        "title": "More About the Math",
+                        "type": "groupMarker"
+                    },
+                    {
+                        "path": "\/documentation\/mandart\/a04-moreaboutthemath",
+                        "title": "More About The Math",
+                        "type": "symbol"
+                    }
+                ],
+                "path": "\/documentation\/mandart",
+                "title": "MandArt",
+                "type": "module"
+            }
+        ]
+    },
+    "schemaVersion": {
+        "major": 0,
+        "minor": 1,
+        "patch": 0
+    }
+}

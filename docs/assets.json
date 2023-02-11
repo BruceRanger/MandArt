@@ -1,0 +1,76 @@
+{
+    "images": [
+        {
+            "alt": "Example",
+            "type": "image",
+            "identifier": "mandart_a04.png",
+            "variants": [
+                {
+                    "url": "\/images\/mandart_a04.png",
+                    "traits": [
+                        "1x",
+                        "light"
+                    ]
+                }
+            ]
+        },
+        {
+            "alt": "Example",
+            "type": "image",
+            "identifier": "mandart_a01.png",
+            "variants": [
+                {
+                    "url": "\/images\/mandart_a01.png",
+                    "traits": [
+                        "1x",
+                        "light"
+                    ]
+                }
+            ]
+        },
+        {
+            "alt": "Example",
+            "type": "image",
+            "identifier": "mandart_a03.png",
+            "variants": [
+                {
+                    "url": "\/images\/mandart_a03.png",
+                    "traits": [
+                        "1x",
+                        "light"
+                    ]
+                }
+            ]
+        },
+        {
+            "alt": "Example",
+            "type": "image",
+            "identifier": "mandart.png",
+            "variants": [
+                {
+                    "url": "\/images\/mandart.png",
+                    "traits": [
+                        "1x",
+                        "light"
+                    ]
+                }
+            ]
+        },
+        {
+            "alt": "Example",
+            "type": "image",
+            "identifier": "mandart_a02.png",
+            "variants": [
+                {
+                    "url": "\/images\/mandart_a02.png",
+                    "traits": [
+                        "1x",
+                        "light"
+                    ]
+                }
+            ]
+        }
+    ],
+    "downloads": [],
+    "videos": []
+}

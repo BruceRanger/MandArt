@@ -1,0 +1,113 @@
+[
+    {
+        "title": "More About The Math",
+        "referenceURL": "doc:\/\/MandArt\/documentation\/MandArt\/A04-MoreAboutTheMath",
+        "language": "swift",
+        "abstract": [
+            {
+                "type": "text",
+                "text": "MandArt is based on a popular fractal, the Mandlebrot set."
+            }
+        ],
+        "path": "\/documentation\/mandart\/a04-moreaboutthemath",
+        "kind": "org.swift.docc.kind.article",
+        "availableLanguages": [
+            "swift"
+        ],
+        "taskGroups": []
+    },
+    {
+        "title": "Getting Started",
+        "referenceURL": "doc:\/\/MandArt\/documentation\/MandArt\/A01-GettingStarted",
+        "language": "swift",
+        "abstract": [
+            {
+                "type": "text",
+                "text": "How to get started using MandArt to generate custom art."
+            }
+        ],
+        "path": "\/documentation\/mandart\/a01-gettingstarted",
+        "kind": "org.swift.docc.kind.article",
+        "availableLanguages": [
+            "swift"
+        ],
+        "taskGroups": []
+    },
+    {
+        "title": "Challenges",
+        "referenceURL": "doc:\/\/MandArt\/documentation\/MandArt\/A03-Challenges",
+        "language": "swift",
+        "abstract": [
+            {
+                "type": "text",
+                "text": "Working with colors presents some challenges."
+            }
+        ],
+        "path": "\/documentation\/mandart\/a03-challenges",
+        "kind": "org.swift.docc.kind.article",
+        "availableLanguages": [
+            "swift"
+        ],
+        "taskGroups": []
+    },
+    {
+        "usr": "MandArt",
+        "title": "MandArt",
+        "referenceURL": "doc:\/\/MandArt\/documentation\/MandArt",
+        "language": "swift",
+        "abstract": [
+            {
+                "type": "text",
+                "text": "Create custom art from the Mandelbrot set."
+            }
+        ],
+        "path": "\/documentation\/mandart",
+        "kind": "org.swift.docc.kind.module",
+        "availableLanguages": [
+            "swift"
+        ],
+        "taskGroups": [
+            {
+                "title": "Getting Started",
+                "identifiers": [
+                    "doc:\/\/MandArt\/documentation\/MandArt\/A01-GettingStarted"
+                ]
+            },
+            {
+                "title": "Setting Inputs",
+                "identifiers": [
+                    "doc:\/\/MandArt\/documentation\/MandArt\/A02-SettingInputs"
+                ]
+            },
+            {
+                "title": "Printing Challenges",
+                "identifiers": [
+                    "doc:\/\/MandArt\/documentation\/MandArt\/A03-Challenges"
+                ]
+            },
+            {
+                "title": "More About the Math",
+                "identifiers": [
+                    "doc:\/\/MandArt\/documentation\/MandArt\/A04-MoreAboutTheMath"
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Setting Inputs",
+        "referenceURL": "doc:\/\/MandArt\/documentation\/MandArt\/A02-SettingInputs",
+        "language": "swift",
+        "abstract": [
+            {
+                "type": "text",
+                "text": "Setting MandArt inputs to generate custom art."
+            }
+        ],
+        "path": "\/documentation\/mandart\/a02-settinginputs",
+        "kind": "org.swift.docc.kind.article",
+        "availableLanguages": [
+            "swift"
+        ],
+        "taskGroups": []
+    }
+]
