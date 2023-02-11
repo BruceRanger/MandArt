@@ -28,17 +28,13 @@ Available at:
 
 <MandArt/.build/plugins/Swift-DocC/outputs/MandArt.doccarchive>
 
-## Plugin Documentation Generation
+## Plugin Documentation Generation - for MandArt
 
-Documentation will be hosted at:
-
-- [docs]()
-- [repo](https://github.com/denisecase/MandArt-Docs)
+To create documentatation in this MandArt repo:
 
 In Terminal, open in the root repository folder, run
 
 ```
-
 swift package --allow-writing-to-directory ./docs \
     generate-documentation --target MandArt --output-path ./docs \
     --disable-indexing \
@@ -46,12 +42,9 @@ swift package --allow-writing-to-directory ./docs \
     --emit-digest \
     --target MandArt \
     --hosting-base-path 'MandArt'
-
-
-
 ```
 
-Preview:
+Then preview:
 
 ```
 swift package --disable-sandbox preview-documentation --target MandArt
@@ -62,6 +55,27 @@ Starting Local Preview Server
 	 Address: http://localhost:8000/documentation/mandart
 ========================================
 
+## Plugin Documentation Generation - for MandArt-Docs
+
+To create documentatation for the MandArt-Docs repo:
+
+In Terminal, open in the root MandArt repository folder, run
+
+```
+swift package --allow-writing-to-directory ./docss \
+    generate-documentation --target MandArt --output-path ./docss \
+    --disable-indexing \
+    --transform-for-static-hosting  \
+    --emit-digest \
+    --target MandArt \
+    --hosting-base-path 'MandArt-Docs'
+```
+
+
+Documentation hosted at:
+
+- [docs](https://denisecase.github.io/MandArt-Docs/documentation/mandart/)
+- [repo](https://github.com/denisecase/MandArt-Docs)
 
 
 References:
