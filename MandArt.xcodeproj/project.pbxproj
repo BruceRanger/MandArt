@@ -57,6 +57,7 @@
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
+				889E3F23293AE0B6009944AC /* Documentation.docc */,
 				88A1716829913A6C00A85AED /* Tests */,
 				88A1716629913A0800A85AED /* Sources */,
 				88A171632991280600A85AED /* Package.swift */,
@@ -97,7 +98,6 @@
 		88A1716729913A1E00A85AED /* MandArt */ = {
 			isa = PBXGroup;
 			children = (
-				889E3F23293AE0B6009944AC /* Documentation.docc */,
 				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
 				8806E113293A5011005F5CB4 /* MandArtApp.swift */,
 				8806E114293A5011005F5CB4 /* MandArtDocument.swift */,

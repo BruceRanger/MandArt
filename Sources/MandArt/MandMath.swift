@@ -82,6 +82,8 @@ enum MandMath {
     /// - Parameter hues: A list of `Hue` objects.
     /// - Returns: An array of Booleans indicating the printability of each `Hue` object.
     ///
+    ///
+    @available(macOS 12.0, *)
     static func getCalculatedPrintabilityOfHues(hues: [Hue]) -> [Bool] {
         // Outputs a separator line in the terminal to make it easier to distinguish between results
         print("================================================")
@@ -113,6 +115,7 @@ enum MandMath {
     ///  rather than to instances of that type  -
     ///  no need to create an instance of MandMath to call this function.
     ///
+    @available(macOS 12.0, *)
     static func getListPrintabilityOfHues(hues: [Hue]) -> [Bool] {
         // make it easy to find a new set of results in the terminal
         print("================================================")
@@ -137,6 +140,7 @@ enum MandMath {
     /// - Parameter hues: An array of `Hue` objects.
     /// - Returns: An array of booleans, indicating if the closest printable color of each hue in the `hues` array is present in the `MandMath.printableColorList`.
     /// 
+    @available(macOS 12.0, *)
     static func getClosestPrintableColors(hues: [Hue]) -> [Bool] {
         // Separate results for each run in the terminal output
         print("================================================")

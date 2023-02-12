@@ -261,8 +261,13 @@ extension Color: Codable {
    ///  `EncodingError` if the `Color` object cannot be encoded
    ///   into the desired data representation.
    ///
-    @available(macOS 12.0, *)
+    @available(macOS 10.15,  *)
     public func encode(to encoder: Encoder) throws {
+
+        // check if mac0S 12 is available
+
+        if #available(macOS 12.0, *) {
+
 
             // Check if the color components are available.
             guard let colorComponents = colorComponents else {
@@ -276,6 +281,10 @@ extension Color: Codable {
             try container.encode(colorComponents.red, forKey: .red)
             try container.encode(colorComponents.green, forKey: .green)
             try container.encode(colorComponents.blue, forKey: .blue)
+
+        } else {
+            print("Error: macOS 12.0 or later is required to use this feature.")
+        }
 
     }
 }
