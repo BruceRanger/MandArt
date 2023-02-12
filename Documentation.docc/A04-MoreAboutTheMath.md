@@ -16,11 +16,25 @@ This article covers the ideas and math behind MandArt and the Mandlebrot set.
 
 Now for a little math to help explain what’s going on.
 
-How are these pictures generated? We start with an iterative formula: 
+How are these pictures generated? 
 
-zn + 1 = zn2 + c
+We start with an iterative formula: 
 
-where z and c are complex numbers. z = x + iy and c = x0 + iy0. 
+```math
+z n+1 = zn^2 + c
+```
+
+where z and c are complex numbers. 
+
+```math
+z = x + iy
+```
+
+and 
+
+```math
+c = x0 + iy0
+```
 
 Since our computers don’t work with complex numbers, and they seem a little scary, we use a little math to get to real numbers. 
 
