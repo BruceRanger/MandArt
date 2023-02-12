@@ -10,13 +10,14 @@ This article covers some of the challenges printing custom MandArt.
 ![Example](mandart_a03.png)
 
 
-## Topics
+## Discussion
 
 ### Printing Colors
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+This app was designed to make a frameable picture. 
+Unfortunately, printers can’t reproduce the range of colors available on the screen.
 
-- <!--@START_MENU_TOKEN@-->``Symbol``<!--@END_MENU_TOKEN@-->
+So, a set of 292 colors that should print well is available by hitting Show Print Colors. 
+The format is the same as for the screen colors, so it is obvious that many of the best colors are missing.
+
+

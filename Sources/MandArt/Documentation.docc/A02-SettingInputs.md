@@ -89,4 +89,66 @@ To emphasize the defined colors over the gradient colors, a slider is provided t
 
 If a value near 1 is chosen, the blocks of colors will show up as solid bands. 
 
+
+### Interesting Areas 
+
 ![Fig 5](Picture5.png)
+
+Fig. 5 shows typical areas where you might look for interesting images. 
+They seem to be in areas that are near where two black areas come together. 
+
+### Zooming 
+
+![Fig 6](Picture6.png)
+
+
+Fig 6 shows an image that has been zoomed in by a factor of about 2,880,000/430 = 6,698. 
+
+There are some obvious paths that seem to flow from the edge of the image into the interior. 
+
+These paths can only end on the Mandelbot figure or on one of the Mini-Mands. 
+However, the Mini-Mand may be so small that the we won’t be able to ever see it. 
+
+If we keep zooming in, eventually the 15-digit significant places of a number in Swift will just start to show big blobs of color. 
+
+### Iterations Before Converging - Minimum
+
+The locations with the fewest iterations occur outside of the image, so the program ignores them. 
+
+If we want to move the initial color in the image into the image, we can enter a value for Change in minimum iteration. 
+
+If we enter a negative value, we’ll get a white area in the image, indicating where that minimum value is.
+
+### Maximum Iterations And Blocks of Color
+
+We typically use a large value for the maximum number of iterations and a small number for the number of blocks of color so we use an exponential relation between the two. 
+
+The spacing between colors near the edges of the image, which is far from the Mini-Mand destination, is set by one variable and that near the Mini-Mand destination by another. 
+
+Only trial and error and artistic preference will determine the best values. 
+
+Likewise for the number of defined colors and the number of blocks of color.
+
+### Joining Colors with Gradiants
+
+If we define only a few colors, the gradients joining a pair of colors may go through regions of color that don’t look good. 
+
+To help see what a gradient looks like, hit Go. 
+
+After that, just enter a different number to see that gradient. 
+To correct the problem, you can change one or both colors or add an intermediate color.
+
+### Specifying Colors
+
+The colors can be defined by inputting the (RGB) values or clicking on a color to get the Color Picker. 
+
+The Color Picker has an eyedrop tool. This tool can select any color visible, in the app or not. 
+
+A selection of 512 colors that look good on the screen is available by hitting Show Screen Colors. 
+
+The eyedropper can be used to select one. 
+
+
+
+
+

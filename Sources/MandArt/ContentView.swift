@@ -1,10 +1,12 @@
-//
-//  ContentView.swift
-//  MandArt
-//
-//  Created by Bruce Johnson on 9/20/21.
-//  Revised and updated 2021-2
-//  All rights reserved.
+///
+/// ContentView.swift
+/// MandArt
+///
+/// The main view in the MandArt project, responsible for displaying the user interface.
+///
+///  Created by Bruce Johnson on 9/20/21.
+///  Revised and updated 2021-2
+///  All rights reserved.
 
 import Foundation // trig functions
 import SwiftUI // views
@@ -21,7 +23,6 @@ var fIterGlobal = [[Double]]()
 @available(macOS 12.0, *)
 struct ContentView: View {
 
-    // TODO: move non-SwiftUI functions and logic into MandMath
     // Get everything we can from MandMath (Swift-only)
     let defaultFileName = MandMath.getDefaultDocumentName()
 
@@ -48,6 +49,10 @@ struct ContentView: View {
     @State private var drawGradient = false
     @State private var drawColors = false
     @State private var activeDisplayState = ActiveDisplayChoice.MandArt
+    @State private var textFieldImageWidth: NSTextField = NSTextField()
+    @State private var textFieldImageHeight: NSTextField = NSTextField()
+    @State private var textFieldX: NSTextField = NSTextField()
+    @State private var textFieldY: NSTextField = NSTextField()
 
     enum ActiveDisplayChoice {
         case MandArt
@@ -59,7 +64,9 @@ struct ContentView: View {
     }
 
     /// Gets an image to display on the right side of the app
+    ///
     /// - Returns: An optional CGImage or nil
+    ///
     func getImage() -> CGImage? {
         var colors: [[Double]] = []
 
@@ -83,9 +90,12 @@ struct ContentView: View {
     }
 
     /// Function to create and return a user-created MandArt bitmap
+    ///
     /// - Parameters:
     ///   - colors: array of colors
+    ///
     /// - Returns: optional CGImage with the bitmap or nil
+    ///
     fileprivate func getPictureImage(_ colors: inout [[Double]]) -> CGImage? {
         // draws image
         let imageHeight: Int = doc.picdef.imageHeight
@@ -349,14 +359,20 @@ struct ContentView: View {
         return contextImage
     }
 
+
+
     /// Function to create and return a gradient bitmap
+    ///
     /// - Parameters:
     ///   - imageHeight: Int bitmap image height in pixels
     ///   - imageWidth: Int bitmap image width in pixels
     ///   - nLeft: int number of the left hand color, starting with 1 (not 0)
     ///   - colors: array of colors (for the whole picture)
+    ///
     /// - Returns: optional CGImage with the bitmap or nil
+    ///
     fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int, _ nLeft: Int, _ colors: inout [[Double]]) -> CGImage? {
+
         var yY: Double = doc.picdef.yY
 
         if yY == 1.0 { yY = yY - 1.0e-10 }
@@ -470,10 +486,14 @@ struct ContentView: View {
         return gradientImage
     }
 
+
     /// Function to create and return a user-colored MandArt bitmap
+    ///
     /// - Parameters:
     ///   - colors: array of colors
+    ///
     /// - Returns: optional CGImage with the colored bitmap or nil
+    ///
     fileprivate func getColorImage(_ colors: inout [[Double]]) -> CGImage? {
         // draws image
         let imageHeight: Int = doc.picdef.imageHeight
@@ -736,14 +756,13 @@ struct ContentView: View {
                                                 print("editing imageWidth, pausing updates")
                                                 self.pauseUpdates()
                                             }
+                                            else {
+                                                self.showMandArtBitMap()
+                                            }
                                         }
-                                        .onSubmit {
-                                           // triggerTab()
-                                           print("submitted, will update now")
-                                            showMandArtBitMap()
-
-
-                                        }
+//                                        .onSubmit {
+//                                            showMandArtBitMap()
+//                                        }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)
@@ -754,18 +773,21 @@ struct ContentView: View {
                                         Text("Image")
 
                                         Text("height, px:")
-                                        TextField("imageHeightStart",
+                                        TextField("imageHeight",
                                                   value: $doc.picdef.imageHeight,
                                                   formatter: ContentView.cgIntPositiveFormatter)
                                         { isStarted in
                                             if isStarted {
-                               //                 print("editing imageHeight, pausing updates")
                                                 self.pauseUpdates()
+                                            }
+                                            else {
+                                                self.showMandArtBitMap()
                                             }
                                         }
                                         .onSubmit {
-                                //            print("submitted, will update now")
                                             showMandArtBitMap()
+                                            print("triggering tab from img height")
+                                            self.triggerTab(on: self.textFieldImageHeight)
                                         }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
@@ -803,10 +825,11 @@ struct ContentView: View {
                                                 print("editing xC, pausing updates")
                                                 self.pauseUpdates()
                                             }
+                                            else {
+                                                self.showMandArtBitMap()
+                                            }
                                         }
                                         .onSubmit {
-                                            print("submitted, will update now")
-                                            print("triggering tab..")
                                             showMandArtBitMap()
                                         }
                                         .textFieldStyle(.roundedBorder)
@@ -821,13 +844,13 @@ struct ContentView: View {
                                         Text("Between -2 and 2")
                                         TextField("yC", value: $doc.picdef.yCenter, formatter: ContentView.cgDecimalAbs2Formatter) { isStarted in
                                                 if isStarted {
-                                 //                   print("editing yC, pausing updates")
                                                     self.pauseUpdates()
                                                 }
                                             }
                                             .onSubmit {
-                                   //             print("submitted, will update now")
                                                 showMandArtBitMap()
+                                                print("triggering tab from Y")
+                                                self.triggerTab(on: self.textFieldY)
                                             }
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
@@ -848,12 +871,10 @@ struct ContentView: View {
                                                   formatter: ContentView.cgRotationThetaFormatter)
                                         { isStarted in
                                             if isStarted {
-                               //                 print("editing theta, pausing updates")
                                                 self.pauseUpdates()
                                             }
                                         }
                                         .onSubmit {
-                                //            print("submitted, will update now")
                                             showMandArtBitMap()
                                         }
                                             .textFieldStyle(.roundedBorder)
@@ -1011,7 +1032,6 @@ struct ContentView: View {
                                             }
                                         }
                                         .onSubmit {
-                              //              print("submitted, will update now")
                                             showMandArtBitMap()
                                         }
                                             .textFieldStyle(.roundedBorder)
@@ -1032,7 +1052,6 @@ struct ContentView: View {
                                             }
                                         }
                                         .onSubmit {
-                               //             print("submitted, will update now")
                                             showMandArtBitMap()
                                         }
                                             .textFieldStyle(.roundedBorder)
@@ -1230,7 +1249,22 @@ struct ContentView: View {
         } // end geometry reader to get screen size
     } // end view body
 
+
+
+    ///tapGesture is a variable that defines a drag gesture
+    ///for the user interaction in the user interface.
+    ///
+    ///The gesture is of type some Gesture
+    ///and uses the DragGesture struct from the SwiftUI framework.
+    ///
+    ///The minimum distance for the drag gesture is set to 10 units,
+    ///and the coordinate space for the gesture is set to .local.
+    ///
+    ///The gesture has an onChanged closure that is triggered
+    ///whenever the gesture is changed by the user's interaction.
+    ///
     var tapGesture: some Gesture {
+
         DragGesture(minimumDistance: 10, coordinateSpace: .local)
             .onChanged { value in
 
@@ -1252,9 +1286,13 @@ struct ContentView: View {
                     }
                     // if we have moved a lot, treat it as a drag event
                     else {
-                        doc.picdef.xCenter = getCenterXFromDrag(tap)
-                        doc.picdef.yCenter = getCenterYFromDrag(tap)
-                        readyForPicture()
+                        if activeDisplayState == ActiveDisplayChoice.MandArt ||
+                            activeDisplayState == ActiveDisplayChoice.Color {
+                            doc.picdef.xCenter = getCenterXFromDrag(tap)
+                            doc.picdef.yCenter = getCenterYFromDrag(tap)
+                            readyForPicture()
+                            showMandArtBitMap() // redraw after drag
+                        }
                     }
                     // reset tap event states
                     self.moved = 0
@@ -1341,6 +1379,7 @@ struct ContentView: View {
         return ratioString
     }
 
+
     private var leftGradientIsValid: Bool {
         var isValid = false
         let leftNum = doc.picdef.leftNumber
@@ -1356,9 +1395,14 @@ struct ContentView: View {
         return 1
     }
 
+
+
     /// Returns the new x to be the picture center x when user drags in the picture.
+    ///
     /// - Parameter tap: information about the drag
+    ///
     /// - Returns: Double new center x
+    ///
     private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
@@ -1376,8 +1420,11 @@ struct ContentView: View {
     }
 
     /// Returns the new y to be the picture center y when user drags in the picture.
+    ///
     /// - Parameter tap: information about the drag
+    ///
     /// - Returns: Double new center y
+    ///
     private func getCenterYFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
@@ -1395,8 +1442,11 @@ struct ContentView: View {
     }
 
     /// Returns the new x to be the picture center x when user clicks on the picture.
+    ///
     /// - Parameter tap: information about the tap
+    ///
     /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
+    ///
     private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
@@ -1412,8 +1462,11 @@ struct ContentView: View {
     }
 
     /// Returns the new y to be the picture center y when user clicks on the picture.
+    ///
     /// - Parameter tap: information about the tap
+    ///
     /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
+    ///
     private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
@@ -1429,7 +1482,9 @@ struct ContentView: View {
     }
 
     /// Return the document directory for this app.
+    ///
     /// - Returns: URL to document directory
+    ///
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
@@ -1437,6 +1492,7 @@ struct ContentView: View {
     }
 
     /// Update hue nums after moviing or deleting
+    ///
     fileprivate func updateHueNums() {
         for (index, _) in $doc.picdef.hues.enumerated() {
             doc.picdef.hues[index].num = index + 1
@@ -1444,24 +1500,39 @@ struct ContentView: View {
     }
 
     /// Function to validate all colors in the picdef
+    ///
     fileprivate func validateColors() {
         // TODO: communicate with user
     }
 
     /// Function to validate X or Y input
+    ///
     fileprivate func validateX() -> Bool {
         return true
     }
 
     /// Function to move an ordered color (hue) from one place to another in the list
+    ///
     fileprivate func moveHue(from source: IndexSet, to destination: Int) {
         doc.picdef.hues.move(fromOffsets: source, toOffset: destination)
     }
 
+
+    /// Show the screen colors for the user to choose from.
+    ///
+    /// This function updates the activeDisplayState property
+    /// with the value .ScreenColors to indicate that screen colors should be displayed.
+    ///
     fileprivate func showScreenColors() {
         activeDisplayState = ActiveDisplayChoice.ScreenColors
     }
 
+
+    /// Show the print colors for the user to choose from.
+    ///
+    /// This function updates the activeDisplayState property
+    /// with the value .PrintColors to indicate that print colors should be displayed.
+    ///
     fileprivate func showPrintColors() {
         activeDisplayState = ActiveDisplayChoice.PrintColors
     }
@@ -1473,6 +1544,8 @@ struct ContentView: View {
         drawColors = true
     }
 
+    /// Pause updates to the calculationally-intensive bitmap
+    ///  while the user inputs numeric entries.
     fileprivate func pauseUpdates() {
         drawIt = false
         drawGradient = false
@@ -1483,6 +1556,7 @@ struct ContentView: View {
         activeDisplayState = ActiveDisplayChoice.MandArt
         readyForPicture()
     }
+
 
     fileprivate func showGradient() {
         activeDisplayState = ActiveDisplayChoice.Gradient
@@ -1512,7 +1586,19 @@ struct ContentView: View {
         doc.picdef.scale = doc.picdef.scale / 2.0
     }
 
-   func triggerTab(on textField: NSTextField) {
+    /// Trigger a tab key press event
+    ///
+    ///  TODO:  add this to each numeric field's
+    ///  onSubmit() logic so that hitting RETURN
+    ///  would also tab to the next field.
+    ///
+    ///  Not currently used as it doesn't know the TextField it was
+    ///  called on, so it can't go to the next field.
+    ///
+    ///  - Parameter textField: The `NSTextField` to trigger the tab event on.
+    ///
+    func triggerTab(on textField: NSTextField) {
+
        print("tab")
        let keyCode = NSEvent.SpecialKey.tab.rawValue
        print(keyCode)
