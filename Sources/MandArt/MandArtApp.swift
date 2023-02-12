@@ -29,41 +29,70 @@ struct MandArtApp: App {
         // in SwiftUI only supports vertical scrolling.
 
         WindowGroup(windowGroupName) {
-            ScrollView(showsIndicators: true) {
+
                 VStack {
-                    // just close current window and open new document
+
+                    Spacer()
+
                     Button("Click to open a sample MandArt") {
+
+                        // close current window and open new document
+
                         NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
+
                         NSDocumentController.shared.newDocument(defaultFileName)
                     }
-                    .frame(minWidth: 300, maxWidth: 500,
-                           minHeight: 200, maxHeight: 400)
 
-//                        ForEach(0..<100) { _ in
-//                            Text("This is a sample text")
-//                                .frame(width: 100)
-//                        }
-//
-//                        HStack {
-//                            ForEach(0..<100) { _ in
-//                                Text("This is a sample text")
-//                                    .frame(width: 100)
-//                            }
-//                        }
+                    Spacer()
+
+                    Text("See menu File / New to create a new MandArt document.")
+
+                    Spacer()
+
+                    Text("See menu / Help / MandArt Help to learn more.")
+
+                    Spacer()
+
+                }  // end VStack
+                .onAppear{
+                    NSWindow.allowsAutomaticWindowTabbing = false
                 }
+                .frame(minWidth: 300, maxWidth: 500,
+                       minHeight: 200, maxHeight: 400)
 
-                // }
-            }
-            .frame(minWidth: 300, maxWidth: 500,
-                   minHeight: 200, maxHeight: 400)
         }
 
         DocumentGroup(newDocument: { MandArtDocument() }) { _ in
             ContentView()
+                .onAppear{
+                NSWindow.allowsAutomaticWindowTabbing = false
+            }
         }
         .commands {
-            // we don't need the pasteboard (cut/copy/paste/delete_
-            CommandGroup(replacing: .pasteboard) {}
+            // Make all modifications to the MENU in here
+
+            // we don't need the Edit/pasteboard menu item (cut/copy/paste/delete)
+            // so we'll replace it with nothing
+            CommandGroup(replacing: CommandGroupPlacement.pasteboard) {}
+
+            // we don't need the Edit/Emoji and Symbols menu item
+            // so we could turn it off using Objective-C
+            // but that seems extreme, so we'll leave it in
+
+            // we don't need the View / Tab bar menu item
+            // so we turned it off above using
+            // NSWindow.allowsAutomaticWindowTabbing = false
+
+            // Help has "Search" & "MandArt Help" by default
+            // let's replace the MandArt help option with a Link
+            // to our hosted documenation on GitHub Pages
+            let displayText:String = "MandArt Help"
+            let url:URL = URL(string: "https://denisecase.github.io/MandArt-Docs/documentation/mandart/")!
+            CommandGroup(replacing:CommandGroupPlacement.help){
+                Link(displayText, destination: url)
+            }
+
+
         }
     }
 }
