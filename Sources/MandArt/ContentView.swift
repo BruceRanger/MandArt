@@ -31,9 +31,9 @@ struct ContentView: View {
 
     //@State private var searchText: String = ""
 
-    let instructionBackgroundColor = Color.green.opacity(0.50)
-    let instructionBackgroundColorMid = Color.yellow.opacity(0.55)
-    let instructionBackgroundColorLite = Color.green.opacity(0.60)
+//    let instructionBackgroundColor = Color.green.opacity(0.50)
+//    let instructionBackgroundColorMid = Color.yellow.opacity(0.55)
+//    let instructionBackgroundColorLite = Color.green.opacity(0.60)
 
     let inputWidth: Double = 290
 
@@ -1175,7 +1175,7 @@ struct ContentView: View {
                                     .padding(.trailing, 5)
                                     .help("Delete " + "\(hue.num)")
                                 }
-                                .listRowBackground(instructionBackgroundColor)
+                               // .listRowBackground(instructionBackgroundColor)
                             } // end foreach
                             .onMove { indices, hue in
                                 doc.picdef.hues.move(fromOffsets: indices,
@@ -1193,7 +1193,7 @@ struct ContentView: View {
                 } // END COLOR LIST GROUP
             } // end VStack for user instructions - Below refers to the 2 cols
               // .searchable(text: $searchText)
-            .background(instructionBackgroundColor)
+          //  .background(instructionBackgroundColor)
             .frame(width: inputWidth)
             .padding(2)
 
@@ -1242,7 +1242,7 @@ struct ContentView: View {
             } // end image scroll view
             .padding(2)
         } // end HStack
-        .background(instructionBackgroundColor)
+        //.background(instructionBackgroundColor)
     } // end view body
 
 
