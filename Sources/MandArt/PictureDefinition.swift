@@ -38,13 +38,13 @@ struct PictureDefinition: Codable, Identifiable {
     ]
     var huesEstimatedPrintPreview: [Hue] = []
     var huesOptimizedForPrinter: [Hue] = []
-
+    
     /// Initialize with an array of Hues (sorted rgbs)
     /// - Parameter hues: an array of hues
     init(hues: [Hue]) {
         self.hues = hues
     }
-
+    
     /// Initialize by setting everything.
     /// - Parameters:
     ///   - xCenter: xCenter description
@@ -100,7 +100,7 @@ struct PictureDefinition: Codable, Identifiable {
         self.leftNumber = leftNumber
         self.hues = hues
     }
-
+    
     private func getHueFromLookupResponse(response: String, sortOrder: Int) -> Hue {
         // response is in format "000-000-000" need to get r / g / b
         let rStr: String = response[0 ..< 3]
@@ -111,7 +111,7 @@ struct PictureDefinition: Codable, Identifiable {
         let blue = Double(bStr)!
         return Hue(num: sortOrder, r: red, g: green, b: blue)
     }
-
+    
     /// Convert from a precise R G B double (0-255)
     ///  To a general bucketed value (0, 34, 68, 102, 136, 170, 204, 238, 255)
     /// - Parameter preciseValue: preciseValue a double from 0 to 255
@@ -119,30 +119,30 @@ struct PictureDefinition: Codable, Identifiable {
     fileprivate func getBucketColorDouble(preciseValue: Double) -> Double {
         var bucketValue = 0.0
         switch preciseValue {
-        case 0 ..< 34:
-            bucketValue = 0
-        case 34 ..< 68:
-            bucketValue = 34
-        case 68 ..< 102:
-            bucketValue = 68
-        case 102 ..< 136:
-            bucketValue = 102
-        case 136 ..< 170:
-            bucketValue = 136
-        case 170 ..< 204:
-            bucketValue = 170
-        case 204 ..< 238:
-            bucketValue = 204
-        case 238 ..< 255:
-            bucketValue = 238
-        case 255:
-            bucketValue = 255
-        default:
-            fatalError()
+            case 0 ..< 34:
+                bucketValue = 0
+            case 34 ..< 68:
+                bucketValue = 34
+            case 68 ..< 102:
+                bucketValue = 68
+            case 102 ..< 136:
+                bucketValue = 102
+            case 136 ..< 170:
+                bucketValue = 136
+            case 170 ..< 204:
+                bucketValue = 170
+            case 204 ..< 238:
+                bucketValue = 204
+            case 238 ..< 255:
+                bucketValue = 238
+            case 255:
+                bucketValue = 255
+            default:
+                fatalError()
         }
         return bucketValue
     }
-
+    
     fileprivate func getLookupStringFromHue(hue: Hue) -> String {
         let bucketR: Double = getBucketColorDouble(preciseValue: hue.r)
         let bucketG: Double = getBucketColorDouble(preciseValue: hue.g)

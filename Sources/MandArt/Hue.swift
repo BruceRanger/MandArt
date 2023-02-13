@@ -1,17 +1,17 @@
 /**
-
+ 
  Hue
  
  This class is used to manage one color or hue entry in the MandArt project.
-
+ 
  Overview
-
+ 
  The Hue class provides a simple structure to manage one color or hue entry, with properties to store the color's num, r, g, and b values. It also conforms to the Codable, Identifiable, and ObservableObject protocols, allowing it to be easily encoded and decoded, and to be used as an object that can observe and respond to changes.
-
+ 
  Usage
-
+ 
  To use the Hue class, simply create an instance of it, providing values for its properties as desired. You can then encode and decode instances of the Hue class using the Encoder and Decoder classes, and you can use instances of the Hue class in your user interface, as they are identifiable and observable.
-
+ 
  Note: This class is only available on macOS 12 and higher.
  */
 
@@ -58,16 +58,16 @@ import SwiftUI
 ///This class has features only available in macOS 12.0 and later.
 @available(macOS 12.0, *)
 class Hue: Codable, Identifiable, ObservableObject {
-
+    
     var id = UUID()
     var num: Int = 1
     var r: Double = 0.0
     var g: Double = 255.0
     var b: Double = 0.0
     var color: Color
-
-
-
+    
+    
+    
     /// Initializes an instance of `Hue` with default values
     ///
     /// - Returns: A new instance of `Hue` with default values (white)
@@ -79,9 +79,9 @@ class Hue: Codable, Identifiable, ObservableObject {
         b = 255
         color = Color(.sRGB, red: r / 255, green: g / 255, blue: b / 255)
     }
-
-
-
+    
+    
+    
     /// Initializes an instance of the `Hue` structure with given values for `num`, `r`, `g` and `b`
     ///
     /// - Parameters:
@@ -96,17 +96,17 @@ class Hue: Codable, Identifiable, ObservableObject {
         self.b = b
         color = Color(.sRGB, red: self.r / 255, green: self.g / 255, blue: self.b / 255)
     }
-
-
-
-
+    
+    
+    
+    
     /// Updates the RGB values of the color based on the `cgColor` parameter.
     ///
     /// - Parameter cgColor: The `CGColor` object
     /// from which to extract the RGB values.
     ///
     func updateColorFromPicker(cgColor: CGColor) {
-
+        
         if let arr = cgColor.components {
             r = arr[0]
             g = arr[1]
@@ -117,7 +117,7 @@ class Hue: Codable, Identifiable, ObservableObject {
             b = 0
         }
     }
-
+    
 }
 
 
@@ -132,11 +132,11 @@ class Hue: Codable, Identifiable, ObservableObject {
 extension Hue: Equatable {
     static func == (lhs: Hue, rhs: Hue) -> Bool {
         lhs.id == rhs.id &&
-            lhs.num == rhs.num &&
-            lhs.r == rhs.r &&
-            lhs.g == rhs.g &&
-            lhs.b == rhs.b &&
-            lhs.color == rhs.color
+        lhs.num == rhs.num &&
+        lhs.r == rhs.r &&
+        lhs.g == rhs.g &&
+        lhs.b == rhs.b &&
+        lhs.color == rhs.color
     }
 }
 
@@ -183,29 +183,29 @@ extension Hue: Equatable {
 ///
 @available(macOS 12.0, *)
 private extension Color {
-    #if os(macOS)
-        typealias SystemColor = NSColor
-    #else
-        typealias SystemColor = UIColor
-    #endif
-
+#if os(macOS)
+    typealias SystemColor = NSColor
+#else
+    typealias SystemColor = UIColor
+#endif
+    
     var colorComponents: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)? {
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
         var a: CGFloat = 0
-
-        #if os(macOS)
-            SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+#if os(macOS)
+        SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a)
         // Note that non RGB color will raise an exception, that I don't now how to catch because it is an Objc exception.
-        #else
-            guard SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a) else {
-                // Pay attention that the color should be convertible into RGB format
-                // Colors using hue, saturation and brightness won't work
-                return nil
-            }
-        #endif
-
+#else
+        guard SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a) else {
+            // Pay attention that the color should be convertible into RGB format
+            // Colors using hue, saturation and brightness won't work
+            return nil
+        }
+#endif
+        
         return (r, g, b, a)
     }
 }
@@ -222,12 +222,12 @@ private extension Color {
 ///
 @available(macOS 10.15, *)
 extension Color: Codable {
-
+    
     // Define the keys for encoding and decoding the color data.
     enum CodingKeys: String, CodingKey {
         case red, green, blue
     }
-
+    
     /*
      Initializer for decoding the `Color` object from data representation.
      - Parameters:
@@ -243,48 +243,48 @@ extension Color: Codable {
         let r = try container.decode(Double.self, forKey: .red)
         let g = try container.decode(Double.self, forKey: .green)
         let b = try container.decode(Double.self, forKey: .blue)
-
+        
         // Initialize a `Color` object with the decoded data.
         self.init(red: r, green: g, blue: b)
     }
-
-
-
-
-   ///
-   /// Method for encoding the `Color` object into data representation.
-   ///
-   ///  - Parameters:
-   ///  - encoder: An encoder object that will encode the `Color` object.
-   ///
-   ///  - Throws:
-   ///  `EncodingError` if the `Color` object cannot be encoded
-   ///   into the desired data representation.
-   ///
+    
+    
+    
+    
+    ///
+    /// Method for encoding the `Color` object into data representation.
+    ///
+    ///  - Parameters:
+    ///  - encoder: An encoder object that will encode the `Color` object.
+    ///
+    ///  - Throws:
+    ///  `EncodingError` if the `Color` object cannot be encoded
+    ///   into the desired data representation.
+    ///
     @available(macOS 10.15,  *)
     public func encode(to encoder: Encoder) throws {
-
+        
         // check if mac0S 12 is available
-
+        
         if #available(macOS 12.0, *) {
-
-
+            
+            
             // Check if the color components are available.
             guard let colorComponents = colorComponents else {
                 return
             }
-
+            
             // Create a container for the encoded data.
             var container = encoder.container(keyedBy: CodingKeys.self)
-
+            
             // Encode the red, green, and blue components of the color.
             try container.encode(colorComponents.red, forKey: .red)
             try container.encode(colorComponents.green, forKey: .green)
             try container.encode(colorComponents.blue, forKey: .blue)
-
+            
         } else {
             print("Error: macOS 12.0 or later is required to use this feature.")
         }
-
+        
     }
 }

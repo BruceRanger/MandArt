@@ -139,7 +139,7 @@ enum MandMath {
     ///
     /// - Parameter hues: An array of `Hue` objects.
     /// - Returns: An array of booleans, indicating if the closest printable color of each hue in the `hues` array is present in the `MandMath.printableColorList`.
-    /// 
+    ///
     @available(macOS 12.0, *)
     static func getClosestPrintableColors(hues: [Hue]) -> [Bool] {
         // Separate results for each run in the terminal output
@@ -178,51 +178,51 @@ enum MandMath {
     static func getPrintableColorsWithMinimumDistance(color: CGColor, num: Int)
     -> [[Int]]
     {
-        guard let components = color.components else {
-            // return an empty array if the color components cannot be retrieved
-            return []
-        }
+    guard let components = color.components else {
+        // return an empty array if the color components cannot be retrieved
+        return []
+    }
 
-        // extract the red, green, and blue components of the color
-        let r = components[0]
-        let g = components[1]
-        let b = components[2]
+    // extract the red, green, and blue components of the color
+    let r = components[0]
+    let g = components[1]
+    let b = components[2]
 
-        // convert the floating-point components to integers in the range 0-255
-        let red = Int(round(r * 255.0))
-        let green = Int(round(g * 255.0))
-        let blue = Int(round(b * 255.0))
+    // convert the floating-point components to integers in the range 0-255
+    let red = Int(round(r * 255.0))
+    let green = Int(round(g * 255.0))
+    let blue = Int(round(b * 255.0))
 
-        // format the color components for printing
-        let rr = padIntToThreeCharacters(number: red)
-        let gg = padIntToThreeCharacters(number: green)
-        let bb = padIntToThreeCharacters(number: blue)
-        print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
+    // format the color components for printing
+    let rr = padIntToThreeCharacters(number: red)
+    let gg = padIntToThreeCharacters(number: green)
+    let bb = padIntToThreeCharacters(number: blue)
+    print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
 
-        // calculate the distances between the input color and each printable color
-        let distances = MandMath.printableColorList.map { color -> Int in
-            let rDiff = color[0] - red
-            let gDiff = color[1] - green
-            let bDiff = color[2] - blue
-            return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff
-        }
+    // calculate the distances between the input color and each printable color
+    let distances = MandMath.printableColorList.map { color -> Int in
+        let rDiff = color[0] - red
+        let gDiff = color[1] - green
+        let bDiff = color[2] - blue
+        return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff
+    }
 
-        // find the printable color with the minimum distance to the input color
-        let minDistance = distances.min()!
-        let nearest = MandMath.printableColorList.enumerated().filter { index, value -> Bool in
-            let rDiff = value[0] - red
-            let gDiff = value[1] - green
-            let bDiff = value[2] - blue
-            return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff == minDistance
-        }.map { $0.element }
+    // find the printable color with the minimum distance to the input color
+    let minDistance = distances.min()!
+    let nearest = MandMath.printableColorList.enumerated().filter { index, value -> Bool in
+        let rDiff = value[0] - red
+        let gDiff = value[1] - green
+        let bDiff = value[2] - blue
+        return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff == minDistance
+    }.map { $0.element }
 
-        // log information about the closest printable color(s)
-        print("    count of closest:\(nearest.count)")
-        for item in nearest {
-            print("    closest:\(item)\n")
-        }
-        // return the closest printable color(s)
-        return nearest
+    // log information about the closest printable color(s)
+    print("    count of closest:\(nearest.count)")
+    for item in nearest {
+        print("    closest:\(item)\n")
+    }
+    // return the closest printable color(s)
+    return nearest
     }
 
 
