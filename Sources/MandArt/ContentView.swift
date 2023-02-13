@@ -683,7 +683,7 @@ struct ContentView: View {
     // and change this state variable when buttons are pressed.
     var body: some View {
 
-        HStack(alignment: .top, spacing: 2) {
+        HStack(alignment: .top, spacing: 1) {
             // instructions on left, picture on right
             // Left (first) VStack is left side with user stuff
             // Right (second) VStack is for mandart, gradient, or colors
@@ -1195,7 +1195,7 @@ struct ContentView: View {
               // .searchable(text: $searchText)
             .background(instructionBackgroundColor)
             .frame(width: inputWidth)
-            .padding(5)
+            .padding(2)
 
             // SECOND COLUMN - VSTACK - IS FOR IMAGES
 
@@ -1238,10 +1238,9 @@ struct ContentView: View {
                             .scaledToFit()
                     }
                 } // end VStack right side (picture space)
-                .padding(5)
+                .padding(2)
             } // end image scroll view
-            .padding(5)
-            .padding(5)
+            .padding(2)
         } // end HStack
         .background(instructionBackgroundColor)
     } // end view body
