@@ -767,6 +767,7 @@ struct ContentView: View {
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)
                                             .help("Enter the width, in pixels, of the image.")
+                                            .disabled(drawColors)
                                     }
 
                                     VStack {
@@ -793,6 +794,7 @@ struct ContentView: View {
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)
                                             .help("Enter the height, in pixels, of the image.")
+                                            .disabled(drawColors)
                                     }
 
                                     VStack {
@@ -837,6 +839,7 @@ struct ContentView: View {
                                         .padding(4)
                                         .frame(maxWidth: 120)
                                         .help("Enter the x value in the Mandelbrot coordinate system for the center of the image.")
+                                        .disabled(drawColors)
                                     }
 
                                     VStack { // each input has a vertical container with a Text label & TextField for data
@@ -857,6 +860,7 @@ struct ContentView: View {
                                             .padding(4)
                                             .frame(maxWidth: 120)
                                             .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
+                                            .disabled(drawColors)
                                     }
                                 } // end HStack for XY
 
@@ -881,6 +885,7 @@ struct ContentView: View {
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 50)
                                             .help("Enter the angle to rotate the image clockwise, in degrees.")
+                                            .disabled(drawColors)
                                     }
 
                                     VStack {
@@ -900,6 +905,7 @@ struct ContentView: View {
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 100)
                                             .help("Enter the magnification of the image.")
+                                            .disabled(drawColors)
                                     }
                                     VStack {
                                         Text("Zoom")
@@ -907,9 +913,11 @@ struct ContentView: View {
                                         HStack {
                                             Button("+") { zoomIn() }
                                                 .help("Zoom in by a factor of two.")
+                                                .disabled(drawColors)
 
                                             Button("-") { zoomOut() }
                                                 .help("Zoom out by a factor of two.")
+                                                .disabled(drawColors)
                                         }
                                     }
                                 }
@@ -933,6 +941,7 @@ struct ContentView: View {
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .help("Enter the maximum number of iterations for a given point in the image. A larger value will increase the resolution, but slow down the calculation.")
+                                        .disabled(drawColors)
                                         .frame(maxWidth: 70)
                                 }
                                 .padding(.horizontal)
@@ -954,6 +963,7 @@ struct ContentView: View {
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 60)
                                         .help("Enter the minimum value for the square of the distance from the origin of the Mandelbrot coordinate system. A larger value will smooth the color gradient, but slow down the calculation.")
+                                        .disabled(drawColors)
                                 }
 
                                 Divider()
@@ -1025,7 +1035,7 @@ struct ContentView: View {
                                         Text("near to edge")
 
                                         TextField("spacingColorFar", value: $doc.picdef.spacingColorFar, formatter: ContentView.cgDecimalUnboundFormatter)
-                                        { isStarted in
+                             /*           { isStarted in
                                             if isStarted {
                                 //                print("editing spacingColorFar, pausing updates")
                                                 self.pauseUpdates()
@@ -1033,7 +1043,7 @@ struct ContentView: View {
                                         }
                                         .onSubmit {
                                             showMandArtBitMap()
-                                        }
+                                        }*/
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)
@@ -1045,7 +1055,8 @@ struct ContentView: View {
                                         Text("near to MiniMand")
                                         Text("far from edge")
 
-                                        TextField("spacingColorNear", value: $doc.picdef.spacingColorNear, formatter: ContentView.cgDecimalUnboundFormatter){ isStarted in
+                                        TextField("spacingColorNear", value: $doc.picdef.spacingColorNear, formatter: ContentView.cgDecimalUnboundFormatter)
+                         /*               { isStarted in
                                             if isStarted {
                               //                  print("editing spacingColorNear, pausing updates")
                                                 self.pauseUpdates()
@@ -1053,7 +1064,7 @@ struct ContentView: View {
                                         }
                                         .onSubmit {
                                             showMandArtBitMap()
-                                        }
+                                        }*/
                                             .textFieldStyle(.roundedBorder)
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 80)
@@ -1566,6 +1577,7 @@ struct ContentView: View {
     /// Get the app ready to draw a MandArt picture.
     fileprivate func readyForPicture() {
         drawIt = true
+        drawColors = false
     }
 
     /// Get the app ready to draw a gradient.

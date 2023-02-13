@@ -66,6 +66,7 @@ struct MandArtApp: App {
             ContentView()
                 .onAppear{
                 NSWindow.allowsAutomaticWindowTabbing = false
+                    
             }
         }
         .commands {
