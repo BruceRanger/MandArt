@@ -1028,15 +1028,15 @@ struct ContentView: View {
                                     Text("near to edge")
 
                                     TextField("spacingColorFar", value: $doc.picdef.spacingColorFar, formatter: ContentView.cgDecimalUnboundFormatter)
-                                    /*           { isStarted in
+                                               { isStarted in
                                      if isStarted {
                                      //                print("editing spacingColorFar, pausing updates")
-                                     self.pauseUpdates()
+                           //          self.pauseUpdates()
                                      }
                                      }
                                      .onSubmit {
                                      showMandArtBitMap()
-                                     }*/
+                                     }
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
