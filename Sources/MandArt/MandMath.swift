@@ -185,16 +185,19 @@ enum MandMath {
 
     // extract the red, green, and blue components of the color
     let r = components[0]
+ //   print ("r = ", r)
     let g = components[1]
     let b = components[2]
 
     // convert the floating-point components to integers in the range 0-255
     let red = Int(round(r * 255.0))
+ //   print("red = ", red)
     let green = Int(round(g * 255.0))
     let blue = Int(round(b * 255.0))
 
     // format the color components for printing
     let rr = padIntToThreeCharacters(number: red)
+//    print ("rr = ",rr)
     let gg = padIntToThreeCharacters(number: green)
     let bb = padIntToThreeCharacters(number: blue)
     print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
@@ -202,8 +205,11 @@ enum MandMath {
     // calculate the distances between the input color and each printable color
     let distances = MandMath.printableColorList.map { color -> Int in
         let rDiff = color[0] - red
+  //      print("rDiff = ", rDiff)
         let gDiff = color[1] - green
         let bDiff = color[2] - blue
+   //     print("distances = ", distances)
+        print("rDiff * rDiff + gDiff * gDiff + bDiff * bDiff = ",  rDiff * rDiff + gDiff * gDiff + bDiff * bDiff)
         return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff
     }
 
