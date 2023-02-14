@@ -626,7 +626,21 @@ enum MandMath {
         [255, 255, 146],
         [255, 255, 182],
         [255, 255, 219],
-        [255, 255, 255]
+        [255, 255, 255],
+        [72,72,177], // printable crayons
+        [71,71,177], // printable crayons
+        [99,16,175], // printable crayons
+        [98,15,175], // printable crayons
+        [46,107,178], // printable crayons
+        [45,107,178], // printable crayons
+        [27,72,142], // printable crayons
+        [27,71,142], // printable crayons
+        [100,40,176], // printable crayons
+        [100,40,176], // printable crayons
+        [101,40,176], // printable crayons
+        [100,40,176], // printable crayons
+        [101,40,176], // printable crayons
+        [100,40,176] // printable crayons
     ]
 
 }

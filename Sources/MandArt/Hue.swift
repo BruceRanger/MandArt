@@ -119,7 +119,10 @@ class Hue: Codable, Identifiable, ObservableObject {
     }
 
 
-     func getLookupString() -> String {
+    ///  get the lookup string for this instance of a  Hue
+    ///  for example:
+    ///  000-027-255
+    func getLookupString() -> String {
         let strR = String(format: "%03d", Int(self.r))
         let strG = String(format: "%03d", Int(self.g))
         let strB = String(format: "%03d", Int(self.b))
@@ -127,16 +130,24 @@ class Hue: Codable, Identifiable, ObservableObject {
         return lookupString
     }
 
-     func printColorInfo(){
 
-             let s = self.getLookupString()
-             print(s)
+    /// print to the console a string representing this Hue
+    /// used to assess the printable crayon colors
+    ///  currently set to show
+    ///    000-027-255
+    ///    could be adjusted so it prints in a way we can add them
+    ///    to the list of printable colors:
+    ///    [0, 27, 255], // printable crayon
+    func printColorInfo(){
+
+//        let s = self.getLookupString()
+//        print(s)
 
 
-//             let strR = String(format: "%d", Int(self.r))
-//             let strG = String(format: "%d", Int(self.g))
-//             let strB = String(format: "%d", Int(self.b))
-//             print("[\(strR),\(strG),\(strB)], // printable crayons")
+                     let strR = String(format: "%d", Int(self.r))
+                     let strG = String(format: "%d", Int(self.g))
+                     let strB = String(format: "%d", Int(self.b))
+                     print("[\(strR),\(strG),\(strB)], // printable crayons")
 
     }
     
