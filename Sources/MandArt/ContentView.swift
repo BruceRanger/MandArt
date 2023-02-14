@@ -1030,7 +1030,7 @@ struct ContentView: View {
                                      }
                                      .onSubmit {
                                      showMandArtBitMap()
-                                     }
+                                     }*/
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
