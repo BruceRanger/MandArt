@@ -54,11 +54,12 @@ struct MandArtApp: App {
                 Spacer()
                 
             }  // end VStack
+            .frame(minWidth: 400, maxWidth: 800,
+                   minHeight: 200, maxHeight: 400)
             .onAppear{
                 NSWindow.allowsAutomaticWindowTabbing = false
             }
-            .frame(minWidth: 300, maxWidth: 500,
-                   minHeight: 200, maxHeight: 400)
+
             
         }
         
