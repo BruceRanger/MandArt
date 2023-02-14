@@ -1253,9 +1253,8 @@ struct ContentView: View {
     ///
     var tapGesture: some Gesture {
         
-        DragGesture(minimumDistance: 10, coordinateSpace: .local)
+        DragGesture(minimumDistance: 0, coordinateSpace: .local)
             .onChanged { value in
-                
                 // store distance the touch has moved as a sum of all movements
                 self.moved += value.translation.width + value.translation.height
                 // only set the start time if it's the first event
@@ -1264,28 +1263,21 @@ struct ContentView: View {
                 }
             }
             .onEnded { tap in
-                // only respond to taps if this is a picture not gradient
-                if drawIt == true {
-                    // if we haven't moved very much, treat it as a tap event
-                    if self.moved < 1 && self.moved > -1 {
-                        doc.picdef.xCenter = getCenterXFromTap(tap)
-                        doc.picdef.yCenter = getCenterYFromTap(tap)
-                        readyForPicture()
-                    }
-                    // if we have moved a lot, treat it as a drag event
-                    else {
-                        if activeDisplayState == ActiveDisplayChoice.MandArt ||
-                            activeDisplayState == ActiveDisplayChoice.Color {
-                            doc.picdef.xCenter = getCenterXFromDrag(tap)
-                            doc.picdef.yCenter = getCenterYFromDrag(tap)
-                            readyForPicture()
-                            showMandArtBitMap() // redraw after drag
-                        }
-                    }
-                    // reset tap event states
-                    self.moved = 0
-                    self.startTime = nil
+                // if we haven't moved very much, treat it as a tap event
+                if self.moved < 1 && self.moved > -1 {
+                    doc.picdef.xCenter = getCenterXFromTap(tap)
+                    doc.picdef.yCenter = getCenterYFromTap(tap)
+                    showMandArtBitMap() // redraw after new center
                 }
+                // if we have moved a lot, treat it as a drag event
+                else {
+                    doc.picdef.xCenter = getCenterXFromDrag(tap)
+                    doc.picdef.yCenter = getCenterYFromDrag(tap)
+                    showMandArtBitMap() // redraw after drag
+                }
+                // reset tap event states
+                self.moved = 0
+                self.startTime = nil
             }
     } // end tapGesture
     
@@ -1507,6 +1499,7 @@ struct ContentView: View {
     /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
     ///
     private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
+        print("getting x from tap")
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
         let w = Double(doc.picdef.imageWidth)
@@ -1527,6 +1520,7 @@ struct ContentView: View {
     /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
     ///
     private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
+        print("getting y from tap")
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
         let w = Double(doc.picdef.imageWidth)
