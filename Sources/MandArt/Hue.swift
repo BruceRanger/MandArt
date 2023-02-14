@@ -117,6 +117,28 @@ class Hue: Codable, Identifiable, ObservableObject {
             b = 0
         }
     }
+
+
+     func getLookupString() -> String {
+        let strR = String(format: "%03d", Int(self.r))
+        let strG = String(format: "%03d", Int(self.g))
+        let strB = String(format: "%03d", Int(self.b))
+        let lookupString: String = strR + "-" + strG + "-" + strB
+        return lookupString
+    }
+
+     func printColorInfo(){
+
+             let s = self.getLookupString()
+             print(s)
+
+
+//             let strR = String(format: "%d", Int(self.r))
+//             let strG = String(format: "%d", Int(self.g))
+//             let strB = String(format: "%d", Int(self.b))
+//             print("[\(strR),\(strG),\(strB)], // printable crayons")
+
+    }
     
 }
 

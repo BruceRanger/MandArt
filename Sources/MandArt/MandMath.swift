@@ -306,6 +306,9 @@ enum MandMath {
         return isPrintable
     }
 
+
+   
+
     /// This function formats the input number to a string with three characters.
     ///
     /// - Parameters:

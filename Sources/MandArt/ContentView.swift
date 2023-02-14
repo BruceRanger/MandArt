@@ -1156,6 +1156,9 @@ struct ContentView: View {
                                             doc.updateHueWithColorPick(
                                                 index: i, newColorPick: newColor
                                             )
+                                            // BHJ: used to get info
+                                            // about printable color crayons
+                                            hue.printColorInfo()
                                         }
                                     
                                     Button {
@@ -1169,7 +1172,6 @@ struct ContentView: View {
                                     .padding(.trailing, 5)
                                     .help("Delete " + "\(hue.num)")
                                 }
-                                // .listRowBackground(instructionBackgroundColor)
                             } // end foreach
                             .onMove { indices, hue in
                                 doc.picdef.hues.move(fromOffsets: indices,
@@ -1641,7 +1643,7 @@ struct ContentView: View {
     }
     
     /// Trigger a tab key press event
-    ///
+    //p
     ///  TODO:  add this to each numeric field's
     ///  onSubmit() logic so that hitting RETURN
     ///  would also tab to the next field.

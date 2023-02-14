@@ -153,4 +153,6 @@ struct PictureDefinition: Codable, Identifiable {
         let lookupString: String = strR + "-" + strG + "-" + strB
         return lookupString
     }
+
+  
 }
