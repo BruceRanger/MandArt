@@ -740,10 +740,10 @@ struct ContentView: View {
                                     Text("Image")
 
                                     Text("width, px:")
-                                    TextField("imageWidth",
+                                    TextField("1100",
                                               value: $doc.picdef.imageWidth,
                                               formatter:
-                                                ContentView.cgIntPositiveFormatter)
+                                                ContentView.fmtImageWidthHeight)
                                     { isStarted in
                                         if isStarted {
                                             print("editing imageWidth, pausing updates")
@@ -767,9 +767,9 @@ struct ContentView: View {
                                     Text("Image")
 
                                     Text("height, px:")
-                                    TextField("imageHeight",
+                                    TextField("1000",
                                               value: $doc.picdef.imageHeight,
-                                              formatter: ContentView.cgIntPositiveFormatter)
+                                              formatter: ContentView.fmtImageWidthHeight)
                                     { isStarted in
                                         if isStarted {
                                             self.pauseUpdates()
@@ -812,9 +812,9 @@ struct ContentView: View {
                                 VStack { // each input has a vertical container with a Text label & TextField for data
                                     Text("Enter center x")
                                     Text("Between -2 and 2")
-                                    TextField("xC",
+                                    TextField("-0.75",
                                               value: $doc.picdef.xCenter,
-                                              formatter: ContentView.cgDecimalAbs2Formatter
+                                              formatter: ContentView.fmtXY
                                     ) { isStarted in
                                         if isStarted {
                                             print("editing xC, pausing updates")
@@ -838,7 +838,7 @@ struct ContentView: View {
                                 VStack { // each input has a vertical container with a Text label & TextField for data
                                     Text("Enter center y")
                                     Text("Between -2 and 2")
-                                    TextField("yC", value: $doc.picdef.yCenter, formatter: ContentView.cgDecimalAbs2Formatter) { isStarted in
+                                    TextField("0.0", value: $doc.picdef.yCenter, formatter: ContentView.fmtXY) { isStarted in
                                         if isStarted {
                                             self.pauseUpdates()
                                         }
@@ -863,9 +863,9 @@ struct ContentView: View {
                                 VStack {
                                     Text("Rotate (º)")
 
-                                    TextField("theta",
+                                    TextField("0",
                                               value: $doc.picdef.theta,
-                                              formatter: ContentView.cgRotationThetaFormatter)
+                                              formatter: ContentView.fmtRotationTheta)
                                     { isStarted in
                                         if isStarted {
                                             self.pauseUpdates()
@@ -883,7 +883,7 @@ struct ContentView: View {
 
                                 VStack {
                                     Text("Scale")
-                                    TextField("Scale", value: $doc.picdef.scale, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    TextField("430", value: $doc.picdef.scale, formatter: ContentView.fmtScale)
                                     { isStarted in
                                         if isStarted {
                                             //                print("editing scale, pausing updates")
@@ -918,9 +918,9 @@ struct ContentView: View {
                             Divider()
 
                             HStack {
-                                Text("Sharpening (interationsMax):")
+                                Text("Sharpening (iterationsMax):")
 
-                                TextField("iterationsMax", value: $doc.picdef.iterationsMax, formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("10,000", value: $doc.picdef.iterationsMax, formatter: ContentView.fmtSharpeningItMax)
                                 { isStarted in
                                     if isStarted {
                                         //                 print("editing iterationsMax, pausing updates")
@@ -942,7 +942,7 @@ struct ContentView: View {
                             HStack {
                                 Text("Color smoothing (rSqLimit):")
 
-                                TextField("rSqLimit", value: $doc.picdef.rSqLimit, formatter: ContentView.cgDecimalUnboundFormatter){ isStarted in
+                                TextField("400", value: $doc.picdef.rSqLimit, formatter: ContentView.fmtSmootingRSqLimit){ isStarted in
                                     if isStarted {
                                         //                 print("editing rSqLimit, pausing updates")
                                         self.pauseUpdates()
@@ -970,10 +970,9 @@ struct ContentView: View {
                                 Slider(value: $doc.picdef.yY, in: 0 ... 1, step: 0.1)
                                     .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
                                 Text("1")
-                                // Text("\(String(format: "%.2f", doc.picdef.yY))")
 
-                                TextField("yY", value: $doc.picdef.yY,
-                                          formatter: ContentView.cgDecimalUnboundFormatter)
+                                TextField("0", value: $doc.picdef.yY,
+                                          formatter: ContentView.fmtHoldFractionGradient)
                                 .textFieldStyle(.roundedBorder)
                                 .multilineTextAlignment(.trailing)
                                 .frame(maxWidth: 50)
@@ -992,8 +991,8 @@ struct ContentView: View {
                             HStack {
                                 Text("Draw gradient from color")
 
-                                TextField("leftNumber", value: $doc.picdef.leftNumber,
-                                          formatter: ContentView.cgIintMaxColorsFormatter/*,
+                                TextField("1", value: $doc.picdef.leftNumber,
+                                          formatter: ContentView.fmtLeftGradiantNumber/*,
                                                                                           onCommit: {
                                                                                           // do something when text field loses focus
                                                                                           showGradient()
@@ -1027,7 +1026,7 @@ struct ContentView: View {
                                     Text("far from MiniMand")
                                     Text("near to edge")
 
-                                    TextField("spacingColorFar", value: $doc.picdef.spacingColorFar, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge)
                                     /*           { isStarted in
                                      if isStarted {
                                      //                print("editing spacingColorFar, pausing updates")
@@ -1048,7 +1047,7 @@ struct ContentView: View {
                                     Text("near to MiniMand")
                                     Text("far from edge")
 
-                                    TextField("spacingColorNear", value: $doc.picdef.spacingColorNear, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
                                     /*               { isStarted in
                                      if isStarted {
                                      //                  print("editing spacingColorNear, pausing updates")
@@ -1069,7 +1068,7 @@ struct ContentView: View {
                                 VStack {
                                     Text("Change in minimum iteration:")
 
-                                    TextField("dFIterMin", value: $doc.picdef.dFIterMin, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
@@ -1079,7 +1078,7 @@ struct ContentView: View {
                                 VStack {
                                     Text("nBlocks:")
 
-                                    TextField("nBlocks", value: $doc.picdef.nBlocks, formatter: ContentView.cgIntNBlocksFormatter)
+                                    TextField("60", value: $doc.picdef.nBlocks, formatter: ContentView.fmtNBlocks)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
@@ -1131,24 +1130,24 @@ struct ContentView: View {
                         List {
                             ForEach($doc.picdef.hues, id: \.num) { $hue in
                                 HStack {
-                                    TextField("number", value: $hue.num, formatter: ContentView.cgDecimalUnboundFormatter)
+                                    TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
                                         .disabled(true)
                                         .frame(maxWidth: 50)
-                                    TextField("r", value: $hue.r, formatter: ContentView.cg255Formatter)
+                                    TextField("r", value: $hue.r, formatter: ContentView.fmt0to255)
                                         .onChange(of: hue.r) { newValue in
                                             let i = hue.num - 1
                                             doc.updateHueWithColorNumberR(
                                                 index: i, newValue: newValue
                                             )
                                         }
-                                    TextField("g", value: $hue.g, formatter: ContentView.cg255Formatter)
+                                    TextField("g", value: $hue.g, formatter: ContentView.fmt0to255)
                                         .onChange(of: hue.g) { newValue in
                                             let i = hue.num - 1
                                             doc.updateHueWithColorNumberG(
                                                 index: i, newValue: newValue
                                             )
                                         }
-                                    TextField("b", value: $hue.b, formatter: ContentView.cg255Formatter)
+                                    TextField("b", value: $hue.b, formatter: ContentView.fmt0to255)
                                         .onChange(of: hue.b) { newValue in
                                             let i = hue.num - 1
                                             doc.updateHueWithColorNumberB(
@@ -1299,7 +1298,7 @@ struct ContentView: View {
 
     // HELPER FUNCTIONS AND PRIVATE VARIABLES DOWN HERE......
 
-    static var cg255Formatter: NumberFormatter {
+    static var fmt0to255: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
@@ -1308,7 +1307,7 @@ struct ContentView: View {
         return formatter
     }
 
-    static var cgDecimalAbs2Formatter: NumberFormatter {
+    static var fmtXY: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.isPartialStringValidationEnabled = true
@@ -1318,50 +1317,106 @@ struct ContentView: View {
         return formatter
     }
 
-    static var cgDecimalUnboundFormatter: NumberFormatter {
+    static var fmtScale: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 8
+        formatter.minimum = 0
+        formatter.maximum = 100_000_000_000
+        return formatter
+    }
+
+    static var fmtSharpeningItMax: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 8
+        formatter.minimum = 0
+        formatter.maximum = 100_000_000
+        return formatter
+    }
+
+    static var fmtSmootingRSqLimit: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        formatter.minimum = 1
+        formatter.maximum = 100_000
+        return formatter
+    }
+
+    static var fmtHoldFractionGradient: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.minimum = 0.00
+        formatter.maximum = 1.00
+        return formatter
+    }
+
+    static var fmtSpacingNearEdge: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        formatter.minimum = 0
+        formatter.maximum = 1000
+        return formatter
+    }
+
+
+    static var fmtSpacingFarFromEdge: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        formatter.minimum = 0
+        formatter.maximum = 1000
+        return formatter
+    }
+
+    static var fmtChangeInMinIteration: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 8
+        formatter.minimum = 0
+        formatter.maximum = 1000
+        return formatter
+    }
+
+    static var fmtIntColorOrderNumber: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 8
         return formatter
     }
 
-    static var cgRotationThetaFormatter: NumberFormatter {
+    static var fmtRotationTheta: NumberFormatter {
         let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 0
         formatter.minimum = -359
         formatter.maximum = 359
         return formatter
     }
 
-    static var cgIntPositiveFormatter: NumberFormatter {
+    static var fmtImageWidthHeight: NumberFormatter {
         let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 0
         formatter.minimum = 1
         formatter.maximum = 10000
+        return formatter
+    }
+
+    static var fmtLeftGradiantNumber: NumberFormatter {
+        let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 0
-        return formatter
-    }
-
-    static var cgDecimal2Formatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        return formatter
-    }
-
-    static var cgIintMaxColorsFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
         formatter.minimum = 1
         formatter.maximum = 20
-        formatter.minimumIntegerDigits = 1
-        formatter.maximumIntegerDigits = 2
         return formatter
     }
 
-    static var cgIntNBlocksFormatter: NumberFormatter {
+    static var fmtNBlocks: NumberFormatter {
         let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 0
         formatter.minimum = 1
         formatter.maximum = 2000
-        formatter.minimumIntegerDigits = 1
         return formatter
     }
 
