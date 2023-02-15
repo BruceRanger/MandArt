@@ -8,9 +8,9 @@
 ///  Revised and updated 2021-2023
 ///  All rights reserved.
 
+import AppKit // keypress
 import Foundation // trig functions
 import SwiftUI // views
-import AppKit // keypress
 
 // File / Project Settings / Per-user project settings / derived data
 // set to project-relative path DerivedData
@@ -22,16 +22,15 @@ var fIterGlobal = [[Double]]()
 
 @available(macOS 12.0, *)
 struct ContentView: View {
-    
     // Get everything we can from MandMath (Swift-only)
     let defaultFileName = MandMath.getDefaultDocumentName()
-    
+
     // the remaining content should all require SwiftUI
     @EnvironmentObject var doc: MandArtDocument
-    
+
     // set width of the first column (user inputs)
     let inputWidth: Double = 300
-    
+
     @State private var testColor = Color.red
     @State private var tapX: Double = 0.0
     @State private var tapY: Double = 0.0
@@ -44,11 +43,11 @@ struct ContentView: View {
     @State private var drawGradient = false
     @State private var drawColors = false
     @State private var activeDisplayState = ActiveDisplayChoice.MandArt
-    @State private var textFieldImageWidth: NSTextField = NSTextField()
-    @State private var textFieldImageHeight: NSTextField = NSTextField()
-    @State private var textFieldX: NSTextField = NSTextField()
-    @State private var textFieldY: NSTextField = NSTextField()
-    
+    @State private var textFieldImageWidth: NSTextField = .init()
+    @State private var textFieldImageHeight: NSTextField = .init()
+    @State private var textFieldX: NSTextField = .init()
+    @State private var textFieldY: NSTextField = .init()
+
     enum ActiveDisplayChoice {
         case MandArt
         //      case Pause
@@ -57,33 +56,33 @@ struct ContentView: View {
         case ScreenColors
         case PrintColors
     }
-    
+
     /// Gets an image to display on the right side of the app
     ///
     /// - Returns: An optional CGImage or nil
     ///
     func getImage() -> CGImage? {
         var colors: [[Double]] = []
-        
+
         doc.picdef.hues.forEach { hue in
             let arr: [Double] = [hue.r, hue.g, hue.b]
             colors.insert(arr, at: colors.endIndex)
         }
-        
+
         let imageWidth: Int = doc.picdef.imageWidth
         let imageHeight: Int = doc.picdef.imageHeight
-        
-        if activeDisplayState == ActiveDisplayChoice.MandArt && drawIt {
+
+        if activeDisplayState == ActiveDisplayChoice.MandArt, drawIt {
             return getPictureImage(&colors)
-        } else if activeDisplayState == ActiveDisplayChoice.Gradient && drawGradient == true && leftGradientIsValid {
+        } else if activeDisplayState == ActiveDisplayChoice.Gradient, drawGradient == true, leftGradientIsValid {
             return getGradientImage(imageWidth, imageHeight, doc.picdef.leftNumber, &colors)
         } else if drawColors == true {
             return getColorImage(&colors)
         }
-        
+
         return nil
     }
-    
+
     /// Function to create and return a user-created MandArt bitmap
     ///
     /// - Parameters:
@@ -104,7 +103,7 @@ struct ContentView: View {
         let pi = 3.14159
         let thetaR: Double = pi * theta / 180.0 // R for Radians
         let rSqLimit: Double = doc.picdef.rSqLimit
-        
+
         var contextImage: CGImage
         var rSq = 0.0
         var rSqMax = 0.0
@@ -131,39 +130,39 @@ struct ContentView: View {
         var p = 0.0
         var test1 = 0.0
         var test2 = 0.0
-        
+
         rSqMax = 1.01 * (rSqLimit + 2) * (rSqLimit + 2)
         gGML = log(log(rSqMax)) - log(log(rSqLimit))
         gGL = log(log(rSqLimit))
-        
+
         for u in 0 ... imageWidth - 1 {
             for v in 0 ... imageHeight - 1 {
                 dX = (Double(u) - Double(imageWidth / 2)) / scale
                 dY = (Double(v) - Double(imageHeight / 2)) / scale
-                
+
                 x0 = xCenter + dX * cos(thetaR) - dY * sin(thetaR)
                 y0 = yCenter + dX * sin(thetaR) + dY * cos(thetaR)
-                
+
                 xx = x0
                 yy = y0
                 rSq = xx * xx + yy * yy
                 iter = 0.0
-                
+
                 p = sqrt((xx - 0.25) * (xx - 0.25) + yy * yy)
                 test1 = p - 2.0 * p * p + 0.25
                 test2 = (xx + 1.0) * (xx + 1.0) + yy * yy
-                
+
                 if xx < test1 || test2 < 0.0625 {
                     fIter[u][v] = iterationsMax // black
                     iter = iterationsMax // black
                 } // end if
-                
+
                 else {
                     for i in 1 ... Int(iterationsMax) {
                         if rSq >= rSqLimit {
                             break
                         }
-                        
+
                         xTemp = xx * xx - yy * yy + x0
                         yy = 2 * xx * yy + y0
                         xx = xTemp
@@ -171,85 +170,85 @@ struct ContentView: View {
                         iter = Double(i)
                     }
                 } // end else
-                
+
                 if iter < iterationsMax {
                     dIter = Double(-(log(log(rSq)) - gGL) / gGML)
-                    
+
                     fIter[u][v] = iter + dIter
                 } // end if
-                
+
                 else {
                     fIter[u][v] = iter
                 } // end else
             } // end first for v
         } // end first for u
-        
+
         fIterGlobal = fIter
-        
+
         for u in 0 ... imageWidth - 1 {
             fIterBottom[u] = fIter[u][0]
             fIterTop[u] = fIter[u][imageHeight - 1]
         } // end second for u
-        
+
         fIterMinLeft = fIter[0].min()!
         fIterMinRight = fIter[imageWidth - 1].min()!
         fIterMinBottom = fIterBottom.min()!
         fIterMinTop = fIterTop.min()!
         fIterMins = [fIterMinLeft, fIterMinRight, fIterMinBottom, fIterMinTop]
         fIterMin = fIterMins.min()!
-        
+
         fIterMin = fIterMin - dFIterMin
-        
+
         // Now we need to generate a bitmap image.
-        
+
         let nBlocks: Int = doc.picdef.nBlocks
         let nColors: Int = doc.picdef.hues.count
         let spacingColorFar: Double = doc.picdef.spacingColorFar
         let spacingColorNear: Double = doc.picdef.spacingColorNear
         var yY: Double = doc.picdef.yY
-        
+
         if yY == 1.0 { yY = yY - 1.0e-10 }
-        
+
         var spacingColorMid = 0.0
         var fNBlocks = 0.0
         var color = 0.0
         var block0 = 0
         var block1 = 0
-        
+
         fNBlocks = Double(nBlocks)
-        
+
         spacingColorMid = (iterationsMax - fIterMin - fNBlocks * spacingColorFar) / pow(fNBlocks, spacingColorNear)
-        
+
         var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
-        
+
         var h = 0.0
         var xX = 0.0
-        
+
         for i in 0 ... nBlocks {
             blockBound[i] = spacingColorFar * Double(i) + spacingColorMid * pow(Double(i), spacingColorNear)
         }
-        
+
         // set up CG parameters
         let bitsPerComponent = 8 // for UInt8
         let componentsPerPixel = 4 // RGBA = 4 components
         let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
         let bytesPerRow: Int = imageWidth * bytesPerPixel
         let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
-        
+
         // Allocate data for the raster buffer.  I'm using UInt8 so that I can
         // address individual RGBA components easily.
         let rasterBufferPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
-        
+
         // Create a CGBitmapContext for drawing and converting into an image for display
         let context =
-        CGContext(data: rasterBufferPtr,
-                  width: imageWidth,
-                  height: imageHeight,
-                  bitsPerComponent: bitsPerComponent,
-                  bytesPerRow: bytesPerRow,
-                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
-                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
-        
+            CGContext(data: rasterBufferPtr,
+                      width: imageWidth,
+                      height: imageHeight,
+                      bitsPerComponent: bitsPerComponent,
+                      bytesPerRow: bytesPerRow,
+                      space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+
         // use CG to draw into the context
         // you can use any of the CG drawing routines for drawing into this context
         // here we will just erase the contents of the CGBitmapContext as the
@@ -257,7 +256,7 @@ struct ContentView: View {
         context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0) // white
         context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
         context.fillPath()
-        
+
         // in addition to using any of the CG drawing routines, you can draw yourself
         // by accessing individual pixels in the raster image.
         // here we'll draw a square one pixel at a time.
@@ -265,7 +264,7 @@ struct ContentView: View {
         let yStarting = 0
         let width: Int = imageWidth
         let height: Int = imageHeight
-        
+
         // iterate over all of the rows for the entire height of the square
         for v in 0 ... (height - 1) {
             // calculate the offset to the row of pixels in the raster buffer
@@ -278,84 +277,82 @@ struct ContentView: View {
             // loop, but it's a small optimization to pull this part out and do it here
             // instead of every time through.
             let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow * (Int(yStarting) + v + 1))
-            
+
             // iterate over all of the pixels in this row
             for u in 0 ... (width - 1) {
                 // calculate the horizontal offset to the pixel in the row
                 let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
-                
+
                 // sum the horixontal and vertical offsets to get the pixel offset
                 let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
-                
+
                 // calculate the offset of the pixel
                 let pixelAddress: UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
-                
+
                 if fIter[u][v] >= iterationsMax { // black
                     pixelAddress.pointee = UInt8(0) // red
                     (pixelAddress + 1).pointee = UInt8(0) // green
                     (pixelAddress + 2).pointee = UInt8(0) // blue
                     (pixelAddress + 3).pointee = UInt8(255) // alpha
                 } // end if
-                
+
                 else {
                     h = fIter[u][v] - fIterMin
-                    
+
                     for block in 0 ... nBlocks {
                         block0 = block
-                        
-                        if h >= blockBound[block] && h < blockBound[block + 1] {
+
+                        if h >= blockBound[block], h < blockBound[block + 1] {
                             if (h - blockBound[block]) / (blockBound[block + 1] - blockBound[block]) <= yY {
                                 h = blockBound[block]
                             } else {
                                 h = blockBound[block] + ((h - blockBound[block]) - yY * (blockBound[block + 1] - blockBound[block])) / (1 - yY)
                             }
-                            
+
                             xX = (h - blockBound[block]) / (blockBound[block + 1] - blockBound[block])
-                            
+
                             while block0 > nColors - 1 {
                                 block0 = block0 - nColors
                             }
-                            
+
                             block1 = block0 + 1
-                            
+
                             if block1 == nColors {
                                 block1 = block1 - nColors
                             }
-                            
+
                             color = colors[block0][0] + xX * (colors[block1][0] - colors[block0][0])
                             pixelAddress.pointee = UInt8(color) // R
-                            
+
                             color = colors[block0][1] + xX * (colors[block1][1] - colors[block0][1])
                             (pixelAddress + 1).pointee = UInt8(color) // G
-                            
+
                             color = colors[block0][2] + xX * (colors[block1][2] - colors[block0][2])
                             (pixelAddress + 2).pointee = UInt8(color) // B
-                            
+
                             (pixelAddress + 3).pointee = UInt8(255) // alpha
                         }
                     }
-                    
+
                     // IMPORTANT:
                     // there is no type checking here and it is up to you to make sure that the
                     // address indexes do not go beyond the memory allocated for the buffer
                 } // end else
             } // end for u
         } // end for v
-        
+
         // convert the context into an image - this is what the function will return
         contextImage = context.makeImage()!
-        
+
         // no automatic deallocation for the raster data
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
-        
+
         // stash picture in global var for saving
         contextImageGlobal = contextImage
         return contextImage
     }
-    
-    
-    
+
     /// Function to create and return a gradient bitmap
     ///
     /// - Parameters:
@@ -367,44 +364,43 @@ struct ContentView: View {
     /// - Returns: optional CGImage with the bitmap or nil
     ///
     fileprivate func getGradientImage(_ imageWidth: Int, _ imageHeight: Int, _ nLeft: Int, _ colors: inout [[Double]]) -> CGImage? {
-        
         var yY: Double = doc.picdef.yY
-        
+
         if yY == 1.0 { yY = yY - 1.0e-10 }
-        
+
         //      var uU: Double = 0.0
-        
+
         var gradientImage: CGImage
         let leftNumber: Int = nLeft
         var rightNumber: Int = leftNumber + 1
-        
+
         if leftNumber == colors.count {
             rightNumber = 1
         }
-        
+
         var color = 0.0
-        
+
         // set up CG parameters
         let bitsPerComponent = 8 // for UInt8
         let componentsPerPixel = 4 // RGBA = 4 components
         let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
         let bytesPerRow: Int = imageWidth * bytesPerPixel
         let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
-        
+
         // Allocate data for the raster buffer.  I'm using UInt8 so that I can
         // address individual RGBA components easily.
         let rasterBufferPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
-        
+
         // Create a CGBitmapContext for drawing and converting into an image for display
         let context =
-        CGContext(data: rasterBufferPtr,
-                  width: imageWidth,
-                  height: imageHeight,
-                  bitsPerComponent: bitsPerComponent,
-                  bytesPerRow: bytesPerRow,
-                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
-                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
-        
+            CGContext(data: rasterBufferPtr,
+                      width: imageWidth,
+                      height: imageHeight,
+                      bitsPerComponent: bitsPerComponent,
+                      bytesPerRow: bytesPerRow,
+                      space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+
         // use CG to draw into the context
         // you can use any of the CG drawing routines for drawing into this context
         // here we will just erase the contents of the CGBitmapContext as the
@@ -412,7 +408,7 @@ struct ContentView: View {
         context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0) // white
         context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
         context.fillPath()
-        
+
         // in addition to using any of the CG drawing routines, you can draw yourself
         // by accessing individual pixels in the raster image.
         // here we'll draw a square one pixel at a time.
@@ -420,7 +416,7 @@ struct ContentView: View {
         let yStarting = 0
         let width: Int = imageWidth
         let height: Int = imageHeight
-        
+
         // iterate over all of the rows for the entire height of the square
         for v in 0 ... (height - 1) {
             // calculate the offset to the row of pixels in the raster buffer
@@ -433,55 +429,54 @@ struct ContentView: View {
             // loop, but it's a small optimization to pull this part out and do it here
             // instead of every time through.
             let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow * (Int(yStarting) + v + 1))
-            
+
             // iterate over all of the pixels in this row
             for u in 0 ... (width - 1) {
                 // calculate the horizontal offset to the pixel in the row
                 let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
-                
+
                 // sum the horixontal and vertical offsets to get the pixel offset
                 let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
-                
+
                 // calculate the offset of the pixel
                 let pixelAddress: UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
-                
+
                 if Double(u) <= yY * Double(width) { color = colors[leftNumber - 1][0] } else {
                     color = colors[leftNumber - 1][0] + (colors[rightNumber - 1][0] - colors[leftNumber - 1][0]) * (Double(u) - yY * Double(width)) / (Double(width) - yY * Double(width))
                 }
                 pixelAddress.pointee = UInt8(color) // R
-                
+
                 if Double(u) <= yY * Double(width) { color = colors[leftNumber - 1][1] } else {
                     color = colors[leftNumber - 1][1] + (colors[rightNumber - 1][1] - colors[leftNumber - 1][1]) * (Double(u) - yY * Double(width)) / (Double(width) - yY * Double(width))
                 }
                 (pixelAddress + 1).pointee = UInt8(color) // G
-                
+
                 if Double(u) <= yY * Double(width) { color = colors[leftNumber - 1][2] } else {
                     color = colors[leftNumber - 1][2] + (colors[rightNumber - 1][2] - colors[leftNumber - 1][2]) * (Double(u) - yY * Double(width)) / (Double(width) - yY * Double(width))
                 }
                 (pixelAddress + 2).pointee = UInt8(color) // B
-                
+
                 (pixelAddress + 3).pointee = UInt8(255) // alpha
-                
+
                 // IMPORTANT:
                 // there is no type checking here and it is up to you to make sure that the
                 // address indexes do not go beyond the memory allocated for the buffer
             } // end for u
         } // end for v
-        
+
         // convert the context into an image - this is what the function will return
         gradientImage = context.makeImage()!
-        
+
         // no automatic deallocation for the raster data
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
-        
+
         // stash picture in global var for saving
         contextImageGlobal = gradientImage
-        
+
         return gradientImage
     }
-    
-    
+
     /// Function to create and return a user-colored MandArt bitmap
     ///
     /// - Parameters:
@@ -500,9 +495,9 @@ struct ContentView: View {
         let spacingColorFar: Double = doc.picdef.spacingColorFar
         let spacingColorNear: Double = doc.picdef.spacingColorNear
         var yY: Double = doc.picdef.yY
-        
+
         if yY == 1.0 { yY = yY - 1.0e-10 }
-        
+
         var contextImage: CGImage
         var fIterMinLeft = 0.0
         var fIterMinRight = 0.0
@@ -512,63 +507,63 @@ struct ContentView: View {
         var fIterMinTop = 0.0
         var fIterMins = [Double](repeating: 0.0, count: 4)
         var fIterMin = 0.0
-        
+
         for u in 0 ... imageWidth - 1 {
             fIterBottom[u] = fIterGlobal[u][0]
             fIterTop[u] = fIterGlobal[u][imageHeight - 1]
         } // end second for u
-        
+
         fIterMinLeft = fIterGlobal[0].min()!
         fIterMinRight = fIterGlobal[imageWidth - 1].min()!
         fIterMinBottom = fIterBottom.min()!
         fIterMinTop = fIterTop.min()!
         fIterMins = [fIterMinLeft, fIterMinRight, fIterMinBottom, fIterMinTop]
         fIterMin = fIterMins.min()!
-        
+
         fIterMin = fIterMin - dFIterMin
-        
+
         // Now we need to generate a bitmap image.
-        
+
         var spacingColorMid = 0.0
         var fNBlocks = 0.0
         var color = 0.0
         var block0 = 0
         var block1 = 0
-        
+
         fNBlocks = Double(nBlocks)
-        
+
         spacingColorMid = (iterationsMax - fIterMin - fNBlocks * spacingColorFar) / pow(fNBlocks, spacingColorNear)
-        
+
         var blockBound = [Double](repeating: 0.0, count: nBlocks + 1)
-        
+
         var h = 0.0
         var xX = 0.0
-        
+
         for i in 0 ... nBlocks {
             blockBound[i] = spacingColorFar * Double(i) + spacingColorMid * pow(Double(i), spacingColorNear)
         }
-        
+
         // set up CG parameters
         let bitsPerComponent = 8 // for UInt8
         let componentsPerPixel = 4 // RGBA = 4 components
         let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
         let bytesPerRow: Int = imageWidth * bytesPerPixel
         let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
-        
+
         // Allocate data for the raster buffer.  I'm using UInt8 so that I can
         // address individual RGBA components easily.
         let rasterBufferPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
-        
+
         // Create a CGBitmapContext for drawing and converting into an image for display
         let context =
-        CGContext(data: rasterBufferPtr,
-                  width: imageWidth,
-                  height: imageHeight,
-                  bitsPerComponent: bitsPerComponent,
-                  bytesPerRow: bytesPerRow,
-                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
-                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
-        
+            CGContext(data: rasterBufferPtr,
+                      width: imageWidth,
+                      height: imageHeight,
+                      bitsPerComponent: bitsPerComponent,
+                      bytesPerRow: bytesPerRow,
+                      space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+
         // use CG to draw into the context
         // you can use any of the CG drawing routines for drawing into this context
         // here we will just erase the contents of the CGBitmapContext as the
@@ -576,7 +571,7 @@ struct ContentView: View {
         context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0) // white
         context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
         context.fillPath()
-        
+
         // in addition to using any of the CG drawing routines, you can draw yourself
         // by accessing individual pixels in the raster image.
         // here we'll draw a square one pixel at a time.
@@ -584,7 +579,7 @@ struct ContentView: View {
         let yStarting = 0
         let width: Int = imageWidth
         let height: Int = imageHeight
-        
+
         // iterate over all of the rows for the entire height of the square
         for v in 0 ... (height - 1) {
             // calculate the offset to the row of pixels in the raster buffer
@@ -597,59 +592,59 @@ struct ContentView: View {
             // loop, but it's a small optimization to pull this part out and do it here
             // instead of every time through.
             let pixel_vertical_offset: Int = rasterBufferSize - (bytesPerRow * (Int(yStarting) + v + 1))
-            
+
             // iterate over all of the pixels in this row
             for u in 0 ... (width - 1) {
                 // calculate the horizontal offset to the pixel in the row
                 let pixel_horizontal_offset: Int = ((Int(xStarting) + u) * bytesPerPixel)
-                
+
                 // sum the horixontal and vertical offsets to get the pixel offset
                 let pixel_offset = pixel_vertical_offset + pixel_horizontal_offset
-                
+
                 // calculate the offset of the pixel
                 let pixelAddress: UnsafeMutablePointer<UInt8> = rasterBufferPtr + pixel_offset
-                
+
                 if fIterGlobal[u][v] >= iterationsMax { // black
                     pixelAddress.pointee = UInt8(0) // red
                     (pixelAddress + 1).pointee = UInt8(0) // green
                     (pixelAddress + 2).pointee = UInt8(0) // blue
                     (pixelAddress + 3).pointee = UInt8(255) // alpha
                 } // end if
-                
+
                 else {
                     h = fIterGlobal[u][v] - fIterMin
-                    
+
                     for block in 0 ... nBlocks {
                         block0 = block
-                        
-                        if h >= blockBound[block] && h < blockBound[block + 1] {
+
+                        if h >= blockBound[block], h < blockBound[block + 1] {
                             if (h - blockBound[block]) / (blockBound[block + 1] - blockBound[block]) <= yY {
                                 h = blockBound[block]
                             } else {
                                 h = blockBound[block] + ((h - blockBound[block]) - yY * (blockBound[block + 1] - blockBound[block])) / (1 - yY)
                             }
-                            
+
                             xX = (h - blockBound[block]) / (blockBound[block + 1] - blockBound[block])
-                            
+
                             while block0 > nColors - 1 {
                                 block0 = block0 - nColors
                             }
-                            
+
                             block1 = block0 + 1
-                            
+
                             if block1 == nColors {
                                 block1 = block1 - nColors
                             }
-                            
+
                             color = colors[block0][0] + xX * (colors[block1][0] - colors[block0][0])
                             pixelAddress.pointee = UInt8(color) // R
-                            
+
                             color = colors[block0][1] + xX * (colors[block1][1] - colors[block0][1])
                             (pixelAddress + 1).pointee = UInt8(color) // G
-                            
+
                             color = colors[block0][2] + xX * (colors[block1][2] - colors[block0][2])
                             (pixelAddress + 2).pointee = UInt8(color) // B
-                            
+
                             (pixelAddress + 3).pointee = UInt8(255) // alpha
                         }
                     }
@@ -659,92 +654,87 @@ struct ContentView: View {
                 } // end else
             } // end for u
         } // end for v
-        
+
         // convert the context into an image - this is what the function will return
         contextImage = context.makeImage()!
-        
+
         // no automatic deallocation for the raster data
         // you need to manage that yourself
         rasterBufferPtr.deallocate()
-        
+
         // stash picture in global var for saving
         contextImageGlobal = contextImage
         return contextImage
     }
-    
+
     // To swap a GeometryReader for an Image on button click in SwiftUI,
     // you can use a state variable to keep track of
     // what should be displayed,
     // and change this state variable when buttons are pressed.
     var body: some View {
-        
         HStack(alignment: .top, spacing: 1) {
             // instructions on left, picture on right
             // Left (first) VStack is left side with user stuff
             // Right (second) VStack is for mandart, gradient, or colors
             // Sspacing is between VStacks (the two columns)
-            
+
             // FIRST COLUMN - VSTACK IS FOR INSTRUCTIONS
-            
+
             VStack(alignment: .center, spacing: 5) {
-                
                 // Wrap in GEOMETRY READER TO GAIN SPACE FROM COLORS
-                
+
                 GeometryReader { geometry in
-                    
+
                     ScrollView(showsIndicators: true) {
-                        
                         //  Text("MandArt \(screenWidthStr) x \(screenHeightStr)")
                         Text("MandArt")
                             .font(.title)
-                        
+
                         //  GROUP 1 -  BASICS
-                        
+
                         Group {
                             HStack {
                                 Button("Draw pic") { showMandArtBitMap() }
                                     .help("Draw the picture.")
-                                
+
                                 Button("Color pic") { readyForColors() }
                                     .help("Color the image using the existing iteration data.")
-                                
+
                                 Button("Pause") {
                                     drawIt = false
                                     drawGradient = false
                                     drawColors = false
                                 }
                                 .help("Pause to change values.")
-                                
+
                                 Button("🌅") {
                                     doc.saveImagePictureFromJSONDocument()
                                 }
                                 .help("Save MandArt image file.")
                             }
-                            
+
                             Divider()
                         } // END SECTION 1 GROUP -  BASICS
                         .fixedSize(horizontal: true, vertical: true)
-                        
+
                         //  GROUP 2 IMAGE SIZE
-                        
+
                         Group {
                             //  Show Row (HStack) of Image Size  Next
-                            
+
                             HStack {
                                 VStack {
                                     Text("Image")
-                                    
+
                                     Text("width, px:")
                                     TextField("1100",
                                               value: $doc.picdef.imageWidth,
                                               formatter:
-                                                ContentView.fmtImageWidthHeight)
-                                    { isStarted in
+                                              ContentView.fmtImageWidthHeight) { isStarted in
                                         if isStarted {
                                             print("editing imageWidth, pausing updates")
                                             self.pauseUpdates()
-                                        }
-                                        else {
+                                        } else {
                                             self.showMandArtBitMap()
                                         }
                                     }
@@ -757,19 +747,17 @@ struct ContentView: View {
                                     .help("Enter the width, in pixels, of the image.")
                                     .disabled(drawColors)
                                 }
-                                
+
                                 VStack {
                                     Text("Image")
-                                    
+
                                     Text("height, px:")
                                     TextField("1000",
                                               value: $doc.picdef.imageHeight,
-                                              formatter: ContentView.fmtImageWidthHeight)
-                                    { isStarted in
+                                              formatter: ContentView.fmtImageWidthHeight) { isStarted in
                                         if isStarted {
                                             self.pauseUpdates()
-                                        }
-                                        else {
+                                        } else {
                                             self.showMandArtBitMap()
                                         }
                                     }
@@ -784,38 +772,36 @@ struct ContentView: View {
                                     .help("Enter the height, in pixels, of the image.")
                                     .disabled(drawColors)
                                 }
-                                
+
                                 VStack {
                                     Text("Aspect")
                                     Text("ratio:")
-                                    
+
                                     Text("\(aspectRatio)")
                                         .padding(1)
                                         .help("Calculated value of image width over image height.")
                                 }
                             }
-                            
+
                             Divider()
                         } // END GROUP 2 IMAGE SIZE
-                        
+
                         //  GROUP 3 X, Y and Scale
-                        
+
                         Group {
                             //  Show Row (HStack) of x, y
-                            
+
                             HStack {
                                 VStack { // each input has a vertical container with a Text label & TextField for data
                                     Text("Enter center x")
                                     Text("Between -2 and 2")
                                     TextField("-0.75",
                                               value: $doc.picdef.xCenter,
-                                              formatter: ContentView.fmtXY
-                                    ) { isStarted in
+                                              formatter: ContentView.fmtXY) { isStarted in
                                         if isStarted {
                                             print("editing xC, pausing updates")
                                             self.pauseUpdates()
-                                        }
-                                        else {
+                                        } else {
                                             self.showMandArtBitMap()
                                         }
                                     }
@@ -829,7 +815,7 @@ struct ContentView: View {
                                     .help("Enter the x value in the Mandelbrot coordinate system for the center of the image.")
                                     .disabled(drawColors)
                                 }
-                                
+
                                 VStack { // each input has a vertical container with a Text label & TextField for data
                                     Text("Enter center y")
                                     Text("Between -2 and 2")
@@ -851,17 +837,16 @@ struct ContentView: View {
                                     .disabled(drawColors)
                                 }
                             } // end HStack for XY
-                            
+
                             //  Show Row (HStack) of Scale Next
-                            
+
                             HStack {
                                 VStack {
                                     Text("Rotate (º)")
-                                    
+
                                     TextField("0",
                                               value: $doc.picdef.theta,
-                                              formatter: ContentView.fmtRotationTheta)
-                                    { isStarted in
+                                              formatter: ContentView.fmtRotationTheta) { isStarted in
                                         if isStarted {
                                             self.pauseUpdates()
                                         }
@@ -875,69 +860,67 @@ struct ContentView: View {
                                     .help("Enter the angle to rotate the image clockwise, in degrees.")
                                     .disabled(drawColors)
                                 }
-                                
+
                                 VStack {
                                     Text("Scale")
-                                    TextField("430", value: $doc.picdef.scale, formatter: ContentView.fmtScale)
-                                    { isStarted in
-                                        if isStarted {
-                                            //                print("editing scale, pausing updates")
-                                            self.pauseUpdates()
+                                    TextField("430", value: $doc.picdef.scale, formatter: ContentView.fmtScale) { isStarted in
+                                            if isStarted {
+                                                //                print("editing scale, pausing updates")
+                                                self.pauseUpdates()
+                                            }
                                         }
-                                    }
-                                    .onSubmit {
-                                        //               print("submitted, will update now")
-                                        showMandArtBitMap()
-                                    }
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 100)
-                                    .help("Enter the magnification of the image.")
-                                    .disabled(drawColors)
+                                        .onSubmit {
+                                            //               print("submitted, will update now")
+                                            showMandArtBitMap()
+                                        }
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 100)
+                                        .help("Enter the magnification of the image.")
+                                        .disabled(drawColors)
                                 }
                                 VStack {
                                     Text("Zoom")
-                                    
+
                                     HStack {
                                         Button("+") { zoomIn() }
                                             .help("Zoom in by a factor of two.")
                                             .disabled(drawColors)
-                                        
+
                                         Button("-") { zoomOut() }
                                             .help("Zoom out by a factor of two.")
                                             .disabled(drawColors)
                                     }
                                 }
                             }
-                            
+
                             Divider()
-                            
+
                             HStack {
                                 Text("Sharpening (iterationsMax):")
-                                
-                                TextField("10,000", value: $doc.picdef.iterationsMax, formatter: ContentView.fmtSharpeningItMax)
-                                { isStarted in
-                                    if isStarted {
-                                        //                 print("editing iterationsMax, pausing updates")
-                                        self.pauseUpdates()
+
+                                TextField("10,000", value: $doc.picdef.iterationsMax, formatter: ContentView.fmtSharpeningItMax) { isStarted in
+                                        if isStarted {
+                                            //                 print("editing iterationsMax, pausing updates")
+                                            self.pauseUpdates()
+                                        }
                                     }
-                                }
-                                .onSubmit {
-                                    //                  print("submitted, will update now")
-                                    showMandArtBitMap()
-                                }
-                                .textFieldStyle(.roundedBorder)
-                                .multilineTextAlignment(.trailing)
-                                .help("Enter the maximum number of iterations for a given point in the image. A larger value will increase the resolution, but slow down the calculation.")
-                                .disabled(drawColors)
-                                .frame(maxWidth: 70)
+                                    .onSubmit {
+                                        //                  print("submitted, will update now")
+                                        showMandArtBitMap()
+                                    }
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .help("Enter the maximum number of iterations for a given point in the image. A larger value will increase the resolution, but slow down the calculation.")
+                                    .disabled(drawColors)
+                                    .frame(maxWidth: 70)
                             }
                             .padding(.horizontal)
-                            
+
                             HStack {
                                 Text("Color smoothing (rSqLimit):")
-                                
-                                TextField("400", value: $doc.picdef.rSqLimit, formatter: ContentView.fmtSmootingRSqLimit){ isStarted in
+
+                                TextField("400", value: $doc.picdef.rSqLimit, formatter: ContentView.fmtSmootingRSqLimit) { isStarted in
                                     if isStarted {
                                         //                 print("editing rSqLimit, pausing updates")
                                         self.pauseUpdates()
@@ -953,126 +936,126 @@ struct ContentView: View {
                                 .help("Enter the minimum value for the square of the distance from the origin of the Mandelbrot coordinate system. A larger value will smooth the color gradient, but slow down the calculation.")
                                 .disabled(drawColors)
                             }
-                            
+
                             Divider()
-                            
+
                             HStack {
                                 Text("Hold fraction (yY)")
                             }
-                            
+
                             HStack {
                                 Text("0")
                                 Slider(value: $doc.picdef.yY, in: 0 ... 1, step: 0.1)
                                     .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
                                 Text("1")
-                                
+
                                 TextField("0", value: $doc.picdef.yY,
                                           formatter: ContentView.fmtHoldFractionGradient)
-                                .textFieldStyle(.roundedBorder)
-                                .multilineTextAlignment(.trailing)
-                                .frame(maxWidth: 50)
-                                .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 50)
+                                    .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
                             }
                             .padding(.horizontal)
-                            
+
                             Divider()
                         } // END GROUP 3 X, Y, SCALE
-                        
+
                         // GROUP 4 - GRADIENT
-                        
+
                         Group {
                             //  Show Row (HStack) of Gradient Content Next
-                            
+
                             HStack {
                                 Text("Draw gradient from color")
-                                
+
                                 TextField("1", value: $doc.picdef.leftNumber,
-                                          formatter: ContentView.fmtLeftGradientNumber/*,
-                                                                                       onCommit: {
-                                                                                       // do something when text field loses focus
-                                                                                       showGradient()
-                                                                                       }*/)
-                                .frame(maxWidth: 30)
-                                .foregroundColor(leftGradientIsValid ? .primary : .red)
-                                .help("Select the color number for the left side of a gradient.")
-                                
+                                          formatter: ContentView.fmtLeftGradientNumber /* ,
+                                           onCommit: {
+                                           // do something when text field loses focus
+                                           showGradient()
+                                           } */ )
+                                           .frame(maxWidth: 30)
+                                           .foregroundColor(leftGradientIsValid ? .primary : .red)
+                                           .help("Select the color number for the left side of a gradient.")
+
                                 Text("to " + String(rightGradientColor))
                                     .help("The color # for the right side of a gradient.")
-                                
+
                                 Button("Go") { showGradient() }
                                     .help("Draw a gradient between two adjoining colors.")
                             }
-                            
+
                             Divider()
                         } // END GROUP 4 - GRADIENT
-                        
+
                         // GROUP 5 - COLOR TUNING
-                        
+
                         Group {
                             HStack {
                                 Text("Coloring Options")
                             }
-                            
+
                             Divider()
-                            
+
                             HStack {
                                 VStack {
                                     Text("Spacing")
                                     Text("far from MiniMand")
                                     Text("near to edge")
-                                    
+
                                     TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge)
-                                    /*           { isStarted in
-                                     if isStarted {
-                                     //                print("editing spacingColorFar, pausing updates")
-                           //          self.pauseUpdates()
-                                     }
-                                     }
-                                     .onSubmit {
-                                     showMandArtBitMap()
-                                     }*/
+                                        /*           { isStarted in
+                                                   if isStarted {
+                                                   //                print("editing spacingColorFar, pausing updates")
+                                         //          self.pauseUpdates()
+                                                   }
+                                                   }
+                                                   .onSubmit {
+                                                   showMandArtBitMap()
+                                                   }*/
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
                                         .help("Enter the value for the color spacing near the edges of the image, awwy from MiniMand.")
                                 }
-                                
+
                                 VStack {
                                     Text("Spacing")
                                     Text("near to MiniMand")
                                     Text("far from edge")
-                                    
+
                                     TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
-                                    /*               { isStarted in
-                                     if isStarted {
-                                     //                  print("editing spacingColorNear, pausing updates")
-                                     self.pauseUpdates()
-                                     }
-                                     }
-                                     .onSubmit {
-                                     showMandArtBitMap()
-                                     }*/
+                                        /*               { isStarted in
+                                         if isStarted {
+                                         //                  print("editing spacingColorNear, pausing updates")
+                                         self.pauseUpdates()
+                                         }
+                                         }
+                                         .onSubmit {
+                                         showMandArtBitMap()
+                                         }*/
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
                                         .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
                                 }
                             }
-                            
+
                             HStack {
                                 VStack {
                                     Text("Change in minimum iteration:")
-                                    
+
                                     TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
                                         .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
                                 }
-                                
+
                                 VStack {
                                     Text("nBlocks:")
-                                    
+
                                     TextField("60", value: $doc.picdef.nBlocks, formatter: ContentView.fmtNBlocks)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
@@ -1089,39 +1072,40 @@ struct ContentView: View {
                     maxHeight: .infinity
                 )
                 .fixedSize(horizontal: false, vertical: false)
-                
+
                 // SECTION 3 - GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
-                
+
                 Group {
                     Divider()
-                    
+
                     HStack {
                         Button("Show Screen Colors") { showScreenColors() }
                             .help("Show 512 colors that look good on the screen.")
-                        
+
                         Button("Show Print Colors") { showPrintColors() }
                             .help("Show 292 colors that should print well.")
                     }
                 } // END GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
-                
+
                 // SECTION 4 - END GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
-                
+
                 Group {
                     HStack {
                         Button("Verify Colors") {
                             MandMath.getListPrintabilityOfHues(hues: doc.picdef.hues)
-                            MandMath.getClosestPrintableColors(hues:doc.picdef.hues) }
+                            MandMath.getClosestPrintableColors(hues: doc.picdef.hues)
+                        }
                         .help("Check for printability.")
                         .padding([.bottom], 2)
                         Button("Add New Color") { doc.addHue() }
                             .help("Add a new color.")
                             .padding([.bottom], 2)
                     }
-                    
+
                     // Wrap the list in a geometry reader so it will
                     // shrink when items are deleted
                     GeometryReader { geometry in
-                        
+
                         List {
                             ForEach($doc.picdef.hues, id: \.num) { $hue in
                                 HStack {
@@ -1149,7 +1133,7 @@ struct ContentView: View {
                                                 index: i, newValue: newValue
                                             )
                                         }
-                                    
+
                                     ColorPicker("", selection: $hue.color, supportsOpacity: false)
                                         .onChange(of: hue.color) { newColor in
                                             let i = hue.num - 1
@@ -1158,9 +1142,11 @@ struct ContentView: View {
                                             )
                                             // BHJ: used to get info
                                             // about printable color crayons
+                                            // comment out or
+                                            // remove if not needed
                                             hue.printColorInfo()
                                         }
-                                    
+
                                     Button {
                                         let i = hue.num - 1
                                         doc.deleteHue(index: i)
@@ -1190,11 +1176,11 @@ struct ContentView: View {
             } // end VStack for user instructions - Below refers to the 2 cols
             .frame(width: inputWidth)
             .padding(2)
-            
+
             // SECOND COLUMN - VSTACK - IS FOR IMAGES
-            
+
             // RIGHT COLUMN IS FOR IMAGES......................
-            
+
             ScrollView(showsIndicators: true) {
                 VStack {
                     if activeDisplayState == ActiveDisplayChoice.MandArt {
@@ -1236,25 +1222,21 @@ struct ContentView: View {
             } // end image scroll view
             .padding(2)
         } // end HStack
-        
     } // end view body
-    
-    
-    
-    ///tapGesture is a variable that defines a drag gesture
-    ///for the user interaction in the user interface.
+
+    /// tapGesture is a variable that defines a drag gesture
+    /// for the user interaction in the user interface.
     ///
-    ///The gesture is of type some Gesture
-    ///and uses the DragGesture struct from the SwiftUI framework.
+    /// The gesture is of type some Gesture
+    /// and uses the DragGesture struct from the SwiftUI framework.
     ///
-    ///The minimum distance for the drag gesture is set to 10 units,
-    ///and the coordinate space for the gesture is set to .local.
+    /// The minimum distance for the drag gesture is set to 10 units,
+    /// and the coordinate space for the gesture is set to .local.
     ///
-    ///The gesture has an onChanged closure that is triggered
-    ///whenever the gesture is changed by the user's interaction.
+    /// The gesture has an onChanged closure that is triggered
+    /// whenever the gesture is changed by the user's interaction.
     ///
     var tapGesture: some Gesture {
-        
         DragGesture(minimumDistance: 0, coordinateSpace: .local)
             .onChanged { value in
                 // store distance the touch has moved as a sum of all movements
@@ -1266,7 +1248,7 @@ struct ContentView: View {
             }
             .onEnded { tap in
                 // if we haven't moved very much, treat it as a tap event
-                if self.moved < 1 && self.moved > -1 {
+                if self.moved < 1, self.moved > -1 {
                     doc.picdef.xCenter = getCenterXFromTap(tap)
                     doc.picdef.yCenter = getCenterYFromTap(tap)
                     showMandArtBitMap() // redraw after new center
@@ -1282,11 +1264,9 @@ struct ContentView: View {
                 self.startTime = nil
             }
     } // end tapGesture
-    
-    
-    
+
     // USER INPUT CUSTOM FORMATTERS - BASIC  .........................
-    
+
     static var fmtImageWidthHeight: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 0
@@ -1294,7 +1274,7 @@ struct ContentView: View {
         formatter.maximum = 10000
         return formatter
     }
-    
+
     static var fmtXY: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -1304,7 +1284,7 @@ struct ContentView: View {
         formatter.minimum = -2.0
         return formatter
     }
-    
+
     static var fmtRotationTheta: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 0
@@ -1312,7 +1292,7 @@ struct ContentView: View {
         formatter.maximum = 359
         return formatter
     }
-    
+
     static var fmtScale: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -1321,9 +1301,9 @@ struct ContentView: View {
         formatter.maximum = 100_000_000_000
         return formatter
     }
-    
+
     // USER INPUT CUSTOM FORMATTERS - GRADIENT  ....................
-    
+
     static var fmtSharpeningItMax: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -1332,7 +1312,7 @@ struct ContentView: View {
         formatter.maximum = 100_000_000
         return formatter
     }
-    
+
     static var fmtSmootingRSqLimit: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -1341,8 +1321,7 @@ struct ContentView: View {
         formatter.maximum = 100_000
         return formatter
     }
-    
-    
+
     static var fmtHoldFractionGradient: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -1351,7 +1330,7 @@ struct ContentView: View {
         formatter.maximum = 1.00
         return formatter
     }
-    
+
     static var fmtLeftGradientNumber: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 0
@@ -1359,10 +1338,9 @@ struct ContentView: View {
         formatter.maximum = 20
         return formatter
     }
-    
+
     // USER INPUT CUSTOM FORMATTERS - COLORING  ....................
-    
-    
+
     static var fmtSpacingNearEdge: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -1371,7 +1349,7 @@ struct ContentView: View {
         formatter.maximum = 1000
         return formatter
     }
-    
+
     static var fmtSpacingFarFromEdge: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -1380,7 +1358,7 @@ struct ContentView: View {
         formatter.maximum = 1000
         return formatter
     }
-    
+
     static var fmtChangeInMinIteration: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -1389,8 +1367,7 @@ struct ContentView: View {
         formatter.maximum = 1000
         return formatter
     }
-    
-    
+
     static var fmtNBlocks: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 0
@@ -1398,17 +1375,16 @@ struct ContentView: View {
         formatter.maximum = 2000
         return formatter
     }
-    
+
     // USER INPUT CUSTOM FORMATTERS -ORDERED LIST OF COLORS (HUES) ...........
-    
-    
+
     static var fmtIntColorOrderNumber: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 8
         return formatter
     }
-    
+
     static var fmt0to255: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -1417,11 +1393,9 @@ struct ContentView: View {
         formatter.maximum = 255
         return formatter
     }
-    
-    
-    
+
     // HELPER FUNCTIONS ..................................
-    
+
     /// Calculated variable for the image aspect ratio.
     /// Uses user-specified image height and width.
     private var aspectRatio: String {
@@ -1431,8 +1405,7 @@ struct ContentView: View {
         let ratioString = String(format: "%.2f", ratioDouble)
         return ratioString
     }
-    
-    
+
     private var leftGradientIsValid: Bool {
         var isValid = false
         let leftNum = doc.picdef.leftNumber
@@ -1440,16 +1413,14 @@ struct ContentView: View {
         isValid = leftNum >= 1 && leftNum <= lastPossible
         return isValid
     }
-    
+
     private var rightGradientColor: Int {
-        if leftGradientIsValid && doc.picdef.leftNumber < doc.picdef.nColors {
+        if leftGradientIsValid, doc.picdef.leftNumber < doc.picdef.nColors {
             return doc.picdef.leftNumber + 1
         }
         return 1
     }
-    
-    
-    
+
     /// Returns the new x to be the picture center x when user drags in the picture.
     ///
     /// - Parameter tap: information about the drag
@@ -1471,7 +1442,7 @@ struct ContentView: View {
         let newCenter: Double = doc.picdef.xCenter - dCenterX
         return newCenter
     }
-    
+
     /// Returns the new y to be the picture center y when user drags in the picture.
     ///
     /// - Parameter tap: information about the drag
@@ -1493,7 +1464,7 @@ struct ContentView: View {
         let newCenter: Double = doc.picdef.yCenter + dCenterY
         return newCenter
     }
-    
+
     /// Returns the new x to be the picture center x when user clicks on the picture.
     ///
     /// - Parameter tap: information about the tap
@@ -1514,7 +1485,7 @@ struct ContentView: View {
         let newCenter: Double = doc.picdef.xCenter + dCenterX
         return newCenter
     }
-    
+
     /// Returns the new y to be the picture center y when user clicks on the picture.
     ///
     /// - Parameter tap: information about the tap
@@ -1535,7 +1506,7 @@ struct ContentView: View {
         let newCenter: Double = doc.picdef.yCenter + dCenterY
         return newCenter
     }
-    
+
     /// Return the document directory for this app.
     ///
     /// - Returns: URL to document directory
@@ -1545,7 +1516,7 @@ struct ContentView: View {
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
-    
+
     /// Update hue nums after moviing or deleting
     ///
     fileprivate func updateHueNums() {
@@ -1553,26 +1524,25 @@ struct ContentView: View {
             doc.picdef.hues[index].num = index + 1
         }
     }
-    
+
     /// Function to validate all colors in the picdef
     ///
     fileprivate func validateColors() {
         // TODO: communicate with user
     }
-    
+
     /// Function to validate X or Y input
     ///
     fileprivate func validateX() -> Bool {
-        return true
+        true
     }
-    
+
     /// Function to move an ordered color (hue) from one place to another in the list
     ///
     fileprivate func moveHue(from source: IndexSet, to destination: Int) {
         doc.picdef.hues.move(fromOffsets: source, toOffset: destination)
     }
-    
-    
+
     /// Show the screen colors for the user to choose from.
     ///
     /// This function updates the activeDisplayState property
@@ -1581,8 +1551,7 @@ struct ContentView: View {
     fileprivate func showScreenColors() {
         activeDisplayState = ActiveDisplayChoice.ScreenColors
     }
-    
-    
+
     /// Show the print colors for the user to choose from.
     ///
     /// This function updates the activeDisplayState property
@@ -1591,14 +1560,14 @@ struct ContentView: View {
     fileprivate func showPrintColors() {
         activeDisplayState = ActiveDisplayChoice.PrintColors
     }
-    
+
     /// Get the app ready to draw colors.
     fileprivate func readyForColors() {
         drawIt = false
         drawGradient = false
         drawColors = true
     }
-    
+
     /// Pause updates to the calculationally-intensive bitmap
     ///  while the user inputs numeric entries.
     fileprivate func pauseUpdates() {
@@ -1606,44 +1575,43 @@ struct ContentView: View {
         drawGradient = false
         drawColors = false
     }
-    
+
     fileprivate func showMandArtBitMap() {
         activeDisplayState = ActiveDisplayChoice.MandArt
         readyForPicture()
     }
-    
-    
+
     fileprivate func showGradient() {
         activeDisplayState = ActiveDisplayChoice.Gradient
         readyForGradient()
     }
-    
+
     /// Get the app ready to draw a MandArt picture.
     fileprivate func readyForPicture() {
         drawIt = true
         drawColors = false
     }
-    
+
     /// Get the app ready to draw a gradient.
     fileprivate func readyForGradient() {
         drawIt = false
         drawGradient = true
     }
-    
+
     /// Multiplies scale by 2.0.
     func zoomIn() {
         readyForPicture()
         doc.picdef.scale = doc.picdef.scale * 2.0
     }
-    
+
     /// Divides scale by 2.0.
     func zoomOut() {
         readyForPicture()
         doc.picdef.scale = doc.picdef.scale / 2.0
     }
-    
+
     /// Trigger a tab key press event
-    //p
+    // p
     ///  TODO:  add this to each numeric field's
     ///  onSubmit() logic so that hitting RETURN
     ///  would also tab to the next field.
@@ -1654,7 +1622,6 @@ struct ContentView: View {
     ///  - Parameter textField: The `NSTextField` to trigger the tab event on.
     ///
     func triggerTab(on textField: NSTextField) {
-        
         print("tab")
         let keyCode = NSEvent.SpecialKey.tab.rawValue
         print(keyCode)
@@ -1671,7 +1638,4 @@ struct ContentView: View {
         textField.window?.sendEvent(keyEvent)
         print(keyEvent)
     }
-    
-    
-    
 }

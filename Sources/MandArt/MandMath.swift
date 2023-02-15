@@ -1,10 +1,11 @@
+import CoreGraphics // CG Color
 /**
- MandMath is a Swift class that provides  operations for MandArt.
+ MandMath
+
+ This is a Swift class that provides operations for MandArt.
 
  The operations are written in pure Swift,
- 
  which allows for decoupling from SwiftUI and facilitates deploying in other ways.
-
 
  Basic Functions
 
@@ -13,7 +14,6 @@
  static func getDefaultDocumentName() -> String
 
  static func getWindowGroupName() -> String
-
 
  Printability Functions
 
@@ -32,17 +32,13 @@
 
  static func padIntToThreeCharacters(number: Int) -> String
 
-
-
  Printable Color List
 
  static let printableColorList
 
-
  note: These functions provide  operations used in various parts of MandArt.
  */
 import Foundation
-import CoreGraphics // CG Color
 
 // set class/static constants first
 // These are the same for every instance of MandMath
@@ -51,7 +47,6 @@ let windowGroupName: String = "Welcome to MandArt"
 let defaultFileName: String = "default.json"
 
 enum MandMath {
-
     // Define static functions below.................
     // static functions are the same for every instance of MandMat
 
@@ -60,22 +55,16 @@ enum MandMath {
     /// - Returns: a simple filename (e.g. "default.json")
     ///
     static func getDefaultDocumentName() -> String {
-        return defaultFileName
+        defaultFileName
     }
-
-
-
 
     /// Returns the title/name of the window group
     ///
     /// - Returns: a simple window group title  (e.g. "Welcome to MandArt")
     ///
     static func getWindowGroupName() -> String {
-        return windowGroupName
+        windowGroupName
     }
-
-
-
 
     /// Determines the printability of a given list of `Hue` objects.
     ///
@@ -85,24 +74,25 @@ enum MandMath {
     ///
     @available(macOS 12.0, *)
     static func getCalculatedPrintabilityOfHues(hues: [Hue]) -> [Bool] {
-        // Outputs a separator line in the terminal to make it easier to distinguish between results
+        // Outputs separator line in the terminal to make it easier
+        // to distinguish between results
         print("================================================")
 
-        // Maps the `hues` array to an array of booleans, indicating the printability of each `Hue` object
+        // Maps the `hues` array to an array of booleans,
+        // indicating the printability of each `Hue` object
         let boolList = hues.map { isColorPrintableByCalculation(color: $0.color.cgColor!, num: $0.num) }
 
         // Returns the array of booleans
         return boolList
     }
 
-
-
     /// Determines the printability of a list of hues.
     ///
     /// - Parameters:
     ///   - hues: An array of `Hue` objects to be evaluated for printability.
     ///
-    /// - Returns: An array of booleans indicating whether each color in the `hues` array is printable or not, as determined by the `isColorInPrintableList` function.
+    /// - Returns: An array of booleans indicating whether each color in the `hues` array is
+    ///   printable or not, as determined by the `isColorInPrintableList` function.
     ///
     /// # Example Usage:
     ///
@@ -111,7 +101,7 @@ enum MandMath {
     ///
     ///  The static keyword in front of the func keyword
     ///  means this function is a "static function".
-    ///  In Swift, a static function is a function that belongs to the type itself,
+    ///  A static function is a function that belongs to the type itself,
     ///  rather than to instances of that type  -
     ///  no need to create an instance of MandMath to call this function.
     ///
@@ -119,37 +109,39 @@ enum MandMath {
     static func getListPrintabilityOfHues(hues: [Hue]) -> [Bool] {
         // make it easy to find a new set of results in the terminal
         print("================================================")
-        //the result of the map function applied to the hues array.
-        //The map function takes a closure (an anonymous function)
+        // the result of the map function applied to the hues array.
+        // The map function takes a closure (an anonymous function)
         // as its argument and applies it to each element of the hues array.
         let boolList = hues.map {
             isColorInPrintableList(
                 color: $0.color.cgColor!,
-                num: $0.num   )
-
+                num: $0.num
+            )
         }
         // return the array of boolean values
         // true or false for each color in the user-defined list
         return boolList
     }
 
-    
-
-    /// Returns a boolean array indicating if the closest printable color of each hue in the `hues` array is present in the `MandMath.printableColorList`.
+    /// Returns a boolean array indicating if the closest printable color of each hue in the `hues` array
+    /// is present in the `MandMath.printableColorList`.
     ///
     /// - Parameter hues: An array of `Hue` objects.
-    /// - Returns: An array of booleans, indicating if the closest printable color of each hue in the `hues` array is present in the `MandMath.printableColorList`.
+    /// - Returns: An array of booleans, indicating if the closest printable color of each hue
+    /// in the `hues` array is present in the `MandMath.printableColorList`.
     ///
     @available(macOS 12.0, *)
     static func getClosestPrintableColors(hues: [Hue]) -> [Bool] {
         // Separate results for each run in the terminal output
         print("================================================")
 
-        // Map over each hue in the `hues` array, and find the closest printable color
+        // Map over each hue in the `hues` array,
+        // and find the closest printable color
         return hues.map {
             let closestColors = getPrintableColorsWithMinimumDistance(
                 color: $0.color.cgColor!,
-                num: $0.num)
+                num: $0.num
+            )
 
             // Return whether the closest color is present in `MandMath.printableColorList`
             return closestColors.contains {
@@ -158,80 +150,78 @@ enum MandMath {
         }
     }
 
-
-
-
     /// Calculates the closest printable colors to a given color.
     ///
     /// - Parameters:
     ///   - color: The `CGColor` for which to determine the closest printable colors.
     ///   - num: An integer representing the number of the color being processed.
     ///
-    /// - Returns: An array of arrays of integers representing the closest printable colors to the input `color`.
+    /// - Returns: An array of arrays of integers representing the closest printable colors
+    ///   to the input `color`.
     ///
     /// # Example Usage:
     ///
     ///     let color: CGColor = ...
     ///     let num: Int = ...
-    ///     let closestPrintableColors = getPrintableColorsWithMinimumDistance(color: color, num: num)
+    ///     let closestPrintableColors =
+    ///        getPrintableColorsWithMinimumDistance(color: color, num: num)
     ///
     static func getPrintableColorsWithMinimumDistance(color: CGColor, num: Int)
-    -> [[Int]]
-    {
-    guard let components = color.components else {
-        // return an empty array if the color components cannot be retrieved
-        return []
+        -> [[Int]] {
+        guard let components = color.components else {
+            // return an empty array if the color components cannot be retrieved
+            return []
+        }
+
+        // extract the red, green, and blue components of the color
+        let r = components[0]
+        //   print ("r = ", r)
+        let g = components[1]
+        let b = components[2]
+
+        // convert the floating-point components to integers in the range 0-255
+        let red = Int(round(r * 255.0))
+        //   print("red = ", red)
+        let green = Int(round(g * 255.0))
+        let blue = Int(round(b * 255.0))
+
+        // format the color components for printing
+        let rr = padIntToThreeCharacters(number: red)
+        //    print ("rr = ",rr)
+        let gg = padIntToThreeCharacters(number: green)
+        let bb = padIntToThreeCharacters(number: blue)
+        print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
+
+        // calculate distances between the input color and each printable color
+        let distances = MandMath.printableColorList.map { color -> Int in
+            let rDiff = color[0] - red
+            //      print("rDiff = ", rDiff)
+            let gDiff = color[1] - green
+            let bDiff = color[2] - blue
+            //     print("distances = ", distances)
+            print("rDiff * rDiff + gDiff * gDiff + bDiff * bDiff = ",
+                  rDiff * rDiff + gDiff * gDiff + bDiff * bDiff)
+            return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff
+        }
+
+        // find the printable color with the minimum distance to the input color
+        let minDistance = distances.min()!
+        let nearest = MandMath.printableColorList.enumerated()
+                .filter { _, value -> Bool in
+            let rDiff = value[0] - red
+            let gDiff = value[1] - green
+            let bDiff = value[2] - blue
+            return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff == minDistance
+        }.map(\.element)
+
+        // log information about the closest printable color(s)
+        print("    count of closest:\(nearest.count)")
+        for item in nearest {
+            print("    closest:\(item)\n")
+        }
+        // return the closest printable color(s)
+        return nearest
     }
-
-    // extract the red, green, and blue components of the color
-    let r = components[0]
- //   print ("r = ", r)
-    let g = components[1]
-    let b = components[2]
-
-    // convert the floating-point components to integers in the range 0-255
-    let red = Int(round(r * 255.0))
- //   print("red = ", red)
-    let green = Int(round(g * 255.0))
-    let blue = Int(round(b * 255.0))
-
-    // format the color components for printing
-    let rr = padIntToThreeCharacters(number: red)
-//    print ("rr = ",rr)
-    let gg = padIntToThreeCharacters(number: green)
-    let bb = padIntToThreeCharacters(number: blue)
-    print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
-
-    // calculate the distances between the input color and each printable color
-    let distances = MandMath.printableColorList.map { color -> Int in
-        let rDiff = color[0] - red
-  //      print("rDiff = ", rDiff)
-        let gDiff = color[1] - green
-        let bDiff = color[2] - blue
-   //     print("distances = ", distances)
-        print("rDiff * rDiff + gDiff * gDiff + bDiff * bDiff = ",  rDiff * rDiff + gDiff * gDiff + bDiff * bDiff)
-        return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff
-    }
-
-    // find the printable color with the minimum distance to the input color
-    let minDistance = distances.min()!
-    let nearest = MandMath.printableColorList.enumerated().filter { index, value -> Bool in
-        let rDiff = value[0] - red
-        let gDiff = value[1] - green
-        let bDiff = value[2] - blue
-        return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff == minDistance
-    }.map { $0.element }
-
-    // log information about the closest printable color(s)
-    print("    count of closest:\(nearest.count)")
-    for item in nearest {
-        print("    closest:\(item)\n")
-    }
-    // return the closest printable color(s)
-    return nearest
-    }
-
-
 
     /// Function to check if a color is in the printable color list.
     ///
@@ -250,12 +240,13 @@ enum MandMath {
         let g = components[1]
         let b = components[2]
 
-        // Convert the red, green, and blue components to integer values between 0 and 255.
+        // Convert red, green, and blue components
+        // to integer values between 0 and 255.
         let red = Int(round(r * 255.0))
         let green = Int(round(g * 255.0))
         let blue = Int(round(b * 255.0))
 
-        // Check if the [red, green, blue] values are in the printable color list.
+        // Check if [red, green, blue] values are in the printable color list.
         let inList = MandMath.printableColorList.contains([red, green, blue])
 
         // Format the red, green, and blue values to be three characters long.
@@ -263,16 +254,14 @@ enum MandMath {
         let gg = padIntToThreeCharacters(number: green)
         let bb = padIntToThreeCharacters(number: blue)
 
-        // Print the results of the check, including the color number and the [red, green, blue] values.
-        print("Color Number \(num)(\(rr)-\(gg)-\(bb)): in printable list: ", inList)
+        // Print results of the check,
+        // including the color number and the [red, green, blue] values.
+        print("Color No. \(num)(\(rr)-\(gg)-\(bb)): in printable list: ", inList)
         print("")
 
         // Return the result of the check.
         return inList
     }
-
-
-
 
     /// Decomposes a CGColor into its
     /// red, green, and blue components,
@@ -285,7 +274,6 @@ enum MandMath {
     /// - Parameter: CGColor
     /// - Returns:boolean true if printable
     static func isColorPrintableByCalculation(color: CGColor, num: Int) -> Bool {
-
         guard let components = color.components else { return false }
         let r = components[0]
         let g = components[1]
@@ -306,9 +294,6 @@ enum MandMath {
         return isPrintable
     }
 
-
-   
-
     /// This function formats the input number to a string with three characters.
     ///
     /// - Parameters:
@@ -321,13 +306,12 @@ enum MandMath {
     ///     let result = padIntToThreeCharacters(number: 123)
     ///     print(result) // Output: "123"
     static func padIntToThreeCharacters(number: Int) -> String {
-        return String(format: "%03d", number)
+        String(format: "%03d", number)
     }
-
 
     /// MandMath keeps a list of known printable colors
     ///
-    ///# Example Usage:
+    /// # Example Usage:
     ///
     ///     let lst = MandMath.printableColorList
     ///
@@ -373,7 +357,6 @@ enum MandMath {
         [36, 182, 219],
         [36, 219, 182],
         [36, 219, 219],
-        [72, 144, 55], // added after choosing a print color
         [73, 0, 109],
         [73, 36, 109],
         [73, 36, 146],
@@ -407,8 +390,6 @@ enum MandMath {
         [73, 219, 182],
         [73, 219, 219],
         [73, 219, 255],
-        [81, 179, 85], // added after choosing a print color
-        [81, 179, 86], // added after choosing a print color
         [109, 0, 0],
         [109, 0, 36],
         [109, 0, 73],
@@ -626,21 +607,6 @@ enum MandMath {
         [255, 255, 146],
         [255, 255, 182],
         [255, 255, 219],
-        [255, 255, 255],
-        [72,72,177], // printable crayons
-        [71,71,177], // printable crayons
-        [99,16,175], // printable crayons
-        [98,15,175], // printable crayons
-        [46,107,178], // printable crayons
-        [45,107,178], // printable crayons
-        [27,72,142], // printable crayons
-        [27,71,142], // printable crayons
-        [100,40,176], // printable crayons
-        [100,40,176], // printable crayons
-        [101,40,176], // printable crayons
-        [100,40,176], // printable crayons
-        [101,40,176], // printable crayons
-        [100,40,176] // printable crayons
+        [255, 255, 255]
     ]
-
 }

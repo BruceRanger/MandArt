@@ -1,12 +1,17 @@
-//
-//  MandArtDocument.swift
-//  MandArt
-//
-//  See:
-//  https://www.hackingwithswift.com/quick-start/swiftui/
-//  how-to-create-a-document-based-app-using-filedocument-and-documentgroup
-//
+/**
+ A document for creating and editing MandArt pictures.
 
+ MandArtDocument is a reference file document that supports only reading and writing JSON files.
+ Its snapshot is a PictureDefinition and it has a @Published picdef property that, when changed,
+ triggers a reload of all views using the document. This document class also has a jsonDocumentName
+ property for the name of the JSON document and a simple initializer that creates a new demo picture.
+
+ For more information, see:
+ https://www.hackingwithswift.com/quick-start/swiftui/
+ how-to-create-a-document-based-app-using-filedocument-and-documentgroup
+
+ Note: This class is only available on macOS 12.0 and later.
+ */
 import AppKit // uikit for mobile, appkit for Mac
 import CoreGraphics
 import ImageIO
@@ -124,7 +129,7 @@ final class MandArtDocument: ReferenceFileDocument {
     /// - Returns: picture definition
     @available(macOS 12.0, *)
     func snapshot(contentType _: UTType) throws -> PictureDefinition {
-        return picdef // return the current state
+        picdef // return the current state
     }
 
     /// Helper function to return a String from an Any?
