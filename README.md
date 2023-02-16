@@ -34,7 +34,7 @@ To create documentatation for the MandArt-Docs repo.
 
 ```
 swift package --allow-writing-to-directory ./docss \
-    generate-documentation --target MandArt --output-path ./docss \
+    generate-documentation --target MandArt --output-path ./docs \
     --disable-indexing \
     --transform-for-static-hosting  \
     --emit-digest \
