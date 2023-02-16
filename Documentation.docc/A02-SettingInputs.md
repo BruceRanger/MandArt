@@ -50,7 +50,7 @@ The window isn't big enough to show the whole picture, so draw the lower-right c
 
 ### Finding MandArt - Centering and Zooming
 
-![Fig 4](Picture4.png)
+![Fig 4](MandArtMainWindow.png)
 
 We’ll use Fig 4 to explain centering and zooming. 
 

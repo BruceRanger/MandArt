@@ -52,8 +52,8 @@
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
-				8892A41E299C7F4F00D9D3A5 /* .swift-version */,
 				889E3F23293AE0B6009944AC /* Documentation.docc */,
+				8892A41E299C7F4F00D9D3A5 /* .swift-version */,
 				88A1716629913A0800A85AED /* Sources */,
 				881B2B69293CE2A200037032 /* Credits.rtf */,
 				6A3AEC0B26F879E700D7E31A /* MandArt */,

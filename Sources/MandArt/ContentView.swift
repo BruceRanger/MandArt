@@ -1108,7 +1108,22 @@ struct ContentView: View {
 
                         List {
                             ForEach($doc.picdef.hues, id: \.num) { $hue in
+                                // $hue is a binding - a reference
+                                // we could call it hueBinding instead.
+                                // we need to get the wrapped value of $hue
+                                // to get the the hue itself.
+                                // We use the wrappedValue property
+                                // of the hueBinding to get the underlying
+                                // Hue object.
+                                // This is because the hueBinding is a Binding
+                                // to a Hue object, not the Hue object itself.
+                                // By using the wrappedValue property,
+                                // we can get the actual Hue object,
+                                // which we use in the call to the
+                                // getPrintableDisplayText function.
+                                let s = getPrintableDisplayText(color: $hue.wrappedValue.color, num: $hue.wrappedValue.num)
                                 HStack {
+                                    Text(s).foregroundColor(Color.blue)
                                     TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
                                         .disabled(true)
                                         .frame(maxWidth: 50)
@@ -1419,6 +1434,14 @@ struct ContentView: View {
             return doc.picdef.leftNumber + 1
         }
         return 1
+    }
+
+    private func getPrintableDisplayText(color: Color, num: Int) -> String {
+        if MandMath.isColorInPrintableList(color: color.cgColor!, num: num) {
+            return " "
+        } else {
+            return "!"
+        }
     }
 
     /// Returns the new x to be the picture center x when user drags in the picture.

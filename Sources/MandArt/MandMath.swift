@@ -263,6 +263,22 @@ enum MandMath {
         return inList
     }
 
+    /// Get a display indicator for the color row
+    /// to indicate if this color is likely to print well
+    /// Or if the printed color may be different than
+    /// what appears on screen.
+    ///
+    ///  Function is in MandMath which knows about all colors.
+    ///  Hue class only knows about one color.
+    func isPrintableDisplayText(color: CGColor, num: Int) -> String {
+        if (MandMath.isColorInPrintableList(color:color, num: num)) {
+            return " "
+        }
+        else {
+            return "!"
+        }
+    }
+
     /// Decomposes a CGColor into its
     /// red, green, and blue components,
     /// and returns true if all of them are between 0 and 1, inclusive.
