@@ -33,8 +33,8 @@ To create documentatation for the MandArt-Docs repo.
 4. In Terminal, run
 
 ```
-swift package --allow-writing-to-directory ./docss \
-    generate-documentation --target MandArt --output-path ./docs \
+swift package --allow-writing-to-directory ./docs \
+    generate-documentation --target MandArt \ --output-path ./docs \
     --disable-indexing \
     --transform-for-static-hosting  \
     --emit-digest \
