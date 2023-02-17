@@ -47,6 +47,7 @@ struct ContentView: View {
     @State private var textFieldImageHeight: NSTextField = .init()
     @State private var textFieldX: NSTextField = .init()
     @State private var textFieldY: NSTextField = .init()
+    @State private var showingPrintablePopup = false
 
     enum ActiveDisplayChoice {
         case MandArt
@@ -1108,6 +1109,7 @@ struct ContentView: View {
 
                         List {
                             ForEach($doc.picdef.hues, id: \.num) { $hue in
+                                let i = hue.num - 1
                                 // $hue is a binding - a reference
                                 // we could call it hueBinding instead.
                                 // we need to get the wrapped value of $hue
@@ -1121,29 +1123,51 @@ struct ContentView: View {
                                 // we can get the actual Hue object,
                                 // which we use in the call to the
                                 // getPrintableDisplayText function.
-                                let s = getPrintableDisplayText(color: $hue.wrappedValue.color, num: $hue.wrappedValue.num)
+                                 let isPrintable = getIsPrintable(color: $hue.wrappedValue.color, num: $hue.wrappedValue.num)
+
                                 HStack {
-                                    Text(s).foregroundColor(Color.blue)
+
+                                        if !isPrintable {
+                                            Button() {
+                                                self.showingPrintablePopup = true
+                                            } label: {
+                                                Image(systemName: "exclamationmark.circle")
+                                                    .foregroundColor(.blue)
+                                            }
+                                            .padding(.trailing, 5)
+                                            .help("See printable options for " + "\(hue.num)")
+                                        }
+                                    else {
+                                        Button {
+                                            // self.showingPrintablePopup = true
+                                        } label: {
+                                            Image(systemName: "exclamationmark.circle")
+                                        }
+                                        .padding(.trailing, 5)
+                                        .hidden()
+                                        .disabled(true)
+                                    }
+
                                     TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
                                         .disabled(true)
                                         .frame(maxWidth: 50)
+
                                     TextField("r", value: $hue.r, formatter: ContentView.fmt0to255)
                                         .onChange(of: hue.r) { newValue in
-                                            let i = hue.num - 1
                                             doc.updateHueWithColorNumberR(
                                                 index: i, newValue: newValue
                                             )
                                         }
+
                                     TextField("g", value: $hue.g, formatter: ContentView.fmt0to255)
                                         .onChange(of: hue.g) { newValue in
-                                            let i = hue.num - 1
                                             doc.updateHueWithColorNumberG(
                                                 index: i, newValue: newValue
                                             )
                                         }
+
                                     TextField("b", value: $hue.b, formatter: ContentView.fmt0to255)
                                         .onChange(of: hue.b) { newValue in
-                                            let i = hue.num - 1
                                             doc.updateHueWithColorNumberB(
                                                 index: i, newValue: newValue
                                             )
@@ -1151,7 +1175,6 @@ struct ContentView: View {
 
                                     ColorPicker("", selection: $hue.color, supportsOpacity: false)
                                         .onChange(of: hue.color) { newColor in
-                                            let i = hue.num - 1
                                             doc.updateHueWithColorPick(
                                                 index: i, newColorPick: newColor
                                             )
@@ -1162,8 +1185,7 @@ struct ContentView: View {
                                             hue.printColorInfo()
                                         }
 
-                                    Button {
-                                        let i = hue.num - 1
+                                    Button(role: .destructive) {
                                         doc.deleteHue(index: i)
                                         updateHueNums()
                                         readyForPicture()
@@ -1443,6 +1465,18 @@ struct ContentView: View {
             return "!"
         }
     }
+
+    // BHJ: Change logic as needed
+    // This currently checks for an exact match to the list of colors
+    private func getIsPrintable(color: Color, num: Int) -> Bool {
+        if MandMath.isColorInPrintableList(color: color.cgColor!, num: num) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+
 
     /// Returns the new x to be the picture center x when user drags in the picture.
     ///
