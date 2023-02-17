@@ -1149,42 +1149,48 @@ struct ContentView: View {
                                         .disabled(true)
                                     }
                                     if self.showingPrintablePopups[i] {
+
                                         ZStack {
+
                                             Color.white
-                                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                            //    .frame(maxWidth: .infinity, maxHeight: .infinity)
                                                 .opacity(0.5)
-                                                .ignoresSafeArea()
+                                               // .ignoresSafeArea()
 
                                             VStack {
+
+                                                Text("Possible Options:")
+
                                                 HStack {
-                                                    Text("Choose one:")
-                                                    Image(systemName: "circle.fill")
-                                                        .foregroundColor(.red)
-                                                    Image(systemName: "circle.fill")
-                                                        .foregroundColor(.blue)
-                                                    Image(systemName: "circle.fill")
-                                                        .foregroundColor(.green)
 
-                                                    Spacer()
+                                                    let betterOptions = [Color.red, Color.green, Color.blue, Color.yellow]
 
-                                                    Button(action: {
-                                                        self.showingPrintablePopups[i] = false
-                                                    }) {
-                                                        Image(systemName: "xmark.circle")
+                                                    ForEach(betterOptions, id: \.self) { color in
+                                                        Rectangle()
+                                                            .fill(color)
+                                                            .frame(width: 30, height: 30)
+                                                            .cornerRadius(8)
                                                     }
+
+
+                                                }  // end HStack
+
+                                                Button(action: {
+                                                    self.showingPrintablePopups[i] = false
+                                                }) {
+                                                    Image(systemName: "xmark.circle")
                                                 }
-                                                .padding()
-                                                .background(Color.white)
-                                                .cornerRadius(8)
-                                                .shadow(radius: 10)
-                                                .padding()
 
-                                                Spacer()
-                                            }
-                                        }
+                                            } // end VStack
+                                            .padding()
+                                            .background(Color.white)
+                                            .cornerRadius(8)
+                                            .shadow(radius: 10)
+                                            .padding()
+
+                                        } // end ZStack for popup
                                         .transition(.scale)
-                                    }
-
+                                    }  // end if self.showingPrintablePopups[i]
 
 
                                     TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
