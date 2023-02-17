@@ -47,7 +47,8 @@ struct ContentView: View {
     @State private var textFieldImageHeight: NSTextField = .init()
     @State private var textFieldX: NSTextField = .init()
     @State private var textFieldY: NSTextField = .init()
-    @State private var showingPrintablePopup = false
+    @State private var showingPrintablePopups = Array(repeating: false, count: 20)
+
 
     enum ActiveDisplayChoice {
         case MandArt
@@ -242,13 +243,13 @@ struct ContentView: View {
 
         // Create a CGBitmapContext for drawing and converting into an image for display
         let context =
-            CGContext(data: rasterBufferPtr,
-                      width: imageWidth,
-                      height: imageHeight,
-                      bitsPerComponent: bitsPerComponent,
-                      bytesPerRow: bytesPerRow,
-                      space: CGColorSpace(name: CGColorSpace.sRGB)!,
-                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        CGContext(data: rasterBufferPtr,
+                  width: imageWidth,
+                  height: imageHeight,
+                  bitsPerComponent: bitsPerComponent,
+                  bytesPerRow: bytesPerRow,
+                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
         // use CG to draw into the context
         // you can use any of the CG drawing routines for drawing into this context
@@ -394,13 +395,13 @@ struct ContentView: View {
 
         // Create a CGBitmapContext for drawing and converting into an image for display
         let context =
-            CGContext(data: rasterBufferPtr,
-                      width: imageWidth,
-                      height: imageHeight,
-                      bitsPerComponent: bitsPerComponent,
-                      bytesPerRow: bytesPerRow,
-                      space: CGColorSpace(name: CGColorSpace.sRGB)!,
-                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        CGContext(data: rasterBufferPtr,
+                  width: imageWidth,
+                  height: imageHeight,
+                  bitsPerComponent: bitsPerComponent,
+                  bytesPerRow: bytesPerRow,
+                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
         // use CG to draw into the context
         // you can use any of the CG drawing routines for drawing into this context
@@ -557,13 +558,13 @@ struct ContentView: View {
 
         // Create a CGBitmapContext for drawing and converting into an image for display
         let context =
-            CGContext(data: rasterBufferPtr,
-                      width: imageWidth,
-                      height: imageHeight,
-                      bitsPerComponent: bitsPerComponent,
-                      bytesPerRow: bytesPerRow,
-                      space: CGColorSpace(name: CGColorSpace.sRGB)!,
-                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+        CGContext(data: rasterBufferPtr,
+                  width: imageWidth,
+                  height: imageHeight,
+                  bitsPerComponent: bitsPerComponent,
+                  bytesPerRow: bytesPerRow,
+                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
         // use CG to draw into the context
         // you can use any of the CG drawing routines for drawing into this context
@@ -731,7 +732,7 @@ struct ContentView: View {
                                     TextField("1100",
                                               value: $doc.picdef.imageWidth,
                                               formatter:
-                                              ContentView.fmtImageWidthHeight) { isStarted in
+                                                ContentView.fmtImageWidthHeight) { isStarted in
                                         if isStarted {
                                             print("editing imageWidth, pausing updates")
                                             self.pauseUpdates()
@@ -742,11 +743,11 @@ struct ContentView: View {
                                     //                                        .onSubmit {
                                     //                                            showMandArtBitMap()
                                     //                                        }
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter the width, in pixels, of the image.")
-                                    .disabled(drawColors)
+                                                .textFieldStyle(.roundedBorder)
+                                                .multilineTextAlignment(.trailing)
+                                                .frame(maxWidth: 80)
+                                                .help("Enter the width, in pixels, of the image.")
+                                                .disabled(drawColors)
                                 }
 
                                 VStack {
@@ -762,16 +763,16 @@ struct ContentView: View {
                                             self.showMandArtBitMap()
                                         }
                                     }
-                                    .onSubmit {
-                                        showMandArtBitMap()
-                                        print("triggering tab from img height")
-                                        self.triggerTab(on: self.textFieldImageHeight)
-                                    }
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter the height, in pixels, of the image.")
-                                    .disabled(drawColors)
+                                              .onSubmit {
+                                                  showMandArtBitMap()
+                                                  print("triggering tab from img height")
+                                                  self.triggerTab(on: self.textFieldImageHeight)
+                                              }
+                                              .textFieldStyle(.roundedBorder)
+                                              .multilineTextAlignment(.trailing)
+                                              .frame(maxWidth: 80)
+                                              .help("Enter the height, in pixels, of the image.")
+                                              .disabled(drawColors)
                                 }
 
                                 VStack {
@@ -806,15 +807,15 @@ struct ContentView: View {
                                             self.showMandArtBitMap()
                                         }
                                     }
-                                    .onSubmit {
-                                        showMandArtBitMap()
-                                    }
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .padding(4)
-                                    .frame(maxWidth: 120)
-                                    .help("Enter the x value in the Mandelbrot coordinate system for the center of the image.")
-                                    .disabled(drawColors)
+                                              .onSubmit {
+                                                  showMandArtBitMap()
+                                              }
+                                              .textFieldStyle(.roundedBorder)
+                                              .multilineTextAlignment(.trailing)
+                                              .padding(4)
+                                              .frame(maxWidth: 120)
+                                              .help("Enter the x value in the Mandelbrot coordinate system for the center of the image.")
+                                              .disabled(drawColors)
                                 }
 
                                 VStack { // each input has a vertical container with a Text label & TextField for data
@@ -852,33 +853,33 @@ struct ContentView: View {
                                             self.pauseUpdates()
                                         }
                                     }
-                                    .onSubmit {
-                                        showMandArtBitMap()
-                                    }
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 50)
-                                    .help("Enter the angle to rotate the image clockwise, in degrees.")
-                                    .disabled(drawColors)
+                                              .onSubmit {
+                                                  showMandArtBitMap()
+                                              }
+                                              .textFieldStyle(.roundedBorder)
+                                              .multilineTextAlignment(.trailing)
+                                              .frame(maxWidth: 50)
+                                              .help("Enter the angle to rotate the image clockwise, in degrees.")
+                                              .disabled(drawColors)
                                 }
 
                                 VStack {
                                     Text("Scale")
                                     TextField("430", value: $doc.picdef.scale, formatter: ContentView.fmtScale) { isStarted in
-                                            if isStarted {
-                                                //                print("editing scale, pausing updates")
-                                                self.pauseUpdates()
-                                            }
+                                        if isStarted {
+                                            //                print("editing scale, pausing updates")
+                                            self.pauseUpdates()
                                         }
-                                        .onSubmit {
-                                            //               print("submitted, will update now")
-                                            showMandArtBitMap()
-                                        }
-                                        .textFieldStyle(.roundedBorder)
-                                        .multilineTextAlignment(.trailing)
-                                        .frame(maxWidth: 100)
-                                        .help("Enter the magnification of the image.")
-                                        .disabled(drawColors)
+                                    }
+                                    .onSubmit {
+                                        //               print("submitted, will update now")
+                                        showMandArtBitMap()
+                                    }
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 100)
+                                    .help("Enter the magnification of the image.")
+                                    .disabled(drawColors)
                                 }
                                 VStack {
                                     Text("Zoom")
@@ -901,20 +902,20 @@ struct ContentView: View {
                                 Text("Sharpening (iterationsMax):")
 
                                 TextField("10,000", value: $doc.picdef.iterationsMax, formatter: ContentView.fmtSharpeningItMax) { isStarted in
-                                        if isStarted {
-                                            //                 print("editing iterationsMax, pausing updates")
-                                            self.pauseUpdates()
-                                        }
+                                    if isStarted {
+                                        //                 print("editing iterationsMax, pausing updates")
+                                        self.pauseUpdates()
                                     }
-                                    .onSubmit {
-                                        //                  print("submitted, will update now")
-                                        showMandArtBitMap()
-                                    }
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .help("Enter the maximum number of iterations for a given point in the image. A larger value will increase the resolution, but slow down the calculation.")
-                                    .disabled(drawColors)
-                                    .frame(maxWidth: 70)
+                                }
+                                .onSubmit {
+                                    //                  print("submitted, will update now")
+                                    showMandArtBitMap()
+                                }
+                                .textFieldStyle(.roundedBorder)
+                                .multilineTextAlignment(.trailing)
+                                .help("Enter the maximum number of iterations for a given point in the image. A larger value will increase the resolution, but slow down the calculation.")
+                                .disabled(drawColors)
+                                .frame(maxWidth: 70)
                             }
                             .padding(.horizontal)
 
@@ -952,10 +953,10 @@ struct ContentView: View {
 
                                 TextField("0", value: $doc.picdef.yY,
                                           formatter: ContentView.fmtHoldFractionGradient)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 50)
-                                    .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
+                                .textFieldStyle(.roundedBorder)
+                                .multilineTextAlignment(.trailing)
+                                .frame(maxWidth: 50)
+                                .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
                             }
                             .padding(.horizontal)
 
@@ -972,13 +973,13 @@ struct ContentView: View {
 
                                 TextField("1", value: $doc.picdef.leftNumber,
                                           formatter: ContentView.fmtLeftGradientNumber /* ,
-                                           onCommit: {
-                                           // do something when text field loses focus
-                                           showGradient()
-                                           } */ )
-                                           .frame(maxWidth: 30)
-                                           .foregroundColor(leftGradientIsValid ? .primary : .red)
-                                           .help("Select the color number for the left side of a gradient.")
+                                                                                        onCommit: {
+                                                                                        // do something when text field loses focus
+                                                                                        showGradient()
+                                                                                        } */ )
+                                .frame(maxWidth: 30)
+                                .foregroundColor(leftGradientIsValid ? .primary : .red)
+                                .help("Select the color number for the left side of a gradient.")
 
                                 Text("to " + String(rightGradientColor))
                                     .help("The color # for the right side of a gradient.")
@@ -1006,15 +1007,15 @@ struct ContentView: View {
                                     Text("near to edge")
 
                                     TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge)
-                                        /*           { isStarted in
-                                                   if isStarted {
-                                                   //                print("editing spacingColorFar, pausing updates")
-                                         //          self.pauseUpdates()
-                                                   }
-                                                   }
-                                                   .onSubmit {
-                                                   showMandArtBitMap()
-                                                   }*/
+                                    /*           { isStarted in
+                                     if isStarted {
+                                     //                print("editing spacingColorFar, pausing updates")
+                                     //          self.pauseUpdates()
+                                     }
+                                     }
+                                     .onSubmit {
+                                     showMandArtBitMap()
+                                     }*/
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
@@ -1027,15 +1028,15 @@ struct ContentView: View {
                                     Text("far from edge")
 
                                     TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
-                                        /*               { isStarted in
-                                         if isStarted {
-                                         //                  print("editing spacingColorNear, pausing updates")
-                                         self.pauseUpdates()
-                                         }
-                                         }
-                                         .onSubmit {
-                                         showMandArtBitMap()
-                                         }*/
+                                    /*               { isStarted in
+                                     if isStarted {
+                                     //                  print("editing spacingColorNear, pausing updates")
+                                     self.pauseUpdates()
+                                     }
+                                     }
+                                     .onSubmit {
+                                     showMandArtBitMap()
+                                     }*/
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
@@ -1123,23 +1124,23 @@ struct ContentView: View {
                                 // we can get the actual Hue object,
                                 // which we use in the call to the
                                 // getPrintableDisplayText function.
-                                 let isPrintable = getIsPrintable(color: $hue.wrappedValue.color, num: $hue.wrappedValue.num)
+                                let isPrintable = getIsPrintable(color: $hue.wrappedValue.color, num: $hue.wrappedValue.num)
 
                                 HStack {
 
-                                        if !isPrintable {
-                                            Button() {
-                                                self.showingPrintablePopup = true
-                                            } label: {
-                                                Image(systemName: "exclamationmark.circle")
-                                                    .foregroundColor(.blue)
-                                            }
-                                            .padding(.trailing, 5)
-                                            .help("See printable options for " + "\(hue.num)")
+                                    if !isPrintable {
+                                        Button() {
+                                            self.showingPrintablePopups[i] = true
+                                        } label: {
+                                            Image(systemName: "exclamationmark.circle")
+                                                .foregroundColor(.blue)
                                         }
+                                        .padding(.trailing, 5)
+                                        .help("See printable options for " + "\(hue.num)")
+                                    }
                                     else {
                                         Button {
-                                            // self.showingPrintablePopup = true
+                                            //
                                         } label: {
                                             Image(systemName: "exclamationmark.circle")
                                         }
@@ -1147,6 +1148,44 @@ struct ContentView: View {
                                         .hidden()
                                         .disabled(true)
                                     }
+                                    if self.showingPrintablePopups[i] {
+                                        ZStack {
+                                            Color.white
+                                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                                .opacity(0.5)
+                                                .ignoresSafeArea()
+
+                                            VStack {
+                                                HStack {
+                                                    Text("Choose one:")
+                                                    Image(systemName: "circle.fill")
+                                                        .foregroundColor(.red)
+                                                    Image(systemName: "circle.fill")
+                                                        .foregroundColor(.blue)
+                                                    Image(systemName: "circle.fill")
+                                                        .foregroundColor(.green)
+
+                                                    Spacer()
+
+                                                    Button(action: {
+                                                        self.showingPrintablePopups[i] = false
+                                                    }) {
+                                                        Image(systemName: "xmark.circle")
+                                                    }
+                                                }
+                                                .padding()
+                                                .background(Color.white)
+                                                .cornerRadius(8)
+                                                .shadow(radius: 10)
+                                                .padding()
+
+                                                Spacer()
+                                            }
+                                        }
+                                        .transition(.scale)
+                                    }
+
+
 
                                     TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
                                         .disabled(true)
@@ -1668,7 +1707,7 @@ struct ContentView: View {
     }
 
     /// Trigger a tab key press event
-    // p
+    ///
     ///  TODO:  add this to each numeric field's
     ///  onSubmit() logic so that hitting RETURN
     ///  would also tab to the next field.
@@ -1696,3 +1735,4 @@ struct ContentView: View {
         print(keyEvent)
     }
 }
+
