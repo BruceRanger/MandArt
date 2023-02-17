@@ -1128,6 +1128,22 @@ struct ContentView: View {
 
                                 HStack {
 
+                                    TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
+                                        .disabled(true)
+                                        .frame(maxWidth: 50)
+
+                                    ColorPicker("", selection: $hue.color, supportsOpacity: false)
+                                        .onChange(of: hue.color) { newColor in
+                                            doc.updateHueWithColorPick(
+                                                index: i, newColorPick: newColor
+                                            )
+                                            // BHJ: used to get info
+                                            // about printable color crayons
+                                            // comment out or
+                                            // remove if not needed
+                                            hue.printColorInfo()
+                                        }
+
                                     if !isPrintable {
                                         Button() {
                                             self.showingPrintablePopups[i] = true
@@ -1153,19 +1169,27 @@ struct ContentView: View {
                                         ZStack {
 
                                             Color.white
-                                            //    .frame(maxWidth: .infinity, maxHeight: .infinity)
                                                 .opacity(0.5)
-                                               // .ignoresSafeArea()
 
-                                            VStack {
+                                            HStack {
 
-                                                Text("Possible Options:")
+                                                Button(action: {
+                                                    self.showingPrintablePopups[i] = false
+                                                }) {
+                                                    Image(systemName: "xmark.circle")
+                                                }
 
-                                                HStack {
+                                                VStack {
 
-                                                    let betterOptions = [Color.red, Color.green, Color.blue, Color.yellow]
+//   let betterOptions = [Color.red, Color.green, Color.blue, Color.yellow]
 
-                                                    ForEach(betterOptions, id: \.self) { color in
+                                                    let printableOptions = MandMath.getPrintableOptions(hue: doc.picdef.hues[i])
+
+                                                    let swiftUIOptions = printableOptions.map { cgColor in
+                                                        Color(cgColor)
+                                                    }
+
+                                                    ForEach(swiftUIOptions, id: \.self) { color in
                                                         Rectangle()
                                                             .fill(color)
                                                             .frame(width: 30, height: 30)
@@ -1173,13 +1197,9 @@ struct ContentView: View {
                                                     }
 
 
-                                                }  // end HStack
+                                                }  // end VStack of color options
 
-                                                Button(action: {
-                                                    self.showingPrintablePopups[i] = false
-                                                }) {
-                                                    Image(systemName: "xmark.circle")
-                                                }
+
 
                                             } // end VStack
                                             .padding()
@@ -1193,9 +1213,7 @@ struct ContentView: View {
                                     }  // end if self.showingPrintablePopups[i]
 
 
-                                    TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
-                                        .disabled(true)
-                                        .frame(maxWidth: 50)
+
 
                                     TextField("r", value: $hue.r, formatter: ContentView.fmt0to255)
                                         .onChange(of: hue.r) { newValue in
@@ -1218,17 +1236,6 @@ struct ContentView: View {
                                             )
                                         }
 
-                                    ColorPicker("", selection: $hue.color, supportsOpacity: false)
-                                        .onChange(of: hue.color) { newColor in
-                                            doc.updateHueWithColorPick(
-                                                index: i, newColorPick: newColor
-                                            )
-                                            // BHJ: used to get info
-                                            // about printable color crayons
-                                            // comment out or
-                                            // remove if not needed
-                                            hue.printColorInfo()
-                                        }
 
                                     Button(role: .destructive) {
                                         doc.deleteHue(index: i)
@@ -1477,6 +1484,7 @@ struct ContentView: View {
     }
 
     // HELPER FUNCTIONS ..................................
+
 
     /// Calculated variable for the image aspect ratio.
     /// Uses user-specified image height and width.

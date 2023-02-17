@@ -150,6 +150,29 @@ enum MandMath {
         }
     }
 
+
+    /// Returns an array of printable color options from `MandMath.printableColorList`.
+    ///
+    /// - Parameter hue: A `Hue` object.
+    /// - Returns: An array of CGColors  in the `MandMath.printableColorList`.
+    ///
+    @available(macOS 12.0, *)
+    static func getPrintableOptions(hue: Hue) -> [CGColor] {
+
+        let closestColorsAsInts = getPrintableColorsWithMinimumDistance(
+                color: hue.color.cgColor!,
+                num: hue.num
+            )
+        // Convert the array of [[r,g,b]] to an array of CGColor
+        let closestColors = closestColorsAsInts.map { colorAsInts in
+            let components = colorAsInts.map { CGFloat($0) / 255.0 }
+            return CGColor(srgbRed: components[0], green: components[1], blue: components[2], alpha: 1.0)
+        }
+
+        return closestColors
+
+    }
+
     /// Calculates the closest printable colors to a given color.
     ///
     /// - Parameters:
