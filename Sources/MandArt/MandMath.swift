@@ -160,9 +160,9 @@ enum MandMath {
     static func getPrintableOptions(hue: Hue) -> [CGColor] {
 
         let closestColorsAsInts = getPrintableColorsWithMinimumDistance(
-                color: hue.color.cgColor!,
-                num: hue.num
-            )
+            color: hue.color.cgColor!,
+            num: hue.num
+        )
         // Convert the array of [[r,g,b]] to an array of CGColor
         let closestColors = closestColorsAsInts.map { colorAsInts in
             let components = colorAsInts.map { CGFloat($0) / 255.0 }
@@ -190,7 +190,7 @@ enum MandMath {
     ///        getPrintableColorsWithMinimumDistance(color: color, num: num)
     ///
     static func getPrintableColorsWithMinimumDistance(color: CGColor, num: Int)
-        -> [[Int]] {
+    -> [[Int]] {
         guard let components = color.components else {
             // return an empty array if the color components cannot be retrieved
             return []
@@ -230,12 +230,12 @@ enum MandMath {
         // find the printable color with the minimum distance to the input color
         let minDistance = distances.min()!
         let nearest = MandMath.printableColorList.enumerated()
-                .filter { _, value -> Bool in
-            let rDiff = value[0] - red
-            let gDiff = value[1] - green
-            let bDiff = value[2] - blue
-            return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff == minDistance
-        }.map(\.element)
+            .filter { _, value -> Bool in
+                let rDiff = value[0] - red
+                let gDiff = value[1] - green
+                let bDiff = value[2] - blue
+                return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff == minDistance
+            }.map(\.element)
 
         // log information about the closest printable color(s)
         print("    count of closest:\(nearest.count)")
@@ -244,6 +244,42 @@ enum MandMath {
         }
         // return the closest printable color(s)
         return nearest
+    }
+
+    static func getMinimumDistance(color: CGColor, num: Int) -> Int {
+        guard let components = color.components else {
+            return 100
+        }
+
+        // extract the red, green, and blue components of the color
+        let r = components[0]
+        let g = components[1]
+        let b = components[2]
+
+
+        // convert the floating-point components to integers in the range 0-255
+        let red = Int(round(r * 255.0))
+        let green = Int(round(g * 255.0))
+        let blue = Int(round(b * 255.0))
+
+        // format the color components for printing
+        let rr = padIntToThreeCharacters(number: red)
+        let gg = padIntToThreeCharacters(number: green)
+        let bb = padIntToThreeCharacters(number: blue)
+        print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
+
+        // calculate distances between the input color and each printable color
+        let distances = MandMath.printableColorList.map { entry -> Int in
+            let rDiff = entry[0] - red
+            print("rDiff", rDiff)
+            let gDiff = entry[1] - green
+            let bDiff = entry[2] - blue
+            let distance = rDiff*rDiff + gDiff*gDiff + bDiff*bDiff
+            print("distance for rdiff,gdiff,bdiff is: ", distance)
+            return distance
+        }
+        let minDistance = Int(distances.min()!)
+        return minDistance
     }
 
     /// Function to check if a color is in the printable color list.
@@ -284,6 +320,50 @@ enum MandMath {
 
         // Return the result of the check.
         return inList
+    }
+
+    static func isColorNearPrintableList(color: CGColor, num: Int) -> Bool {
+        // Check if the components of the CGColor object can be accessed.
+        guard let components = color.components else { return false }
+
+        // Extract the red, green, and blue components from the CGColor object.
+        let r = components[0]
+        let g = components[1]
+        let b = components[2]
+
+        // Convert red, green, and blue components
+        // to integer values between 0 and 255.
+        let red = Int(round(r * 255.0))
+        let green = Int(round(g * 255.0))
+        let blue = Int(round(b * 255.0))
+
+        // Check if [red, green, blue] values are in the printable color list.
+        let inList = MandMath.printableColorList.contains([red, green, blue])
+
+        // Format the red, green, and blue values to be three characters long.
+        let rr = padIntToThreeCharacters(number: red)
+        let gg = padIntToThreeCharacters(number: green)
+        let bb = padIntToThreeCharacters(number: blue)
+
+        // Print results of the check,
+        // including the color number and the [red, green, blue] values.
+        print("Color No. \(num)(\(rr)-\(gg)-\(bb)): in printable list: ", inList)
+        print("")
+
+        // if in list, return true
+        if inList {
+            return true
+        }
+
+        // otherwise, check minimum distance to see if close enough
+        let minDistance = MandMath.getMinimumDistance(color: color,num: num)
+        let limit = 33*33
+        if minDistance <= limit {
+            return true
+        } else {
+            return false
+        }
+
     }
 
     /// Get a display indicator for the color row

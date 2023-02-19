@@ -1154,7 +1154,6 @@ struct ContentView: View {
                                             Image(systemName: "exclamationmark.circle")
                                                 .foregroundColor(.blue)
                                         }
-                     //                   .padding(.trailing, 0)
                                         .help("See printable options for " + "\(hue.num)")
                                     }
                                     else {
@@ -1163,57 +1162,56 @@ struct ContentView: View {
                                         } label: {
                                             Image(systemName: "exclamationmark.circle")
                                         }
-                //                        .padding(.trailing, 0)
                                         .hidden()
                                         .disabled(true)
                                     }
-                                    if self.showingPrintablePopups[i] {
-
-                                        ZStack {
-
-                                            Color.white
-                                                .opacity(0.5)
-
-                                            HStack {
-
-                                                Button(action: {
-                                                    self.showingPrintablePopups[i] = false
-                                                }) {
-                                                    Image(systemName: "xmark.circle")
-                                                }
-
-                                                VStack {
-
-//   let betterOptions = [Color.red, Color.green, Color.blue, Color.yellow]
-
-                                                    let printableOptions = MandMath.getPrintableOptions(hue: doc.picdef.hues[i])
-
-                                                    let swiftUIOptions = printableOptions.map { cgColor in
-                                                        Color(cgColor)
-                                                    }
-
-                                                    ForEach(swiftUIOptions, id: \.self) { color in
-                                                        Rectangle()
-                                                            .fill(color)
-                                                            .frame(width: 30, height: 30)
-                                                            .cornerRadius(8)
-                                                    }
-
-
-                                                }  // end VStack of color options
-
-
-
-                                            } // end VStack
-                                            .padding()
-                                            .background(Color.white)
-                                            .cornerRadius(8)
-                                            .shadow(radius: 10)
-                                            .padding()
-
-                                        } // end ZStack for popup
-                                        .transition(.scale)
-                                    }  // end if self.showingPrintablePopups[i]
+//                                    if self.showingPrintablePopups[i] {
+//
+//                                        ZStack {
+//
+//                                            Color.white
+//                                                .opacity(0.5)
+//
+//                                            HStack {
+//
+//                                                Button(action: {
+//                                                    self.showingPrintablePopups[i] = false
+//                                                }) {
+//                                                    Image(systemName: "xmark.circle")
+//                                                }
+//
+//                                                VStack {
+//
+////   let betterOptions = [Color.red, Color.green, Color.blue, Color.yellow]
+//
+//                                                    let printableOptions = MandMath.getPrintableOptions(hue: doc.picdef.hues[i])
+//
+//                                                    let swiftUIOptions = printableOptions.map { cgColor in
+//                                                        Color(cgColor)
+//                                                    }
+//
+//                                                    ForEach(swiftUIOptions, id: \.self) { color in
+//                                                        Rectangle()
+//                                                            .fill(color)
+//                                                            .frame(width: 30, height: 30)
+//                                                            .cornerRadius(8)
+//                                                    }
+//
+//
+//                                                }  // end VStack of color options
+//
+//
+//
+//                                            } // end VStack
+//                                            .padding()
+//                                            .background(Color.white)
+//                                            .cornerRadius(8)
+//                                            .shadow(radius: 10)
+//                                            .padding()
+//
+//                                        } // end ZStack for popup
+//                                        .transition(.scale)
+//                                    }  // end if self.showingPrintablePopups[i]
 
 
 
@@ -1522,10 +1520,8 @@ struct ContentView: View {
         }
     }
 
-    // BHJ: Change logic as needed
-    // This currently checks for an exact match to the list of colors
-    private func getIsPrintable(color: Color, num: Int) -> Bool {
-        if MandMath.isColorInPrintableList(color: color.cgColor!, num: num) {
+     private func getIsPrintable(color: Color, num: Int) -> Bool {
+        if MandMath.isColorNearPrintableList(color: color.cgColor!, num: num) {
             return true
         } else {
             return false
