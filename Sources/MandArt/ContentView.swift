@@ -736,9 +736,9 @@ struct ContentView: View {
                                         if isStarted {
                                             print("editing imageWidth, pausing updates")
                                             self.pauseUpdates()
-                                        } else {
+                                        } /*else {
                                             self.showMandArtBitMap()
-                                        }
+                                        }*/
                                     }
                                     //                                        .onSubmit {
                                     //                                            showMandArtBitMap()
@@ -759,9 +759,9 @@ struct ContentView: View {
                                               formatter: ContentView.fmtImageWidthHeight) { isStarted in
                                         if isStarted {
                                             self.pauseUpdates()
-                                        } else {
+                                        } /*else {
                                             self.showMandArtBitMap()
-                                        }
+                                        }*/
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -798,14 +798,14 @@ struct ContentView: View {
                                     Text("Enter center x")
                                     Text("Between -2 and 2")
                                     TextField("-0.75",
-                                              value: $doc.picdef.xCenter,
-                                              formatter: ContentView.fmtXY) { isStarted in
+                                            value: $doc.picdef.xCenter,
+                                            formatter: ContentView.fmtXY) { isStarted in
                                         if isStarted {
                                             print("editing xC, pausing updates")
                                             self.pauseUpdates()
-                                        } else {
+                                        } /*else {
                                             self.showMandArtBitMap()
-                                        }
+                                        }*/
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -821,7 +821,9 @@ struct ContentView: View {
                                 VStack { // each input has a vertical container with a Text label & TextField for data
                                     Text("Enter center y")
                                     Text("Between -2 and 2")
-                                    TextField("0.0", value: $doc.picdef.yCenter, formatter: ContentView.fmtXY) { isStarted in
+                                    TextField("0.0",
+                                            value: $doc.picdef.yCenter,
+                                            formatter: ContentView.fmtXY) { isStarted in
                                         if isStarted {
                                             self.pauseUpdates()
                                         }
@@ -1099,6 +1101,7 @@ struct ContentView: View {
                         }
                         .help("Check for printability.")
                         .padding([.bottom], 2)
+                        
                         Button("Add New Color") { doc.addHue() }
                             .help("Add a new color.")
                             .padding([.bottom], 2)
@@ -1130,7 +1133,7 @@ struct ContentView: View {
 
                                     TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
                                         .disabled(true)
-                                        .frame(maxWidth: 50)
+                                        .frame(maxWidth: 15)
 
                                     ColorPicker("", selection: $hue.color, supportsOpacity: false)
                                         .onChange(of: hue.color) { newColor in
@@ -1151,7 +1154,7 @@ struct ContentView: View {
                                             Image(systemName: "exclamationmark.circle")
                                                 .foregroundColor(.blue)
                                         }
-                                        .padding(.trailing, 5)
+                     //                   .padding(.trailing, 0)
                                         .help("See printable options for " + "\(hue.num)")
                                     }
                                     else {
@@ -1160,7 +1163,7 @@ struct ContentView: View {
                                         } label: {
                                             Image(systemName: "exclamationmark.circle")
                                         }
-                                        .padding(.trailing, 5)
+                //                        .padding(.trailing, 0)
                                         .hidden()
                                         .disabled(true)
                                     }
@@ -1244,7 +1247,7 @@ struct ContentView: View {
                                     } label: {
                                         Image(systemName: "trash")
                                     }
-                                    .padding(.trailing, 5)
+                      //              .padding(.trailing, 5)
                                     .help("Delete " + "\(hue.num)")
                                 }
                             } // end foreach
