@@ -49,6 +49,7 @@ struct ContentView: View {
     @State private var textFieldY: NSTextField = .init()
     @State private var showingAllColorsPopup = false
     @State private var showingPrintableColorsPopup = false
+    @State private var showingAllPrintableColorsPopup = false
     @State private var showingPrintablePopups = Array(repeating: false, count: 20)
 
 
@@ -1102,6 +1103,11 @@ struct ContentView: View {
                         }
                         .padding([.bottom], 2)
 
+                        Button("AP") {
+                            self.showingAllPrintableColorsPopup = true
+                        }
+                        .padding([.bottom], 2)
+
                         Button("P") {
                             self.showingPrintableColorsPopup = true
                         }
@@ -1320,7 +1326,96 @@ struct ContentView: View {
                             .resizable()
                             .scaledToFit()
                     }
-                    let columns = 7 // number of columns in the grid
+
+
+
+
+                    if self.showingAllColorsPopup {
+                        ZStack {
+                            Color.white
+                                .opacity(0.5)
+                            HStack {
+                                Button(action: {
+                                    self.showingAllColorsPopup = false
+                                }) {
+                                    Image(systemName: "xmark.circle")
+                                }
+                                VStack {
+                                    let cgColorList = MandMath.getAllCGColorsList()
+                                    let swiftUIOptions = cgColorList.map { cgColor in
+                                        Color(cgColor)
+                                    }
+                                    let nColumns = 16
+                                    ForEach(0..<swiftUIOptions.count/nColumns) { rowIndex in
+                                        HStack(spacing: 0) {
+                                            ForEach(0..<nColumns) { columnIndex in
+                                                let index = rowIndex * nColumns + columnIndex
+                                                Rectangle()
+                                                    .fill(swiftUIOptions[index])
+                                                    .frame(width: 30, height: 30)
+                                                    .cornerRadius(4)
+                                                    .padding(1)
+                                            }
+                                        }
+                                    }
+                                }  // end VStack of color options
+                                Spacer()
+                            } // end HStack
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(8)
+                            .shadow(radius: 10)
+                            .padding()
+                        } // end ZStack for popup
+                        .transition(.scale)
+                    }  // end if popup
+
+
+
+                    if self.showingAllPrintableColorsPopup {
+                        ZStack {
+                            Color.white
+                                .opacity(0.5)
+                            HStack {
+                                Button(action: {
+                                    self.showingAllPrintableColorsPopup = false
+                                }) {
+                                    Image(systemName: "xmark.circle")
+                                }
+                                VStack {
+                                    let cgColorList = MandMath.getAllPrintableCGColorsList()
+                                    let swiftUIOptions = cgColorList.map { cgColor in
+                                        Color(cgColor)
+                                    }
+                                    let nColumns = 16
+                                    ForEach(0..<swiftUIOptions.count/nColumns) { rowIndex in
+                                        HStack(spacing: 0) {
+                                            ForEach(0..<nColumns) { columnIndex in
+                                                let index = rowIndex * nColumns + columnIndex
+                                                Rectangle()
+                                                    .fill(swiftUIOptions[index])
+                                                    .frame(width: 30, height: 30)
+                                                    .cornerRadius(4)
+                                                    .padding(1)
+                                            }
+                                        }
+                                    }
+                                }  // end VStack of color options
+                                Spacer()
+                            } // end HStack
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(8)
+                            .shadow(radius: 10)
+                            .padding()
+                        } // end ZStack for popup
+                        .transition(.scale)
+                    }  // end if popup
+
+
+
+
+
                     if self.showingPrintableColorsPopup {
                         ZStack {
                            Color.white

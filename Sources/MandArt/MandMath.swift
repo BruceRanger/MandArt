@@ -441,6 +441,45 @@ enum MandMath {
         return lst
     }
 
+    static func getAllCGColorsList() -> [CGColor] {
+        var allColors: [CGColor] = []
+        for r in self.colorInts {
+            for g in self.colorInts {
+                for b in self.colorInts {
+                    let red = CGFloat(r) / 255.0
+                    let green = CGFloat(g) / 255.0
+                    let blue = CGFloat(b) / 255.0
+                    let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+                    allColors.append(color)
+                }
+            }
+        }
+        return allColors
+    }
+
+    static func getAllPrintableCGColorsList() -> [CGColor] {
+        var allColors: [CGColor] = []
+        for r in colorInts {
+            for g in colorInts {
+                for b in colorInts {
+                    let red = CGFloat(r) / 255.0
+                    let green = CGFloat(g) / 255.0
+                    let blue = CGFloat(b) / 255.0
+                    let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+                    if MandMath.isColorInPrintableList(color:color, num:1){
+                        allColors.append(color)
+                    } else {
+                        allColors.append(CGColor.white)
+                    }
+                }
+            }
+        }
+        return allColors
+    }
+
+
+    static let colorInts = [0,36,73, 109, 146,182,219,255]
+
     /// MandMath keeps a list of known printable colors
     ///
     /// # Example Usage:
