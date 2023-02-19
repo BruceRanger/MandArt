@@ -446,9 +446,9 @@ enum MandMath {
         for r in self.colorInts {
             for g in self.colorInts {
                 for b in self.colorInts {
-                    let red = CGFloat(r) / 255.0
-                    let green = CGFloat(g) / 255.0
-                    let blue = CGFloat(b) / 255.0
+                    let red = round(CGFloat(r)) / 255.0
+                    let green = round(CGFloat(g)) / 255.0
+                    let blue = round(CGFloat(b)) / 255.0
                     let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
                     allColors.append(color)
                 }
