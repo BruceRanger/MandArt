@@ -1111,7 +1111,7 @@ struct ContentView: View {
                     // shrink when items are deleted
                     GeometryReader { geometry in
 
-                        List {
+                        List {  // BHJ: List of Input Colors / Hues
                             ForEach($doc.picdef.hues, id: \.num) { $hue in
                                 let i = hue.num - 1
                                 // $hue is a binding - a reference
@@ -1127,6 +1127,7 @@ struct ContentView: View {
                                 // we can get the actual Hue object,
                                 // which we use in the call to the
                                 // getPrintableDisplayText function.
+                                // hue = $hue.wrappedValue 
                                 let isPrintable = getIsPrintable(color: $hue.wrappedValue.color, num: $hue.wrappedValue.num)
 
                                 HStack {
