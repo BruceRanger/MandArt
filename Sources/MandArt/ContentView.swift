@@ -1345,7 +1345,7 @@ struct ContentView: View {
                                     let swiftUIOptions = cgColorList.map { cgColor in
                                         Color(cgColor)
                                     }
-                                    let nColumns = 24
+                                    let nColumns = 64
                                     ForEach(0..<swiftUIOptions.count/nColumns) { rowIndex in
                                         HStack(spacing: 0) {
                                             ForEach(0..<nColumns) { columnIndex in
@@ -1387,7 +1387,7 @@ struct ContentView: View {
                                     let swiftUIOptions = cgColorList.map { cgColor in
                                         Color(cgColor)
                                     }
-                                    let nColumns = 24
+                                    let nColumns = 64
                                     ForEach(0..<swiftUIOptions.count/nColumns) { rowIndex in
                                         HStack(spacing: 0) {
                                             ForEach(0..<nColumns) { columnIndex in
