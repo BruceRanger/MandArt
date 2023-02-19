@@ -47,6 +47,8 @@ struct ContentView: View {
     @State private var textFieldImageHeight: NSTextField = .init()
     @State private var textFieldX: NSTextField = .init()
     @State private var textFieldY: NSTextField = .init()
+    @State private var showingAllColorsPopup = false
+    @State private var showingPrintableColorsPopup = false
     @State private var showingPrintablePopups = Array(repeating: false, count: 20)
 
 
@@ -737,8 +739,8 @@ struct ContentView: View {
                                             print("editing imageWidth, pausing updates")
                                             self.pauseUpdates()
                                         } /*else {
-                                            self.showMandArtBitMap()
-                                        }*/
+                                           self.showMandArtBitMap()
+                                           }*/
                                     }
                                     //                                        .onSubmit {
                                     //                                            showMandArtBitMap()
@@ -760,8 +762,8 @@ struct ContentView: View {
                                         if isStarted {
                                             self.pauseUpdates()
                                         } /*else {
-                                            self.showMandArtBitMap()
-                                        }*/
+                                           self.showMandArtBitMap()
+                                           }*/
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -798,14 +800,14 @@ struct ContentView: View {
                                     Text("Enter center x")
                                     Text("Between -2 and 2")
                                     TextField("-0.75",
-                                            value: $doc.picdef.xCenter,
-                                            formatter: ContentView.fmtXY) { isStarted in
+                                              value: $doc.picdef.xCenter,
+                                              formatter: ContentView.fmtXY) { isStarted in
                                         if isStarted {
                                             print("editing xC, pausing updates")
                                             self.pauseUpdates()
                                         } /*else {
-                                            self.showMandArtBitMap()
-                                        }*/
+                                           self.showMandArtBitMap()
+                                           }*/
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -822,23 +824,23 @@ struct ContentView: View {
                                     Text("Enter center y")
                                     Text("Between -2 and 2")
                                     TextField("0.0",
-                                            value: $doc.picdef.yCenter,
-                                            formatter: ContentView.fmtXY) { isStarted in
+                                              value: $doc.picdef.yCenter,
+                                              formatter: ContentView.fmtXY) { isStarted in
                                         if isStarted {
                                             self.pauseUpdates()
                                         }
                                     }
-                                    .onSubmit {
-                                        showMandArtBitMap()
-                                        print("triggering tab from Y")
-                                        self.triggerTab(on: self.textFieldY)
-                                    }
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .padding(4)
-                                    .frame(maxWidth: 120)
-                                    .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
-                                    .disabled(drawColors)
+                                              .onSubmit {
+                                                  showMandArtBitMap()
+                                                  print("triggering tab from Y")
+                                                  self.triggerTab(on: self.textFieldY)
+                                              }
+                                              .textFieldStyle(.roundedBorder)
+                                              .multilineTextAlignment(.trailing)
+                                              .padding(4)
+                                              .frame(maxWidth: 120)
+                                              .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
+                                              .disabled(drawColors)
                                 }
                             } // end HStack for XY
 
@@ -1095,6 +1097,16 @@ struct ContentView: View {
 
                 Group {
                     HStack {
+                        Button("A") {
+                            self.showingAllColorsPopup = true
+                        }
+                        .padding([.bottom], 2)
+
+                        Button("P") {
+                            self.showingPrintableColorsPopup = true
+                        }
+                        .padding([.bottom], 2)
+
                         Button("Verify Colors") {
                             MandMath.getListPrintabilityOfHues(hues: doc.picdef.hues)
                             MandMath.getClosestPrintableColors(hues: doc.picdef.hues)
@@ -1165,53 +1177,53 @@ struct ContentView: View {
                                         .hidden()
                                         .disabled(true)
                                     }
-//                                    if self.showingPrintablePopups[i] {
-//
-//                                        ZStack {
-//
-//                                            Color.white
-//                                                .opacity(0.5)
-//
-//                                            HStack {
-//
-//                                                Button(action: {
-//                                                    self.showingPrintablePopups[i] = false
-//                                                }) {
-//                                                    Image(systemName: "xmark.circle")
-//                                                }
-//
-//                                                VStack {
-//
-////   let betterOptions = [Color.red, Color.green, Color.blue, Color.yellow]
-//
-//                                                    let printableOptions = MandMath.getPrintableOptions(hue: doc.picdef.hues[i])
-//
-//                                                    let swiftUIOptions = printableOptions.map { cgColor in
-//                                                        Color(cgColor)
-//                                                    }
-//
-//                                                    ForEach(swiftUIOptions, id: \.self) { color in
-//                                                        Rectangle()
-//                                                            .fill(color)
-//                                                            .frame(width: 30, height: 30)
-//                                                            .cornerRadius(8)
-//                                                    }
-//
-//
-//                                                }  // end VStack of color options
-//
-//
-//
-//                                            } // end VStack
-//                                            .padding()
-//                                            .background(Color.white)
-//                                            .cornerRadius(8)
-//                                            .shadow(radius: 10)
-//                                            .padding()
-//
-//                                        } // end ZStack for popup
-//                                        .transition(.scale)
-//                                    }  // end if self.showingPrintablePopups[i]
+                                    //                                    if self.showingPrintablePopups[i] {
+                                    //
+                                    //                                        ZStack {
+                                    //
+                                    //                                            Color.white
+                                    //                                                .opacity(0.5)
+                                    //
+                                    //                                            HStack {
+                                    //
+                                    //                                                Button(action: {
+                                    //                                                    self.showingPrintablePopups[i] = false
+                                    //                                                }) {
+                                    //                                                    Image(systemName: "xmark.circle")
+                                    //                                                }
+                                    //
+                                    //                                                VStack {
+                                    //
+                                    ////   let betterOptions = [Color.red, Color.green, Color.blue, Color.yellow]
+                                    //
+                                    //                                                    let printableOptions = MandMath.getPrintableOptions(hue: doc.picdef.hues[i])
+                                    //
+                                    //                                                    let swiftUIOptions = printableOptions.map { cgColor in
+                                    //                                                        Color(cgColor)
+                                    //                                                    }
+                                    //
+                                    //                                                    ForEach(swiftUIOptions, id: \.self) { color in
+                                    //                                                        Rectangle()
+                                    //                                                            .fill(color)
+                                    //                                                            .frame(width: 30, height: 30)
+                                    //                                                            .cornerRadius(8)
+                                    //                                                    }
+                                    //
+                                    //
+                                    //                                                }  // end VStack of color options
+                                    //
+                                    //
+                                    //
+                                    //                                            } // end VStack
+                                    //                                            .padding()
+                                    //                                            .background(Color.white)
+                                    //                                            .cornerRadius(8)
+                                    //                                            .shadow(radius: 10)
+                                    //                                            .padding()
+                                    //
+                                    //                                        } // end ZStack for popup
+                                    //                                        .transition(.scale)
+                                    //                                    }  // end if self.showingPrintablePopups[i]
 
 
 
@@ -1245,7 +1257,6 @@ struct ContentView: View {
                                     } label: {
                                         Image(systemName: "trash")
                                     }
-                      //              .padding(.trailing, 5)
                                     .help("Delete " + "\(hue.num)")
                                 }
                             } // end foreach
@@ -1273,6 +1284,7 @@ struct ContentView: View {
 
             ScrollView(showsIndicators: true) {
                 VStack {
+
                     if activeDisplayState == ActiveDisplayChoice.MandArt {
                         let image: CGImage = getImage()!
                         GeometryReader {
@@ -1282,6 +1294,7 @@ struct ContentView: View {
                                     .gesture(self.tapGesture)
                             }
                         }
+
                     } else if activeDisplayState == ActiveDisplayChoice.Gradient {
                         let image: CGImage = getImage()!
                         GeometryReader {
@@ -1307,6 +1320,53 @@ struct ContentView: View {
                             .resizable()
                             .scaledToFit()
                     }
+                    let columns = 7 // number of columns in the grid
+                    if self.showingPrintableColorsPopup {
+                        ZStack {
+                           Color.white
+                                .opacity(0.5)
+                            HStack {
+                                Button(action: {
+                                    self.showingPrintableColorsPopup = false
+                                }) {
+                                    Image(systemName: "xmark.circle")
+                                }
+                                VStack {
+                                    let cgColorList = MandMath.getPrintableCGColorList()
+                                    let swiftUIOptions = cgColorList.map { cgColor in
+                                        Color(cgColor)
+                                    }
+                                    let nColumns = 16
+                                    ForEach(0..<swiftUIOptions.count/nColumns) { rowIndex in
+                                        HStack(spacing: 0) {
+                                            ForEach(0..<nColumns) { columnIndex in
+                                                let index = rowIndex * nColumns + columnIndex
+                                                Rectangle()
+                                                    .fill(swiftUIOptions[index])
+                                                    .frame(width: 30, height: 30)
+                                                    .cornerRadius(4)
+                                                    .padding(1)
+                                            }
+                                        }
+                                    }
+                                }  // end VStack of color options
+                                Spacer()
+                            } // end HStack
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(8)
+                            .shadow(radius: 10)
+                            .padding()
+                        } // end ZStack for popup
+                        .transition(.scale)
+                    }  // end if popup
+
+
+
+
+
+
+
                 } // end VStack right side (picture space)
                 .padding(2)
             } // end image scroll view
@@ -1520,7 +1580,7 @@ struct ContentView: View {
         }
     }
 
-     private func getIsPrintable(color: Color, num: Int) -> Bool {
+    private func getIsPrintable(color: Color, num: Int) -> Bool {
         if MandMath.isColorNearPrintableList(color: color.cgColor!, num: num) {
             return true
         } else {

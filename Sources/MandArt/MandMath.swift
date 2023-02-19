@@ -428,6 +428,19 @@ enum MandMath {
         String(format: "%03d", number)
     }
 
+
+    static func getPrintableCGColorList() -> [CGColor] {
+        
+        let lst = MandMath.printableColorList.map { colorValues in
+            let red = CGFloat(colorValues[0]) / 255.0
+            let green = CGFloat(colorValues[1]) / 255.0
+            let blue = CGFloat(colorValues[2]) / 255.0
+            return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+        }
+
+        return lst
+    }
+
     /// MandMath keeps a list of known printable colors
     ///
     /// # Example Usage:
