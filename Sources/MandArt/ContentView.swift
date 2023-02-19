@@ -16,6 +16,8 @@ import SwiftUI // views
 // set to project-relative path DerivedData
 // now I can see the intermediate build products.
 
+// Formatting on push using GitHub actions
+
 // Declare global variables first (outside the ContentView struct)
 var contextImageGlobal: CGImage?
 var fIterGlobal = [[Double]]()
