@@ -1323,7 +1323,7 @@ struct ContentView: View {
                                         Color.white
                                             .opacity(0.5)
 
-                                        HStack {
+                                        VStack {
 
                                             Button(action: {
                                                 self.showingPrintablePopups[i] = false
@@ -1333,10 +1333,18 @@ struct ContentView: View {
 
                                             VStack {
 
-                                                Text("Twas brillig and the")
-                                                Text("slithy toves did")
-                                                Text("gyre and gimble")
-                                                Text("in the wabe...")
+                           //                     Text("Twas brillig and the")
+                           //                     Text("slithy toves did")
+                           //                     Text("gyre and gimble")
+                           //                     Text("in the wabe...")
+                                                Text("This color may not print well.")
+                            //                    Text("You can try to find a better one,")
+                            //                    Text("or you can click on one of the AP orP buttons")
+                            //                    Text("to see some colors that should print better.")
+                            //                    Text("Click on the color that you want changed,")
+                            //                    Text("then click on the eyedropper and on one of the popup colors.")
+                                                Text("See the instructions for options.")
+                                                
 
 
 
@@ -1357,7 +1365,7 @@ struct ContentView: View {
                                             }  // end VStack of color options
 
 
-                                        } // end HStack
+                                        } // end VStack
                                        // .padding()
                                         .frame(width:150,height:100)
                                         .background(Color.white)
