@@ -50,7 +50,14 @@ struct ContentView: View {
     @State private var showingAllColorsPopups = Array(repeating: false, count: 6)
     @State private var showingPrintableColorsPopups = Array(repeating: false, count: 6)
     @State private var showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
-    @State private var showingPrintablePopups = Array(repeating: false, count: 20)
+
+    //BHJ: ToDo - set to max number of user input ordered colors (Hues)
+    @State private var showingPrintablePopups = Array(repeating: false, count: 100)
+
+    @State private var hoverColorValues: String? = nil
+    @State private var hoverColorValueR: String? = nil
+    @State private var hoverColorValueG: String? = nil
+    @State private var hoverColorValueB: String? = nil
 
     enum ActiveDisplayChoice {
         case MandArt
@@ -1308,6 +1315,65 @@ struct ContentView: View {
                                     .hidden()
                                     .disabled(true)
                                 }
+                                if self.showingPrintablePopups[i] {
+
+                                    ZStack {
+
+                                        Color.white
+                                            .opacity(0.5)
+
+                                        HStack {
+
+                                            Button(action: {
+                                                self.showingPrintablePopups[i] = false
+                                            }) {
+                                                Image(systemName: "xmark.circle")
+                                            }
+
+                                            VStack {
+
+                                                Text("Twas brillig and the")
+                                                Text("slithy toves did")
+                                                Text("gyre and gimble")
+                                                Text("in the wabe...")
+
+
+
+                                                //let printableOptions = MandMath.getPrintableOptions(hue: doc.picdef.hues[i])
+
+                                                //let swiftUIOptions = printableOptions.map { cgColor in
+                                                    //Color(cgColor)
+                                                //}
+
+                                               // ForEach(swiftUIOptions, id: \.self) { color in
+                                                 //   Rectangle()
+                                                  //      .fill(color)
+                                                  //      .frame(width: 30, height: 30)
+                                                 //       .cornerRadius(8)
+                                              //  }
+
+
+                                            }  // end VStack of color options
+
+
+                                        } // end HStack
+                                       // .padding()
+                                        .frame(width:150,height:100)
+                                        .background(Color.white)
+                                        .cornerRadius(8)
+                                        .shadow(radius: 10)
+                                     //   .padding()
+
+                                    } // end ZStack for popup
+                                    .transition(.scale)
+                                }  // end if self.showingPrintablePopups[i]
+
+
+
+
+
+
+
 
                                 TextField("r", value: $hue.r, formatter: ContentView.fmt0to255)
                                     .onChange(of: hue.r) { newValue in
@@ -1476,7 +1542,7 @@ struct ContentView: View {
                                 .opacity(0.5)
                             HStack {
                                 Button(action: {
-                                showingAllPrintableColorsPopups[iAP!] = false
+                                    showingAllPrintableColorsPopups[iAP!] = false
                                 }) {
                                     Image(systemName: "xmark.circle")
                                 }
@@ -1531,18 +1597,56 @@ struct ContentView: View {
                                         Color(cgColor)
                                     }
                                     let nColumns = 32
-                                    ForEach(0..<arrColors.count/nColumns) { rowIndex in
-                                        HStack(spacing: 0) {
-                                            ForEach(0..<nColumns) { columnIndex in
-                                                let index = rowIndex * nColumns + columnIndex
-                                                Rectangle()
-                                                    .fill(arrColors[index])
-                                                    .frame(width: 30, height: 30)
-                                                    .cornerRadius(4)
-                                                    .padding(1)
-                                            }
-                                        }
-                                    }
+
+                                        ForEach(0..<arrColors.count/nColumns) { rowIndex in
+                                            HStack(spacing: 0) {
+                                                ForEach(0..<nColumns) { columnIndex in
+                                                    let index = rowIndex * nColumns + columnIndex
+                                                    let color = arrColors[index]
+                                                    let nsColor = NSColor(color)
+                                                    let red = nsColor.redComponent
+                                                    let green = nsColor.greenComponent
+                                                    let blue = nsColor.blueComponent
+                                                    //let colorValues = "R: \(Int(red*255)), G: \(Int(green*255)), B: \(Int(blue*255))"
+                                                    //let colorValues = " \(Int(red*255)), \(Int(green*255)), \(Int(blue*255))"
+                                                    let colorValues = " \(String(format: "%03d", Int(red*255))) \(String(format: "%03d", Int(green*255))) \(String(format: "%03d", Int(blue*255)))"
+
+                                                    let colorValueR = "\(Int(red*255))"
+                                                    let colorValueG = "\(Int(green*255))"
+                                                    let colorValueB = "\(Int(blue*255))"
+
+                                                    VStack {
+                                                        Rectangle()
+                                                            .fill(arrColors[index])
+                                                            .frame(width: 30, height: 30)
+                                                            .cornerRadius(4)
+                                                            .padding(1)
+
+
+                                                        Text(colorValueR)
+                                                          .font(.system(size: 10))
+                                                          .background(Color.white)
+                                                        Text(colorValueG)
+                                                            .font(.system(size: 10))
+                                                            .background(Color.white)
+                                                        Text(colorValueB)
+                                                            .font(.system(size: 10))
+                                                            .background(Color.white)
+
+                                                            //Text(colorValues)
+                                                               // .font(.system(size: 8))
+                                                             //   .padding(1)
+                                                             //   .background(Color.white)
+                                                               // .cornerRadius(2)
+                                                               // .shadow(radius: 2)
+
+                                                    } // end Zstack of rect, rgb values
+                                                }// end for each column of colors
+                                            } // end HStack of colors
+
+                                        } // end for each color
+
+
                                 }  // end VStack of color options
                                 Spacer()
                             } // end HStack
