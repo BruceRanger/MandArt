@@ -1084,7 +1084,7 @@ struct ContentView: View {
 
 
 
-                // GROUP FOR SHOWING SCREEN COLORS & PRINT COLORS
+       /*         // GROUP FOR SHOWING SCREEN COLORS & PRINT COLORS
 
                 Group {
                     Divider()
@@ -1096,7 +1096,7 @@ struct ContentView: View {
                         Button("Show Print Colors") { showPrintColors() }
                             .help("Show 292 colors that should print well.")
                     }
-                } // END GROUP FOR SHOWING SCREEN COLORS & PRINT COLORS
+                } // END GROUP FOR SHOWING SCREEN COLORS & PRINT COLORS*/
 
 
 
@@ -1385,7 +1385,7 @@ struct ContentView: View {
                                 Image(image, scale: 1.0, label: Text("Test"))
                             }
                         }
-                    } else if activeDisplayState == ActiveDisplayChoice.Color {
+                    } /*else if activeDisplayState == ActiveDisplayChoice.Color {
                         let image: CGImage = getImage()!
                         GeometryReader {
                             _ in
@@ -1401,7 +1401,7 @@ struct ContentView: View {
                         Image("Print colors")
                             .resizable()
                             .scaledToFit()
-                    }
+                    }*/
 
                     // User will click buttons on the user input side
                     // of the main screen, but we'll show the colors on the
@@ -1430,7 +1430,7 @@ struct ContentView: View {
                         ZStack {
                             Color.white
                                 .opacity(0.5)
-                            HStack {
+                            VStack {
                                 Button(action: {
                                     showingAllColorsPopups[iAll!] = false
                                 }) {
@@ -1448,7 +1448,7 @@ struct ContentView: View {
                                                 let index = rowIndex * nColumns + columnIndex
                                                 Rectangle()
                                                     .fill(arrColors[index])
-                                                    .frame(width: 25, height: 25)
+                                                    .frame(width: 17, height: 27)
                                                     .cornerRadius(4)
                                                     .padding(1)
                                             }
@@ -1456,7 +1456,7 @@ struct ContentView: View {
                                     }
                                 }  // end VStack of color options
                                 Spacer()
-                            } // end HStack
+                            } // end VStack
                             .padding()
                             .background(Color.white)
                             .cornerRadius(8)
@@ -1474,7 +1474,7 @@ struct ContentView: View {
                         ZStack {
                             Color.white
                                 .opacity(0.5)
-                            HStack {
+                            VStack {
                                 Button(action: {
                                 showingAllPrintableColorsPopups[iAP!] = false
                                 }) {
@@ -1492,7 +1492,7 @@ struct ContentView: View {
                                                 let index = rowIndex * nColumns + columnIndex
                                                 Rectangle()
                                                     .fill(arrColors[index])
-                                                    .frame(width: 25, height: 25)
+                                                    .frame(width: 17, height: 27)
                                                     .cornerRadius(4)
                                                     .padding(1)
                                             }
@@ -1500,7 +1500,7 @@ struct ContentView: View {
                                     }
                                 }  // end VStack of color options
                                 Spacer()
-                            } // end HStack
+                            } // end VStack
                             .padding()
                             .background(Color.white)
                             .cornerRadius(8)
@@ -1519,7 +1519,7 @@ struct ContentView: View {
                         ZStack {
                             Color.white
                                 .opacity(0.5)
-                            HStack {
+                            VStack {
                                 Button(action: {
                                     showingPrintableColorsPopups[iP!] = false
                                 }) {
@@ -1545,7 +1545,7 @@ struct ContentView: View {
                                     }
                                 }  // end VStack of color options
                                 Spacer()
-                            } // end HStack
+                            } // end VStack
                             .padding()
                             .background(Color.white)
                             .cornerRadius(8)
