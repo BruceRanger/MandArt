@@ -1155,7 +1155,8 @@ struct ContentView: View {
 
                     HStack {
                         Text("Grb:")
-                        Button("A") {                            self.resetAllPopupsToFalse()
+                        Button("A") {
+                            self.resetAllPopupsToFalse()
                             self.showingAllColorsPopups[2] = true
                         }
                         .padding([.bottom], 2)
@@ -1640,7 +1641,7 @@ struct ContentView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 8
-        formatter.minimum = 0
+        formatter.minimum = 1
         formatter.maximum = 100_000_000_000
         return formatter
     }
@@ -1651,7 +1652,7 @@ struct ContentView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 8
-        formatter.minimum = 0
+        formatter.minimum = 1
         formatter.maximum = 100_000_000
         return formatter
     }
@@ -1661,7 +1662,7 @@ struct ContentView: View {
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
         formatter.minimum = 1
-        formatter.maximum = 100_000
+        formatter.maximum = 100_000_000
         return formatter
     }
 
@@ -1678,7 +1679,7 @@ struct ContentView: View {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 0
         formatter.minimum = 1
-        formatter.maximum = 20
+        formatter.maximum = 100
         return formatter
     }
 
@@ -1688,7 +1689,7 @@ struct ContentView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
-        formatter.minimum = 0
+        formatter.minimum = 1
         formatter.maximum = 1000
         return formatter
     }
@@ -1697,7 +1698,7 @@ struct ContentView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
-        formatter.minimum = 0
+        formatter.minimum = 1
         formatter.maximum = 1000
         return formatter
     }
