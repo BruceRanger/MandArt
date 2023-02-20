@@ -47,8 +47,10 @@ struct ContentView: View {
     @State private var textFieldImageHeight: NSTextField = .init()
     @State private var textFieldX: NSTextField = .init()
     @State private var textFieldY: NSTextField = .init()
+    @State private var showingAllColorsPopups = Array(repeating: false, count: 6)
+    @State private var showingPrintableColorsPopups = Array(repeating: false, count: 6)
+    @State private var showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
     @State private var showingPrintablePopups = Array(repeating: false, count: 20)
-
 
     enum ActiveDisplayChoice {
         case MandArt
@@ -737,8 +739,8 @@ struct ContentView: View {
                                             print("editing imageWidth, pausing updates")
                                             self.pauseUpdates()
                                         } /*else {
-                                            self.showMandArtBitMap()
-                                        }*/
+                                           self.showMandArtBitMap()
+                                           }*/
                                     }
                                     //                                        .onSubmit {
                                     //                                            showMandArtBitMap()
@@ -760,8 +762,8 @@ struct ContentView: View {
                                         if isStarted {
                                             self.pauseUpdates()
                                         } /*else {
-                                            self.showMandArtBitMap()
-                                        }*/
+                                           self.showMandArtBitMap()
+                                           }*/
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -798,14 +800,14 @@ struct ContentView: View {
                                     Text("Enter center x")
                                     Text("Between -2 and 2")
                                     TextField("-0.75",
-                                            value: $doc.picdef.xCenter,
-                                            formatter: ContentView.fmtXY) { isStarted in
+                                              value: $doc.picdef.xCenter,
+                                              formatter: ContentView.fmtXY) { isStarted in
                                         if isStarted {
                                             print("editing xC, pausing updates")
                                             self.pauseUpdates()
                                         } /*else {
-                                            self.showMandArtBitMap()
-                                        }*/
+                                           self.showMandArtBitMap()
+                                           }*/
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -822,23 +824,23 @@ struct ContentView: View {
                                     Text("Enter center y")
                                     Text("Between -2 and 2")
                                     TextField("0.0",
-                                            value: $doc.picdef.yCenter,
-                                            formatter: ContentView.fmtXY) { isStarted in
+                                              value: $doc.picdef.yCenter,
+                                              formatter: ContentView.fmtXY) { isStarted in
                                         if isStarted {
                                             self.pauseUpdates()
                                         }
                                     }
-                                    .onSubmit {
-                                        showMandArtBitMap()
-                                        print("triggering tab from Y")
-                                        self.triggerTab(on: self.textFieldY)
-                                    }
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .padding(4)
-                                    .frame(maxWidth: 120)
-                                    .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
-                                    .disabled(drawColors)
+                                              .onSubmit {
+                                                  showMandArtBitMap()
+                                                  print("triggering tab from Y")
+                                                  self.triggerTab(on: self.textFieldY)
+                                              }
+                                              .textFieldStyle(.roundedBorder)
+                                              .multilineTextAlignment(.trailing)
+                                              .padding(4)
+                                              .frame(maxWidth: 120)
+                                              .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
+                                              .disabled(drawColors)
                                 }
                             } // end HStack for XY
 
@@ -993,7 +995,7 @@ struct ContentView: View {
                             Divider()
                         } // END GROUP 4 - GRADIENT
 
-                        // GROUP 5 - COLOR TUNING
+                        // GROUP 5 - COLOR TUNING GROUP
 
                         Group {
                             HStack {
@@ -1067,7 +1069,10 @@ struct ContentView: View {
                                         .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
                                 }
                             }
-                        } // end color tuning group
+
+
+                        } // end GROUP 5 - COLOR TUNING GROUP
+
                     } // end scroll bar
                     .frame(height: geometry.size.height)
                 } // end top scoll bar geometry reader
@@ -1077,7 +1082,9 @@ struct ContentView: View {
                 )
                 .fixedSize(horizontal: false, vertical: false)
 
-                // SECTION 3 - GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
+
+
+                // GROUP FOR SHOWING SCREEN COLORS & PRINT COLORS
 
                 Group {
                     Divider()
@@ -1089,183 +1096,266 @@ struct ContentView: View {
                         Button("Show Print Colors") { showPrintColors() }
                             .help("Show 292 colors that should print well.")
                     }
-                } // END GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
+                } // END GROUP FOR SHOWING SCREEN COLORS & PRINT COLORS
 
-                // SECTION 4 - END GROUP FOR ADDING COLORS AND VIEWING COLOR OPTIONS
+
+
+                // GROUP FOR POPUPS BUTTONS AND VERIFY AND ADD NEW COLOR
 
                 Group {
+
+
+                    // HSTACK START WITH RED
                     HStack {
-                        Button("Verify Colors") {
-                            MandMath.getListPrintabilityOfHues(hues: doc.picdef.hues)
-                            MandMath.getClosestPrintableColors(hues: doc.picdef.hues)
+
+                        Text("Rgb:")
+
+                        Button("A") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllColorsPopups[0] = true
                         }
-                        .help("Check for printability.")
                         .padding([.bottom], 2)
-                        
+
+                        Button("AP") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllPrintableColorsPopups[0] = true
+                        }
+                        .padding([.bottom], 2)
+
+                        Button("P") {
+                            self.resetAllPopupsToFalse()
+                            self.showingPrintableColorsPopups[0] = true
+                        }
+                        .padding([.bottom], 2)
+
+                        Text("Rbg:")
+
+                        Button("A") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllColorsPopups[1] = true
+                        }
+                        .padding([.bottom], 2)
+
+                        Button("AP") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllPrintableColorsPopups[1] = true
+                        }
+                        .padding([.bottom], 2)
+
+                        Button("P") {
+                            self.resetAllPopupsToFalse()
+                            self.showingPrintableColorsPopups[1] = true
+                        }
+                        .padding([.bottom], 2)
+
+                    } // END HSTACK START WITH RED
+
+
+                    // HSTACK START WITH GREEN
+
+                    HStack {
+                        Text("Grb:")
+                        Button("A") {                            self.resetAllPopupsToFalse()
+                            self.showingAllColorsPopups[2] = true
+                        }
+                        .padding([.bottom], 2)
+                        Button("AP") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllPrintableColorsPopups[2] = true
+                        }
+                        .padding([.bottom], 2)
+                        Button("P") {
+                            self.resetAllPopupsToFalse()
+                            self.showingPrintableColorsPopups[2] = true
+                        }
+                        .padding([.bottom], 2)
+                        Text("Gbr:")
+                        Button("A") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllColorsPopups[3] = true
+                        }
+                        .padding([.bottom], 2)
+                        Button("AP") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllPrintableColorsPopups[3] = true
+                        }
+                        .padding([.bottom], 2)
+                        Button("P") {
+                            self.resetAllPopupsToFalse()
+                            self.showingPrintableColorsPopups[3] = true
+                        }
+                        .padding([.bottom], 2)
+
+                    } // END HSTACK START WITH GREEN
+
+
+                    // HSTACK START WITH BLUE
+
+                    HStack {
+                        Text("Brg:")
+                        Button("A") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllColorsPopups[4] = true
+                        }
+                        .padding([.bottom], 2)
+                        Button("AP") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllPrintableColorsPopups[4] = true
+                        }
+                        .padding([.bottom], 2)
+                        Button("P") {
+                            self.resetAllPopupsToFalse()
+                            self.showingPrintableColorsPopups[4] = true
+                        }
+                        .padding([.bottom], 2)
+
+                        Text("Bgr:")
+                        Button("A") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllColorsPopups[5] = true
+                        }
+                        .padding([.bottom], 2)
+                        Button("AP") {
+                            self.resetAllPopupsToFalse()
+                            self.showingAllPrintableColorsPopups[5] = true
+                        }
+                        .padding([.bottom], 2)
+                        Button("P") {
+                            self.resetAllPopupsToFalse()
+                            self.showingPrintableColorsPopups[5] = true
+                        }
+                        .padding([.bottom], 2)
+
+                    } // END  HSTACK START WITH BLUE
+
+                    HStack {
+
+                        //Button("Verify Colors") {
+                        //    MandMath.getListPrintabilityOfHues(hues: doc.picdef.hues)
+                        //    MandMath.getClosestPrintableColors(hues: doc.picdef.hues)
+                        //}
+                        //.help("Check for printability.")
+                        //.padding([.bottom], 2)
+
+
                         Button("Add New Color") { doc.addHue() }
                             .help("Add a new color.")
                             .padding([.bottom], 2)
                     }
 
-                    // Wrap the list in a geometry reader so it will
-                    // shrink when items are deleted
-                    GeometryReader { geometry in
 
-                        List {  // BHJ: List of Input Colors / Hues
-                            ForEach($doc.picdef.hues, id: \.num) { $hue in
-                                let i = hue.num - 1
-                                // $hue is a binding - a reference
-                                // we could call it hueBinding instead.
-                                // we need to get the wrapped value of $hue
-                                // to get the the hue itself.
-                                // We use the wrappedValue property
-                                // of the hueBinding to get the underlying
-                                // Hue object.
-                                // This is because the hueBinding is a Binding
-                                // to a Hue object, not the Hue object itself.
-                                // By using the wrappedValue property,
-                                // we can get the actual Hue object,
-                                // which we use in the call to the
-                                // getPrintableDisplayText function.
-                                // hue = $hue.wrappedValue 
-                                let isPrintable = getIsPrintable(color: $hue.wrappedValue.color, num: $hue.wrappedValue.num)
 
-                                HStack {
 
-                                    TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
-                                        .disabled(true)
-                                        .frame(maxWidth: 15)
+                } // END  GROUP FOR POPUPS BUTTONS AND VERIFY AND ADD NEW COLOR
 
-                                    ColorPicker("", selection: $hue.color, supportsOpacity: false)
-                                        .onChange(of: hue.color) { newColor in
-                                            doc.updateHueWithColorPick(
-                                                index: i, newColorPick: newColor
-                                            )
-                                            // BHJ: used to get info
-                                            // about printable color crayons
-                                            // comment out or
-                                            // remove if not needed
-                                            hue.printColorInfo()
-                                        }
 
-                                    if !isPrintable {
-                                        Button() {
-                                            self.showingPrintablePopups[i] = true
-                                        } label: {
-                                            Image(systemName: "exclamationmark.circle")
-                                                .foregroundColor(.blue)
-                                        }
-                     //                   .padding(.trailing, 0)
-                                        .help("See printable options for " + "\(hue.num)")
+
+                // Wrap the list in a geometry reader so it will
+                // shrink when items are deleted
+                GeometryReader { geometry in
+
+                    List {
+                        ForEach($doc.picdef.hues, id: \.num) { $hue in
+                            let i = hue.num - 1
+                            // $hue is a binding - a reference
+                            // we could call it hueBinding instead.
+                            // we need to get the wrapped value of $hue
+                            // to get the the hue itself.
+                            // We use the wrappedValue property
+                            // of the hueBinding to get the underlying
+                            // Hue object.
+                            // This is because the hueBinding is a Binding
+                            // to a Hue object, not the Hue object itself.
+                            // By using the wrappedValue property,
+                            // we can get the actual Hue object,
+                            // which we use in the call to the
+                            // getPrintableDisplayText function.
+                            let isPrintable = getIsPrintable(color: $hue.wrappedValue.color, num: $hue.wrappedValue.num)
+
+                            HStack {
+
+                                TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
+                                    .disabled(true)
+                                    .frame(maxWidth: 15)
+
+                                ColorPicker("", selection: $hue.color, supportsOpacity: false)
+                                    .onChange(of: hue.color) { newColor in
+                                        doc.updateHueWithColorPick(
+                                            index: i, newColorPick: newColor
+                                        )
+                                        // BHJ: used to get info
+                                        // about printable color crayons
+                                        // comment out or
+                                        // remove if not needed
+                                        hue.printColorInfo()
                                     }
-                                    else {
-                                        Button {
-                                            //
-                                        } label: {
-                                            Image(systemName: "exclamationmark.circle")
-                                        }
-                //                        .padding(.trailing, 0)
-                                        .hidden()
-                                        .disabled(true)
-                                    }
-                                    if self.showingPrintablePopups[i] {
 
-                                        ZStack {
-
-                                            Color.white
-                                                .opacity(0.5)
-
-                                            HStack {
-
-                                                Button(action: {
-                                                    self.showingPrintablePopups[i] = false
-                                                }) {
-                                                    Image(systemName: "xmark.circle")
-                                                }
-
-                                                VStack {
-
-//   let betterOptions = [Color.red, Color.green, Color.blue, Color.yellow]
-
-                                                    let printableOptions = MandMath.getPrintableOptions(hue: doc.picdef.hues[i])
-
-                                                    let swiftUIOptions = printableOptions.map { cgColor in
-                                                        Color(cgColor)
-                                                    }
-
-                                                    ForEach(swiftUIOptions, id: \.self) { color in
-                                                        Rectangle()
-                                                            .fill(color)
-                                                            .frame(width: 30, height: 30)
-                                                            .cornerRadius(8)
-                                                    }
-
-
-                                                }  // end VStack of color options
-
-
-
-                                            } // end VStack
-                                            .padding()
-                                            .background(Color.white)
-                                            .cornerRadius(8)
-                                            .shadow(radius: 10)
-                                            .padding()
-
-                                        } // end ZStack for popup
-                                        .transition(.scale)
-                                    }  // end if self.showingPrintablePopups[i]
-
-
-
-
-                                    TextField("r", value: $hue.r, formatter: ContentView.fmt0to255)
-                                        .onChange(of: hue.r) { newValue in
-                                            doc.updateHueWithColorNumberR(
-                                                index: i, newValue: newValue
-                                            )
-                                        }
-
-                                    TextField("g", value: $hue.g, formatter: ContentView.fmt0to255)
-                                        .onChange(of: hue.g) { newValue in
-                                            doc.updateHueWithColorNumberG(
-                                                index: i, newValue: newValue
-                                            )
-                                        }
-
-                                    TextField("b", value: $hue.b, formatter: ContentView.fmt0to255)
-                                        .onChange(of: hue.b) { newValue in
-                                            doc.updateHueWithColorNumberB(
-                                                index: i, newValue: newValue
-                                            )
-                                        }
-
-
-                                    Button(role: .destructive) {
-                                        doc.deleteHue(index: i)
-                                        updateHueNums()
-                                        readyForPicture()
+                                if !isPrintable {
+                                    Button() {
+                                        self.showingPrintablePopups[i] = true
                                     } label: {
-                                        Image(systemName: "trash")
+                                        Image(systemName: "exclamationmark.circle")
+                                            .foregroundColor(.blue)
                                     }
-                      //              .padding(.trailing, 5)
-                                    .help("Delete " + "\(hue.num)")
+                                    .help("See printable options for " + "\(hue.num)")
                                 }
-                            } // end foreach
-                            .onMove { indices, hue in
-                                doc.picdef.hues.move(fromOffsets: indices,
-                                                     toOffset: hue)
-                                updateHueNums()
+                                else {
+                                    Button {
+                                        //
+                                    } label: {
+                                        Image(systemName: "exclamationmark.circle")
+                                    }
+                                    .hidden()
+                                    .disabled(true)
+                                }
+
+                                TextField("r", value: $hue.r, formatter: ContentView.fmt0to255)
+                                    .onChange(of: hue.r) { newValue in
+                                        doc.updateHueWithColorNumberR(
+                                            index: i, newValue: newValue
+                                        )
+                                    }
+
+                                TextField("g", value: $hue.g, formatter: ContentView.fmt0to255)
+                                    .onChange(of: hue.g) { newValue in
+                                        doc.updateHueWithColorNumberG(
+                                            index: i, newValue: newValue
+                                        )
+                                    }
+
+                                TextField("b", value: $hue.b, formatter: ContentView.fmt0to255)
+                                    .onChange(of: hue.b) { newValue in
+                                        doc.updateHueWithColorNumberB(
+                                            index: i, newValue: newValue
+                                        )
+                                    }
+
+
+                                Button(role: .destructive) {
+                                    doc.deleteHue(index: i)
+                                    updateHueNums()
+                                    readyForPicture()
+                                } label: {
+                                    Image(systemName: "trash")
+                                }
+                                .help("Delete " + "\(hue.num)")
                             }
-                        } // end list
-                        .frame(height: geometry.size.height)
-                    } // end color list geometry reader
-                    .frame(
-                        minHeight: 0,
-                        maxHeight: 220
-                    )
-                    .fixedSize(horizontal: false, vertical: false)
-                } // END COLOR LIST GROUP
+                        } // end foreach
+                        .onMove { indices, hue in
+                            doc.picdef.hues.move(fromOffsets: indices,
+                                                 toOffset: hue)
+                            updateHueNums()
+                        }
+                    } // end list
+                    .frame(height: geometry.size.height)
+                } // end color list geometry reader
+                .frame(
+                    minHeight: 0,
+                    maxHeight: 220
+                )
+                .fixedSize(horizontal: false, vertical: false)
+
+                // } // END COLOR LIST VSTACK
             } // end VStack for user instructions - Below refers to the 2 cols
             .frame(width: inputWidth)
             .padding(2)
@@ -1276,6 +1366,7 @@ struct ContentView: View {
 
             ScrollView(showsIndicators: true) {
                 VStack {
+
                     if activeDisplayState == ActiveDisplayChoice.MandArt {
                         let image: CGImage = getImage()!
                         GeometryReader {
@@ -1285,6 +1376,7 @@ struct ContentView: View {
                                     .gesture(self.tapGesture)
                             }
                         }
+
                     } else if activeDisplayState == ActiveDisplayChoice.Gradient {
                         let image: CGImage = getImage()!
                         GeometryReader {
@@ -1310,6 +1402,164 @@ struct ContentView: View {
                             .resizable()
                             .scaledToFit()
                     }
+
+                    // User will click buttons on the user input side
+                    // of the main screen, but we'll show the colors on the
+                    // right side of the main screen (here)
+
+                    // this checks to see which button the user clicked
+                    // it will set one of the following to "true"
+                    // and that's the one we'll show.
+
+                    // There are six of each - depending on the sort order
+                    // for example
+                    // RGB is the first (index = 0)
+                    // RBG (blue & green reversed) is the second or index 1
+
+                    // THere are 3 buttons for each color sort order (e.g. RGB)
+                    // ALL screen colors
+                    // ALL PRINTABLE colors (uses white squares as placeholders)
+                    // just the PRINTABLE colors (no white square placeholders)
+                    let iAll = showingAllColorsPopups.firstIndex(of: true)
+                    let iAP = showingAllPrintableColorsPopups.firstIndex(of: true)
+                    let iP = showingPrintableColorsPopups.firstIndex(of: true)
+
+
+                    // IF USER WANTED TO SEE ALL SCREEN COLORS
+                    if iAll != nil {
+                        ZStack {
+                            Color.white
+                                .opacity(0.5)
+                            HStack {
+                                Button(action: {
+                                    showingAllColorsPopups[iAll!] = false
+                                }) {
+                                    Image(systemName: "xmark.circle")
+                                }
+                                VStack {
+                                    let arrCGs = MandMath.getAllCGColorsList(iSort:iAll!)
+                                    let arrColors = arrCGs.map { cgColor in
+                                        Color(cgColor)
+                                    }
+                                    let nColumns = 64
+                                    ForEach(0..<arrColors.count/nColumns) { rowIndex in
+                                        HStack(spacing: 0) {
+                                            ForEach(0..<nColumns) { columnIndex in
+                                                let index = rowIndex * nColumns + columnIndex
+                                                Rectangle()
+                                                    .fill(arrColors[index])
+                                                    .frame(width: 25, height: 25)
+                                                    .cornerRadius(4)
+                                                    .padding(1)
+                                            }
+                                        }
+                                    }
+                                }  // end VStack of color options
+                                Spacer()
+                            } // end HStack
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(8)
+                            .shadow(radius: 10)
+                            .padding()
+                        } // end ZStack for popup
+                        .transition(.scale)
+                    }  // end if popup
+
+
+                    // IF USER WANTED TO SEE ALL PRINTABLE COLORS
+                    // WITH PLACEHOLDERS
+
+                    if iAP != nil {
+                        ZStack {
+                            Color.white
+                                .opacity(0.5)
+                            HStack {
+                                Button(action: {
+                                showingAllPrintableColorsPopups[iAP!] = false
+                                }) {
+                                    Image(systemName: "xmark.circle")
+                                }
+                                VStack {
+                                    let arrCGs = MandMath.getAllPrintableCGColorsList(iSort:iAP!)
+                                    let arrColors = arrCGs.map { cgColor in
+                                        Color(cgColor)
+                                    }
+                                    let nColumns = 64
+                                    ForEach(0..<arrColors.count/nColumns) { rowIndex in
+                                        HStack(spacing: 0) {
+                                            ForEach(0..<nColumns) { columnIndex in
+                                                let index = rowIndex * nColumns + columnIndex
+                                                Rectangle()
+                                                    .fill(arrColors[index])
+                                                    .frame(width: 25, height: 25)
+                                                    .cornerRadius(4)
+                                                    .padding(1)
+                                            }
+                                        }
+                                    }
+                                }  // end VStack of color options
+                                Spacer()
+                            } // end HStack
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(8)
+                            .shadow(radius: 10)
+                            .padding()
+                        } // end ZStack for popup
+                        .transition(.scale)
+                    }  // end if popup
+
+
+
+                    // IF USER WANTED TO SEE ONLY PRINTABLE COLORS
+                    // * WITHOUT * PLACEHOLDERS
+
+                    if iP  != nil {
+                        ZStack {
+                            Color.white
+                                .opacity(0.5)
+                            HStack {
+                                Button(action: {
+                                    showingPrintableColorsPopups[iP!] = false
+                                }) {
+                                    Image(systemName: "xmark.circle")
+                                }
+                                VStack {
+                                    let arrCGs = MandMath.getPrintableCGColorListSorted(iSort:iP!)
+                                    let arrColors = arrCGs.map { cgColor in
+                                        Color(cgColor)
+                                    }
+                                    let nColumns = 32
+                                    ForEach(0..<arrColors.count/nColumns) { rowIndex in
+                                        HStack(spacing: 0) {
+                                            ForEach(0..<nColumns) { columnIndex in
+                                                let index = rowIndex * nColumns + columnIndex
+                                                Rectangle()
+                                                    .fill(arrColors[index])
+                                                    .frame(width: 30, height: 30)
+                                                    .cornerRadius(4)
+                                                    .padding(1)
+                                            }
+                                        }
+                                    }
+                                }  // end VStack of color options
+                                Spacer()
+                            } // end HStack
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(8)
+                            .shadow(radius: 10)
+                            .padding()
+                        } // end ZStack for popup
+                        .transition(.scale)
+                    }  // end if popup
+
+
+
+
+
+
                 } // end VStack right side (picture space)
                 .padding(2)
             } // end image scroll view
@@ -1523,10 +1773,8 @@ struct ContentView: View {
         }
     }
 
-    // BHJ: Change logic as needed
-    // This currently checks for an exact match to the list of colors
     private func getIsPrintable(color: Color, num: Int) -> Bool {
-        if MandMath.isColorInPrintableList(color: color.cgColor!, num: num) {
+        if MandMath.isColorNearPrintableList(color: color.cgColor!, num: num) {
             return true
         } else {
             return false
@@ -1710,6 +1958,12 @@ struct ContentView: View {
     fileprivate func readyForGradient() {
         drawIt = false
         drawGradient = true
+    }
+
+    fileprivate func resetAllPopupsToFalse() {
+        showingAllColorsPopups = Array(repeating: false, count: 6)
+        showingPrintableColorsPopups = Array(repeating: false, count: 6)
+        showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
     }
 
     /// Multiplies scale by 2.0.
