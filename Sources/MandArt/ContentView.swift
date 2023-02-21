@@ -745,13 +745,8 @@ struct ContentView: View {
                                         if isStarted {
                                             print("editing imageWidth, pausing updates")
                                             self.pauseUpdates()
-                                        } /*else {
-                                           self.showMandArtBitMap()
-                                           }*/
+                                        }
                                     }
-                                    //                                        .onSubmit {
-                                    //                                            showMandArtBitMap()
-                                    //                                        }
                                                 .textFieldStyle(.roundedBorder)
                                                 .multilineTextAlignment(.trailing)
                                                 .frame(maxWidth: 80)
@@ -768,9 +763,7 @@ struct ContentView: View {
                                               formatter: ContentView.fmtImageWidthHeight) { isStarted in
                                         if isStarted {
                                             self.pauseUpdates()
-                                        } /*else {
-                                           self.showMandArtBitMap()
-                                           }*/
+                                        }
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -812,9 +805,7 @@ struct ContentView: View {
                                         if isStarted {
                                             print("editing xC, pausing updates")
                                             self.pauseUpdates()
-                                        } /*else {
-                                           self.showMandArtBitMap()
-                                           }*/
+                                        }
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -1018,15 +1009,7 @@ struct ContentView: View {
                                     Text("near to edge")
 
                                     TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge)
-                                    /*           { isStarted in
-                                     if isStarted {
-                                     //                print("editing spacingColorFar, pausing updates")
-                                     //          self.pauseUpdates()
-                                     }
-                                     }
-                                     .onSubmit {
-                                     showMandArtBitMap()
-                                     }*/
+                                    
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
@@ -1039,15 +1022,6 @@ struct ContentView: View {
                                     Text("far from edge")
 
                                     TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
-                                    /*               { isStarted in
-                                     if isStarted {
-                                     //                  print("editing spacingColorNear, pausing updates")
-                                     self.pauseUpdates()
-                                     }
-                                     }
-                                     .onSubmit {
-                                     showMandArtBitMap()
-                                     }*/
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
@@ -1088,24 +1062,6 @@ struct ContentView: View {
                     maxHeight: .infinity
                 )
                 .fixedSize(horizontal: false, vertical: false)
-
-
-
-       /*         // GROUP FOR SHOWING SCREEN COLORS & PRINT COLORS
-
-                Group {
-                    Divider()
-
-                    HStack {
-                        Button("Show Screen Colors") { showScreenColors() }
-                            .help("Show 512 colors that look good on the screen.")
-
-                        Button("Show Print Colors") { showPrintColors() }
-                            .help("Show 292 colors that should print well.")
-                    }
-                } // END GROUP FOR SHOWING SCREEN COLORS & PRINT COLORS*/
-
-
 
                 // GROUP FOR POPUPS BUTTONS AND VERIFY AND ADD NEW COLOR
 
@@ -1238,14 +1194,6 @@ struct ContentView: View {
 
                     HStack {
 
-                        //Button("Verify Colors") {
-                        //    MandMath.getListPrintabilityOfHues(hues: doc.picdef.hues)
-                        //    MandMath.getClosestPrintableColors(hues: doc.picdef.hues)
-                        //}
-                        //.help("Check for printability.")
-                        //.padding([.bottom], 2)
-
-
                         Button("Add New Color") { doc.addHue() }
                             .help("Add a new color.")
                             .padding([.bottom], 2)
@@ -1333,33 +1281,8 @@ struct ContentView: View {
 
                                             VStack {
 
-                           //                     Text("Twas brillig and the")
-                           //                     Text("slithy toves did")
-                           //                     Text("gyre and gimble")
-                           //                     Text("in the wabe...")
                                                 Text("This color may not print well.")
-                            //                    Text("You can try to find a better one,")
-                            //                    Text("or you can click on one of the AP orP buttons")
-                            //                    Text("to see some colors that should print better.")
-                            //                    Text("Click on the color that you want changed,")
-                            //                    Text("then click on the eyedropper and on one of the popup colors.")
                                                 Text("See the instructions for options.")
-                                                
-
-
-
-                                                //let printableOptions = MandMath.getPrintableOptions(hue: doc.picdef.hues[i])
-
-                                                //let swiftUIOptions = printableOptions.map { cgColor in
-                                                    //Color(cgColor)
-                                                //}
-
-                                               // ForEach(swiftUIOptions, id: \.self) { color in
-                                                 //   Rectangle()
-                                                  //      .fill(color)
-                                                  //      .frame(width: 30, height: 30)
-                                                 //       .cornerRadius(8)
-                                              //  }
 
 
                                             }  // end VStack of color options
@@ -1376,13 +1299,6 @@ struct ContentView: View {
                                     } // end ZStack for popup
                                     .transition(.scale)
                                 }  // end if self.showingPrintablePopups[i]
-
-
-
-
-
-
-
 
                                 TextField("r", value: $hue.r, formatter: ContentView.fmt0to255)
                                     .onChange(of: hue.r) { newValue in
