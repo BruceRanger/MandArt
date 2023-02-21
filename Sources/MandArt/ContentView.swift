@@ -1013,7 +1013,7 @@ struct ContentView: View {
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 80)
-                                        .help("Enter the value for the color spacing near the edges of the image, awwy from MiniMand.")
+                                        .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
                                 }
 
                                 VStack {
