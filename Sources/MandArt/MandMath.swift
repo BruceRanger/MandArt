@@ -263,9 +263,9 @@ enum MandMath {
         let blue = Int(round(b * 255.0))
 
         // format the color components for printing
-        let rr = padIntToThreeCharacters(number: red)
-        let gg = padIntToThreeCharacters(number: green)
-        let bb = padIntToThreeCharacters(number: blue)
+        //let rr = padIntToThreeCharacters(number: red)
+        //let gg = padIntToThreeCharacters(number: green)
+        //let bb = padIntToThreeCharacters(number: blue)
         //print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
 
         // calculate distances between the input color and each printable color

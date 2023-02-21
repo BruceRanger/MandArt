@@ -80,7 +80,7 @@ final class MandArtDocument: ReferenceFileDocument {
     ) throws -> FileWrapper {
         let data = try JSONEncoder().encode(snapshot)
         let fileWrapper = FileWrapper(regularFileWithContents: data)
-        let fn = fileWrapper.filename
+        let fn = fileWrapper.filename!
         print("When saving a new /unamed file, the json file name is ", fn)
         print("In fileWrapper function, saving jsonDocumentName=", jsonDocumentName)
         return fileWrapper

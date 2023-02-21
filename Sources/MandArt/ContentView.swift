@@ -1462,7 +1462,8 @@ struct ContentView: View {
                                         Color(cgColor)
                                     }
                                     let nColumns = 64
-                                    ForEach(0..<arrColors.count/nColumns) { rowIndex in
+                                    let nRows = arrColors.count/nColumns
+                                    ForEach(0..<nRows) { rowIndex in
                                         HStack(spacing: 0) {
                                             ForEach(0..<nColumns) { columnIndex in
                                                 let index = rowIndex * nColumns + columnIndex
@@ -1506,7 +1507,8 @@ struct ContentView: View {
                                         Color(cgColor)
                                     }
                                     let nColumns = 64
-                                    ForEach(0..<arrColors.count/nColumns) { rowIndex in
+                                    let nRows = arrColors.count/nColumns
+                                    ForEach(0..<nRows) { rowIndex in
                                         HStack(spacing: 0) {
                                             ForEach(0..<nColumns) { columnIndex in
                                                 let index = rowIndex * nColumns + columnIndex
@@ -1563,7 +1565,7 @@ struct ContentView: View {
                                                 let blue = nsColor.blueComponent
                                                 //let colorValues = "R: \(Int(red*255)), G: \(Int(green*255)), B: \(Int(blue*255))"
                                                 //let colorValues = " \(Int(red*255)), \(Int(green*255)), \(Int(blue*255))"
-                                                let colorValues = " \(String(format: "%03d", Int(red*255))) \(String(format: "%03d", Int(green*255))) \(String(format: "%03d", Int(blue*255)))"
+                                                //let colorValues = " \(String(format: "%03d", Int(red*255))) \(String(format: "%03d", Int(green*255))) \(String(format: "%03d", Int(blue*255)))"
 
                                                 let colorValueR = "\(Int(red*255))"
                                                 let colorValueG = "\(Int(green*255))"
