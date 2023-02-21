@@ -1735,7 +1735,7 @@ struct ContentView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 8
-        formatter.minimum = 0
+        formatter.minimum = -1000
         formatter.maximum = 1000
         return formatter
     }
