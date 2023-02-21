@@ -1002,59 +1002,83 @@ struct ContentView: View {
                                 Text("Coloring Options")
                             }
                             Divider()
-                            // Spacing 1 with Slider
-                            Text("Spacing far from MiniMand (near to edge)")
-                            HStack {
-                                Text("1")
-                                Slider(value: $doc.picdef.spacingColorFar, in: 0 ... 100, step: 5)
-                                    .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
-                                Text("100")
-                                TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 50)
-                                    .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
-                            }
-                            .padding(.horizontal)
-                            // END  Slider
+
+                            Group { // NEAR FAR GROUP
+                                    // Spacing 1 with Slider
+                                Text("Spacing far from MiniMand (near to edge)")
+                                HStack {
+                                    Text("1")
+                                    Slider(value: $doc.picdef.spacingColorFar, in: 0 ... 100, step: 5)
+                                        .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
+                                    Text("100")
+                                    TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 50)
+                                        .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
+                                }
+                                .padding(.horizontal)
+                                // END  Slider
 
 
-                            // Spacing 2 with Slider
-                            Text("Spacing near to MiniMand (far from edge)")
-                            HStack {
-                                Text("1")
-                                Slider(value: $doc.picdef.spacingColorNear, in: 0 ... 100, step: 5)
-                                    .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
-                                Text("100")
-                                TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 50)
-                                    .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
-                            }
-                            .padding(.horizontal)
-                            // END  Slider
+                                // Spacing 2 with Slider
+                                Text("Spacing near to MiniMand (far from edge)")
+                                HStack {
+                                    Text("1")
+                                    Slider(value: $doc.picdef.spacingColorNear, in: 0 ... 100, step: 5)
+                                        .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
+                                    Text("100")
+                                    TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 50)
+                                        .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
+                                }
+                                .padding(.horizontal)
+                                // END  Slider
 
-                            VStack {
+
+                                Divider()
+                            } // END NEAR FAR GROUP
+
+
+                            Group {
+                                // Min Iterations with Slider
                                 Text("Change in minimum iteration:")
+                                HStack{
 
-                                TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
-                            }
+                                    Text("0")
+                                    Slider(value: $doc.picdef.dFIterMin, in: 0 ... 100, step: 5)
+                                        //.help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
+                                    Text("100")
 
-                            VStack {
+                                    TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 50)
+                                        .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
+                                }
+                                .padding(.horizontal)
+                                // END Min Iterations with Slider
+
+                                // nblocks with Slider
                                 Text("nBlocks:")
+                                HStack {
+                                    Text("1")
+                                    Text("---Slider----")
+                                    //Slider(value: $doc.picdef.nBlocks, in: 0 ... 100, step: 5)
+                                        .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
+                                    Text("100")
+                                    TextField("60", value: $doc.picdef.nBlocks, formatter: ContentView.fmtNBlocks)
+                                        .textFieldStyle(.roundedBorder)
+                                        .multilineTextAlignment(.trailing)
+                                        .frame(maxWidth: 50)
+                                       .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
+                               }
+                                .padding(.horizontal)
+                                // END nblocks with Slider
 
-                                TextField("60", value: $doc.picdef.nBlocks, formatter: ContentView.fmtNBlocks)
-                                    .textFieldStyle(.roundedBorder)
-                                    .multilineTextAlignment(.trailing)
-                                    .frame(maxWidth: 80)
-                                    .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
-                            }
-
+                            } // END GROUP of last 2 slider inputs
 
 
                         } // end GROUP 5 - COLOR TUNING GROUP
@@ -1739,9 +1763,9 @@ struct ContentView: View {
     static var fmtChangeInMinIteration: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 8
-        formatter.minimum = -1000
-        formatter.maximum = 1000
+        formatter.maximumFractionDigits = 0
+        formatter.minimum = 0
+        formatter.maximum = 100
         return formatter
     }
 
@@ -1749,7 +1773,7 @@ struct ContentView: View {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 0
         formatter.minimum = 1
-        formatter.maximum = 2000
+        formatter.maximum = 100
         return formatter
     }
 
