@@ -115,8 +115,6 @@ class Hue: Codable, Identifiable, ObservableObject {
         }
     }
 
- 
-
     ///  Get the lookup string for this instance of a  Hue
     ///  For example:
     ///  000-027-255

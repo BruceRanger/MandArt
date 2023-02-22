@@ -51,13 +51,13 @@ struct ContentView: View {
     @State private var showingPrintableColorsPopups = Array(repeating: false, count: 6)
     @State private var showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
 
-    //BHJ: ToDo - set to max number of user input ordered colors (Hues)
+    // BHJ: ToDo - set to max number of user input ordered colors (Hues)
     @State private var showingPrintablePopups = Array(repeating: false, count: 100)
 
-    @State private var hoverColorValues: String? = nil
-    @State private var hoverColorValueR: String? = nil
-    @State private var hoverColorValueG: String? = nil
-    @State private var hoverColorValueB: String? = nil
+    @State private var hoverColorValues: String?
+    @State private var hoverColorValueR: String?
+    @State private var hoverColorValueG: String?
+    @State private var hoverColorValueB: String?
 
     enum ActiveDisplayChoice {
         case MandArt
@@ -941,7 +941,6 @@ struct ContentView: View {
                                 .disabled(drawColors)
                             }
 
-
                             Divider()
 
                             // Hold fraction with Slider
@@ -1019,11 +1018,10 @@ struct ContentView: View {
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
-                                       
+
                                 }
                                 .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
                                 // END  Slider
-
 
                                 // Spacing 2 with Slider
                                 Text("Spacing near to MiniMand (far from edge)")
@@ -1034,26 +1032,23 @@ struct ContentView: View {
                                     Slider(value: $doc.picdef.spacingColorNear, in: 0 ... 100, step: 5)
                                         .accentColor(Color.blue)
 
-
                                     Text("100")
 
                                     TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
-                                       
+
                                 }
                                 .padding(.horizontal)
                                 .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
                                 // END  Slider
 
-
                                 Divider()
                             } // END NEAR FAR GROUP
 
-
                             Group {
-                                
+
                                 // Min Iterations with Slider
                                 Text("Change in minimum iteration:")
                                 HStack {
@@ -1061,14 +1056,13 @@ struct ContentView: View {
 
                                     Slider(value: $doc.picdef.dFIterMin, in: 0 ... 100, step: 5)
 
-
                                     Text("100")
 
                                     TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
-                                        
+
                                 }
                                 .padding(.horizontal)
                                 .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
@@ -1086,7 +1080,6 @@ struct ContentView: View {
                                     set: { doc.picdef.nBlocks = Int($0) }
                                 ), in: 0...100, step: 5)
                                 .accentColor(Color.green)
-
 
                                     Text("100")
 
@@ -1110,11 +1103,10 @@ struct ContentView: View {
 //                                .padding(.horizontal)
 //                                .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
                                 // END nblocks with Slider
-                                
+
                                 Divider()
 
                             } // END GROUP of last 2 slider inputs
-
 
                         } // end GROUP 5 - COLOR TUNING GROUP
 
@@ -1130,7 +1122,6 @@ struct ContentView: View {
                 // GROUP FOR POPUPS BUTTONS AND VERIFY AND ADD NEW COLOR
 
                 Group {
-
 
                     // HSTACK START WITH RED
                     HStack {
@@ -1177,7 +1168,6 @@ struct ContentView: View {
 
                     } // END HSTACK START WITH RED
 
-
                     // HSTACK START WITH GREEN
 
                     HStack {
@@ -1215,7 +1205,6 @@ struct ContentView: View {
                         .padding([.bottom], 2)
 
                     } // END HSTACK START WITH GREEN
-
 
                     // HSTACK START WITH BLUE
 
@@ -1263,12 +1252,7 @@ struct ContentView: View {
                             .padding([.bottom], 2)
                     }
 
-
-
-
                 } // END  GROUP FOR POPUPS BUTTONS AND VERIFY AND ADD NEW COLOR
-
-
 
                 // Wrap the list in a geometry reader so it will
                 // shrink when items are deleted
@@ -1311,15 +1295,14 @@ struct ContentView: View {
                                     }
 
                                 if !isPrintable {
-                                    Button() {
+                                    Button {
                                         self.showingPrintablePopups[i] = true
                                     } label: {
                                         Image(systemName: "exclamationmark.circle")
                                             .foregroundColor(.blue)
                                     }
                                     .help("See printable options for " + "\(hue.num)")
-                                }
-                                else {
+                                } else {
                                     Button {
                                         //
                                     } label: {
@@ -1348,13 +1331,11 @@ struct ContentView: View {
                                                 Text("This color may not print well.")
                                                 Text("See the instructions for options.")
 
-
                                             }  // end VStack of color options
-
 
                                         } // end VStack
                                           // .padding()
-                                        .frame(width:150,height:100)
+                                        .frame(width: 150, height: 100)
                                         .background(Color.white)
                                         .cornerRadius(8)
                                         .shadow(radius: 10)
@@ -1384,7 +1365,6 @@ struct ContentView: View {
                                             index: i, newValue: newValue
                                         )
                                     }
-
 
                                 Button(role: .destructive) {
                                     doc.deleteHue(index: i)
@@ -1479,7 +1459,6 @@ struct ContentView: View {
                     let iAP = showingAllPrintableColorsPopups.firstIndex(of: true)
                     let iP = showingPrintableColorsPopups.firstIndex(of: true)
 
-
                     // IF USER WANTED TO SEE ALL SCREEN COLORS
                     if iAll != nil {
                         ZStack {
@@ -1492,7 +1471,7 @@ struct ContentView: View {
                                     Image(systemName: "xmark.circle")
                                 }
                                 VStack {
-                                    let arrCGs = MandMath.getAllCGColorsList(iSort:iAll!)
+                                    let arrCGs = MandMath.getAllCGColorsList(iSort: iAll!)
                                     let arrColors = arrCGs.map { cgColor in
                                         Color(cgColor)
                                     }
@@ -1521,7 +1500,6 @@ struct ContentView: View {
                         } // end ZStack for popup
                         .transition(.scale)
                     }  // end if popup
-
 
                     // IF USER WANTED TO SEE ALL PRINTABLE COLORS
                     // WITH PLACEHOLDERS
@@ -1537,7 +1515,7 @@ struct ContentView: View {
                                     Image(systemName: "xmark.circle")
                                 }
                                 VStack {
-                                    let arrCGs = MandMath.getAllPrintableCGColorsList(iSort:iAP!)
+                                    let arrCGs = MandMath.getAllPrintableCGColorsList(iSort: iAP!)
                                     let arrColors = arrCGs.map { cgColor in
                                         Color(cgColor)
                                     }
@@ -1567,8 +1545,6 @@ struct ContentView: View {
                         .transition(.scale)
                     }  // end if popup
 
-
-
                     // IF USER WANTED TO SEE ONLY PRINTABLE COLORS
                     // * WITHOUT * PLACEHOLDERS
 
@@ -1583,7 +1559,7 @@ struct ContentView: View {
                                     Image(systemName: "xmark.circle")
                                 }
                                 VStack {
-                                    let arrCGs = MandMath.getPrintableCGColorListSorted(iSort:iP!)
+                                    let arrCGs = MandMath.getPrintableCGColorListSorted(iSort: iP!)
                                     let arrColors = arrCGs.map { cgColor in
                                         Color(cgColor)
                                     }
@@ -1598,9 +1574,9 @@ struct ContentView: View {
                                                 let red = nsColor.redComponent
                                                 let green = nsColor.greenComponent
                                                 let blue = nsColor.blueComponent
-                                                //let colorValues = "R: \(Int(red*255)), G: \(Int(green*255)), B: \(Int(blue*255))"
-                                                //let colorValues = " \(Int(red*255)), \(Int(green*255)), \(Int(blue*255))"
-                                                //let colorValues = " \(String(format: "%03d", Int(red*255))) \(String(format: "%03d", Int(green*255))) \(String(format: "%03d", Int(blue*255)))"
+                                                // let colorValues = "R: \(Int(red*255)), G: \(Int(green*255)), B: \(Int(blue*255))"
+                                                // let colorValues = " \(Int(red*255)), \(Int(green*255)), \(Int(blue*255))"
+                                                // let colorValues = " \(String(format: "%03d", Int(red*255))) \(String(format: "%03d", Int(green*255))) \(String(format: "%03d", Int(blue*255)))"
 
                                                 let colorValueR = "\(Int(red*255))"
                                                 let colorValueG = "\(Int(green*255))"
@@ -1613,7 +1589,6 @@ struct ContentView: View {
                                                         .cornerRadius(4)
                                                         .padding(1)
 
-
                                                     Text(colorValueR)
                                                         .font(.system(size: 10))
                                                         .background(Color.white)
@@ -1624,7 +1599,7 @@ struct ContentView: View {
                                                         .font(.system(size: 10))
                                                         .background(Color.white)
 
-                                                    //Text(colorValues)
+                                                    // Text(colorValues)
                                                     // .font(.system(size: 8))
                                                     //   .padding(1)
                                                     //   .background(Color.white)
@@ -1637,7 +1612,6 @@ struct ContentView: View {
 
                                     } // end for each color
 
-
                                 }  // end VStack of color options
                                 Spacer()
                             } // end VStack
@@ -1649,11 +1623,6 @@ struct ContentView: View {
                         } // end ZStack for popup
                         .transition(.scale)
                     }  // end if popup
-
-
-
-
-
 
                 } // end VStack right side (picture space)
                 .padding(2)
@@ -1834,7 +1803,6 @@ struct ContentView: View {
 
     // HELPER FUNCTIONS ..................................
 
-
     /// Calculated variable for the image aspect ratio.
     /// Uses user-specified image height and width.
     private var aspectRatio: String {
@@ -1875,8 +1843,6 @@ struct ContentView: View {
             return false
         }
     }
-
-
 
     /// Returns the new x to be the picture center x when user drags in the picture.
     ///
@@ -2102,4 +2068,3 @@ struct ContentView: View {
         print(keyEvent)
     }
 }
-

@@ -1,0 +1,6 @@
+framework module Pods_MandArt {
+  umbrella header "Pods-MandArt-umbrella.h"
+
+  export *
+  module * { export * }
+}
