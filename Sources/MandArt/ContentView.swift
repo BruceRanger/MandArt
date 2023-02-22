@@ -1010,10 +1010,10 @@ struct ContentView: View {
 
                                     Text("1")
 
-                                    Slider(value: $doc.picdef.spacingColorFar, in: 0 ... 100, step: 5)
+                                    Slider(value: $doc.picdef.spacingColorFar, in: 1 ... 20, step: 1)
                                         .accentColor(Color.blue)
 
-                                    Text("100")
+                                    Text("20")
 
                                     TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge)
                                         .textFieldStyle(.roundedBorder)
@@ -1029,13 +1029,13 @@ struct ContentView: View {
                                 Text("Spacing near to MiniMand (far from edge)")
                                 HStack {
 
-                                    Text("1")
+                                    Text("5")
 
-                                    Slider(value: $doc.picdef.spacingColorNear, in: 0 ... 100, step: 5)
+                                    Slider(value: $doc.picdef.spacingColorNear, in: 5 ... 50, step: 5)
                                         .accentColor(Color.blue)
 
 
-                                    Text("100")
+                                    Text("50")
 
                                     TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
                                         .textFieldStyle(.roundedBorder)
@@ -1057,12 +1057,12 @@ struct ContentView: View {
                                 // Min Iterations with Slider
                                 Text("Change in minimum iteration:")
                                 HStack {
-                                    Text("0")
+                                    Text("-5")
 
-                                    Slider(value: $doc.picdef.dFIterMin, in: 0 ... 100, step: 5)
+                                    Slider(value: $doc.picdef.dFIterMin, in: -5 ... 20, step: 1)
 
 
-                                    Text("100")
+                                    Text("20")
 
                                     TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration)
                                         .textFieldStyle(.roundedBorder)
@@ -1079,12 +1079,12 @@ struct ContentView: View {
 
                                 HStack {
 
-                                    Text("0")
+                                    Text("10")
 
                                 Slider(value: Binding(
                                     get: { Double(doc.picdef.nBlocks) },
                                     set: { doc.picdef.nBlocks = Int($0) }
-                                ), in: 0...100, step: 5)
+                                ), in: 10...100, step: 10)
                                 .accentColor(Color.green)
 
 
