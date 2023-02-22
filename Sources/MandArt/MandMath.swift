@@ -150,7 +150,6 @@ enum MandMath {
         }
     }
 
-
     /// Returns an array of printable color options from `MandMath.printableColorList`.
     ///
     /// - Parameter hue: A `Hue` object.
@@ -222,7 +221,7 @@ enum MandMath {
             let gDiff = color[1] - green
             let bDiff = color[2] - blue
             //     print("distances = ", distances)
-            //print("rDiff * rDiff + gDiff * gDiff + bDiff * bDiff = ",
+            // print("rDiff * rDiff + gDiff * gDiff + bDiff * bDiff = ",
             //      rDiff * rDiff + gDiff * gDiff + bDiff * bDiff)
             return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff
         }
@@ -238,7 +237,7 @@ enum MandMath {
             }.map(\.element)
 
         // log information about the closest printable color(s)
-        //print("    count of closest:\(nearest.count)")
+        // print("    count of closest:\(nearest.count)")
         for item in nearest {
             print("    closest:\(item)\n")
         }
@@ -256,26 +255,25 @@ enum MandMath {
         let g = components[1]
         let b = components[2]
 
-
         // convert the floating-point components to integers in the range 0-255
         let red = Int(round(r * 255.0))
         let green = Int(round(g * 255.0))
         let blue = Int(round(b * 255.0))
 
         // format the color components for printing
-        //let rr = padIntToThreeCharacters(number: red)
-        //let gg = padIntToThreeCharacters(number: green)
-        //let bb = padIntToThreeCharacters(number: blue)
-        //print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
+        // let rr = padIntToThreeCharacters(number: red)
+        // let gg = padIntToThreeCharacters(number: green)
+        // let bb = padIntToThreeCharacters(number: blue)
+        // print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
 
         // calculate distances between the input color and each printable color
         let distances = MandMath.printableColorList.map { entry -> Int in
             let rDiff = entry[0] - red
-            //print("rDiff", rDiff)
+            // print("rDiff", rDiff)
             let gDiff = entry[1] - green
             let bDiff = entry[2] - blue
             let distance = rDiff*rDiff + gDiff*gDiff + bDiff*bDiff
-            //print("distance for rdiff,gdiff,bdiff is: ", distance)
+            // print("distance for rdiff,gdiff,bdiff is: ", distance)
             return distance
         }
         let minDistance = Int(distances.min()!)
@@ -356,7 +354,7 @@ enum MandMath {
         }
 
         // otherwise, check minimum distance to see if close enough
-        let minDistance = MandMath.getMinimumDistance(color: color,num: num)
+        let minDistance = MandMath.getMinimumDistance(color: color, num: num)
         let limit = 33*33
         if minDistance <= limit {
             return true
@@ -374,10 +372,9 @@ enum MandMath {
     ///  Function is in MandMath which knows about all colors.
     ///  Hue class only knows about one color.
     func isPrintableDisplayText(color: CGColor, num: Int) -> String {
-        if (MandMath.isColorInPrintableList(color:color, num: num)) {
+        if MandMath.isColorInPrintableList(color: color, num: num) {
             return " "
-        }
-        else {
+        } else {
             return "!"
         }
     }
@@ -428,7 +425,6 @@ enum MandMath {
         String(format: "%03d", number)
     }
 
-
     static func getPrintableCGColorList() -> [CGColor] {
         let lst = MandMath.printableColorList.map { colorValues in
             let red = CGFloat(colorValues[0]) / 255.0
@@ -449,7 +445,7 @@ enum MandMath {
                     let blue = CGFloat(colorValues[2]) / 255.0
                     return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
                 }
-            case 1: //rbg
+            case 1: // rbg
                 lst = MandMath.printableColorListRBG.map { colorValues in
                     let red = CGFloat(colorValues[0]) / 255.0
                     let green = CGFloat(colorValues[1]) / 255.0
@@ -463,7 +459,7 @@ enum MandMath {
                     let blue = CGFloat(colorValues[2]) / 255.0
                     return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
                 }
-            case 3: //gbr
+            case 3: // gbr
                 lst = MandMath.printableColorListGBR.map { colorValues in
                     let red = CGFloat(colorValues[0]) / 255.0
                     let green = CGFloat(colorValues[1]) / 255.0
@@ -509,7 +505,7 @@ enum MandMath {
                         }
                     }
                 }
-            case 1: //rbg
+            case 1: // rbg
                 for r in self.colorInts {
                     for b in self.colorInts {
                         for g in self.colorInts {
@@ -533,7 +529,7 @@ enum MandMath {
                         }
                     }
                 }
-            case 3: //gbr
+            case 3: // gbr
                 for g in self.colorInts {
                     for b in self.colorInts {
                         for r in self.colorInts {
@@ -592,7 +588,7 @@ enum MandMath {
                             let green = round(CGFloat(g)) / 255.0
                             let blue = round(CGFloat(b)) / 255.0
                             let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-                            if MandMath.isColorInPrintableList(color:color, num:1){
+                            if MandMath.isColorInPrintableList(color: color, num: 1) {
                                 allColors.append(color)
                             } else {
                                 allColors.append(CGColor.white)
@@ -600,7 +596,7 @@ enum MandMath {
                         }
                     }
                 }
-            case 1: //rbg
+            case 1: // rbg
                 for r in self.colorInts {
                     for b in self.colorInts {
                         for g in self.colorInts {
@@ -608,7 +604,7 @@ enum MandMath {
                             let green = round(CGFloat(g)) / 255.0
                             let blue = round(CGFloat(b)) / 255.0
                             let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-                            if MandMath.isColorInPrintableList(color:color, num:1){
+                            if MandMath.isColorInPrintableList(color: color, num: 1) {
                                 allColors.append(color)
                             } else {
                                 allColors.append(CGColor.white)
@@ -624,7 +620,7 @@ enum MandMath {
                             let green = round(CGFloat(g)) / 255.0
                             let blue = round(CGFloat(b)) / 255.0
                             let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-                            if MandMath.isColorInPrintableList(color:color, num:1){
+                            if MandMath.isColorInPrintableList(color: color, num: 1) {
                                 allColors.append(color)
                             } else {
                                 allColors.append(CGColor.white)
@@ -632,7 +628,7 @@ enum MandMath {
                         }
                     }
                 }
-            case 3: //gbr
+            case 3: // gbr
                 for g in self.colorInts {
                     for b in self.colorInts {
                         for r in self.colorInts {
@@ -640,7 +636,7 @@ enum MandMath {
                             let green = round(CGFloat(g)) / 255.0
                             let blue = round(CGFloat(b)) / 255.0
                             let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-                            if MandMath.isColorInPrintableList(color:color, num:1){
+                            if MandMath.isColorInPrintableList(color: color, num: 1) {
                                 allColors.append(color)
                             } else {
                                 allColors.append(CGColor.white)
@@ -656,7 +652,7 @@ enum MandMath {
                             let green = round(CGFloat(g)) / 255.0
                             let blue = round(CGFloat(b)) / 255.0
                             let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-                            if MandMath.isColorInPrintableList(color:color, num:1){
+                            if MandMath.isColorInPrintableList(color: color, num: 1) {
                                 allColors.append(color)
                             } else {
                                 allColors.append(CGColor.white)
@@ -672,7 +668,7 @@ enum MandMath {
                             let green = round(CGFloat(g)) / 255.0
                             let blue = round(CGFloat(b)) / 255.0
                             let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-                            if MandMath.isColorInPrintableList(color:color, num:1){
+                            if MandMath.isColorInPrintableList(color: color, num: 1) {
                                 allColors.append(color)
                             } else {
                                 allColors.append(CGColor.white)
@@ -685,9 +681,7 @@ enum MandMath {
         return allColors
     }
 
-
-    static let colorInts = [0,36,73, 109, 146,182,219,255]
-
+    static let colorInts = [0, 36, 73, 109, 146, 182, 219, 255]
 
     static let printableColorListRGB = printableColorList.sorted { (lhs, rhs) -> Bool in
         if lhs[0] != rhs[0] {
@@ -766,7 +760,6 @@ enum MandMath {
             return lhs[0] < rhs[0]
         }
     }
-
 
     /// MandMath keeps a list of known printable colors
     ///
