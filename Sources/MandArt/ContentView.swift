@@ -1009,15 +1009,15 @@ struct ContentView: View {
                                 HStack {
                                     Text("1")
                                     Slider(value: $doc.picdef.spacingColorFar, in: 0 ... 100, step: 5)
-                                        .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
+                               
                                     Text("100")
                                     TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
-                                        .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
+                                       
                                 }
-                                .padding(.horizontal)
+                                .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
                                 // END  Slider
 
 
@@ -1026,15 +1026,15 @@ struct ContentView: View {
                                 HStack {
                                     Text("1")
                                     Slider(value: $doc.picdef.spacingColorNear, in: 0 ... 100, step: 5)
-                                        .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
                                     Text("100")
                                     TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
-                                        .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
+                                       
                                 }
                                 .padding(.horizontal)
+                                .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
                                 // END  Slider
 
 
@@ -1043,40 +1043,39 @@ struct ContentView: View {
 
 
                             Group {
+                                
                                 // Min Iterations with Slider
                                 Text("Change in minimum iteration:")
-                                HStack{
-
+                                HStack {
                                     Text("0")
                                     Slider(value: $doc.picdef.dFIterMin, in: 0 ... 100, step: 5)
-                                        //.help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
                                     Text("100")
-
                                     TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
-                                        .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
+                                        
                                 }
                                 .padding(.horizontal)
+                                .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
                                 // END Min Iterations with Slider
 
-                                // nblocks with Slider
-                                Text("nBlocks:")
+                                // nblocks with Stepper
                                 HStack {
-                                    Text("1")
-                                    Text("---Slider----")
-                                    //Slider(value: $doc.picdef.nBlocks, in: 0 ... 100, step: 5)
-                                        .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
-                                    Text("100")
+                                      Stepper("Use \(doc.picdef.nBlocks) blocks of color",  value: $doc.picdef.nBlocks, in:0...100)
+                                        .padding(2)
+
                                     TextField("60", value: $doc.picdef.nBlocks, formatter: ContentView.fmtNBlocks)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
-                                       .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
+                                       
                                }
                                 .padding(.horizontal)
+                                .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
                                 // END nblocks with Slider
+                                
+                                Divider()
 
                             } // END GROUP of last 2 slider inputs
 
