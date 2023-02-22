@@ -1007,10 +1007,14 @@ struct ContentView: View {
                                     // Spacing 1 with Slider
                                 Text("Spacing far from MiniMand (near to edge)")
                                 HStack {
+
                                     Text("1")
+
                                     Slider(value: $doc.picdef.spacingColorFar, in: 0 ... 100, step: 5)
-                               
+                                        .accentColor(Color.blue)
+
                                     Text("100")
+
                                     TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
@@ -1024,9 +1028,15 @@ struct ContentView: View {
                                 // Spacing 2 with Slider
                                 Text("Spacing near to MiniMand (far from edge)")
                                 HStack {
+
                                     Text("1")
+
                                     Slider(value: $doc.picdef.spacingColorNear, in: 0 ... 100, step: 5)
+                                        .accentColor(Color.blue)
+
+
                                     Text("100")
+
                                     TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
@@ -1048,8 +1058,12 @@ struct ContentView: View {
                                 Text("Change in minimum iteration:")
                                 HStack {
                                     Text("0")
+
                                     Slider(value: $doc.picdef.dFIterMin, in: 0 ... 100, step: 5)
+
+
                                     Text("100")
+
                                     TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
@@ -1060,19 +1074,41 @@ struct ContentView: View {
                                 .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
                                 // END Min Iterations with Slider
 
-                                // nblocks with Stepper
+                                // nblocks with slider
+                                Text("Number of Color Blocks:")
+
                                 HStack {
-                                      Stepper("Use \(doc.picdef.nBlocks) blocks of color",  value: $doc.picdef.nBlocks, in:0...100)
-                                        .padding(2)
+
+                                    Text("0")
+
+                                Slider(value: Binding(
+                                    get: { Double(doc.picdef.nBlocks) },
+                                    set: { doc.picdef.nBlocks = Int($0) }
+                                ), in: 0...100, step: 5)
+                                .accentColor(Color.green)
+
+
+                                    Text("100")
 
                                     TextField("60", value: $doc.picdef.nBlocks, formatter: ContentView.fmtNBlocks)
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
-                                       
-                               }
+                                }
                                 .padding(.horizontal)
                                 .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
+//                                HStack {
+//                                      Stepper("Use \(doc.picdef.nBlocks) blocks of color",  value: $doc.picdef.nBlocks, in:0...100)
+//                                        .padding(2)
+//
+//                                    TextField("60", value: $doc.picdef.nBlocks, formatter: ContentView.fmtNBlocks)
+//                                        .textFieldStyle(.roundedBorder)
+//                                        .multilineTextAlignment(.trailing)
+//                                        .frame(maxWidth: 50)
+//
+//                               }
+//                                .padding(.horizontal)
+//                                .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
                                 // END nblocks with Slider
                                 
                                 Divider()
