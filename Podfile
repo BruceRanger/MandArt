@@ -1,10 +1,8 @@
-# Uncomment the next line to define a global platform for your project
-platform :macos, '13.1'
-pod 'swift-syntax', '~> 0.50400.0'
-
+source 'https://github.com/apple/swift-package-manager.git'
 
 target 'MandArt' do
-  # Comment the next line if you don't want to use dynamic frameworks
+  platform :macos, '13.1'
+
   use_frameworks!
 
   # Pods for MandArt
