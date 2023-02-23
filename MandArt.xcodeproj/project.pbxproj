@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		36432EFA10666694A410F9BC /* Pods_MandArt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57370DEFF3B8B7318AFF9FF9 /* Pods_MandArt.framework */; };
 		6A3AEC0F26F879E700D7E31A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3AEC0E26F879E700D7E31A /* ContentView.swift */; };
 		6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A3AEC1026F879F500D7E31A /* Assets.xcassets */; };
 		8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E113293A5011005F5CB4 /* MandArtApp.swift */; };
@@ -47,7 +46,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36432EFA10666694A410F9BC /* Pods_MandArt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,7 +401,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 0.1.0;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
@@ -443,7 +441,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 0.1.0;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
