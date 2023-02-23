@@ -15,7 +15,6 @@
 		882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED2293409FE003ACB0B /* PictureDefinition.swift */; };
 		882BAED72934167D003ACB0B /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 882BAED62934167D003ACB0B /* default.json */; };
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
-		8830D5D129A6D4F700997340 /* Pods_MandArt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57370DEFF3B8B7318AFF9FF9 /* Pods_MandArt.framework */; };
 		88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88511CB22948B3FF009B5CF6 /* MandMath.swift */; };
 		8892A41F299C7F5000D9D3A5 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 8892A41E299C7F4F00D9D3A5 /* .swift-version */; };
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
@@ -47,7 +46,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8830D5D129A6D4F700997340 /* Pods_MandArt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
