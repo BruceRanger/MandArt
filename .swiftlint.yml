@@ -5,7 +5,6 @@ excluded:
   - Carthage
   - Pods
   - ./Sources/MandArt/ContentView.swift
-  - ./Sources/MandArt/Hue.swift
   - ./Sources/MandArt/MandArtApp.swift
   - ./Sources/MandArt/MandArtDocument.swift
   - ./Sources/MandArt/MandMath.swift
@@ -20,3 +19,7 @@ opt_in_rules:
 disabled_rules:
   - cyclomatic_complexity
   - type_name
+  - identifier_name
+  - large_tuple
+
+
