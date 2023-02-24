@@ -1870,7 +1870,7 @@ struct ContentView: View {
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
         let dCenterX = diffY * sin(thetaRadians) + diffX * cos(thetaRadians)
-        let newCenterX: Double = doc.picdef.xCenter - dCenterX
+        let newCenterX: Double = doc.picdef.xCenter + dCenterX
         return newCenterX
     }
 
