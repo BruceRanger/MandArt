@@ -313,8 +313,8 @@ enum MandMath {
 
         // Print results of the check,
         // including the color number and the [red, green, blue] values.
-        print("Color No. \(num)(\(rr)-\(gg)-\(bb)): in printable list: ", inList)
-        print("")
+   //     print("Color No. \(num)(\(rr)-\(gg)-\(bb)): in printable list: ", inList)
+   //     print("")
 
         // Return the result of the check.
         return inList
@@ -345,8 +345,8 @@ enum MandMath {
 
         // Print results of the check,
         // including the color number and the [red, green, blue] values.
-        print("Color No. \(num)(\(rr)-\(gg)-\(bb)): in printable list: ", inList)
-        print("")
+   //     print("Color No. \(num)(\(rr)-\(gg)-\(bb)): in printable list: ", inList)
+   //     print("")
 
         // if in list, return true
         if inList {

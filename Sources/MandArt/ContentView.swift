@@ -109,10 +109,12 @@ struct ContentView: View {
         let scale: Double = doc.picdef.scale
         let xCenter: Double = doc.picdef.xCenter
         let yCenter: Double = doc.picdef.yCenter
-        let theta: Double = doc.picdef.theta // in degrees
+        let theta: Double = -doc.picdef.theta // in degrees
+  //      print ("theta", theta)
         let dFIterMin: Double = doc.picdef.dFIterMin
         let pi = 3.14159
         let thetaR: Double = pi * theta / 180.0 // R for Radians
+   //     print ("thetaR", thetaR)
         let rSqLimit: Double = doc.picdef.rSqLimit
 
         var contextImage: CGImage
@@ -767,7 +769,7 @@ struct ContentView: View {
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
-                                                  print("triggering tab from img height")
+                             //                     print("triggering tab from img height")
                                                   self.triggerTab(on: self.textFieldImageHeight)
                                               }
                                               .textFieldStyle(.roundedBorder)
@@ -803,7 +805,7 @@ struct ContentView: View {
                                               value: $doc.picdef.xCenter,
                                               formatter: ContentView.fmtXY) { isStarted in
                                         if isStarted {
-                                            print("editing xC, pausing updates")
+                     //                       print("editing xC, pausing updates")
                                             self.pauseUpdates()
                                         }
                                     }
@@ -830,7 +832,7 @@ struct ContentView: View {
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
-                                                  print("triggering tab from Y")
+                        //                          print("triggering tab from Y")
                                                   self.triggerTab(on: self.textFieldY)
                                               }
                                               .textFieldStyle(.roundedBorder)
@@ -1859,8 +1861,10 @@ struct ContentView: View {
         let startY = tap.startLocation.y
         let endX = tap.location.x
         let endY = tap.location.y
-        let movedX = endX - startX
+        let movedX = -(endX - startX)
+        print("movedX in Drag X", movedX)
         let movedY = endY - startY
+        print("movedY in Drag X", movedY)
         let thetaDegrees = Double(doc.picdef.theta)
         let thetaRadians = -3.14159 * thetaDegrees / 180 // change sign since positive angle is clockwise
         let diffX = movedX / doc.picdef.scale
@@ -1881,8 +1885,11 @@ struct ContentView: View {
         let startY = tap.startLocation.y
         let endX = tap.location.x
         let endY = tap.location.y
-        let movedX = endX - startX
+        let movedX = -(endX - startX)
+        print("movedX in Drag Y", movedX)
         let movedY = endY - startY
+        print("movedY in Drag Y", movedY)
+        print("")
         let thetaDegrees = Double(doc.picdef.theta)
         let thetaRadians = -3.14159 * thetaDegrees / 180 // change sign since positive angle is clockwise
         let diffX = movedX / doc.picdef.scale
@@ -1899,17 +1906,19 @@ struct ContentView: View {
     /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
     ///
     private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-        print("getting x from tap")
+   //     print("getting x from tap")
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
         let w = Double(doc.picdef.imageWidth)
         let h = Double(doc.picdef.imageHeight)
-        let movedX = startX - w / 2.0
+        let movedX = (startX - w / 2.0)
+        print("movedX in Tap X", movedX)
         let movedY = ((h - startY) - h / 2.0)
+        print("movedY in Tap X", movedY)
         let thetaDegrees = Double(doc.picdef.theta)
         let thetaRadians = -3.14159 * thetaDegrees / 180 // change sign since positive angle is clockwise
-        let diffX = (startX - w / 2.0) / doc.picdef.scale
-        let diffY = ((h - startY) - h / 2.0) / doc.picdef.scale
+        let diffX = movedX / doc.picdef.scale
+        let diffY = movedY / doc.picdef.scale
         let dCenterX = diffY * sin(thetaRadians) + diffX * cos(thetaRadians)
         let newCenterX: Double = doc.picdef.xCenter + dCenterX
         return newCenterX
@@ -1922,13 +1931,16 @@ struct ContentView: View {
     /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
     ///
     private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-        print("getting y from tap")
+  //      print("getting y from tap")
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
         let w = Double(doc.picdef.imageWidth)
         let h = Double(doc.picdef.imageHeight)
-        let movedX = startX - w / 2.0
+        let movedX = (startX - w / 2.0)
+        print("movedX in Tap Y", movedX)
         let movedY = ((h - startY) - h / 2.0)
+        print("movedY in Tap Y", movedY)
+        print("")
         let thetaDegrees = Double(doc.picdef.theta)
         let thetaRadians = -3.14159 * thetaDegrees / 180 // change sign since positive angle is clockwise
         let diffX = movedX / doc.picdef.scale
