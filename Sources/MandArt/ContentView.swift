@@ -1904,6 +1904,8 @@ struct ContentView: View {
         let startY = tap.startLocation.y
         let w = Double(doc.picdef.imageWidth)
         let h = Double(doc.picdef.imageHeight)
+        let movedX = startX - w / 2.0
+        let movedY = ((h - startY) - h / 2.0)
         let thetaDegrees = Double(doc.picdef.theta)
         let thetaRadians = -3.14159 * thetaDegrees / 180 // change sign since positive angle is clockwise
         let diffX = (startX - w / 2.0) / doc.picdef.scale
@@ -1925,10 +1927,12 @@ struct ContentView: View {
         let startY = tap.startLocation.y
         let w = Double(doc.picdef.imageWidth)
         let h = Double(doc.picdef.imageHeight)
+        let movedX = startX - w / 2.0
+        let movedY = ((h - startY) - h / 2.0)
         let thetaDegrees = Double(doc.picdef.theta)
         let thetaRadians = -3.14159 * thetaDegrees / 180 // change sign since positive angle is clockwise
-        let diffX = (startX - w / 2.0) / doc.picdef.scale
-        let diffY = ((h - startY) - h / 2.0) / doc.picdef.scale
+        let diffX = movedX / doc.picdef.scale
+        let diffY = movedY / doc.picdef.scale
         let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
         let newCenterY: Double = doc.picdef.yCenter + dCenterY
         return newCenterY
