@@ -1661,7 +1661,7 @@ struct ContentView: View {
             }
             .onEnded { tap in
                 // if we haven't moved very much, treat it as a tap event
-                if self.moved < 1, self.moved > -1 {
+                if self.moved < 2, self.moved > -2 {
                     doc.picdef.xCenter = getCenterXFromTap(tap)
                     doc.picdef.yCenter = getCenterYFromTap(tap)
                     showMandArtBitMap() // redraw after new center
