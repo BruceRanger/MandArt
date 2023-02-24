@@ -1866,8 +1866,8 @@ struct ContentView: View {
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
         let dCenterX = diffY * sin(thetaRadians) + diffX * cos(thetaRadians)
-        let newCenter: Double = doc.picdef.xCenter - dCenterX
-        return newCenter
+        let newCenterX: Double = doc.picdef.xCenter - dCenterX
+        return newCenterX
     }
 
     /// Returns the new y to be the picture center y when user drags in the picture.
@@ -1888,8 +1888,8 @@ struct ContentView: View {
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
         let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
-        let newCenter: Double = doc.picdef.yCenter + dCenterY
-        return newCenter
+        let newCenterY: Double = doc.picdef.yCenter + dCenterY
+        return newCenterY
     }
 
     /// Returns the new x to be the picture center x when user clicks on the picture.
@@ -1909,8 +1909,8 @@ struct ContentView: View {
         let diffX = (startX - w / 2.0) / doc.picdef.scale
         let diffY = ((h - startY) - h / 2.0) / doc.picdef.scale
         let dCenterX = diffY * sin(thetaRadians) + diffX * cos(thetaRadians)
-        let newCenter: Double = doc.picdef.xCenter + dCenterX
-        return newCenter
+        let newCenterX: Double = doc.picdef.xCenter + dCenterX
+        return newCenterX
     }
 
     /// Returns the new y to be the picture center y when user clicks on the picture.
@@ -1930,8 +1930,8 @@ struct ContentView: View {
         let diffX = (startX - w / 2.0) / doc.picdef.scale
         let diffY = ((h - startY) - h / 2.0) / doc.picdef.scale
         let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
-        let newCenter: Double = doc.picdef.yCenter + dCenterY
-        return newCenter
+        let newCenterY: Double = doc.picdef.yCenter + dCenterY
+        return newCenterY
     }
 
     /// Return the document directory for this app.
