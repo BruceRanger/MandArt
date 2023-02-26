@@ -1862,9 +1862,7 @@ struct ContentView: View {
         let endX = tap.location.x
         let endY = tap.location.y
         let movedX = -(endX - startX)
-        print("movedX in Drag X", movedX)
         let movedY = endY - startY
-        print("movedY in Drag X", movedY)
         let thetaDegrees = Double(doc.picdef.theta)
         let thetaRadians = 3.14159 * thetaDegrees / 180
         let diffX = movedX / doc.picdef.scale
@@ -1886,10 +1884,7 @@ struct ContentView: View {
         let endX = tap.location.x
         let endY = tap.location.y
         let movedX = -(endX - startX)
-        print("movedX in Drag Y", movedX)
         let movedY = endY - startY
-        print("movedY in Drag Y", movedY)
-        print("")
         let thetaDegrees = Double(doc.picdef.theta)
         let thetaRadians = 3.14159 * thetaDegrees / 180
         let diffX = movedX / doc.picdef.scale
@@ -1906,15 +1901,12 @@ struct ContentView: View {
     /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
     ///
     private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-   //     print("getting x from tap")
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
         let w = Double(doc.picdef.imageWidth)
         let h = Double(doc.picdef.imageHeight)
         let movedX = (startX - w / 2.0)
-        print("movedX in Tap X", movedX)
         let movedY = ((h - startY) - h / 2.0)
-        print("movedY in Tap X", movedY)
         let thetaDegrees = Double(doc.picdef.theta)
         let thetaRadians = 3.14159 * thetaDegrees / 180
         let diffX = movedX / doc.picdef.scale
@@ -1931,16 +1923,12 @@ struct ContentView: View {
     /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
     ///
     private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
-  //      print("getting y from tap")
         let startX = tap.startLocation.x
         let startY = tap.startLocation.y
         let w = Double(doc.picdef.imageWidth)
         let h = Double(doc.picdef.imageHeight)
         let movedX = (startX - w / 2.0)
-        print("movedX in Tap Y", movedX)
         let movedY = ((h - startY) - h / 2.0)
-        print("movedY in Tap Y", movedY)
-        print("")
         let thetaDegrees = Double(doc.picdef.theta)
         let thetaRadians = 3.14159 * thetaDegrees / 180
         let diffX = movedX / doc.picdef.scale
