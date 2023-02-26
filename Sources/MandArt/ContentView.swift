@@ -1866,7 +1866,7 @@ struct ContentView: View {
         let movedY = endY - startY
         print("movedY in Drag X", movedY)
         let thetaDegrees = Double(doc.picdef.theta)
-        let thetaRadians = -3.14159 * thetaDegrees / 180 // change sign since positive angle is clockwise
+        let thetaRadians = 3.14159 * thetaDegrees / 180
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
         let dCenterX = diffY * sin(thetaRadians) + diffX * cos(thetaRadians)
@@ -1891,7 +1891,7 @@ struct ContentView: View {
         print("movedY in Drag Y", movedY)
         print("")
         let thetaDegrees = Double(doc.picdef.theta)
-        let thetaRadians = -3.14159 * thetaDegrees / 180 // change sign since positive angle is clockwise
+        let thetaRadians = 3.14159 * thetaDegrees / 180
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
         let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
@@ -1916,7 +1916,7 @@ struct ContentView: View {
         let movedY = ((h - startY) - h / 2.0)
         print("movedY in Tap X", movedY)
         let thetaDegrees = Double(doc.picdef.theta)
-        let thetaRadians = -3.14159 * thetaDegrees / 180 // change sign since positive angle is clockwise
+        let thetaRadians = 3.14159 * thetaDegrees / 180
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
         let dCenterX = diffY * sin(thetaRadians) + diffX * cos(thetaRadians)
@@ -1942,7 +1942,7 @@ struct ContentView: View {
         print("movedY in Tap Y", movedY)
         print("")
         let thetaDegrees = Double(doc.picdef.theta)
-        let thetaRadians = -3.14159 * thetaDegrees / 180 // change sign since positive angle is clockwise
+        let thetaRadians = 3.14159 * thetaDegrees / 180
         let diffX = movedX / doc.picdef.scale
         let diffY = movedY / doc.picdef.scale
         let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
