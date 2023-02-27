@@ -16,15 +16,11 @@
 		882BAED72934167D003ACB0B /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 882BAED62934167D003ACB0B /* default.json */; };
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
 		88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88511CB22948B3FF009B5CF6 /* MandMath.swift */; };
-		8892A41F299C7F5000D9D3A5 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 8892A41E299C7F4F00D9D3A5 /* .swift-version */; };
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		03141719B2C05B3C2860778F /* Pods-MandArt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MandArt.release.xcconfig"; path = "Target Support Files/Pods-MandArt/Pods-MandArt.release.xcconfig"; sourceTree = "<group>"; };
-		3655C7087BB805AC8900132D /* Pods-MandArt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MandArt.debug.xcconfig"; path = "Target Support Files/Pods-MandArt/Pods-MandArt.debug.xcconfig"; sourceTree = "<group>"; };
-		57370DEFF3B8B7318AFF9FF9 /* Pods_MandArt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MandArt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A3AEC0926F879E700D7E31A /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A3AEC0926F879E700D7E31A /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MandArt.app; path = /Users/denisecase/Documents/MandArt/build/Debug/MandArt.app; sourceTree = "<absolute>"; };
 		6A3AEC0E26F879E700D7E31A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6A3AEC1026F879F500D7E31A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A3AEC1826F879F500D7E31A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -35,7 +31,6 @@
 		882BAED62934167D003ACB0B /* default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = default.json; sourceTree = "<group>"; };
 		882BAED829346C92003ACB0B /* Hue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hue.swift; sourceTree = "<group>"; };
 		88511CB22948B3FF009B5CF6 /* MandMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandMath.swift; sourceTree = "<group>"; };
-		8892A41E299C7F4F00D9D3A5 /* .swift-version */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-version"; sourceTree = "<group>"; };
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
 		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
@@ -52,14 +47,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		25F7AD3A93CC8C18A8CDF18A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				57370DEFF3B8B7318AFF9FF9 /* Pods_MandArt.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
@@ -68,22 +55,10 @@
 				889E3F22293A7733009944AC /* MandArtRelease.entitlements */,
 				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
 				889E3F23293AE0B6009944AC /* Documentation.docc */,
-				8892A41E299C7F4F00D9D3A5 /* .swift-version */,
 				88A1716629913A0800A85AED /* Sources */,
 				881B2B69293CE2A200037032 /* Credits.rtf */,
 				6A3AEC0B26F879E700D7E31A /* MandArt */,
-				6A3AEC0A26F879E700D7E31A /* Products */,
-				FF47708F3788BE4248B345C6 /* Pods */,
-				25F7AD3A93CC8C18A8CDF18A /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		6A3AEC0A26F879E700D7E31A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				6A3AEC0926F879E700D7E31A /* MandArt.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		6A3AEC0B26F879E700D7E31A /* MandArt */ = {
@@ -115,15 +90,6 @@
 			path = MandArt;
 			sourceTree = "<group>";
 		};
-		FF47708F3788BE4248B345C6 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3655C7087BB805AC8900132D /* Pods-MandArt.debug.xcconfig */,
-				03141719B2C05B3C2860778F /* Pods-MandArt.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -131,11 +97,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A3AEC1C26F879F500D7E31A /* Build configuration list for PBXNativeTarget "MandArt" */;
 			buildPhases = (
-				9DE5EA8E6D21A9329833E287 /* [CP] Check Pods Manifest.lock */,
 				6A3AEC0526F879E700D7E31A /* Sources */,
 				6A3AEC0626F879E700D7E31A /* Frameworks */,
 				6A3AEC0726F879E700D7E31A /* Resources */,
-				8830D5CF29A6C3F600997340 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -170,9 +134,8 @@
 			);
 			mainGroup = 6A3AEC0026F879E700D7E31A;
 			packageReferences = (
-				8830D5D029A6D0DC00997340 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
-			productRefGroup = 6A3AEC0A26F879E700D7E31A /* Products */;
+			productRefGroup = 6A3AEC0026F879E700D7E31A;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -186,7 +149,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8892A41F299C7F5000D9D3A5 /* .swift-version in Resources */,
 				881B2B6A293CE2A200037032 /* Credits.rtf in Resources */,
 				882BAED72934167D003ACB0B /* default.json in Resources */,
 				6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */,
@@ -194,51 +156,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		8830D5CF29A6C3F600997340 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"",
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
-		};
-		9DE5EA8E6D21A9329833E287 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MandArt-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6A3AEC0526F879E700D7E31A /* Sources */ = {
@@ -378,7 +295,6 @@
 		};
 		6A3AEC1D26F879F500D7E31A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3655C7087BB805AC8900132D /* Pods-MandArt.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -419,7 +335,6 @@
 		};
 		6A3AEC1E26F879F500D7E31A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03141719B2C05B3C2860778F /* Pods-MandArt.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -478,17 +393,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		8830D5D029A6D0DC00997340 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.50.3;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 6A3AEC0126F879E700D7E31A /* Project object */;
 }
