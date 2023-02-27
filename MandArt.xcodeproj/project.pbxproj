@@ -34,8 +34,8 @@
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
 		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
-		C5F4AF5029AD095800E731CA /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MandArt.app; path = /Users/bhj/MandArt/build/Debug/MandArt.app; sourceTree = "<absolute>"; };
 		C5F4AF5129AD302F00E731CA /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icons; sourceTree = "<group>"; };
+		C5F4AF5329AD464600E731CA /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +61,7 @@
 				88A1716629913A0800A85AED /* Sources */,
 				881B2B69293CE2A200037032 /* Credits.rtf */,
 				6A3AEC0B26F879E700D7E31A /* MandArt */,
+				C5F4AF5329AD464600E731CA /* MandArt.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,7 +111,7 @@
 			);
 			name = MandArt;
 			productName = MandArt;
-			productReference = C5F4AF5029AD095800E731CA /* MandArt.app */;
+			productReference = C5F4AF5329AD464600E731CA /* MandArt.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -310,7 +311,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = L3C8KXQ7DP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = NO;
 				"INCLUDED_SOURCE_FILE_NAMES[arch=*]" = "";
@@ -350,7 +351,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = L3C8KXQ7DP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
