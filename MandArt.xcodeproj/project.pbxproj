@@ -17,10 +17,10 @@
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
 		88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88511CB22948B3FF009B5CF6 /* MandMath.swift */; };
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
+		C5F4AF5229AD302F00E731CA /* icons in Resources */ = {isa = PBXBuildFile; fileRef = C5F4AF5129AD302F00E731CA /* icons */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6A3AEC0926F879E700D7E31A /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MandArt.app; path = /Users/denisecase/Documents/MandArt/build/Debug/MandArt.app; sourceTree = "<absolute>"; };
 		6A3AEC0E26F879E700D7E31A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6A3AEC1026F879F500D7E31A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A3AEC1826F879F500D7E31A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -34,6 +34,8 @@
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
 		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
+		C5F4AF5029AD095800E731CA /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MandArt.app; path = /Users/bhj/MandArt/build/Debug/MandArt.app; sourceTree = "<absolute>"; };
+		C5F4AF5129AD302F00E731CA /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icons; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +52,7 @@
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
+				C5F4AF5129AD302F00E731CA /* icons */,
 				6A3AEC1026F879F500D7E31A /* Assets.xcassets */,
 				6A3AEC1826F879F500D7E31A /* Info.plist */,
 				889E3F22293A7733009944AC /* MandArtRelease.entitlements */,
@@ -107,7 +110,7 @@
 			);
 			name = MandArt;
 			productName = MandArt;
-			productReference = 6A3AEC0926F879E700D7E31A /* MandArt.app */;
+			productReference = C5F4AF5029AD095800E731CA /* MandArt.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -150,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				881B2B6A293CE2A200037032 /* Credits.rtf in Resources */,
+				C5F4AF5229AD302F00E731CA /* icons in Resources */,
 				882BAED72934167D003ACB0B /* default.json in Resources */,
 				6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */,
 			);
