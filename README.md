@@ -1,22 +1,21 @@
 # MandArt
 
-> Mandelbrot set running in SwiftUI - create custom art
+[![macos-Monterey](https://img.shields.io/badge/macos-monterey-brightgreen.svg)](https://www.apple.com/macos/monterey)
+[![macos-Ventura](https://img.shields.io/badge/macos-ventura-brightgreen.svg)](https://www.apple.com/macos/ventura)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+[![swift-version](https://img.shields.io/badge/swift-5.7-brightgreen.svg)](https://github.com/apple/swift)
+[![swiftui-version](https://img.shields.io/badge/swiftui-3-brightgreen)](https://developer.apple.com/documentation/swiftui)
+[![xcode-version](https://img.shields.io/badge/xcode-14-brightgreen)](https://developer.apple.com/xcode/)
+
+
+SwiftUI macOS app to create custom art using the Mandelbrot set.
 
 - Applied Physics Engineering
 - [Bruce Johnson](https://github.com/bruceranger)
 
-## Documentation 
-
 - [Documentation](https://denisecase.github.io/MandArt-Docs/documentation/mandart/)
 - [Source](https://github.com/denisecase/MandArt-Docs)
-
-## For
-
-- MacOS v 12+
-
-## Developed On
-
-- Xcode 14.1+
 
 
 ## Generate MandArt-Docs
@@ -50,12 +49,3 @@ In MandArt:
 2. Move Documentation.docc back to root.
 3. Delete the /docs folder.
 
-
-
-## References
-
-- [Install Plugin](https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin)
-- [swift-docc-plugin](https://github.com/apple/swift-docc-plugin)
-- <https://rhonabwy.com/2022/01/28/hosting-your-swift-library-docs-on-github-pages/>
-- [Generating Documentation for Hosting Online](https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin/generating-documentation-for-hosting-online/)
-- [Publishing to Github Pages](https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin/publishing-to-github-pages/)
