@@ -156,7 +156,6 @@ extension MandArtDocument {
         picdef.hues.append(Hue())
         let newLength = picdef.hues.count
         picdef.hues[newLength - 1].num = newLength
-        picdef.nColors = newLength
         let count = picdef.hues.count
         undoManager?.registerUndo(withTarget: self) { doc in
             withAnimation {
@@ -168,7 +167,6 @@ extension MandArtDocument {
     /// Deletes the hue at an index, and registers an undo action.
     func deleteHue(index: Int, undoManager: UndoManager? = nil) {
         let oldHues = picdef.hues
-        picdef.nColors = picdef.nColors - 1
         withAnimation {
             _ = picdef.hues.remove(at: index)
         }

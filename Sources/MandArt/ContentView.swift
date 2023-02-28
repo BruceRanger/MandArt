@@ -1803,7 +1803,7 @@ struct ContentView: View {
     }
 
     private var rightGradientColor: Int {
-        if leftGradientIsValid, doc.picdef.leftNumber < doc.picdef.nColors {
+        if leftGradientIsValid, doc.picdef.leftNumber < doc.picdef.hues.count {
             return doc.picdef.leftNumber + 1
         }
         return 1

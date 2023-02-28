@@ -42,7 +42,6 @@ struct PictureDefinition: Codable, Identifiable {
     var theta: Double = 0.0
     var nImage: Int = 0
     var dFIterMin: Double = 0.0
-    var nColors: Int = 6
     var leftNumber: Int = 1
     var hues: [Hue] = [
         Hue(num: 1, r: 0.0, g: 255.0, b: 0.0),
@@ -76,7 +75,6 @@ struct PictureDefinition: Codable, Identifiable {
     ///   - theta: <#theta description#>
     ///   - nImage: <#nImage description#>
     ///   - dFIterMin: <#dFIterMin description#>
-    ///   - nColors: <#nColors description#>
     ///   - leftNumber: <#leftNumber description#>
     ///   - hues: <#hues description#>
     init(
@@ -94,7 +92,6 @@ struct PictureDefinition: Codable, Identifiable {
         theta: Double,
         nImage: Int,
         dFIterMin: Double,
-        nColors: Int,
         leftNumber: Int,
         hues: [Hue]
     ) {
@@ -112,7 +109,6 @@ struct PictureDefinition: Codable, Identifiable {
         self.theta = theta
         self.nImage = nImage
         self.dFIterMin = dFIterMin
-        self.nColors = nColors
         self.leftNumber = leftNumber
         self.hues = hues
     }
