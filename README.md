@@ -5,25 +5,21 @@
 - Applied Physics Engineering
 - [Bruce Johnson](https://github.com/bruceranger)
 
-## Development
+## Documentation 
 
-- Xcode 14.1
-
-Starting April 2023, 
-all iOS and iPadOS apps submitted to the App Store 
-must be built with Xcode 14.1 and the iOS 16.1 SDK.
+- [Documentation](https://denisecase.github.io/MandArt-Docs/documentation/mandart/)
+- [Source](https://github.com/denisecase/MandArt-Docs)
 
 ## For
 
-- MacOS
+- MacOS v 12+
 
-## XCode Documentation 
+## Developed On
 
-Available at: 
+- Xcode 14.1+
 
-<MandArt/.build/plugins/Swift-DocC/outputs/MandArt.doccarchive>
 
-## Plugin Documentation Generation - for MandArt-Docs
+## Generate MandArt-Docs
 
 To create documentatation for the MandArt-Docs repo.
 
@@ -45,7 +41,6 @@ swift package --allow-writing-to-directory ./docs \
 
 ## After generating Docs
 
-
 1. Copy MandArt/docs to MandArt-Docs/docs 
 2. Commit and push MandArt-Docs to GitHub (using VS Code)
 
@@ -55,11 +50,6 @@ In MandArt:
 2. Move Documentation.docc back to root.
 3. Delete the /docs folder.
 
-
-## View Documentation 
-
-- [docs](https://denisecase.github.io/MandArt-Docs/documentation/mandart/)
-- [repo](https://github.com/denisecase/MandArt-Docs)
 
 
 ## References
