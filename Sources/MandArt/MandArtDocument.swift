@@ -1,10 +1,10 @@
 /**
  A document for creating and editing MandArt pictures.
 
- MandArtDocument is a reference file document that supports only reading and writing JSON files.
+ MandArtDocument is a reference file document that supports only reading and writing MandArt data files.
  Its snapshot is a PictureDefinition and it has a @Published picdef property that, when changed,
- triggers a reload of all views using the document. This document class also has a jsonDocumentName
- property for the name of the JSON document and a simple initializer that creates a new demo picture.
+ triggers a reload of all views using the document. This document class also has a docName
+ property for the name of the data document and a simple initializer that creates a new demo MandArt.
 
  For more information, see:
  https://www.hackingwithswift.com/quick-start/swiftui/
@@ -12,7 +12,7 @@
 
  Note: This class is only available on macOS 12.0 and later.
  */
-import AppKit // uikit for mobile, appkit for Mac
+import AppKit
 import CoreGraphics
 import ImageIO
 import SwiftUI
@@ -29,10 +29,11 @@ import UniformTypeIdentifiers
 ///
 @available(macOS 12.0, *)
 final class MandArtDocument: ReferenceFileDocument {
-    var jsonDocumentName: String = "unknowndocname"
+    var docName: String = "unknown"
 
-    // tell the system we support only reading / writing json files
-    static var readableContentTypes = [UTType.json]
+    // tell the system we support only reading / writing mandart files
+    //static var readableContentTypes = [UTType.json]
+    static var readableContentTypes: [UTType] { [.mandartDocType] }
 
     // snapshot is used to serialize and save the current version
     // while the active self remains editable by the user
@@ -65,8 +66,8 @@ final class MandArtDocument: ReferenceFileDocument {
             throw CocoaError(.fileReadCorruptFile)
         }
         picdef = try JSONDecoder().decode(PictureDefinition.self, from: data)
-        jsonDocumentName = configuration.file.filename!
-        print("Opening data file = ", jsonDocumentName)
+        docName = configuration.file.filename!
+        print("Opening data file = ", docName)
     }
 
     /// Save the active picture definittion data to a file.
@@ -83,14 +84,14 @@ final class MandArtDocument: ReferenceFileDocument {
         let fileWrapper = FileWrapper(regularFileWithContents: data)
         let fn = fileWrapper.filename!
         print("When saving a new /unamed file, the data file name is ", fn)
-        print("In fileWrapper function, saving jsonDocumentName=", jsonDocumentName)
+        print("In fileWrapper function, saving jsonDocumentName=", docName)
         return fileWrapper
     }
 
     @available(macOS 12.0, *)
     func saveImagePictureFromJSONDocument() {
-        print("Saving image from data file:", jsonDocumentName)
-        let justname = jsonDocumentName.replacingOccurrences(of: ".mandart", with: "")
+        print("Saving image from data file:", docName)
+        let justname = docName.replacingOccurrences(of: ".mandart", with: "")
         let justname2 = justname.replacingOccurrences(of: ".json", with: "")
 
         let fn = justname2 + ".png"
@@ -306,7 +307,5 @@ extension String {
 }
 
 extension UTType {
-    static var mandart: UTType {
-        UTType(importedAs: ".mandart")
-    }
+    static let mandartDocType = UTType(exportedAs: "org.bhj.mandart")
 }
