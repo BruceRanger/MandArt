@@ -18,6 +18,7 @@
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
 		88CCE4A129AE48FB006AD285 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88CCE4A029AE48FB006AD285 /* LICENSE */; };
 		88CCE4A329AE490D006AD285 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 88CCE4A229AE490D006AD285 /* README.md */; };
+		88CCE4A629AE4CDA006AD285 /* Debug.zip in Resources */ = {isa = PBXBuildFile; fileRef = 88CCE4A529AE4CDA006AD285 /* Debug.zip */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		88CCE4A029AE48FB006AD285 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		88CCE4A229AE490D006AD285 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88CCE4A429AE4AA3006AD285 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		88CCE4A529AE4CDA006AD285 /* Debug.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = Debug.zip; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
+				88CCE4A529AE4CDA006AD285 /* Debug.zip */,
 				88CCE4A229AE490D006AD285 /* README.md */,
 				88CCE4A029AE48FB006AD285 /* LICENSE */,
 				8845506529AE3C8D008F202A /* Resources */,
@@ -145,6 +148,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88CCE4A629AE4CDA006AD285 /* Debug.zip in Resources */,
 				8845506629AE3C8D008F202A /* Resources in Resources */,
 				88CCE4A329AE490D006AD285 /* README.md in Resources */,
 				88CCE4A129AE48FB006AD285 /* LICENSE in Resources */,
