@@ -18,6 +18,7 @@
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
 		88CCE4A129AE48FB006AD285 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88CCE4A029AE48FB006AD285 /* LICENSE */; };
 		88CCE4A329AE490D006AD285 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 88CCE4A229AE490D006AD285 /* README.md */; };
+		88CCE4A829AE63C3006AD285 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCE4A729AE63C3006AD285 /* Package.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		88CCE4A029AE48FB006AD285 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		88CCE4A229AE490D006AD285 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88CCE4A429AE4AA3006AD285 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MandArt.app; path = /Users/denisecase/Documents/MandArt/build/Debug/MandArt.app; sourceTree = "<absolute>"; };
+		88CCE4A729AE63C3006AD285 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
+				88CCE4A729AE63C3006AD285 /* Package.swift */,
 				88CCE4A229AE490D006AD285 /* README.md */,
 				88CCE4A029AE48FB006AD285 /* LICENSE */,
 				8845506529AE3C8D008F202A /* Resources */,
@@ -162,6 +165,7 @@
 				889E3F24293AE0B6009944AC /* Documentation.docc in Sources */,
 				6A3AEC0F26F879E700D7E31A /* ContentView.swift in Sources */,
 				8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */,
+				88CCE4A829AE63C3006AD285 /* Package.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
 				88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */,
 				8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */,
