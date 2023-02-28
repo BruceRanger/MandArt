@@ -429,6 +429,7 @@ struct ContentView: View {
         let yStarting = 0
         let width: Int = imageWidth
         let height: Int = imageHeight
+        
 
         // iterate over all of the rows for the entire height of the square
         for v in 0 ... (height - 1) {
