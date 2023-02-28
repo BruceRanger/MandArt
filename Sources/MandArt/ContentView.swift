@@ -108,11 +108,9 @@ struct ContentView: View {
         let xCenter: Double = doc.picdef.xCenter
         let yCenter: Double = doc.picdef.yCenter
         let theta: Double = -doc.picdef.theta // in degrees
-  //      print ("theta", theta)
         let dFIterMin: Double = doc.picdef.dFIterMin
         let pi = 3.14159
         let thetaR: Double = pi * theta / 180.0 // R for Radians
-   //     print ("thetaR", thetaR)
         let rSqLimit: Double = doc.picdef.rSqLimit
 
         var contextImage: CGImage
@@ -706,15 +704,15 @@ struct ContentView: View {
 
                         Group {
                             HStack {
-                                Button("Draw pic") { showMandArtBitMap() }
-                                    .help("Draw the picture.")
+                  /*              Button("Draw pic") { showMandArtBitMap() }
+                                    .help("Draw the picture.")*/
 
-                                Button("Pause") {
+                   /*             Button("Pause") {
                                     drawIt = false
                                     drawGradient = false
                                     drawColors = false
                                 }
-                                .help("Pause to change values.")
+                                .help("Pause to change values.")*/
 
                                 Button("🌅") {
                                     doc.saveImagePictureFromJSONDocument()
@@ -741,10 +739,13 @@ struct ContentView: View {
                                               formatter:
                                                 ContentView.fmtImageWidthHeight) { isStarted in
                                         if isStarted {
-                                            print("editing imageWidth, pausing updates")
                                             self.pauseUpdates()
                                         }
                                     }
+                                                .onSubmit {
+                                                    showMandArtBitMap()
+                                                    self.triggerTab(on: self.textFieldImageHeight)
+                                                }
                                                 .textFieldStyle(.roundedBorder)
                                                 .multilineTextAlignment(.trailing)
                                                 .frame(maxWidth: 80)
@@ -895,7 +896,6 @@ struct ContentView: View {
                                     }
                                 }
                                 .onSubmit {
-                                    //                  print("submitted, will update now")
                                     showMandArtBitMap()
                                 }
                                 .textFieldStyle(.roundedBorder)
@@ -914,7 +914,6 @@ struct ContentView: View {
                                     }
                                 }
                                 .onSubmit {
-                                    //            print("submitted, will update now")
                                     showMandArtBitMap()
                                 }
                                 .textFieldStyle(.roundedBorder)
@@ -1105,6 +1104,7 @@ struct ContentView: View {
                                 }
                                 .padding(.horizontal)
                                 .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
+                                
 
                                 Divider()
 
@@ -2021,9 +2021,8 @@ struct ContentView: View {
     ///  - Parameter textField: The `NSTextField` to trigger the tab event on.
     ///
     func triggerTab(on textField: NSTextField) {
-        print("tab")
         let keyCode = NSEvent.SpecialKey.tab.rawValue
-        print(keyCode)
+  //      print(keyCode)
         let keyEvent = NSEvent.keyEvent(with: .keyDown,
                                         location: NSPoint(),
                                         modifierFlags: [],
@@ -2035,6 +2034,6 @@ struct ContentView: View {
                                         isARepeat: false,
                                         keyCode: UInt16(keyCode))!
         textField.window?.sendEvent(keyEvent)
-        print(keyEvent)
+ //       print(keyEvent)
     }
 }
