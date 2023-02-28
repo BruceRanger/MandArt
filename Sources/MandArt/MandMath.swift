@@ -44,7 +44,7 @@ import Foundation
 // These are the same for every instance of MandMath
 
 let windowGroupName: String = "Welcome to MandArt"
-let defaultFileName: String = "default.json"
+let defaultFileName: String = "default.mandart"
 
 enum MandMath {
     // Define static functions below.................
@@ -52,7 +52,7 @@ enum MandMath {
 
     /// Returns the name of the default document to show when the app first starts up
     ///
-    /// - Returns: a simple filename (e.g. "default.json")
+    /// - Returns: a simple filename (e.g. "default.mandart")
     ///
     static func getDefaultDocumentName() -> String {
         defaultFileName
@@ -306,16 +306,6 @@ enum MandMath {
         // Check if [red, green, blue] values are in the printable color list.
         let inList = MandMath.printableColorList.contains([red, green, blue])
 
-        // Format the red, green, and blue values to be three characters long.
-        let rr = padIntToThreeCharacters(number: red)
-        let gg = padIntToThreeCharacters(number: green)
-        let bb = padIntToThreeCharacters(number: blue)
-
-        // Print results of the check,
-        // including the color number and the [red, green, blue] values.
-   //     print("Color No. \(num)(\(rr)-\(gg)-\(bb)): in printable list: ", inList)
-   //     print("")
-
         // Return the result of the check.
         return inList
     }
@@ -337,16 +327,6 @@ enum MandMath {
 
         // Check if [red, green, blue] values are in the printable color list.
         let inList = MandMath.printableColorList.contains([red, green, blue])
-
-        // Format the red, green, and blue values to be three characters long.
-        let rr = padIntToThreeCharacters(number: red)
-        let gg = padIntToThreeCharacters(number: green)
-        let bb = padIntToThreeCharacters(number: blue)
-
-        // Print results of the check,
-        // including the color number and the [red, green, blue] values.
-   //     print("Color No. \(num)(\(rr)-\(gg)-\(bb)): in printable list: ", inList)
-   //     print("")
 
         // if in list, return true
         if inList {

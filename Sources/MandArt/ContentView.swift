@@ -1643,7 +1643,7 @@ struct ContentView: View {
     /// The gesture is of type some Gesture
     /// and uses the DragGesture struct from the SwiftUI framework.
     ///
-    /// The minimum distance for the drag gesture is set to 10 units,
+    /// The minimum distance for the drag gesture is set to 0 units,
     /// and the coordinate space for the gesture is set to .local.
     ///
     /// The gesture has an onChanged closure that is triggered

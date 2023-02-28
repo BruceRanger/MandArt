@@ -66,7 +66,7 @@ final class MandArtDocument: ReferenceFileDocument {
         }
         picdef = try JSONDecoder().decode(PictureDefinition.self, from: data)
         jsonDocumentName = configuration.file.filename!
-        print("Opening JSON file = ", jsonDocumentName)
+        print("Opening data file = ", jsonDocumentName)
     }
 
     /// Save the active picture definittion data to a file.
@@ -78,20 +78,22 @@ final class MandArtDocument: ReferenceFileDocument {
         snapshot: PictureDefinition,
         configuration _: WriteConfiguration
     ) throws -> FileWrapper {
+        print("Preparing to save.")
         let data = try JSONEncoder().encode(snapshot)
         let fileWrapper = FileWrapper(regularFileWithContents: data)
         let fn = fileWrapper.filename!
-        print("When saving a new /unamed file, the json file name is ", fn)
+        print("When saving a new /unamed file, the data file name is ", fn)
         print("In fileWrapper function, saving jsonDocumentName=", jsonDocumentName)
         return fileWrapper
     }
 
     @available(macOS 12.0, *)
     func saveImagePictureFromJSONDocument() {
-        print("Saving image from JSON file:", jsonDocumentName)
-        let justname = jsonDocumentName.replacingOccurrences(of: ".json", with: "")
-        //      let fn = "mandart-from-" + justname + ".png"
-        let fn = justname + ".png"
+        print("Saving image from data file:", jsonDocumentName)
+        let justname = jsonDocumentName.replacingOccurrences(of: ".mandart", with: "")
+        let justname2 = justname.replacingOccurrences(of: ".json", with: "")
+
+        let fn = justname2 + ".png"
 
         var data: Data
         do {
@@ -101,6 +103,8 @@ final class MandArtDocument: ReferenceFileDocument {
             exit(1)
         }
         let fileWrapper = FileWrapper(regularFileWithContents: data)
+        let defname = fileWrapper.filename
+        print(defname!)
         // trigger state from this window / json document to get a current img
         picdef.imageHeight = picdef.imageHeight + 1
         picdef.imageHeight = picdef.imageHeight - 1
@@ -298,5 +302,11 @@ extension String {
     subscript(_ range: CountablePartialRangeFrom<Int>) -> String {
         let start = index(startIndex, offsetBy: max(0, range.lowerBound))
         return String(self[start...])
+    }
+}
+
+extension UTType {
+    static var mandart: UTType {
+        UTType(importedAs: ".mandart")
     }
 }
