@@ -307,5 +307,5 @@ extension String {
 }
 
 extension UTType {
-    static let mandartDocType = UTType(exportedAs: "org.bhj.mandart")
+    static let mandartDocType = UTType(importedAs: "org.bhj.mandart")
 }
