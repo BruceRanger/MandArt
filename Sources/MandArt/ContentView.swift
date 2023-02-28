@@ -709,9 +709,6 @@ struct ContentView: View {
                                 Button("Draw pic") { showMandArtBitMap() }
                                     .help("Draw the picture.")
 
-                                Button("Color pic") { readyForColors() }
-                                    .help("Color the image using the existing iteration data.")
-
                                 Button("Pause") {
                                     drawIt = false
                                     drawGradient = false
@@ -767,7 +764,6 @@ struct ContentView: View {
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
-                             //                     print("triggering tab from img height")
                                                   self.triggerTab(on: self.textFieldImageHeight)
                                               }
                                               .textFieldStyle(.roundedBorder)
@@ -802,7 +798,6 @@ struct ContentView: View {
                                               value: $doc.picdef.xCenter,
                                               formatter: ContentView.fmtXY) { isStarted in
                                         if isStarted {
-                     //                       print("editing xC, pausing updates")
                                             self.pauseUpdates()
                                         }
                                     }
@@ -828,7 +823,6 @@ struct ContentView: View {
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
-                        //                          print("triggering tab from Y")
                                                   self.triggerTab(on: self.textFieldY)
                                               }
                                               .textFieldStyle(.roundedBorder)
@@ -865,12 +859,10 @@ struct ContentView: View {
                                     Text("Scale")
                                     TextField("430", value: $doc.picdef.scale, formatter: ContentView.fmtScale) { isStarted in
                                         if isStarted {
-                                            //                print("editing scale, pausing updates")
                                             self.pauseUpdates()
                                         }
                                     }
                                     .onSubmit {
-                                        //               print("submitted, will update now")
                                         showMandArtBitMap()
                                     }
                                     .textFieldStyle(.roundedBorder)
@@ -899,7 +891,6 @@ struct ContentView: View {
 
                                 TextField("10,000", value: $doc.picdef.iterationsMax, formatter: ContentView.fmtSharpeningItMax) { isStarted in
                                     if isStarted {
-                                        //                 print("editing iterationsMax, pausing updates")
                                         self.pauseUpdates()
                                     }
                                 }
@@ -919,7 +910,6 @@ struct ContentView: View {
 
                                 TextField("400", value: $doc.picdef.rSqLimit, formatter: ContentView.fmtSmootingRSqLimit) { isStarted in
                                     if isStarted {
-                                        //                 print("editing rSqLimit, pausing updates")
                                         self.pauseUpdates()
                                     }
                                 }
@@ -967,11 +957,7 @@ struct ContentView: View {
                                 Text("Draw gradient from color")
 
                                 TextField("1", value: $doc.picdef.leftNumber,
-                                          formatter: ContentView.fmtLeftGradientNumber /* ,
-                                                                                        onCommit: {
-                                                                                        // do something when text field loses focus
-                                                                                        showGradient()
-                                                                                        } */ )
+                                          formatter: ContentView.fmtLeftGradientNumber)
                                 .frame(maxWidth: 30)
                                 .foregroundColor(leftGradientIsValid ? .primary : .red)
                                 .help("Select the color number for the left side of a gradient.")
@@ -1001,12 +987,20 @@ struct ContentView: View {
 
                                     Text("1")
 
-                                    Slider(value: $doc.picdef.spacingColorFar, in: 1 ... 20, step: 1)
+                                    Slider(value: $doc.picdef.spacingColorFar, in: 1 ... 20, step: 1) { isStarted in
+                                        if isStarted {
+                                            self.readyForColors()
+                                        }
+                                    }
                                         .accentColor(Color.blue)
 
                                     Text("20")
 
-                                    TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge)
+                                    TextField("5", value: $doc.picdef.spacingColorFar, formatter: ContentView.fmtSpacingNearEdge) { isStarted in
+                                        if isStarted {
+                                            self.readyForColors()
+                                        }
+                                    }
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
@@ -1022,13 +1016,21 @@ struct ContentView: View {
 
                                     Text("5")
 
-                                    Slider(value: $doc.picdef.spacingColorNear, in: 5 ... 50, step: 5)
+                                    Slider(value: $doc.picdef.spacingColorNear, in: 5 ... 50, step: 5) { isStarted in
+                                        if isStarted {
+                                            self.readyForColors()
+                                        }
+                                    }
                                         .accentColor(Color.blue)
 
 
                                     Text("50")
 
-                                    TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge)
+                                    TextField("15", value: $doc.picdef.spacingColorNear, formatter: ContentView.fmtSpacingFarFromEdge) { isStarted in
+                                        if isStarted {
+                                            self.readyForColors()
+                                        }
+                                    }
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
@@ -1050,12 +1052,20 @@ struct ContentView: View {
                                 HStack {
                                     Text("-5")
 
-                                    Slider(value: $doc.picdef.dFIterMin, in: -5 ... 20, step: 1)
+                                    Slider(value: $doc.picdef.dFIterMin, in: -5 ... 20, step: 1) { isStarted in
+                                        if isStarted {
+                                            self.readyForColors()
+                                        }
+                                    }
 
 
                                     Text("20")
 
-                                    TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration)
+                                    TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration) { isStarted in
+                                        if isStarted {
+                                            self.readyForColors()
+                                        }
+                                    }
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
@@ -1075,31 +1085,26 @@ struct ContentView: View {
                                 Slider(value: Binding(
                                     get: { Double(doc.picdef.nBlocks) },
                                     set: { doc.picdef.nBlocks = Int($0) }
-                                ), in: 10...100, step: 10)
+                                ), in: 10...100, step: 10) { isStarted in
+                                    if isStarted {
+                                        self.readyForColors()
+                                    }
+                                }
                                 .accentColor(Color.green)
 
                                     Text("100")
 
-                                    TextField("60", value: $doc.picdef.nBlocks, formatter: ContentView.fmtNBlocks)
+                                    TextField("60", value: $doc.picdef.nBlocks, formatter: ContentView.fmtNBlocks) { isStarted in
+                                        if isStarted {
+                                            self.readyForColors()
+                                        }
+                                    }
                                         .textFieldStyle(.roundedBorder)
                                         .multilineTextAlignment(.trailing)
                                         .frame(maxWidth: 50)
                                 }
                                 .padding(.horizontal)
                                 .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
-//                                HStack {
-//                                      Stepper("Use \(doc.picdef.nBlocks) blocks of color",  value: $doc.picdef.nBlocks, in:0...100)
-//                                        .padding(2)
-//
-//                                    TextField("60", value: $doc.picdef.nBlocks, formatter: ContentView.fmtNBlocks)
-//                                        .textFieldStyle(.roundedBorder)
-//                                        .multilineTextAlignment(.trailing)
-//                                        .frame(maxWidth: 50)
-//
-//                               }
-//                                .padding(.horizontal)
-//                                .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
-                                // END nblocks with Slider
 
                                 Divider()
 
