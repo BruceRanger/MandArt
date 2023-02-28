@@ -22,7 +22,9 @@ struct MandArtApp: App {
     /// The body of the app; kicks off the opening page.
     ///  It creates a WindowGroup and DocumentGroup.
     var body: some Scene {
+
         WindowGroup(windowGroupName) {
+
             VStack {
                 Spacer()
                 Button("Click to open a sample MandArt") {
@@ -45,7 +47,7 @@ struct MandArtApp: App {
             }
         }
 
-        DocumentGroup(newDocument: { MandArtDocument() }) { _ in
+        DocumentGroup(newDocument: { MandArtDocument() }) { configuration in
             ContentView()
                 .onAppear {
                     NSWindow.allowsAutomaticWindowTabbing = false
