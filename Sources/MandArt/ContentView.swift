@@ -714,10 +714,11 @@ struct ContentView: View {
                                 }
                                 .help("Pause to change values.")*/
 
-                                Button("🌅") {
+                    //            Button("🌅") {
+                                Button("Save") {
                                     doc.saveImagePictureFromJSONDocument()
                                 }
-                                .help("Save MandArt image file.")
+                                .help("Save MandArt image and image file.")
                             }
 
                             Divider()
