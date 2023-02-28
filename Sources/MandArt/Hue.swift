@@ -225,7 +225,6 @@ private extension Color {
             return nil
         }
 #endif
-
         return (r, g, b, a)
     }
 }
