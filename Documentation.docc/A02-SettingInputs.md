@@ -215,11 +215,31 @@ can be adjusted.
 
 ### Checking The Gradient Between Two Adjacent Colors
 
-Getting back to finding an intermediate color in a gradient: We’ll try an example. Make the first color lime (0,
-255, 0) and the second color magenta (255, 0, 255) and hit the **Go** button to draw a gradient between them.
-The resulting picture shows a gray area in the middle. Add a new color and click in its colored area. Use the
-eyedropper to select a color near the middle of the gray area of the gradient. The new color will show that color.
-Select that color again and use the Color Picker to find a better color. The Color Sliders work well for this. Any
-set of three equal components will be a shade of gray, so avoid that. When you find a color you like hit Return
-to select it. Move the new color up between the first and second colors. Now the first two gradients should look
-good.
+Getting back to finding an intermediate color in a gradient: We’ll try an example. 
+
+Make the first color lime (0, 255, 0) and the second color magenta (255, 0, 255) and 
+hit the **Go** button to draw a gradient between them.
+
+The resulting picture shows a gray area in the middle. 
+Grey doesn't usually make a good transition color.
+
+### Fixing an Unpleasant Intermediate Color
+
+To fix a poor transition color (e.g., gray), 
+we'll first add the intermediate grey to our color list between the two adjacent colors we're workin on, 
+and then select a better intermediate color.
+
+1. Add a new color.
+2. Click in its displayed colored area. 
+3. Use the Color Picker Eyedropper to select a color near the middle of the gray area of the gradient. 
+4. Verify the new color displays the unfortunate intermediate color.
+5. Select the new color again and use the Color Picker to find a better color. The Color Sliders work well for this. Any set of three equal components will be a shade of gray, so avoid that. 
+6. When you find a color you like, exit the Color Picker and hit Return to select it. 
+7. Finally, move the new color up between the two adjacent colors (in this example, the first and second colors).
+
+Now the first two gradients should look good. 
+
+### Recommendation
+
+Check the gradient between each two adjacent colors, 
+including the last color (which will be adjacent to the first color in the list) to make sure the intermediate colors look good.
