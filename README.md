@@ -14,15 +14,16 @@ SwiftUI macOS app to create custom art using the Mandelbrot set.
 - Applied Physics Engineering
 - [Bruce Johnson](https://github.com/bruceranger)
 
+## Learn More
+
 - [Documentation](https://denisecase.github.io/MandArt-Docs/documentation/mandart/)
-- [Source](https://github.com/denisecase/MandArt-Docs)
 
+## Developers
 
-## Generate MandArt-Docs
+The following process is used to create documentatation and host it in the
+[MandArt-Docs](https://github.com/denisecase/MandArt-Docs) repo.
 
-To create documentatation for the MandArt-Docs repo.
-
-1. Uncomment out Package.swift in the root folder. 
+1. Add or uncomment Package.swift in the root folder of MandArt repo. 
 2. Move Documentation.docc from root to Sources/MandArt with the .swift files. 
 3. Open Terminal, in the root MandArt repository folder.
 4. In Terminal, run
@@ -45,7 +46,7 @@ swift package --allow-writing-to-directory ./docs \
 
 In MandArt:
 
-1. Comment out Package.swift.
+1. Remove or comment out Package.swift.
 2. Move Documentation.docc back to root.
 3. Delete the /docs folder.
 
