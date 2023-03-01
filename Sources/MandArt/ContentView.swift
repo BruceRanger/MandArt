@@ -51,6 +51,8 @@ struct ContentView: View {
     @State private var showingAllColorsPopups = Array(repeating: false, count: 6)
     @State private var showingPrintableColorsPopups = Array(repeating: false, count: 6)
     @State private var showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
+    @State private var showSaveFirstAlert = false
+
 
     // BHJ: ToDo - set to max number of user input ordered colors (Hues)
     @State private var showingPrintablePopups = Array(repeating: false, count: 100)
@@ -716,16 +718,28 @@ struct ContentView: View {
                                  .help("Pause to change values.")*/
 
                                 //            Button("🌅") {
-                                Button("Save Image") {
 
-                                    doc.saveImagePictureFromJSONDocument()
+                                Button("Save Data"){
+                                    doc.saveMandArtDataFile()
                                 }
-                                .help("Save MandArt image and image file.")
+                                .help("Save MandArt data file.")
+
+                                Button("Save Image") {
+                                    doc.saveMandArtImage()
+                                }
+                                .help("Save MandArt image file.")
                             }
 
                             Divider()
                         } // END SECTION 1 GROUP -  BASICS
                         .fixedSize(horizontal: true, vertical: true)
+                        .alert(isPresented: $showSaveFirstAlert) {
+                            Alert(
+                                title: Text("Warning"),
+                                message: Text("Use File / Save to save your data first."),
+                                dismissButton: .default(Text("OK"))
+                            )
+                        }
 
                         //  GROUP 2 IMAGE SIZE
 

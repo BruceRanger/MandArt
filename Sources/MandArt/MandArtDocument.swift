@@ -128,9 +128,15 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
         return FileWrapper(regularFileWithContents: data)
     }
 
+    public func saveMandArtDataFile() {
+         //first, save the data file and wait for it to complete
+        DispatchQueue.main.async {
+            // Trigger a "File > Save" menu event to update the app's UI.
+            NSApp.sendAction(#selector(NSDocument.save(_:)), to: nil, from: self)
+        }
+    }
 
-    @available(macOS 12.0, *)
-    func saveImagePictureFromJSONDocument() {
+    public func saveMandArtImage() {
         let winTitle = self.getCurrentWindowTitle()
         print("Saving image from data file (winTitle):", winTitle)
         let justname = winTitle.replacingOccurrences(of: ".mandart", with: "")
@@ -167,6 +173,21 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
                 }
             }
         }
+    }
+
+    @available(macOS 12.0, *)
+    func onClickToSaveImage() {
+
+        
+
+        // first, save the data file and wait for it to complete
+//        DispatchQueue.main.async {
+//            // Trigger a "File > Save" menu event to update the app's UI.
+//            NSApp.sendAction(#selector(NSDocument.save(_:)), to: nil, from: self)
+//        }
+            // after saving the data file, we can use that name to save the image
+            self.saveMandArtImage()
+
     }
 
     /// Create a snapshot of the current state of the document for serialization
