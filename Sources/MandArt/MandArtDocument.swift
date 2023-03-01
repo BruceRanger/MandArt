@@ -173,7 +173,6 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     }
   }
 
-
   /// Create a snapshot of the current state of the document for serialization
   ///  while the live self remains editiable by the user
   /// - Parameter contentType: the standard type we use

@@ -241,11 +241,11 @@ struct ContentView: View {
     let bytesPerRow: Int = imageWidth * bytesPerPixel
     let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
 
-    // Allocate data for the raster buffer.  I'm using UInt8 so that I can
+    // Allocate data for the raster buffer.  Use UInt8 to
     // address individual RGBA components easily.
     let rasterBufferPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
 
-    // Create a CGBitmapContext for drawing and converting into an image for display
+    // Create CGBitmapContext for drawing and converting into image for display
     let context =
       CGContext(
         data: rasterBufferPtr,
@@ -265,7 +265,7 @@ struct ContentView: View {
     context.addRect(CGRect(x: 0.0, y: 0.0, width: Double(imageWidth), height: Double(imageHeight)))
     context.fillPath()
 
-    // in addition to using any of the CG drawing routines, you can draw yourself
+    // Use any CG drawing routines, or draw yourself
     // by accessing individual pixels in the raster image.
     // here we'll draw a square one pixel at a time.
     let xStarting = 0
@@ -470,7 +470,6 @@ struct ContentView: View {
             (Double(u) - yY * Double(width)) / (Double(width) - yY * Double(width))
         }
         (pixelAddress + 2).pointee = UInt8(color) // B
-
         (pixelAddress + 3).pointee = UInt8(255) // alpha
 
         // IMPORTANT:
@@ -620,9 +619,7 @@ struct ContentView: View {
           (pixelAddress + 1).pointee = UInt8(0) // green
           (pixelAddress + 2).pointee = UInt8(0) // blue
           (pixelAddress + 3).pointee = UInt8(255) // alpha
-        }
-
-        else {
+        } else {
           h = fIterGlobal[u][v] - fIterMin
 
           for block in 0 ... nBlocks {
@@ -1401,8 +1398,7 @@ struct ContentView: View {
         VStack {
           if activeDisplayState == ActiveDisplayChoice.MandArt {
             let image: CGImage = getImage()!
-            GeometryReader {
-              _ in
+            GeometryReader {_ in
               ZStack(alignment: .topLeading) {
                 Image(image, scale: 1.0, label: Text("Test"))
                   .gesture(self.tapGesture)
@@ -1411,8 +1407,7 @@ struct ContentView: View {
 
           } else if activeDisplayState == ActiveDisplayChoice.Gradient {
             let image: CGImage = getImage()!
-            GeometryReader {
-              _ in
+            GeometryReader { _ in
               ZStack(alignment: .topLeading) {
                 Image(image, scale: 1.0, label: Text("Test"))
               }
