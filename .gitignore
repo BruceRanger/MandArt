@@ -1,6 +1,9 @@
 # VS Code
 .vscode/
 
+# docs - not used in MandArt
+docs/
+
 # Permit the built app
 !DerivedData/MandArt/Build/Products/Debug/MandArt.app
 
