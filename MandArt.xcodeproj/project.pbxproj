@@ -36,7 +36,6 @@
 		88CCE4A029AE48FB006AD285 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		88CCE4A229AE490D006AD285 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		88CF1E2629AEFE4B00D933F6 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		88CF1E2729AF00F500D933F6 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +53,6 @@
 			isa = PBXGroup;
 			children = (
 				C5F4AF5629AF7D8E00E731CA /* Screenshots */,
-				88CF1E2729AF00F500D933F6 /* Package.swift */,
 				88CCE4A229AE490D006AD285 /* README.md */,
 				88CCE4A029AE48FB006AD285 /* LICENSE */,
 				8845506529AE3C8D008F202A /* Resources */,
