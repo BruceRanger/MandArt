@@ -24,7 +24,7 @@
 import Foundation
 import SwiftUI
 
-/// The user input information defining a MandArt picture.
+ // The user input information defining a MandArt picture.
 @available(macOS 12.0, *)
 struct PictureDefinition: Codable, Identifiable {
   var id = UUID()
@@ -54,29 +54,33 @@ struct PictureDefinition: Codable, Identifiable {
   var huesEstimatedPrintPreview: [Hue] = []
   var huesOptimizedForPrinter: [Hue] = []
 
-  /// Initialize with an array of Hues (sorted rgbs)
-  /// - Parameter hues: an array of hues
+   /**
+    Initialize with an array of Hues (sorted rgbs)
+   - Parameter hues: an array of hues
+    */
   init(hues: [Hue]) {
     self.hues = hues
   }
 
-  /// Initialize by setting everything.
-  /// - Parameters:
-  ///   - xCenter: xCenter description
-  ///   - yCenter: yC descriptionyCenter
-  ///   - scale: <#scale description#>
-  ///   - : <# description#>
-  ///   - rSqLimit: <#rSqLimit description#>
-  ///   - imageWidth: <#imageWidth description#>
-  ///   - imageHeight: <#imageHeight description#>
-  ///   - nBlocks: <#nBlocks description#>
-  ///   - spacingColorFar: spacingColorFar description
-  ///   - spacingColorNear: spacingColorNear description
-  ///   - theta: <#theta description#>
-  ///   - nImage: <#nImage description#>
-  ///   - dFIterMin: <#dFIterMin description#>
-  ///   - leftNumber: <#leftNumber description#>
-  ///   - hues: <#hues description#>
+  /**
+   Initialize by setting everything.
+   - Parameters:
+     - xCenter: xCenter description
+     - yCenter: yC descriptionyCenter
+     - scale: <#scale description#>
+     - : <# description#>
+     - rSqLimit: <#rSqLimit description#>
+     - imageWidth: <#imageWidth description#>
+     - imageHeight: <#imageHeight description#>
+     - nBlocks: <#nBlocks description#>
+     - spacingColorFar: spacingColorFar description
+     - spacingColorNear: spacingColorNear description
+     - theta: <#theta description#>
+     - nImage: <#nImage description#>
+     - dFIterMin: <#dFIterMin description#>
+     - leftNumber: <#leftNumber description#>
+     - hues: <#hues description#>
+   */
   init(
     xCenter: Double,
     yCenter: Double,
@@ -113,56 +117,4 @@ struct PictureDefinition: Codable, Identifiable {
     self.hues = hues
   }
 
-  private func getHueFromLookupResponse(response: String, sortOrder: Int) -> Hue {
-    // response is in format "000-000-000" need to get r / g / b
-    let rStr: String = response[0 ..< 3]
-    let gStr: String = response[4 ..< 7]
-    let bStr: String = response[8 ..< 11]
-    let red = Double(rStr)!
-    let green = Double(gStr)!
-    let blue = Double(bStr)!
-    return Hue(num: sortOrder, r: red, g: green, b: blue)
-  }
-
-  /// Convert from a precise R G B double (0-255)
-  ///  To a general bucketed value (0, 34, 68, 102, 136, 170, 204, 238, 255)
-  /// - Parameter preciseValue: preciseValue a double from 0 to 255
-  /// - Returns: a bucketed Double equal or less than the precise value
-  fileprivate func getBucketColorDouble(preciseValue: Double) -> Double {
-    var bucketValue = 0.0
-    switch preciseValue {
-    case 0 ..< 34:
-      bucketValue = 0
-    case 34 ..< 68:
-      bucketValue = 34
-    case 68 ..< 102:
-      bucketValue = 68
-    case 102 ..< 136:
-      bucketValue = 102
-    case 136 ..< 170:
-      bucketValue = 136
-    case 170 ..< 204:
-      bucketValue = 170
-    case 204 ..< 238:
-      bucketValue = 204
-    case 238 ..< 255:
-      bucketValue = 238
-    case 255:
-      bucketValue = 255
-    default:
-      fatalError()
-    }
-    return bucketValue
-  }
-
-  fileprivate func getLookupStringFromHue(hue: Hue) -> String {
-    let bucketR: Double = self.getBucketColorDouble(preciseValue: hue.r)
-    let bucketG: Double = self.getBucketColorDouble(preciseValue: hue.g)
-    let bucketB: Double = self.getBucketColorDouble(preciseValue: hue.b)
-    let strR = String(format: "%03d", Int(bucketR))
-    let strG = String(format: "%03d", Int(bucketG))
-    let strB = String(format: "%03d", Int(bucketB))
-    let lookupString: String = strR + "-" + strG + "-" + strB
-    return lookupString
-  }
 }

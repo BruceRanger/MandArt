@@ -20,18 +20,15 @@ import SwiftUI
 @available(macOS 12.0, *)
 @main
 struct MandArtApp: App {
-  /// The body of the app; kicks off the opening page.
-  ///  It creates a WindowGroup and DocumentGroup.
+
   var body: some Scene {
-    WindowGroup(windowGroupName) {
+    WindowGroup("Welcome to MandArt") {
       VStack {
         Spacer()
         Button("Click to open a sample MandArt") {
           // close current window and open new document
-
           NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
-
-          NSDocumentController.shared.newDocument(defaultFileName)
+          NSDocumentController.shared.newDocument("default.mandart")
         }
         Spacer()
         Text("See menu: File > New to create a new MandArt document.")

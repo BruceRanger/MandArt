@@ -1,13 +1,13 @@
-///
-/// ContentView.swift
-/// MandArt
-///
-/// The main view in the MandArt project, responsible for displaying the user interface.
-///
-///  Created by Bruce Johnson on 9/20/21.
-///  Revised and updated 2021-2023
-///  All rights reserved.
+/**
+ ContentView.swift
+ MandArt
 
+ The main view in the MandArt project, responsible for displaying the user interface.
+
+  Created by Bruce Johnson on 9/20/21.
+  Revised and updated 2021-2023
+  All rights reserved.
+ */
 import AppKit // keypress
 import Foundation // trig functions
 import SwiftUI // views
@@ -40,10 +40,11 @@ struct ContentView: View {
     case Gradient
   }
 
-  /// Gets an image to display on the right side of the app
-  ///
-  /// - Returns: An optional CGImage or nil
-  ///
+  /**
+   Gets an image to display on the right side of the app
+
+   - Returns: An optional CGImage or nil
+   */
   func getImage() -> CGImage? {
     var colors: [[Double]] = []
 
@@ -67,13 +68,14 @@ struct ContentView: View {
     return nil
   }
 
-  /// Function to create and return a user-created MandArt bitmap
-  ///
-  /// - Parameters:
-  ///   - colors: array of colors
-  ///
-  /// - Returns: optional CGImage with the bitmap or nil
-  ///
+  /**
+   Function to create and return a user-created MandArt bitmap
+
+   - Parameters:
+     - colors: array of colors
+
+   - Returns: optional CGImage with the bitmap or nil
+   */
   fileprivate func getPictureImage(_ colors: inout [[Double]]) -> CGImage? {
     // draws image
     let imageHeight: Int = self.doc.picdef.imageHeight
@@ -340,16 +342,17 @@ struct ContentView: View {
     return contextImage
   }
 
-  /// Function to create and return a gradient bitmap
-  ///
-  /// - Parameters:
-  ///   - imageHeight: Int bitmap image height in pixels
-  ///   - imageWidth: Int bitmap image width in pixels
-  ///   - nLeft: int number of the left hand color, starting with 1 (not 0)
-  ///   - colors: array of colors (for the whole picture)
-  ///
-  /// - Returns: optional CGImage with the bitmap or nil
-  ///
+  /**
+   Function to create and return a gradient bitmap
+
+   - Parameters:
+     - imageHeight: Int bitmap image height in pixels
+     - imageWidth: Int bitmap image width in pixels
+     - nLeft: int number of the left hand color, starting with 1 (not 0)
+     - colors: array of colors (for the whole picture)
+
+   - Returns: optional CGImage with the bitmap or nil
+   */
   fileprivate func getGradientImage(
     _ imageWidth: Int,
     _ imageHeight: Int,
@@ -359,8 +362,6 @@ struct ContentView: View {
     var yY: Double = self.doc.picdef.yY
 
     if yY == 1.0 { yY = yY - 1.0e-10 }
-
-    //      var uU: Double = 0.0
 
     var gradientImage: CGImage
     let leftNumber: Int = nLeft
@@ -375,11 +376,11 @@ struct ContentView: View {
     // set up CG parameters
     let bitsPerComponent = 8 // for UInt8
     let componentsPerPixel = 4 // RGBA = 4 components
-    let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
+    let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // = 4
     let bytesPerRow: Int = imageWidth * bytesPerPixel
     let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
 
-    // Allocate data for the raster buffer.  Using UInt8 so that I can
+    // Allocate data for raster buffer.  Using UInt8 to
     // address individual RGBA components easily.
     let rasterBufferPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
 
@@ -467,13 +468,14 @@ struct ContentView: View {
     return gradientImage
   }
 
-  /// Function to create and return a user-colored MandArt bitmap
-  ///
-  /// - Parameters:
-  ///   - colors: array of colors
-  ///
-  /// - Returns: optional CGImage with the colored bitmap or nil
-  ///
+  /**
+   Function to create and return a user-colored MandArt bitmap
+
+   - Parameters:
+     - colors: array of colors
+
+   - Returns: optional CGImage with the colored bitmap or nil
+   */
   fileprivate func getColorImage(_ colors: inout [[Double]]) -> CGImage? {
     // draws image
     let imageHeight: Int = self.doc.picdef.imageHeight
@@ -536,7 +538,7 @@ struct ContentView: View {
     // set up CG parameters
     let bitsPerComponent = 8 // for UInt8
     let componentsPerPixel = 4 // RGBA = 4 components
-    let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // 32/8 = 4
+    let bytesPerPixel: Int = (bitsPerComponent * componentsPerPixel) / 8 // = 4
     let bytesPerRow: Int = imageWidth * bytesPerPixel
     let rasterBufferSize: Int = imageWidth * imageHeight * bytesPerPixel
 
@@ -1571,22 +1573,23 @@ struct ContentView: View {
     } // end HStack
   } // end view body
 
-  /// tapGesture is a variable that defines a drag gesture
-  /// for the user interaction in the user interface.
-  ///
-  /// The gesture is of type some Gesture
-  /// and uses the DragGesture struct from the SwiftUI framework.
-  ///
-  /// The minimum distance for the drag gesture is set to 0 units,
-  /// and the coordinate space for the gesture is set to .local.
-  ///
-  /// The onChanged closure is triggered
-  /// when the gesture is changed by the user's interaction.
-  ///
-  /// The onEnded closure is triggered
-  /// when the user lifts the mouse off the screen,
-  /// indicating the tap gesture has completed.
-  ///
+  /**
+   tapGesture is a variable that defines a drag gesture
+   for the user interaction in the user interface.
+
+   The gesture is of type some Gesture
+   and uses the DragGesture struct from the SwiftUI framework.
+
+   The minimum distance for the drag gesture is set to 0 units,
+   and the coordinate space for the gesture is set to .local.
+
+   The onChanged closure is triggered
+   when the gesture is changed by the user's interaction.
+
+   The onEnded closure is triggered
+   when the user lifts the mouse off the screen,
+   indicating the tap gesture has completed.
+   */
   var tapGesture: some Gesture {
     DragGesture(minimumDistance: 0, coordinateSpace: .local)
       .onChanged { value in
@@ -1747,8 +1750,8 @@ struct ContentView: View {
 
   // HELPER FUNCTIONS ..................................
 
-  /// Calculated variable for the image aspect ratio.
-  /// Uses user-specified image height and width.
+   // Calculated variable for the image aspect ratio.
+  // Uses user-specified image height and width.
   private var aspectRatio: String {
     let h = Double(doc.picdef.imageHeight)
     let w = Double(doc.picdef.imageWidth)
@@ -1780,12 +1783,13 @@ struct ContentView: View {
     }
   }
 
-  /// Returns the new x to be the picture center x when user drags in the picture.
-  ///
-  /// - Parameter tap: information about the drag
-  ///
-  /// - Returns: Double new center x
-  ///
+  /**
+   Returns the new x to be the picture center x when user drags in the picture.
+
+   - Parameter tap: information about the drag
+
+   - Returns: Double new center x
+   */
   private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
     let startX = tap.startLocation.x
     let startY = tap.startLocation.y
@@ -1802,12 +1806,13 @@ struct ContentView: View {
     return newCenterX
   }
 
-  /// Returns the new y to be the picture center y when user drags in the picture.
-  ///
-  /// - Parameter tap: information about the drag
-  ///
-  /// - Returns: Double new center y
-  ///
+     /**
+   Returns the new y to be the picture center y when user drags in the picture.
+
+   - Parameter tap: information about the drag
+
+   - Returns: Double new center y
+      */
   private func getCenterYFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
     let startX = tap.startLocation.x
     let startY = tap.startLocation.y
@@ -1824,12 +1829,13 @@ struct ContentView: View {
     return newCenterY
   }
 
-  /// Returns the new x to be the picture center x when user clicks on the picture.
-  ///
-  /// - Parameter tap: information about the tap
-  ///
-  /// - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
-  ///
+     /**
+   Returns the new x to be the picture center x when user clicks on the picture.
+
+   - Parameter tap: information about the tap
+
+   - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
+      */
   private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
     let startX = tap.startLocation.x
     let startY = tap.startLocation.y
@@ -1845,13 +1851,13 @@ struct ContentView: View {
     let newCenterX: Double = self.doc.picdef.xCenter + dCenterX
     return newCenterX
   }
+/**
+   Returns the new y to be the picture center y when user clicks on the picture.
 
-  /// Returns the new y to be the picture center y when user clicks on the picture.
-  ///
-  /// - Parameter tap: information about the tap
-  ///
-  /// - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
-  ///
+   - Parameter tap: information about the tap
+
+   - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
+ */
   private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
     let startX = tap.startLocation.x
     let startY = tap.startLocation.y
@@ -1868,23 +1874,22 @@ struct ContentView: View {
     return newCenterY
   }
 
-  /// Update hue nums after moviing or deleting
-  ///
+   // Update hue nums after moviing or deleting
   fileprivate func updateHueNums() {
     for (index, _) in self.$doc.picdef.hues.enumerated() {
       self.doc.picdef.hues[index].num = index + 1
     }
   }
 
-  /// Get the app ready to draw colors.
+   // Get the app ready to draw colors.
   fileprivate func readyForColors() {
     self.drawIt = false
     self.drawGradient = false
     self.drawColors = true
   }
 
-  /// Pause updates to the calculationally-intensive bitmap
-  ///  while the user inputs numeric entries.
+   // Pause updates to the calculationally-intensive bitmap
+    // while the user inputs numeric entries.
   fileprivate func pauseUpdates() {
     self.drawIt = false
     self.drawGradient = false
@@ -1901,13 +1906,13 @@ struct ContentView: View {
     self.readyForGradient()
   }
 
-  /// Get the app ready to draw a MandArt picture.
+   // Get the app ready to draw a MandArt picture.
   fileprivate func readyForPicture() {
     self.drawIt = true
     self.drawColors = false
   }
 
-  /// Get the app ready to draw a gradient.
+   // Get the app ready to draw a gradient.
   fileprivate func readyForGradient() {
     self.drawIt = false
     self.drawGradient = true
@@ -1919,34 +1924,34 @@ struct ContentView: View {
     self.showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
   }
 
-  /// Multiplies scale by 2.0.
+   // Multiplies scale by 2.0.
   func zoomIn() {
     self.readyForPicture()
     self.doc.picdef.scale = self.doc.picdef.scale * 2.0
     self.showMandArtBitMap()
   }
 
-  /// Divides scale by 2.0.
+  // Divides scale by 2.0.
   func zoomOut() {
     self.readyForPicture()
     self.doc.picdef.scale = self.doc.picdef.scale / 2.0
     self.showMandArtBitMap()
   }
 
-  /// Trigger a tab key press event
-  ///
-  ///  TODO:  add this to each numeric field's
-  ///  onSubmit() logic so that hitting RETURN
-  ///  would also tab to the next field.
-  ///
-  ///  Not currently used as it doesn't know the TextField it was
-  ///  called on, so it can't go to the next field.
-  ///
-  ///  - Parameter textField: The `NSTextField` to trigger the tab event on.
-  ///
+     /**
+   Trigger a tab key press event
+
+    TODO:  add this to each numeric field's
+    onSubmit() logic so that hitting RETURN
+    would also tab to the next field.
+
+    Not currently used as it doesn't know the TextField it was
+    called on, so it can't go to the next field.
+
+    - Parameter textField: The `NSTextField` to trigger the tab event on.
+      */
   func triggerTab(on textField: NSTextField) {
     let keyCode = NSEvent.SpecialKey.tab.rawValue
-    //      print(keyCode)
     let keyEvent = NSEvent.keyEvent(
       with: .keyDown,
       location: NSPoint(),
@@ -1960,6 +1965,5 @@ struct ContentView: View {
       keyCode: UInt16(keyCode)
     )!
     textField.window?.sendEvent(keyEvent)
-    //       print(keyEvent)
   }
 }

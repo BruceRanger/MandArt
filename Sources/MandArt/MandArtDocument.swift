@@ -18,56 +18,24 @@ import ImageIO
 import SwiftUI
 import UniformTypeIdentifiers
 
-/// A utility class to work with files for saving and sharing your art.
-/// Includes logic for adding, deleting, and reordering colors.
-///
-/// Note: Since MandArtDocument is a class, we derive from
-/// [ReferenceFileDocument](
-/// https://developer.apple.com/documentation/swiftui/referencefiledocument
-/// )
-/// rather than FileDocument for a struct.
-///
+ /**
+  A utility class to work with files for saving and sharing your art.
+ Includes logic for adding, deleting, and reordering colors.
+
+ Note: Since MandArtDocument is a class, we derive from
+ [ReferenceFileDocument](
+ https://developer.apple.com/documentation/swiftui/referencefiledocument
+ )
+ rather than FileDocument for a struct.
+*/
 @available(macOS 12.0, *)
 final class MandArtDocument: ReferenceFileDocument, ObservableObject {
-  @Published var savedFileName: URL?
-
-  public func getCurrentWindowTitle() -> String {
-    guard let mainWindow = NSApp.mainWindow else {
-      return ""
-    }
-    return mainWindow.title
-  }
-
-  public func save(
-    to url: URL,
-    ofType _: String,
-    for _: NSDocument.SaveOperationType,
-    completionHandler: @escaping (Error?) -> Void
-  ) {
-    var data: Data
-    do {
-      data = try JSONEncoder().encode(self.picdef)
-    } catch {
-      print("!!error in Save encoding self.picdef")
-      exit(1)
-    }
-    do {
-      try data.write(to: url)
-      self.savedFileName = url
-      completionHandler(nil)
-    } catch {
-      completionHandler(error)
-    }
-  }
 
   var docName: String = "unknown"
-
-  // tell the system we support only reading / writing mandart files
-  // static var readableContentTypes = [UTType.json]
   static var readableContentTypes: [UTType] { [.mandartDocType] }
 
-  // snapshot is used to serialize and save the current version
-  // while the active self remains editable by the user
+  // snapshot used to serialize and save current version
+  // while active self remains editable by the user
   typealias Snapshot = PictureDefinition
 
   // our document has a @Published picdef property,
@@ -76,7 +44,9 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
   // to reflect the picdef changes
   @Published var picdef: PictureDefinition
 
-  /// A simple initializer that creates a new demo picture
+  /**
+   A simple initializer that creates a new demo picture
+   */
   init() {
     let hues: [Hue] = [
       Hue(num: 1, r: 0.0, g: 255.0, b: 0.0),
@@ -89,8 +59,10 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     self.picdef = PictureDefinition(hues: hues)
   }
 
-  /// Initialize a document with our picdef property
-  /// - Parameter configuration: config
+  /**
+   Initialize a document with our picdef property
+   - Parameter configuration: config
+   */
   init(configuration: ReadConfiguration) throws {
     guard let data = configuration.file.regularFileContents else {
       throw CocoaError(.fileReadCorruptFile)
@@ -100,11 +72,23 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     print("Opening data file = ", self.docName)
   }
 
-  /// Save the active picture definittion data to a file.
-  /// - Parameters:
-  ///   - snapshot: snapshot of the current state
-  ///   - configuration: write config
-  /// - Returns: a fileWrapper
+  /**
+   Get the current window title (shows data file name).
+   */
+  func getCurrentWindowTitle() -> String {
+    guard let mainWindow = NSApp.mainWindow else {
+      return ""
+    }
+    return mainWindow.title
+  }
+
+  /**
+   Save the active picture definittion data to a file.
+   - Parameters:
+     - snapshot: snapshot of the current state
+     - configuration: write config
+   - Returns: a fileWrapper
+   */
   func fileWrapper(
     snapshot: PictureDefinition,
     configuration _: WriteConfiguration
@@ -115,19 +99,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     return fileWrapper
   }
 
-  func fileWrapper(
-    snapshot: PictureDefinition,
-    byProducingFile file: URL,
-    configuration _: WriteConfiguration
-  ) throws -> FileWrapper {
-    let data = try JSONEncoder().encode(snapshot)
-    try data.write(to: file, options: .atomic)
-    // Extract the filename from the file URL
-    let filename = file.lastPathComponent
-    print("new fwmthod fn:", filename)
-    return FileWrapper(regularFileWithContents: data)
-  }
-
+  // Save the MandArt data to a file.
   public func saveMandArtDataFile() {
     // first, save the data file and wait for it to complete
     DispatchQueue.main.async {
@@ -136,11 +108,11 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     }
   }
 
+  // Save the image to a file.
   public func saveMandArtImage() {
     let winTitle = self.getCurrentWindowTitle()
     let justname = winTitle.replacingOccurrences(of: ".mandart", with: "")
     let imageFileName = justname + ".png"
-
     var data: Data
     do {
       data = try JSONEncoder().encode(self.picdef)
@@ -173,18 +145,22 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     }
   }
 
-  /// Create a snapshot of the current state of the document for serialization
-  ///  while the live self remains editiable by the user
-  /// - Parameter contentType: the standard type we use
-  /// - Returns: picture definition
+  /**
+   Create a snapshot of the current state of the document for serialization
+    while the live self remains editiable by the user
+   - Parameter contentType: the standard type we use
+   - Returns: picture definition
+   */
   @available(macOS 12.0, *)
   func snapshot(contentType _: UTType) throws -> PictureDefinition {
     self.picdef // return the current state
   }
 
-  /// Helper function to return a String from an Any?
-  /// - Parameter value: an optional Any (Any?)
-  /// - Returns: a String with content if possible, otherwise an empty String
+  /**
+   Helper function to return a String from an Any?
+   - Parameter value: an optional Any (Any?)
+   - Returns: a String with content if possible, otherwise an empty String
+   */
   func stringFromAny(_ value: Any?) -> String {
     if let nonNil = value, !(nonNil is NSNull) {
       return String(describing: nonNil)
@@ -196,7 +172,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
 // Provide operations on the MandArt document.
 @available(macOS 12.0, *)
 extension MandArtDocument {
-  /// Adds a new default hue, and registers an undo action.
+   // Adds a new default hue, and registers an undo action.
   func addHue(undoManager: UndoManager? = nil) {
     self.picdef.hues.append(Hue())
     let newLength = self.picdef.hues.count
@@ -209,7 +185,7 @@ extension MandArtDocument {
     }
   }
 
-  /// Deletes the hue at an index, and registers an undo action.
+   // Deletes the hue at an index, and registers an undo action.
   func deleteHue(index: Int, undoManager: UndoManager? = nil) {
     let oldHues = self.picdef.hues
     withAnimation {
@@ -222,7 +198,7 @@ extension MandArtDocument {
     }
   }
 
-  /// Replaces the existing items with a new set of items.
+   // Replaces the existing items with a new set of items.
   func replaceHues(with newHues: [Hue], undoManager: UndoManager? = nil, animation: Animation? = .default) {
     let oldHues = self.picdef.hues
 
@@ -236,7 +212,7 @@ extension MandArtDocument {
     }
   }
 
-  /// Relocates the specified items, and registers an undo action.
+   // Relocates the specified items, and registers an undo action.
   func moveHuesAt(offsets: IndexSet, toOffset: Int, undoManager: UndoManager? = nil) {
     let oldHues = self.picdef.hues
     withAnimation {
@@ -249,7 +225,7 @@ extension MandArtDocument {
     }
   }
 
-  /// Registers an undo action and a redo action for a hue change
+   // Registers an undo action and a redo action for a hue change
   func registerUndoHueChange(for hue: Hue, oldHue: Hue, undoManager: UndoManager?) {
     let index = self.picdef.hues.firstIndex(of: hue)!
 
@@ -316,11 +292,13 @@ extension MandArtDocument {
     }
   }
 
-  /// Update an ordered color with a new selection from the ColorPicker
-  /// - Parameters:
-  ///   - index: an Int for the index of this ordered color
-  ///   - newColorPick: the Color of the new selection
-  ///   - undoManager: undoManager
+  /**
+   Update an ordered color with a new selection from the ColorPicker
+   - Parameters:
+     - index: an Int for the index of this ordered color
+     - newColorPick: the Color of the new selection
+     - undoManager: undoManager
+   */
   func updateHueWithColorPick(index: Int, newColorPick: Color, undoManager: UndoManager? = nil) {
     let oldHues = self.picdef.hues
     let oldHue = self.picdef.hues[index]

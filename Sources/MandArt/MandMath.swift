@@ -10,179 +10,7 @@ import CoreGraphics // CG Color
  */
 import Foundation
 
-// set class/static constants first
-// These are the same for every instance of MandMath
-
-let windowGroupName: String = "Welcome to MandArt"
-let defaultFileName: String = "default.mandart"
-
 enum MandMath {
-  // Define static functions below.................
-  // static functions are the same for every instance of MandMat
-
-  /// Returns the name of the default document to show when the app first starts up
-  ///
-  /// - Returns: a simple filename (e.g. "default.mandart")
-  ///
-  static func getDefaultDocumentName() -> String {
-    defaultFileName
-  }
-
-  /// Returns the title/name of the window group
-  ///
-  /// - Returns: a simple window group title  (e.g. "Welcome to MandArt")
-  ///
-  static func getWindowGroupName() -> String {
-    windowGroupName
-  }
-
-  /// Determines the printability of a given list of `Hue` objects.
-  ///
-  /// - Parameter hues: A list of `Hue` objects.
-  /// - Returns: An array of Booleans indicating the printability of each `Hue` object.
-  ///
-  ///
-  @available(macOS 12.0, *)
-  static func getCalculatedPrintabilityOfHues(hues: [Hue]) -> [Bool] {
-    // Map `hues` array to an array of booleans,
-    // indicating the printability of each `Hue` object
-    let boolList = hues.map { isColorPrintableByCalculation(color: $0.color.cgColor!, num: $0.num) }
-    return boolList
-  }
-
-  /// Determines the printability of a list of hues.
-  ///
-  /// - Parameters:
-  ///   - hues: An array of `Hue` objects to be evaluated for printability.
-  ///
-  /// - Returns: An array of booleans indicating whether each color in the `hues` array is
-  ///   printable or not, as determined by the `isColorInPrintableList` function.
-  ///
-  /// # Example Usage:
-  ///
-  ///     let hues: [Hue] = [ ... ]
-  ///     let printability = getListPrintabilityOfHues(hues: hues)
-  ///
-  ///  The static keyword in front of the func keyword
-  ///  means this function is a "static function".
-  ///  A static function is a function that belongs to the type itself,
-  ///  rather than to instances of that type  -
-  ///  no need to create an instance of MandMath to call this function.
-  ///
-  @available(macOS 12.0, *)
-  static func getListPrintabilityOfHues(hues: [Hue]) -> [Bool] {
-    // the result of the map function applied to the hues array.
-    // The map function takes a closure (an anonymous function)
-    // as its argument and applies it to each element of the hues array.
-    let boolList = hues.map {
-      isColorInPrintableList(
-        color: $0.color.cgColor!,
-        num: $0.num
-      )
-    }
-    return boolList
-  }
-
-  /// Returns a boolean array indicating if the closest printable color of each hue in the `hues` array
-  /// is present in the `MandMath.printableColorList`.
-  ///
-  /// - Parameter hues: An array of `Hue` objects.
-  /// - Returns: An array of booleans, indicating if the closest printable color of each hue
-  /// in the `hues` array is present in the `MandMath.printableColorList`.
-  ///
-  @available(macOS 12.0, *)
-  static func getClosestPrintableColors(hues: [Hue]) -> [Bool] {
-    // Map over each hue in the `hues` array,
-    // and find the closest printable color
-    return hues.map {
-      let closestColors = getPrintableColorsWithMinimumDistance(
-        color: $0.color.cgColor!,
-        num: $0.num
-      )
-
-      // Return whether the closest color is present in `MandMath.printableColorList`
-      return closestColors.contains {
-        color in MandMath.printableColorList.contains(color)
-      }
-    }
-  }
-
-  /// Returns an array of printable color options from `MandMath.printableColorList`.
-  ///
-  /// - Parameter hue: A `Hue` object.
-  /// - Returns: An array of CGColors  in the `MandMath.printableColorList`.
-  ///
-  @available(macOS 12.0, *)
-  static func getPrintableOptions(hue: Hue) -> [CGColor] {
-    let closestColorsAsInts = self.getPrintableColorsWithMinimumDistance(
-      color: hue.color.cgColor!,
-      num: hue.num
-    )
-    // Convert the array of [[r,g,b]] to an array of CGColor
-    let closestColors = closestColorsAsInts.map { colorAsInts in
-      let components = colorAsInts.map { CGFloat($0) / 255.0 }
-      return CGColor(srgbRed: components[0], green: components[1], blue: components[2], alpha: 1.0)
-    }
-    return closestColors
-  }
-
-  /// Calculates the closest printable colors to a given color.
-  ///
-  /// - Parameters:
-  ///   - color: The `CGColor` for which to determine the closest printable colors.
-  ///   - num: An integer representing the number of the color being processed.
-  ///
-  /// - Returns: An array of arrays of integers representing the closest printable colors
-  ///   to the input `color`.
-  ///
-  ///
-  static func getPrintableColorsWithMinimumDistance(color: CGColor, num: Int)
-    -> [[Int]] {
-    guard let components = color.components else {
-      // return an empty array if the color components cannot be retrieved
-      return []
-    }
-
-    // extract the red, green, and blue components of the color
-    let r = components[0]
-    let g = components[1]
-    let b = components[2]
-
-    // convert the floating-point components to integers in the range 0-255
-    let red = Int(round(r * 255.0))
-    let green = Int(round(g * 255.0))
-    let blue = Int(round(b * 255.0))
-
-    // format the color components for printing
-    let rr = self.padIntToThreeCharacters(number: red)
-    let gg = self.padIntToThreeCharacters(number: green)
-    let bb = self.padIntToThreeCharacters(number: blue)
-    print("Color Number \(num)(\(rr)-\(gg)-\(bb)): Checking for closest")
-
-    // calculate distances between the input color and each printable color
-    let distances = MandMath.printableColorList.map { color -> Int in
-      let rDiff = color[0] - red
-      let gDiff = color[1] - green
-      let bDiff = color[2] - blue
-      return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff
-    }
-
-    // find the printable color with the minimum distance to the input color
-    let minDistance = distances.min()!
-    let nearest = MandMath.printableColorList.enumerated()
-      .filter { _, value -> Bool in
-        let rDiff = value[0] - red
-        let gDiff = value[1] - green
-        let bDiff = value[2] - blue
-        return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff == minDistance
-      }.map(\.element)
-
-    for item in nearest {
-      print("    closest:\(item)\n")
-    }
-    // return the closest printable color(s)
-    return nearest
-  }
 
   static func getMinimumDistance(color: CGColor, num _: Int) -> Int {
     guard let components = color.components else {
@@ -211,16 +39,19 @@ enum MandMath {
     return minDistance
   }
 
-  /// Function to check if a color is in the printable color list.
-  ///
-  /// - Parameters:
-  ///   - color: The `CGColor` object representing the color to check.
-  ///   - num: An integer representing the color number.
-  ///
-  /// - Returns:
-  ///   - A boolean value indicating if the color is in the printable color list or not.
-  static func isColorInPrintableList(color: CGColor, num _: Int) -> Bool {
-    // Check if the components of the CGColor object can be accessed.
+  /**
+   Function to check if a color is in the printable color list.
+
+   - Parameters:
+     - color: The `CGColor` object representing the color to check.
+     - num: An integer representing the color number.
+
+   - Returns:
+     - A boolean value indicating if the color is in the printable color list or not.
+   */
+   static func isColorInPrintableList(color: CGColor, num _: Int) -> Bool {
+
+     // Check if the components of the CGColor object can be accessed.
     guard let components = color.components else { return false }
 
     // Extract the red, green, and blue components from the CGColor object.
@@ -270,75 +101,20 @@ enum MandMath {
     }
   }
 
-  /// Get a display indicator for the color row
-  /// to indicate if this color is likely to print well
-  /// Or if the printed color may be different than
-  /// what appears on screen.
-  ///
-  ///  Function is in MandMath which knows about all colors.
-  ///  Hue class only knows about one color.
-  func isPrintableDisplayText(color: CGColor, num: Int) -> String {
-    if MandMath.isColorInPrintableList(color: color, num: num) {
-      return " "
-    } else {
-      return "!"
-    }
-  }
+       /**
+   This function formats the input number to a string with three characters.
 
-  /// Decomposes a CGColor into its
-  /// red, green, and blue components,
-  /// and returns true if all of them are between 0 and 1, inclusive.
-  ///
-  /// This indicates that the color is printable,
-  /// as the RGB color space used by Core Graphics uses
-  /// values between 0 and 1 to represent color intensity.
-  ///
-  /// - Parameter: CGColor
-  /// - Returns:boolean true if printable
-  static func isColorPrintableByCalculation(color: CGColor, num: Int) -> Bool {
-    guard let components = color.components else { return false }
-    let r = components[0]
-    let g = components[1]
-    let b = components[2]
+   - Parameters:
+     - number: The input integer to format.
 
-    let isPrintable = r >= 0 && r <= 1 && g >= 0 && g <= 1 && b >= 0 && b <= 1
+   - Returns: The formatted string with three characters.
 
-    let red = Int(round(r * 255.0))
-    let green = Int(round(g * 255.0))
-    let blue = Int(round(b * 255.0))
-    print(num, red, green, blue)
-
-    let rr = self.padIntToThreeCharacters(number: red)
-    let gg = self.padIntToThreeCharacters(number: green)
-    let bb = self.padIntToThreeCharacters(number: blue)
-
-    print("Color Number \(num)(\(rr)-\(gg)-\(bb)): calculated printable: ", isPrintable)
-    return isPrintable
-  }
-
-  /// This function formats the input number to a string with three characters.
-  ///
-  /// - Parameters:
-  ///   - number: The input integer to format.
-  ///
-  /// - Returns: The formatted string with three characters.
-  ///
-  /// Example:
-  ///
-  ///     let result = padIntToThreeCharacters(number: 123)
-  ///     print(result) // Output: "123"
+   Example:
+       let result = padIntToThreeCharacters(number: 123)
+       print(result) // Output: "123"
+        */
   static func padIntToThreeCharacters(number: Int) -> String {
     String(format: "%03d", number)
-  }
-
-  static func getPrintableCGColorList() -> [CGColor] {
-    let lst = MandMath.printableColorList.map { colorValues in
-      let red = CGFloat(colorValues[0]) / 255.0
-      let green = CGFloat(colorValues[1]) / 255.0
-      let blue = CGFloat(colorValues[2]) / 255.0
-      return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-    }
-    return lst
   }
 
   static func getPrintableCGColorListSorted(iSort: Int) -> [CGColor] {
@@ -390,12 +166,14 @@ enum MandMath {
     return lst
   }
 
-  ///  Get ALL screen colors to display as little squares
-  ///  Parameter: iSort indicates the order to present the colors
-  ///  iSort:
-  ///  0 = rgb, 1 = rbg
-  ///  2 = grb, 3 = gbr
-  ///  4 = brg, 5 = bgr
+       /**
+    Get ALL screen colors to display as little squares
+    Parameter: iSort indicates the order to present the colors
+    iSort:
+    0 = rgb, 1 = rbg
+    2 = grb, 3 = gbr
+    4 = brg, 5 = bgr
+        */
   static func getAllCGColorsList(iSort: Int) -> [CGColor] {
     var allColors: [CGColor] = []
     switch iSort {
@@ -475,13 +253,15 @@ enum MandMath {
     return allColors
   }
 
-  ///  Get ALL PRINTABLE  colors to display as little squares
-  ///  If a screen color is NOT printable, it will be replaced with a white square
-  ///  Parameter: iSort indicates the order to present the colors
-  ///  iSort:
-  ///  0 = rgb, 1 = rbg
-  ///  2 = grb, 3 = gbr
-  ///  4 = brg, 5 = bgr
+       /**
+    Get ALL PRINTABLE  colors to display as little squares
+    If a screen color is NOT printable, it will be replaced with a white square
+    Parameter: iSort indicates the order to present the colors
+    iSort:
+    0 = rgb, 1 = rbg
+    2 = grb, 3 = gbr
+    4 = brg, 5 = bgr
+        */
   static func getAllPrintableCGColorsList(iSort: Int) -> [CGColor] {
     var allColors: [CGColor] = []
     switch iSort {
@@ -665,12 +445,13 @@ enum MandMath {
     }
   }
 
-  /// MandMath keeps a list of known printable colors
-  ///
-  /// # Example Usage:
-  ///
-  ///     let lst = MandMath.printableColorList
-  ///
+       /**
+   MandMath keeps a list of known printable colors
+
+   # Example Usage:
+
+       let lst = MandMath.printableColorList
+*/
   static let printableColorList = [
     [0, 73, 36],
     [0, 73, 73],
