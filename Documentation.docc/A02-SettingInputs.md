@@ -38,23 +38,23 @@ The other versions of it we’ll call **Mini-Mands**.
 
 ### Welcome Screen
 
-![Fig 2](Picture2.png)
+![Welcome Screen](WelcomeScreen.png)
 
 This image shows the welcome screen in the app. Click on the Get Started button to begin.
 
 
 ### MandArt Main Window
 
-![Fig 3](Picture3.png)
+![Opening Main Window](OpeningMandArt.png)
 
 This shows the main window after opening. 
 The window isn't big enough to show the whole picture, 
 so resize it by drawing the lower-right corner until it shows the whole picture. 
 
 
-### Finding MandArt - Centering and Zooming
+### Finding MandArt - Centering, Dragging, and Zooming
 
-![Fig 4](MandArtMainWindow.png)
+![Centering, Dragging, and Zooming](CenteringDraggingZooming.png)
 
 We’ll use this image to explain centering, dragging, and zooming. 
 
@@ -113,17 +113,16 @@ a slider is provided to define the fraction of a block that uses the defined col
 If a value near 1 is chosen, the blocks of colors will show up as solid bands. 
 
 
-### Interesting Areas 
+### Finding Interesting Areas 
 
-![Fig 5](Picture5.png)
+![Finding Interesting Areas](CheckTheWhiteSpots.png)
 
 This shows typical areas where you might look for interesting images. 
 They seem to be in areas that are near where two black areas come together. 
 
-### Interesting Area Example 
+### Interesting Example 
 
-![Fig 6](Picture6.png)
-
+![Interesting Example](InterestingArea.png)
 
 Here we show an image that has been moved to a new center, rotated, and zoomed in by a factor of about 2,880,000/430 = 6,698. 
 
