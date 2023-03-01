@@ -101,22 +101,6 @@ enum MandMath {
     }
   }
 
-       /**
-   This function formats the input number to a string with three characters.
-
-   - Parameters:
-     - number: The input integer to format.
-
-   - Returns: The formatted string with three characters.
-
-   Example:
-       let result = padIntToThreeCharacters(number: 123)
-       print(result) // Output: "123"
-        */
-  static func padIntToThreeCharacters(number: Int) -> String {
-    String(format: "%03d", number)
-  }
-
   static func getPrintableCGColorListSorted(iSort: Int) -> [CGColor] {
     var lst: [CGColor] = []
     switch iSort {

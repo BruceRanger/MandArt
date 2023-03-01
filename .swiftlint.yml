@@ -80,6 +80,18 @@ identifier_name:
     - b
     - yY
     - a
+    - u
+    - v
+    - w
+    - h
+    - xX
+    - yY
+    - x0
+    - y0
+    - xx
+    - yy
+    - dx
+    - dy
 
 line_length:
   warning: 100

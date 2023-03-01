@@ -118,7 +118,6 @@ class Hue: Codable, Identifiable, ObservableObject {
     let strR = String(format: "%d", Int(r))
     let strG = String(format: "%d", Int(g))
     let strB = String(format: "%d", Int(b))
-    print("[\(strR),\(strG),\(strB)], // printable crayons")
   }
 }
 

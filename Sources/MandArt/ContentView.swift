@@ -959,7 +959,7 @@ struct ContentView: View {
                 .help("Select the color number for the left side of a gradient.")
 
                 Text("to " + String(rightGradientColor))
-                  .help("The color # for the right side of a gradient.")
+                  .help("The color number for the right side of a gradient.")
 
                 Button("Go") { showGradient() }
                   .help("Draw a gradient between two adjoining colors.")

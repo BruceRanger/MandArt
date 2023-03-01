@@ -85,22 +85,21 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
   /**
    Save the active picture definittion data to a file.
    - Parameters:
-     - snapshot: snapshot of the current state
-     - configuration: write config
+   - snapshot: snapshot of the current state
+   - configuration: write config
    - Returns: a fileWrapper
    */
   func fileWrapper(
     snapshot: PictureDefinition,
     configuration _: WriteConfiguration
   ) throws -> FileWrapper {
-    print("Preparing to save.")
     let data = try JSONEncoder().encode(snapshot)
     let fileWrapper = FileWrapper(regularFileWithContents: data)
     return fileWrapper
   }
 
   // Save the MandArt data to a file.
-  public func saveMandArtDataFile() {
+  func saveMandArtDataFile() {
     // first, save the data file and wait for it to complete
     DispatchQueue.main.async {
       // Trigger a "File > Save" menu event to update the app's UI.
@@ -109,7 +108,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
   }
 
   // Save the image to a file.
-  public func saveMandArtImage() {
+  func saveMandArtImage() {
     let winTitle = self.getCurrentWindowTitle()
     let justname = winTitle.replacingOccurrences(of: ".mandart", with: "")
     let imageFileName = justname + ".png"
@@ -121,7 +120,6 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
       exit(1)
     }
     let fileWrapper = FileWrapper(regularFileWithContents: data)
-    print("In saving image, the filewrapper.filename is:", fileWrapper.filename!)
 
     // trigger state from this window / json document to get a current img
     self.picdef.imageHeight += 1
@@ -147,7 +145,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
 
   /**
    Create a snapshot of the current state of the document for serialization
-    while the live self remains editiable by the user
+   while the live self remains editiable by the user
    - Parameter contentType: the standard type we use
    - Returns: picture definition
    */
@@ -156,17 +154,6 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     self.picdef // return the current state
   }
 
-  /**
-   Helper function to return a String from an Any?
-   - Parameter value: an optional Any (Any?)
-   - Returns: a String with content if possible, otherwise an empty String
-   */
-  func stringFromAny(_ value: Any?) -> String {
-    if let nonNil = value, !(nonNil is NSNull) {
-      return String(describing: nonNil)
-    }
-    return ""
-  }
 }
 
 // Provide operations on the MandArt document.
