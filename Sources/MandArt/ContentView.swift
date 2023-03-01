@@ -707,17 +707,6 @@ struct ContentView: View {
 
                         Group {
                             HStack {
-                                /*              Button("Draw pic") { showMandArtBitMap() }
-                                 .help("Draw the picture.")*/
-
-                                /*             Button("Pause") {
-                                 drawIt = false
-                                 drawGradient = false
-                                 drawColors = false
-                                 }
-                                 //.help("Pause to change values.")*/
-
-                                //            Button("🌅") {
 
                                 Button("Save Data"){
                                     doc.saveMandArtDataFile()
@@ -731,15 +720,10 @@ struct ContentView: View {
                             }
 
                             Divider()
+
                         } // END SECTION 1 GROUP -  BASICS
                         .fixedSize(horizontal: true, vertical: true)
-                        .alert(isPresented: $showSaveFirstAlert) {
-                            Alert(
-                                title: Text("Warning"),
-                                message: Text("Use File / Save to save your data first."),
-                                dismissButton: .default(Text("OK"))
-                            )
-                        }
+
 
                         //  GROUP 2 IMAGE SIZE
 
@@ -755,9 +739,7 @@ struct ContentView: View {
                                               value: $doc.picdef.imageWidth,
                                               formatter:
                                                 ContentView.fmtImageWidthHeight) { isStarted in
-                                        if isStarted {
-                                            self.pauseUpdates()
-                                        }
+                                        isStarted ? pauseUpdates() : showMandArtBitMap()
                                     }
                                                 .onSubmit {
                                                     showMandArtBitMap()
@@ -776,9 +758,8 @@ struct ContentView: View {
                                     TextField("1000",
                                               value: $doc.picdef.imageHeight,
                                               formatter: ContentView.fmtImageWidthHeight) { isStarted in
-                                        if isStarted {
-                                            self.pauseUpdates()
-                                        }
+                                        isStarted ? pauseUpdates() : showMandArtBitMap()
+
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -815,9 +796,8 @@ struct ContentView: View {
                                     TextField("-0.75",
                                               value: $doc.picdef.xCenter,
                                               formatter: ContentView.fmtXY) { isStarted in
-                                        if isStarted {
-                                            self.pauseUpdates()
-                                        }
+                                        isStarted ? pauseUpdates() : showMandArtBitMap()
+
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -835,9 +815,8 @@ struct ContentView: View {
                                     TextField("0.0",
                                               value: $doc.picdef.yCenter,
                                               formatter: ContentView.fmtXY) { isStarted in
-                                        if isStarted {
-                                            self.pauseUpdates()
-                                        }
+                                        isStarted ? pauseUpdates() : showMandArtBitMap()
+
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -860,9 +839,8 @@ struct ContentView: View {
                                     TextField("0",
                                               value: $doc.picdef.theta,
                                               formatter: ContentView.fmtRotationTheta) { isStarted in
-                                        if isStarted {
-                                            self.pauseUpdates()
-                                        }
+                                        isStarted ? pauseUpdates() : showMandArtBitMap()
+
                                     }
                                               .onSubmit {
                                                   showMandArtBitMap()
@@ -876,9 +854,8 @@ struct ContentView: View {
                                 VStack {
                                     Text("Scale")
                                     TextField("430", value: $doc.picdef.scale, formatter: ContentView.fmtScale) { isStarted in
-                                        if isStarted {
-                                            self.pauseUpdates()
-                                        }
+                                        isStarted ? pauseUpdates() : showMandArtBitMap()
+
                                     }
                                     .onSubmit {
                                         showMandArtBitMap()
@@ -908,9 +885,8 @@ struct ContentView: View {
                                 Text("Sharpening (iterationsMax):")
 
                                 TextField("10,000", value: $doc.picdef.iterationsMax, formatter: ContentView.fmtSharpeningItMax) { isStarted in
-                                    if isStarted {
-                                        self.pauseUpdates()
-                                    }
+                                    isStarted ? pauseUpdates() : showMandArtBitMap()
+
                                 }
                                 .onSubmit {
                                     showMandArtBitMap()
@@ -926,9 +902,8 @@ struct ContentView: View {
                                 Text("Color smoothing (rSqLimit):")
 
                                 TextField("400", value: $doc.picdef.rSqLimit, formatter: ContentView.fmtSmootingRSqLimit) { isStarted in
-                                    if isStarted {
-                                        self.pauseUpdates()
-                                    }
+                                    isStarted ? pauseUpdates() : showMandArtBitMap()
+
                                 }
                                 .onSubmit {
                                     showMandArtBitMap()
@@ -1280,19 +1255,6 @@ struct ContentView: View {
                     List {
                         ForEach($doc.picdef.hues, id: \.num) { $hue in
                             let i = hue.num - 1
-                            // $hue is a binding - a reference
-                            // we could call it hueBinding instead.
-                            // we need to get the wrapped value of $hue
-                            // to get the the hue itself.
-                            // We use the wrappedValue property
-                            // of the hueBinding to get the underlying
-                            // Hue object.
-                            // This is because the hueBinding is a Binding
-                            // to a Hue object, not the Hue object itself.
-                            // By using the wrappedValue property,
-                            // we can get the actual Hue object,
-                            // which we use in the call to the
-                            // getPrintableDisplayText function.
                             let isPrintable = getIsPrintable(color: $hue.wrappedValue.color, num: $hue.wrappedValue.num)
 
                             HStack {
@@ -1306,10 +1268,6 @@ struct ContentView: View {
                                         doc.updateHueWithColorPick(
                                             index: i, newColorPick: newColor
                                         )
-                                        // BHJ: used to get info
-                                        // about printable color crayons
-                                        // comment out or
-                                        // remove if not needed
                                         hue.printColorInfo()
                                     }
 
@@ -1353,12 +1311,10 @@ struct ContentView: View {
                                             }  // end VStack of color options
 
                                         } // end VStack
-                                          // .padding()
                                         .frame(width: 150, height: 100)
                                         .background(Color.white)
                                         .cornerRadius(8)
                                         .shadow(radius: 10)
-                                        //   .padding()
 
                                     } // end ZStack for popup
                                     .transition(.scale)
@@ -1410,7 +1366,7 @@ struct ContentView: View {
                 .fixedSize(horizontal: false, vertical: false)
 
                 // } // END COLOR LIST VSTACK
-            } // end VStack for user instructions - Below refers to the 2 cols
+            } // end VStack for user instructions, rest is 2nd col
             .frame(width: inputWidth)
             .padding(2)
 
@@ -1578,9 +1534,6 @@ struct ContentView: View {
                                                 let red = nsColor.redComponent
                                                 let green = nsColor.greenComponent
                                                 let blue = nsColor.blueComponent
-                                                // let colorValues = "R: \(Int(red*255)), G: \(Int(green*255)), B: \(Int(blue*255))"
-                                                // let colorValues = " \(Int(red*255)), \(Int(green*255)), \(Int(blue*255))"
-                                                // let colorValues = " \(String(format: "%03d", Int(red*255))) \(String(format: "%03d", Int(green*255))) \(String(format: "%03d", Int(blue*255)))"
 
                                                 let colorValueR = "\(Int(red*255))"
                                                 let colorValueG = "\(Int(green*255))"
@@ -1603,15 +1556,10 @@ struct ContentView: View {
                                                         .font(.system(size: 10))
                                                         .background(Color.white)
 
-                                                    // Text(colorValues)
-                                                    // .font(.system(size: 8))
-                                                    //   .padding(1)
-                                                    //   .background(Color.white)
-                                                    // .cornerRadius(2)
-                                                    // .shadow(radius: 2)
-
                                                 } // end Zstack of rect, rgb values
+
                                             }// end for each column of colors
+
                                         } // end HStack of colors
 
                                     } // end for each color
@@ -1644,8 +1592,12 @@ struct ContentView: View {
     /// The minimum distance for the drag gesture is set to 0 units,
     /// and the coordinate space for the gesture is set to .local.
     ///
-    /// The gesture has an onChanged closure that is triggered
-    /// whenever the gesture is changed by the user's interaction.
+    /// The onChanged closure is triggered
+    /// when the gesture is changed by the user's interaction.
+    ///
+    /// The onEnded closure is triggered
+    /// when the user lifts the mouse off the screen,
+    /// indicating the tap gesture has completed.
     ///
     var tapGesture: some Gesture {
         DragGesture(minimumDistance: 0, coordinateSpace: .local)
@@ -2019,12 +1971,15 @@ struct ContentView: View {
     func zoomIn() {
         readyForPicture()
         doc.picdef.scale = doc.picdef.scale * 2.0
+        showMandArtBitMap()
+
     }
 
     /// Divides scale by 2.0.
     func zoomOut() {
         readyForPicture()
         doc.picdef.scale = doc.picdef.scale / 2.0
+        showMandArtBitMap()
     }
 
     /// Trigger a tab key press event
