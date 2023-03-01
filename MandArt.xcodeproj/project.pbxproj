@@ -16,8 +16,6 @@
 		8845506629AE3C8D008F202A /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 8845506529AE3C8D008F202A /* Resources */; };
 		88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88511CB22948B3FF009B5CF6 /* MandMath.swift */; };
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
-		88CCE4A129AE48FB006AD285 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88CCE4A029AE48FB006AD285 /* LICENSE */; };
-		88CCE4A329AE490D006AD285 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 88CCE4A229AE490D006AD285 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,9 +31,7 @@
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
 		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
-		88CCE4A029AE48FB006AD285 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		88CCE4A229AE490D006AD285 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		88CF1E2629AEFE4B00D933F6 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		88CF1E2629AEFE4B00D933F6 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MandArt.app; path = /Users/denisecase/Documents/MandArt/build/Debug/MandArt.app; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,9 +48,6 @@
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
-				C5F4AF5629AF7D8E00E731CA /* Screenshots */,
-				88CCE4A229AE490D006AD285 /* README.md */,
-				88CCE4A029AE48FB006AD285 /* LICENSE */,
 				8845506529AE3C8D008F202A /* Resources */,
 				6A3AEC1026F879F500D7E31A /* Assets.xcassets */,
 				6A3AEC1826F879F500D7E31A /* Info.plist */,
@@ -62,7 +55,6 @@
 				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
 				889E3F23293AE0B6009944AC /* Documentation.docc */,
 				88A1716629913A0800A85AED /* Sources */,
-				88CF1E2629AEFE4B00D933F6 /* MandArt.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -85,13 +77,6 @@
 				88511CB22948B3FF009B5CF6 /* MandMath.swift */,
 			);
 			path = MandArt;
-			sourceTree = "<group>";
-		};
-		C5F4AF5629AF7D8E00E731CA /* Screenshots */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Screenshots;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,8 +139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8845506629AE3C8D008F202A /* Resources in Resources */,
-				88CCE4A329AE490D006AD285 /* README.md in Resources */,
-				88CCE4A129AE48FB006AD285 /* LICENSE in Resources */,
 				6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
