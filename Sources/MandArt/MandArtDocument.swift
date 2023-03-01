@@ -29,9 +29,37 @@ import UniformTypeIdentifiers
 ///
 @available(macOS 12.0, *)
 final class MandArtDocument: ReferenceFileDocument, ObservableObject {
+
+    @Published var savedFileName: URL?
+
+    public func getCurrentWindowTitle() -> String {
+        guard let mainWindow = NSApp.mainWindow else {
+            return ""
+        }
+        return mainWindow.title
+    }
+
+    public func save(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, completionHandler: @escaping (Error?) -> Void) {
+        var data: Data
+        do {
+            data = try JSONEncoder().encode(picdef)
+        } catch {
+            print("!!error in Save encoding self.picdef")
+            exit(1)
+        }
+        do {
+            try data.write(to: url)
+            savedFileName = url
+            completionHandler(nil)
+        } catch {
+            completionHandler(error)
+        }
+    }
+
+
     
     var docName: String = "unknown"
-    var savedFileName: String?
+    //var savedFileName: String?
 
     // tell the system we support only reading / writing mandart files
     //static var readableContentTypes = [UTType.json]
@@ -90,15 +118,12 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
         return fileWrapper
     }
 
-    var filename: String?
 
     func fileWrapper(snapshot: PictureDefinition, byProducingFile file: URL, configuration: WriteConfiguration) throws -> FileWrapper {
         let data = try JSONEncoder().encode(snapshot)
         try data.write(to: file, options: .atomic)
-
         // Extract the filename from the file URL
         let filename = file.lastPathComponent
-        self.filename = filename
         print("new fwmthod fn:", filename)
         return FileWrapper(regularFileWithContents: data)
     }
@@ -106,8 +131,9 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
 
     @available(macOS 12.0, *)
     func saveImagePictureFromJSONDocument() {
-        print("Saving image from data file:", docName)
-        let justname = docName.replacingOccurrences(of: ".mandart", with: "")
+        let winTitle = self.getCurrentWindowTitle()
+        print("Saving image from data file (winTitle):", winTitle)
+        let justname = winTitle.replacingOccurrences(of: ".mandart", with: "")
         print("saving image, data file name is: ", justname)
         let fn = justname + ".png"
 
@@ -121,10 +147,6 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
         let fileWrapper = FileWrapper(regularFileWithContents: data)
         print("In saving image, the filewrapper.filename is:", fileWrapper.filename!)
 
-        let defname = fileWrapper.filename
-        print("In saving image, the defname is:", defname!)
-        let fnn = self.filename
-        print("In saving image, the fnn is:", fnn!)
         // trigger state from this window / json document to get a current img
         picdef.imageHeight = picdef.imageHeight + 1
         picdef.imageHeight = picdef.imageHeight - 1

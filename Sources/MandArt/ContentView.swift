@@ -22,11 +22,12 @@ var fIterGlobal = [[Double]]()
 
 @available(macOS 12.0, *)
 struct ContentView: View {
-    // Get everything we can from MandMath (Swift-only)
-    let defaultFileName = MandMath.getDefaultDocumentName()
 
     // the remaining content should all require SwiftUI
     @EnvironmentObject var doc: MandArtDocument
+
+    // Get everything we can from MandMath (Swift-only)
+    let defaultFileName = MandMath.getDefaultDocumentName()
 
     // set width of the first column (user inputs)
     let inputWidth: Double = 300
@@ -704,18 +705,19 @@ struct ContentView: View {
 
                         Group {
                             HStack {
-                  /*              Button("Draw pic") { showMandArtBitMap() }
-                                    .help("Draw the picture.")*/
+                                /*              Button("Draw pic") { showMandArtBitMap() }
+                                 .help("Draw the picture.")*/
 
-                   /*             Button("Pause") {
-                                    drawIt = false
-                                    drawGradient = false
-                                    drawColors = false
-                                }
-                                .help("Pause to change values.")*/
+                                /*             Button("Pause") {
+                                 drawIt = false
+                                 drawGradient = false
+                                 drawColors = false
+                                 }
+                                 .help("Pause to change values.")*/
 
-                    //            Button("🌅") {
-                                Button("Save") {
+                                //            Button("🌅") {
+                                Button("Save Image") {
+
                                     doc.saveImagePictureFromJSONDocument()
                                 }
                                 .help("Save MandArt image and image file.")
@@ -992,7 +994,7 @@ struct ContentView: View {
                                             self.readyForColors()
                                         }
                                     }
-                                        .accentColor(Color.blue)
+                                    .accentColor(Color.blue)
 
                                     Text("20")
 
@@ -1001,10 +1003,10 @@ struct ContentView: View {
                                             self.readyForColors()
                                         }
                                     }
-                                        .textFieldStyle(.roundedBorder)
-                                        .multilineTextAlignment(.trailing)
-                                        .frame(maxWidth: 50)
-                                        .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 50)
+                                    .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
 
                                 }
                                 
@@ -1021,7 +1023,7 @@ struct ContentView: View {
                                             self.readyForColors()
                                         }
                                     }
-                                        .accentColor(Color.blue)
+                                    .accentColor(Color.blue)
 
 
                                     Text("50")
@@ -1031,10 +1033,10 @@ struct ContentView: View {
                                             self.readyForColors()
                                         }
                                     }
-                                        .textFieldStyle(.roundedBorder)
-                                        .multilineTextAlignment(.trailing)
-                                        .frame(maxWidth: 50)
-                                       
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 50)
+
                                 }
                                 .padding(.horizontal)
                                 .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
@@ -1066,9 +1068,9 @@ struct ContentView: View {
                                             self.readyForColors()
                                         }
                                     }
-                                        .textFieldStyle(.roundedBorder)
-                                        .multilineTextAlignment(.trailing)
-                                        .frame(maxWidth: 50)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 50)
 
                                 }
                                 .padding(.horizontal)
@@ -1082,15 +1084,15 @@ struct ContentView: View {
 
                                     Text("10")
 
-                                Slider(value: Binding(
-                                    get: { Double(doc.picdef.nBlocks) },
-                                    set: { doc.picdef.nBlocks = Int($0) }
-                                ), in: 10...100, step: 10) { isStarted in
-                                    if isStarted {
-                                        self.readyForColors()
+                                    Slider(value: Binding(
+                                        get: { Double(doc.picdef.nBlocks) },
+                                        set: { doc.picdef.nBlocks = Int($0) }
+                                    ), in: 10...100, step: 10) { isStarted in
+                                        if isStarted {
+                                            self.readyForColors()
+                                        }
                                     }
-                                }
-                                .accentColor(Color.green)
+                                    .accentColor(Color.green)
 
                                     Text("100")
 
@@ -1099,9 +1101,9 @@ struct ContentView: View {
                                             self.readyForColors()
                                         }
                                     }
-                                        .textFieldStyle(.roundedBorder)
-                                        .multilineTextAlignment(.trailing)
-                                        .frame(maxWidth: 50)
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 50)
                                 }
                                 .padding(.horizontal)
                                 .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
@@ -1397,6 +1399,7 @@ struct ContentView: View {
             } // end VStack for user instructions - Below refers to the 2 cols
             .frame(width: inputWidth)
             .padding(2)
+
 
             // SECOND COLUMN - VSTACK - IS FOR IMAGES
 
@@ -2023,7 +2026,7 @@ struct ContentView: View {
     ///
     func triggerTab(on textField: NSTextField) {
         let keyCode = NSEvent.SpecialKey.tab.rawValue
-  //      print(keyCode)
+        //      print(keyCode)
         let keyEvent = NSEvent.keyEvent(with: .keyDown,
                                         location: NSPoint(),
                                         modifierFlags: [],
@@ -2035,6 +2038,6 @@ struct ContentView: View {
                                         isARepeat: false,
                                         keyCode: UInt16(keyCode))!
         textField.window?.sendEvent(keyEvent)
- //       print(keyEvent)
+        //       print(keyEvent)
     }
 }
