@@ -12,11 +12,6 @@ import AppKit // keypress
 import Foundation // trig functions
 import SwiftUI // views
 
-// File / Project Settings / Per-user project settings / derived data
-// set to project-relative path DerivedData
-// now I can see the intermediate build products.
-
-// Declare global variables first (outside the ContentView struct)
 var contextImageGlobal: CGImage?
 var fIterGlobal = [[Double]]()
 
@@ -24,38 +19,21 @@ var fIterGlobal = [[Double]]()
 struct ContentView: View {
   @EnvironmentObject var doc: MandArtDocument
 
-  let defaultFileName = MandMath.getDefaultDocumentName()
-
   // set width of the first column (user inputs)
   let inputWidth: Double = 300
 
-  @State private var testColor = Color.red
-  @State private var tapX: Double = 0.0
-  @State private var tapY: Double = 0.0
-  @State private var tapLocations: [CGPoint] = []
   @State private var moved: Double = 0.0
   @State private var startTime: Date?
-  @State private var dragCompleted = false
-  @State private var dragOffset = CGSize.zero
   @State private var drawIt = true
   @State private var drawGradient = false
   @State private var drawColors = false
   @State private var activeDisplayState = ActiveDisplayChoice.MandArt
-  @State private var textFieldImageWidth: NSTextField = .init()
   @State private var textFieldImageHeight: NSTextField = .init()
-  @State private var textFieldX: NSTextField = .init()
   @State private var textFieldY: NSTextField = .init()
   @State private var showingAllColorsPopups = Array(repeating: false, count: 6)
   @State private var showingPrintableColorsPopups = Array(repeating: false, count: 6)
   @State private var showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
-  @State private var showSaveFirstAlert = false
-
   @State private var showingPrintablePopups = Array(repeating: false, count: 100)
-
-  @State private var hoverColorValues: String?
-  @State private var hoverColorValueR: String?
-  @State private var hoverColorValueG: String?
-  @State private var hoverColorValueB: String?
 
   enum ActiveDisplayChoice {
     case MandArt
@@ -1794,14 +1772,6 @@ struct ContentView: View {
     return 1
   }
 
-  private func getPrintableDisplayText(color: Color, num: Int) -> String {
-    if MandMath.isColorInPrintableList(color: color.cgColor!, num: num) {
-      return " "
-    } else {
-      return "!"
-    }
-  }
-
   private func getIsPrintable(color: Color, num: Int) -> Bool {
     if MandMath.isColorNearPrintableList(color: color.cgColor!, num: num) {
       return true
@@ -1898,40 +1868,12 @@ struct ContentView: View {
     return newCenterY
   }
 
-  /// Return the document directory for this app.
-  ///
-  /// - Returns: URL to document directory
-  ///
-  func getDocumentsDirectory() -> URL {
-    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    let documentsDirectory = paths[0]
-    return documentsDirectory
-  }
-
   /// Update hue nums after moviing or deleting
   ///
   fileprivate func updateHueNums() {
     for (index, _) in self.$doc.picdef.hues.enumerated() {
       self.doc.picdef.hues[index].num = index + 1
     }
-  }
-
-  /// Function to validate all colors in the picdef
-  ///
-  fileprivate func validateColors() {
-    // TODO: communicate with user
-  }
-
-  /// Function to validate X or Y input
-  ///
-  fileprivate func validateX() -> Bool {
-    true
-  }
-
-  /// Function to move an ordered color (hue) from one place to another in the list
-  ///
-  fileprivate func moveHue(from source: IndexSet, to destination: Int) {
-    self.doc.picdef.hues.move(fromOffsets: source, toOffset: destination)
   }
 
   /// Get the app ready to draw colors.

@@ -32,8 +32,22 @@ swiftlint lint --config .swiftlint.yml Sources/MandArt/MandArtApp.swift
 swiftlint lint --config .swiftlint.yml Sources/MandArt/MandMath.swift
 swiftlint lint --config .swiftlint.yml Sources/MandArt/ContentView.swift
 
+```
+
+## Dev Notes: Periphery
+
+First, build, then run:
 
 ```
+xcodebuild -scheme MandArt -destination 'platform=macOS' -derivedDataPath 'DerivedData' clean build
+
+periphery scan --skip-build --index-store-path 'DerivedData/MandArt/Index.noindex/DataStore/'
+
+```
+
+
+
+
 
 ## Dev Notes: How to Create Documentation
 
