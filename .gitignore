@@ -1,6 +1,9 @@
 # VS Code
 .vscode/
 
+# Permit the built app
+!DerivedData/MandArt/Build/Products/Debug/MandArt.app
+
 # Mac
 .DS_Store
 
