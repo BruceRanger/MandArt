@@ -53,6 +53,7 @@
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
+				C5F4AF5629AF7D8E00E731CA /* Screenshots */,
 				88CF1E2729AF00F500D933F6 /* Package.swift */,
 				88CCE4A229AE490D006AD285 /* README.md */,
 				88CCE4A029AE48FB006AD285 /* LICENSE */,
@@ -86,6 +87,13 @@
 				88511CB22948B3FF009B5CF6 /* MandMath.swift */,
 			);
 			path = MandArt;
+			sourceTree = "<group>";
+		};
+		C5F4AF5629AF7D8E00E731CA /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screenshots;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
