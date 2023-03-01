@@ -715,7 +715,7 @@ struct ContentView: View {
                                  drawGradient = false
                                  drawColors = false
                                  }
-                                 .help("Pause to change values.")*/
+                                 //.help("Pause to change values.")*/
 
                                 //            Button("🌅") {
 
