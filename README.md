@@ -18,7 +18,23 @@ SwiftUI macOS app to create custom art using the Mandelbrot set.
 
 - [Documentation](https://denisecase.github.io/MandArt-Docs/documentation/mandart/)
 
-## Developers
+## Dev Notes: Formatting and Linting
+
+```
+swiftlint --fix --config .swiftlint.yml Sources/MandArt
+swiftformat Sources/MandArt --swiftversion 5
+
+swiftlint lint --config .swiftlint.yml Sources/MandArt/Hue.swift
+swiftlint lint --config .swiftlint.yml Sources/MandArt/PictureDefinition.swift
+swiftlint lint --config .swiftlint.yml Sources/MandArt/MandArtDocument.swift
+swiftlint lint --config .swiftlint.yml Sources/MandArt/MandArtApp.swift
+swiftlint lint --config .swiftlint.yml Sources/MandArt/MandMath.swift
+swiftlint lint --config .swiftlint.yml Sources/MandArt/ContentView.swift
+
+
+```
+
+## Dev Notes: How to Create Documentation
 
 The following process is used to create documentatation and host it in the
 [MandArt-Docs](https://github.com/denisecase/MandArt-Docs) repo.
@@ -39,7 +55,7 @@ swift package --allow-writing-to-directory ./docs \
 ```
 
 
-## After generating Docs
+After generating Docs
 
 1. Copy MandArt/docs to MandArt-Docs/docs 
 2. Commit and push MandArt-Docs to GitHub (using VS Code)

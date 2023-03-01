@@ -1,19 +1,20 @@
 /**
  MandArtApp
 
- This struct is the main entry point of the MandArt application.  It has a body that creates a WindowGroup
- and a DocumentGroup. The WindowGroup presents an opening page that provides information
- about the app, a sample MandArt button, and links to help resources. The DocumentGroup creates new MandArtDocument instances and presents the ContentView for editing the MandArt picture. This class
- modifies the app menu by removing the Edit/pasteboard menu item and the View/Tab bar menu item
- and by replacing the Help/MandArt Help menu item with a link to the app's hosted documentation on
- GitHub Pages.
+ This struct is the main entry point of the MandArt application.
+ It has a body that creates a WindowGroup and a DocumentGroup.
 
- For more information, see:
- https://developer.apple.com/documentation/swiftui/building_a_document-based_app_with_swiftui
+ The WindowGroup presents an opening page that provides information
+ about the app, a sample MandArt button, and links to help resources.
+
+ The DocumentGroup creates new MandArtDocument instances and presents the ContentView for editing the MandArt picture.
+
+ This class modifies the app menu by removing the Edit/pasteboard menu item
+ and the View/Tab bar menu item and by replacing the Help/MandArt Help menu item
+ with a link to the app's hosted documentation on GitHub Pages.
 
  Note: This class is only available on macOS 12.0 and later.
  */
-import AppKit // needed to get user screen dimensions
 import SwiftUI
 
 @available(macOS 12.0, *)
@@ -22,9 +23,7 @@ struct MandArtApp: App {
     /// The body of the app; kicks off the opening page.
     ///  It creates a WindowGroup and DocumentGroup.
     var body: some Scene {
-
         WindowGroup(windowGroupName) {
-
             VStack {
                 Spacer()
                 Button("Click to open a sample MandArt") {
@@ -47,7 +46,7 @@ struct MandArtApp: App {
             }
         }
 
-        DocumentGroup(newDocument: { MandArtDocument() }) { configuration in
+        DocumentGroup(newDocument: { MandArtDocument() }) { _ in
             ContentView()
                 .onAppear {
                     NSWindow.allowsAutomaticWindowTabbing = false
@@ -79,64 +78,3 @@ struct MandArtApp: App {
         } // end .commands
     } // end body
 } // end app
-
-/*
-
- SwiftFormat is a command-line tool that can be used to format your Swift code.
- Here's how you can use it.
-
- Install SwiftFormat using Homebrew, by running the following command:
-
- brew install swiftformat
-
- Format your code: To format a single file, run the following command:
-
- swiftformat <file-name>.swift
-
- To format an entire directory, run the following command:
-
- swiftformat <directory-name> or, from the root project repo directory:
-
- swiftformat .
-
- */
-
-/*
-
- SwiftLint is a tool that helps enforce Swift style and conventions.
- Here's how you can use it:
-
- Install SwiftLint using Homebrew, by running the following command:
-
- brew install swiftlint
-
- To lint a single file, run the following command:
-
- swiftlint lint <file-name>.swift
-
- To lint an entire directory, run the following command from the root project
- repo folder:
-
- swiftlint lint .
-
- Customize lint rules:
- SwiftLint has a number of customizable rules
- that can be used to enforce specific coding conventions and standards.
- You can specify these rules by creating a .swiftlint.yml configuration
- file in your project's root directory or
- by passing them as command-line arguments.
-
- Integrating with Xcode:
- SwiftLint can be easily integrated with Xcode to automatically
- check and enforce coding style in real-time.
- To do this, you can add a new "Run Script" phase
- to your Xcode project and call the swiftlint command
- with the appropriate arguments.
-
- SwiftLint will enforce the specified lint rules and conventions,
- helping you maintain a consistent and high-quality codebase.
-
- To lint and fix, run:
-
- swiftlint --fix && swiftlint MandArtApp.swift
- */

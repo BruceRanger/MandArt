@@ -154,11 +154,11 @@ class Hue: Codable, Identifiable, ObservableObject {
 extension Hue: Equatable {
     static func == (lhs: Hue, rhs: Hue) -> Bool {
         lhs.id == rhs.id &&
-        lhs.num == rhs.num &&
-        lhs.r == rhs.r &&
-        lhs.g == rhs.g &&
-        lhs.b == rhs.b &&
-        lhs.color == rhs.color
+            lhs.num == rhs.num &&
+            lhs.r == rhs.r &&
+            lhs.g == rhs.g &&
+            lhs.b == rhs.b &&
+            lhs.color == rhs.color
     }
 }
 
@@ -200,31 +200,32 @@ extension Hue: Equatable {
 ///
 @available(macOS 12.0, *)
 private extension Color {
-#if os(macOS)
-    typealias SystemColor = NSColor
-#else
-    typealias SystemColor = UIColor
-#endif
+    #if os(macOS)
+        typealias SystemColor = NSColor
+    #else
+        typealias SystemColor = UIColor
+    #endif
 
     var colorComponents: (red: CGFloat, green: CGFloat, blue: CGFloat,
-                          alpha: CGFloat)? {
+                          alpha: CGFloat)?
+    {
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
         var a: CGFloat = 0
 
-#if os(macOS)
-        SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a)
+        #if os(macOS)
+            SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a)
         // Note that non RGB color will raise an exception,
         // don't now how to catch because it is an Objc exception.
-#else
-        guard SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a)
-        else {
-            // Color should be convertible into RGB format
-            // Colors using hue, saturation and brightness won't work
-            return nil
-        }
-#endif
+        #else
+            guard SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a)
+            else {
+                // Color should be convertible into RGB format
+                // Colors using hue, saturation and brightness won't work
+                return nil
+            }
+        #endif
         return (r, g, b, a)
     }
 }

@@ -29,7 +29,6 @@ import UniformTypeIdentifiers
 ///
 @available(macOS 12.0, *)
 final class MandArtDocument: ReferenceFileDocument, ObservableObject {
-
     @Published var savedFileName: URL?
 
     public func getCurrentWindowTitle() -> String {
@@ -39,7 +38,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
         return mainWindow.title
     }
 
-    public func save(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, completionHandler: @escaping (Error?) -> Void) {
+    public func save(to url: URL, ofType _: String, for _: NSDocument.SaveOperationType, completionHandler: @escaping (Error?) -> Void) {
         var data: Data
         do {
             data = try JSONEncoder().encode(picdef)
@@ -59,7 +58,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     var docName: String = "unknown"
 
     // tell the system we support only reading / writing mandart files
-    //static var readableContentTypes = [UTType.json]
+    // static var readableContentTypes = [UTType.json]
     static var readableContentTypes: [UTType] { [.mandartDocType] }
 
     // snapshot is used to serialize and save the current version
@@ -71,7 +70,6 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     // all views using that document will be reloaded
     // to reflect the picdef changes
     @Published var picdef: PictureDefinition
-
 
     /// A simple initializer that creates a new demo picture
     init() {
@@ -105,7 +103,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     /// - Returns: a fileWrapper
     func fileWrapper(
         snapshot: PictureDefinition,
-        configuration: WriteConfiguration
+        configuration _: WriteConfiguration
     ) throws -> FileWrapper {
         print("Preparing to save.")
         let data = try JSONEncoder().encode(snapshot)
@@ -115,8 +113,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
         return fileWrapper
     }
 
-
-    func fileWrapper(snapshot: PictureDefinition, byProducingFile file: URL, configuration: WriteConfiguration) throws -> FileWrapper {
+    func fileWrapper(snapshot: PictureDefinition, byProducingFile file: URL, configuration _: WriteConfiguration) throws -> FileWrapper {
         let data = try JSONEncoder().encode(snapshot)
         try data.write(to: file, options: .atomic)
         // Extract the filename from the file URL
@@ -126,7 +123,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     }
 
     public func saveMandArtDataFile() {
-         //first, save the data file and wait for it to complete
+        // first, save the data file and wait for it to complete
         DispatchQueue.main.async {
             // Trigger a "File > Save" menu event to update the app's UI.
             NSApp.sendAction(#selector(NSDocument.save(_:)), to: nil, from: self)
@@ -134,7 +131,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     }
 
     public func saveMandArtImage() {
-        let winTitle = self.getCurrentWindowTitle()
+        let winTitle = getCurrentWindowTitle()
         print("Saving image from data file (winTitle):", winTitle)
         let justname = winTitle.replacingOccurrences(of: ".mandart", with: "")
         print("saving image, data file name is: ", justname)
@@ -151,8 +148,8 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
         print("In saving image, the filewrapper.filename is:", fileWrapper.filename!)
 
         // trigger state from this window / json document to get a current img
-        picdef.imageHeight = picdef.imageHeight + 1
-        picdef.imageHeight = picdef.imageHeight - 1
+        picdef.imageHeight += 1
+        picdef.imageHeight -= 1
 
         let currImage = contextImageGlobal!
         let savePanel = NSSavePanel()
@@ -174,17 +171,13 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
 
     @available(macOS 12.0, *)
     func onClickToSaveImage() {
-
-        
-
         // first, save the data file and wait for it to complete
 //        DispatchQueue.main.async {
 //            // Trigger a "File > Save" menu event to update the app's UI.
 //            NSApp.sendAction(#selector(NSDocument.save(_:)), to: nil, from: self)
 //        }
-            // after saving the data file, we can use that name to save the image
-            self.saveMandArtImage()
-
+        // after saving the data file, we can use that name to save the image
+        saveMandArtImage()
     }
 
     /// Create a snapshot of the current state of the document for serialization

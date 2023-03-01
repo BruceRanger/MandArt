@@ -1,0 +1,6 @@
+disabled_rules:
+  - line_length
+  - identifier_name
+
+file_length:
+  warning: 500

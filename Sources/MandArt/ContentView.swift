@@ -22,11 +22,8 @@ var fIterGlobal = [[Double]]()
 
 @available(macOS 12.0, *)
 struct ContentView: View {
-
-    // the remaining content should all require SwiftUI
     @EnvironmentObject var doc: MandArtDocument
 
-    // Get everything we can from MandMath (Swift-only)
     let defaultFileName = MandMath.getDefaultDocumentName()
 
     // set width of the first column (user inputs)
@@ -53,8 +50,6 @@ struct ContentView: View {
     @State private var showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
     @State private var showSaveFirstAlert = false
 
-
-    // BHJ: ToDo - set to max number of user input ordered colors (Hues)
     @State private var showingPrintablePopups = Array(repeating: false, count: 100)
 
     @State private var hoverColorValues: String?
@@ -64,9 +59,7 @@ struct ContentView: View {
 
     enum ActiveDisplayChoice {
         case MandArt
-        //      case Pause
         case Gradient
-        case Color
     }
 
     /// Gets an image to display on the right side of the app
@@ -253,13 +246,13 @@ struct ContentView: View {
 
         // Create a CGBitmapContext for drawing and converting into an image for display
         let context =
-        CGContext(data: rasterBufferPtr,
-                  width: imageWidth,
-                  height: imageHeight,
-                  bitsPerComponent: bitsPerComponent,
-                  bytesPerRow: bytesPerRow,
-                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
-                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+            CGContext(data: rasterBufferPtr,
+                      width: imageWidth,
+                      height: imageHeight,
+                      bitsPerComponent: bitsPerComponent,
+                      bytesPerRow: bytesPerRow,
+                      space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
         // use CG to draw into the context
         // you can use any of the CG drawing routines for drawing into this context
@@ -405,13 +398,13 @@ struct ContentView: View {
 
         // Create a CGBitmapContext for drawing and converting into an image for display
         let context =
-        CGContext(data: rasterBufferPtr,
-                  width: imageWidth,
-                  height: imageHeight,
-                  bitsPerComponent: bitsPerComponent,
-                  bytesPerRow: bytesPerRow,
-                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
-                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+            CGContext(data: rasterBufferPtr,
+                      width: imageWidth,
+                      height: imageHeight,
+                      bitsPerComponent: bitsPerComponent,
+                      bytesPerRow: bytesPerRow,
+                      space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
         // use CG to draw into the context
         // you can use any of the CG drawing routines for drawing into this context
@@ -428,7 +421,6 @@ struct ContentView: View {
         let yStarting = 0
         let width: Int = imageWidth
         let height: Int = imageHeight
-        
 
         // iterate over all of the rows for the entire height of the square
         for v in 0 ... (height - 1) {
@@ -569,13 +561,13 @@ struct ContentView: View {
 
         // Create a CGBitmapContext for drawing and converting into an image for display
         let context =
-        CGContext(data: rasterBufferPtr,
-                  width: imageWidth,
-                  height: imageHeight,
-                  bitsPerComponent: bitsPerComponent,
-                  bytesPerRow: bytesPerRow,
-                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
-                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+            CGContext(data: rasterBufferPtr,
+                      width: imageWidth,
+                      height: imageHeight,
+                      bitsPerComponent: bitsPerComponent,
+                      bytesPerRow: bytesPerRow,
+                      space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
         // use CG to draw into the context
         // you can use any of the CG drawing routines for drawing into this context
@@ -699,7 +691,6 @@ struct ContentView: View {
                 GeometryReader { geometry in
 
                     ScrollView(showsIndicators: true) {
-                        //  Text("MandArt \(screenWidthStr) x \(screenHeightStr)")
                         Text("MandArt")
                             .font(.title)
 
@@ -707,8 +698,7 @@ struct ContentView: View {
 
                         Group {
                             HStack {
-
-                                Button("Save Data"){
+                                Button("Save Data") {
                                     doc.saveMandArtDataFile()
                                 }
                                 .help("Save MandArt data file.")
@@ -724,11 +714,10 @@ struct ContentView: View {
                         } // END SECTION 1 GROUP -  BASICS
                         .fixedSize(horizontal: true, vertical: true)
 
-
                         //  GROUP 2 IMAGE SIZE
 
                         Group {
-                            //  Show Row (HStack) of Image Size  Next
+                            //  Show Row (HStack) of Image Size Next
 
                             HStack {
                                 VStack {
@@ -738,17 +727,17 @@ struct ContentView: View {
                                     TextField("1100",
                                               value: $doc.picdef.imageWidth,
                                               formatter:
-                                                ContentView.fmtImageWidthHeight) { isStarted in
+                                              ContentView.fmtImageWidthHeight) { isStarted in
                                         isStarted ? pauseUpdates() : showMandArtBitMap()
                                     }
-                                                .onSubmit {
-                                                    showMandArtBitMap()
-                                                    self.triggerTab(on: self.textFieldImageHeight)
-                                                }
-                                                .textFieldStyle(.roundedBorder)
-                                                .multilineTextAlignment(.trailing)
-                                                .frame(maxWidth: 80)
-                                                .help("Enter the width, in pixels, of the image.")
+                                    .onSubmit {
+                                        showMandArtBitMap()
+                                        self.triggerTab(on: self.textFieldImageHeight)
+                                    }
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 80)
+                                    .help("Enter the width, in pixels, of the image.")
                                 }
 
                                 VStack {
@@ -759,16 +748,15 @@ struct ContentView: View {
                                               value: $doc.picdef.imageHeight,
                                               formatter: ContentView.fmtImageWidthHeight) { isStarted in
                                         isStarted ? pauseUpdates() : showMandArtBitMap()
-
                                     }
-                                              .onSubmit {
-                                                  showMandArtBitMap()
-                                                  self.triggerTab(on: self.textFieldImageHeight)
-                                              }
-                                              .textFieldStyle(.roundedBorder)
-                                              .multilineTextAlignment(.trailing)
-                                              .frame(maxWidth: 80)
-                                              .help("Enter the height, in pixels, of the image.")
+                                    .onSubmit {
+                                        showMandArtBitMap()
+                                        self.triggerTab(on: self.textFieldImageHeight)
+                                    }
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 80)
+                                    .help("Enter the height, in pixels, of the image.")
                                 }
 
                                 VStack {
@@ -797,16 +785,15 @@ struct ContentView: View {
                                               value: $doc.picdef.xCenter,
                                               formatter: ContentView.fmtXY) { isStarted in
                                         isStarted ? pauseUpdates() : showMandArtBitMap()
-
                                     }
-                                              .onSubmit {
-                                                  showMandArtBitMap()
-                                              }
-                                              .textFieldStyle(.roundedBorder)
-                                              .multilineTextAlignment(.trailing)
-                                              .padding(4)
-                                              .frame(maxWidth: 120)
-                                              .help("Enter the x value in the Mandelbrot coordinate system for the center of the image.")
+                                    .onSubmit {
+                                        showMandArtBitMap()
+                                    }
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .padding(4)
+                                    .frame(maxWidth: 120)
+                                    .help("Enter the x value in the Mandelbrot coordinate system for the center of the image.")
                                 }
 
                                 VStack { // each input has a vertical container with a Text label & TextField for data
@@ -816,17 +803,16 @@ struct ContentView: View {
                                               value: $doc.picdef.yCenter,
                                               formatter: ContentView.fmtXY) { isStarted in
                                         isStarted ? pauseUpdates() : showMandArtBitMap()
-
                                     }
-                                              .onSubmit {
-                                                  showMandArtBitMap()
-                                                  self.triggerTab(on: self.textFieldY)
-                                              }
-                                              .textFieldStyle(.roundedBorder)
-                                              .multilineTextAlignment(.trailing)
-                                              .padding(4)
-                                              .frame(maxWidth: 120)
-                                              .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
+                                    .onSubmit {
+                                        showMandArtBitMap()
+                                        self.triggerTab(on: self.textFieldY)
+                                    }
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .padding(4)
+                                    .frame(maxWidth: 120)
+                                    .help("Enter the Y value in the Mandelbrot coordinate system for the center of the image.")
                                 }
                             } // end HStack for XY
 
@@ -840,22 +826,20 @@ struct ContentView: View {
                                               value: $doc.picdef.theta,
                                               formatter: ContentView.fmtRotationTheta) { isStarted in
                                         isStarted ? pauseUpdates() : showMandArtBitMap()
-
                                     }
-                                              .onSubmit {
-                                                  showMandArtBitMap()
-                                              }
-                                              .textFieldStyle(.roundedBorder)
-                                              .multilineTextAlignment(.trailing)
-                                              .frame(maxWidth: 50)
-                                              .help("Enter the angle to rotate the image clockwise, in degrees.")
+                                    .onSubmit {
+                                        showMandArtBitMap()
+                                    }
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 50)
+                                    .help("Enter the angle to rotate the image clockwise, in degrees.")
                                 }
 
                                 VStack {
                                     Text("Scale")
                                     TextField("430", value: $doc.picdef.scale, formatter: ContentView.fmtScale) { isStarted in
                                         isStarted ? pauseUpdates() : showMandArtBitMap()
-
                                     }
                                     .onSubmit {
                                         showMandArtBitMap()
@@ -865,7 +849,7 @@ struct ContentView: View {
                                     .frame(maxWidth: 100)
                                     .help("Enter the magnification of the image.")
                                 }
-                                
+
                                 VStack {
                                     Text("Zoom")
 
@@ -886,7 +870,6 @@ struct ContentView: View {
 
                                 TextField("10,000", value: $doc.picdef.iterationsMax, formatter: ContentView.fmtSharpeningItMax) { isStarted in
                                     isStarted ? pauseUpdates() : showMandArtBitMap()
-
                                 }
                                 .onSubmit {
                                     showMandArtBitMap()
@@ -903,7 +886,6 @@ struct ContentView: View {
 
                                 TextField("400", value: $doc.picdef.rSqLimit, formatter: ContentView.fmtSmootingRSqLimit) { isStarted in
                                     isStarted ? pauseUpdates() : showMandArtBitMap()
-
                                 }
                                 .onSubmit {
                                     showMandArtBitMap()
@@ -928,10 +910,10 @@ struct ContentView: View {
 
                                 TextField("0", value: $doc.picdef.yY,
                                           formatter: ContentView.fmtHoldFractionGradient)
-                                .textFieldStyle(.roundedBorder)
-                                .multilineTextAlignment(.trailing)
-                                .frame(maxWidth: 50)
-                                .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
+                                    .textFieldStyle(.roundedBorder)
+                                    .multilineTextAlignment(.trailing)
+                                    .frame(maxWidth: 50)
+                                    .help("Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient.")
                             }
                             .padding(.horizontal)
                             // END Hold fraction with Slider
@@ -949,9 +931,9 @@ struct ContentView: View {
 
                                 TextField("1", value: $doc.picdef.leftNumber,
                                           formatter: ContentView.fmtLeftGradientNumber)
-                                .frame(maxWidth: 30)
-                                .foregroundColor(leftGradientIsValid ? .primary : .red)
-                                .help("Select the color number for the left side of a gradient.")
+                                    .frame(maxWidth: 30)
+                                    .foregroundColor(leftGradientIsValid ? .primary : .red)
+                                    .help("Select the color number for the left side of a gradient.")
 
                                 Text("to " + String(rightGradientColor))
                                     .help("The color # for the right side of a gradient.")
@@ -966,16 +948,15 @@ struct ContentView: View {
                         // GROUP 5 - COLOR TUNING GROUP
 
                         Group {
-                            HStack {
-                                Text("Coloring Options")
-                            }
+                            
+                            Text("Coloring Options")
+
                             Divider()
 
                             Group { // NEAR FAR GROUP
-                                    // Spacing 1 with Slider
+                                // Spacing 1 with Slider
                                 Text("Spacing far from MiniMand (near to edge)")
                                 HStack {
-
                                     Text("1")
 
                                     Slider(value: $doc.picdef.spacingColorFar, in: 1 ... 20, step: 1) { isStarted in
@@ -996,15 +977,13 @@ struct ContentView: View {
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 50)
                                     .help("Enter the value for the color spacing near the edges of the image, away from MiniMand.")
-
                                 }
-                                
+
                                 // END  Slider
 
                                 // Spacing 2 with Slider
                                 Text("Spacing near to MiniMand (far from edge)")
                                 HStack {
-
                                     Text("5")
 
                                     Slider(value: $doc.picdef.spacingColorNear, in: 5 ... 50, step: 5) { isStarted in
@@ -1013,7 +992,6 @@ struct ContentView: View {
                                         }
                                     }
                                     .accentColor(Color.blue)
-
 
                                     Text("50")
 
@@ -1025,19 +1003,15 @@ struct ContentView: View {
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 50)
-
                                 }
                                 .padding(.horizontal)
                                 .help("Enter the value for the color spacing away from the edges of the image, near the MiniMand.")
                                 // END  Slider
 
-
                                 Divider()
                             } // END NEAR FAR GROUP
 
-
                             Group {
-                                
                                 // Min Iterations with Slider
                                 Text("Change in minimum iteration:")
                                 HStack {
@@ -1049,7 +1023,6 @@ struct ContentView: View {
                                         }
                                     }
 
-
                                     Text("20")
 
                                     TextField("0", value: $doc.picdef.dFIterMin, formatter: ContentView.fmtChangeInMinIteration) { isStarted in
@@ -1060,7 +1033,6 @@ struct ContentView: View {
                                     .textFieldStyle(.roundedBorder)
                                     .multilineTextAlignment(.trailing)
                                     .frame(maxWidth: 50)
-
                                 }
                                 .padding(.horizontal)
                                 .help("Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.")
@@ -1070,13 +1042,12 @@ struct ContentView: View {
                                 Text("Number of Color Blocks:")
 
                                 HStack {
-
                                     Text("10")
 
                                     Slider(value: Binding(
                                         get: { Double(doc.picdef.nBlocks) },
                                         set: { doc.picdef.nBlocks = Int($0) }
-                                    ), in: 10...100, step: 10) { isStarted in
+                                    ), in: 10 ... 100, step: 10) { isStarted in
                                         if isStarted {
                                             self.readyForColors()
                                         }
@@ -1096,14 +1067,10 @@ struct ContentView: View {
                                 }
                                 .padding(.horizontal)
                                 .help("Enter a value for the number of blocks of color in the image. Each block is the gradient between two adjacent colors. If the number of blocks is greater than the number of colors, the colors will be repeated.")
-                                
 
                                 Divider()
-
                             } // END GROUP of last 2 slider inputs
-
                         } // end GROUP 5 - COLOR TUNING GROUP
-
                     } // end scroll bar
                     .frame(height: geometry.size.height)
                 } // end top scoll bar geometry reader
@@ -1116,10 +1083,8 @@ struct ContentView: View {
                 // GROUP FOR POPUPS BUTTONS AND VERIFY AND ADD NEW COLOR
 
                 Group {
-
                     // HSTACK START WITH RED
                     HStack {
-
                         Text("Rgb:")
 
                         Button("A") {
@@ -1159,7 +1124,6 @@ struct ContentView: View {
                             self.showingPrintableColorsPopups[1] = true
                         }
                         .padding([.bottom], 2)
-
                     } // END HSTACK START WITH RED
 
                     // HSTACK START WITH GREEN
@@ -1197,7 +1161,6 @@ struct ContentView: View {
                             self.showingPrintableColorsPopups[3] = true
                         }
                         .padding([.bottom], 2)
-
                     } // END HSTACK START WITH GREEN
 
                     // HSTACK START WITH BLUE
@@ -1236,16 +1199,13 @@ struct ContentView: View {
                             self.showingPrintableColorsPopups[5] = true
                         }
                         .padding([.bottom], 2)
-
                     } // END  HSTACK START WITH BLUE
 
                     HStack {
-
                         Button("Add New Color") { doc.addHue() }
                             .help("Add a new color.")
                             .padding([.bottom], 2)
                     }
-
                 } // END  GROUP FOR POPUPS BUTTONS AND VERIFY AND ADD NEW COLOR
 
                 // Wrap the list in a geometry reader so it will
@@ -1258,7 +1218,6 @@ struct ContentView: View {
                             let isPrintable = getIsPrintable(color: $hue.wrappedValue.color, num: $hue.wrappedValue.num)
 
                             HStack {
-
                                 TextField("number", value: $hue.num, formatter: ContentView.fmtIntColorOrderNumber)
                                     .disabled(true)
                                     .frame(maxWidth: 15)
@@ -1289,14 +1248,11 @@ struct ContentView: View {
                                     .disabled(true)
                                 }
                                 if self.showingPrintablePopups[i] {
-
                                     ZStack {
-
                                         Color.white
                                             .opacity(0.5)
 
                                         VStack {
-
                                             Button(action: {
                                                 self.showingPrintablePopups[i] = false
                                             }) {
@@ -1304,21 +1260,17 @@ struct ContentView: View {
                                             }
 
                                             VStack {
-
                                                 Text("This color may not print well.")
                                                 Text("See the instructions for options.")
-
-                                            }  // end VStack of color options
-
+                                            } // end VStack of color options
                                         } // end VStack
                                         .frame(width: 150, height: 100)
                                         .background(Color.white)
                                         .cornerRadius(8)
                                         .shadow(radius: 10)
-
                                     } // end ZStack for popup
                                     .transition(.scale)
-                                }  // end if self.showingPrintablePopups[i]
+                                } // end if self.showingPrintablePopups[i]
 
                                 TextField("r", value: $hue.r, formatter: ContentView.fmt0to255)
                                     .onChange(of: hue.r) { newValue in
@@ -1370,14 +1322,12 @@ struct ContentView: View {
             .frame(width: inputWidth)
             .padding(2)
 
-
             // SECOND COLUMN - VSTACK - IS FOR IMAGES
 
             // RIGHT COLUMN IS FOR IMAGES......................
 
             ScrollView(showsIndicators: true) {
                 VStack {
-
                     if activeDisplayState == ActiveDisplayChoice.MandArt {
                         let image: CGImage = getImage()!
                         GeometryReader {
@@ -1436,10 +1386,10 @@ struct ContentView: View {
                                         Color(cgColor)
                                     }
                                     let nColumns = 64
-                                    let nRows = arrColors.count/nColumns
-                                    ForEach(0..<nRows) { rowIndex in
+                                    let nRows = arrColors.count / nColumns
+                                    ForEach(0 ..< nRows) { rowIndex in
                                         HStack(spacing: 0) {
-                                            ForEach(0..<nColumns) { columnIndex in
+                                            ForEach(0 ..< nColumns) { columnIndex in
                                                 let index = rowIndex * nColumns + columnIndex
                                                 Rectangle()
                                                     .fill(arrColors[index])
@@ -1449,7 +1399,7 @@ struct ContentView: View {
                                             }
                                         }
                                     }
-                                }  // end VStack of color options
+                                } // end VStack of color options
                                 Spacer()
                             } // end VStack
                             .padding()
@@ -1459,7 +1409,7 @@ struct ContentView: View {
                             .padding()
                         } // end ZStack for popup
                         .transition(.scale)
-                    }  // end if popup
+                    } // end if popup
 
                     // IF USER WANTED TO SEE ALL PRINTABLE COLORS
                     // WITH PLACEHOLDERS
@@ -1480,10 +1430,10 @@ struct ContentView: View {
                                         Color(cgColor)
                                     }
                                     let nColumns = 64
-                                    let nRows = arrColors.count/nColumns
-                                    ForEach(0..<nRows) { rowIndex in
+                                    let nRows = arrColors.count / nColumns
+                                    ForEach(0 ..< nRows) { rowIndex in
                                         HStack(spacing: 0) {
-                                            ForEach(0..<nColumns) { columnIndex in
+                                            ForEach(0 ..< nColumns) { columnIndex in
                                                 let index = rowIndex * nColumns + columnIndex
                                                 Rectangle()
                                                     .fill(arrColors[index])
@@ -1493,7 +1443,7 @@ struct ContentView: View {
                                             }
                                         }
                                     }
-                                }  // end VStack of color options
+                                } // end VStack of color options
                                 Spacer()
                             } // end VStack
                             .padding()
@@ -1503,12 +1453,12 @@ struct ContentView: View {
                             .padding()
                         } // end ZStack for popup
                         .transition(.scale)
-                    }  // end if popup
+                    } // end if popup
 
                     // IF USER WANTED TO SEE ONLY PRINTABLE COLORS
                     // * WITHOUT * PLACEHOLDERS
 
-                    if iP  != nil {
+                    if iP != nil {
                         ZStack {
                             Color.white
                                 .opacity(0.5)
@@ -1525,9 +1475,9 @@ struct ContentView: View {
                                     }
                                     let nColumns = 32
 
-                                    ForEach(0..<arrColors.count/nColumns) { rowIndex in
+                                    ForEach(0 ..< arrColors.count / nColumns) { rowIndex in
                                         HStack(spacing: 0) {
-                                            ForEach(0..<nColumns) { columnIndex in
+                                            ForEach(0 ..< nColumns) { columnIndex in
                                                 let index = rowIndex * nColumns + columnIndex
                                                 let color = arrColors[index]
                                                 let nsColor = NSColor(color)
@@ -1535,9 +1485,9 @@ struct ContentView: View {
                                                 let green = nsColor.greenComponent
                                                 let blue = nsColor.blueComponent
 
-                                                let colorValueR = "\(Int(red*255))"
-                                                let colorValueG = "\(Int(green*255))"
-                                                let colorValueB = "\(Int(blue*255))"
+                                                let colorValueR = "\(Int(red * 255))"
+                                                let colorValueG = "\(Int(green * 255))"
+                                                let colorValueB = "\(Int(blue * 255))"
 
                                                 VStack {
                                                     Rectangle()
@@ -1555,16 +1505,11 @@ struct ContentView: View {
                                                     Text(colorValueB)
                                                         .font(.system(size: 10))
                                                         .background(Color.white)
-
                                                 } // end Zstack of rect, rgb values
-
-                                            }// end for each column of colors
-
+                                            } // end for each column of colors
                                         } // end HStack of colors
-
                                     } // end for each color
-
-                                }  // end VStack of color options
+                                } // end VStack of color options
                                 Spacer()
                             } // end VStack
                             .padding()
@@ -1574,8 +1519,7 @@ struct ContentView: View {
                             .padding()
                         } // end ZStack for popup
                         .transition(.scale)
-                    }  // end if popup
-
+                    } // end if popup
                 } // end VStack right side (picture space)
                 .padding(2)
             } // end image scroll view
@@ -1972,7 +1916,6 @@ struct ContentView: View {
         readyForPicture()
         doc.picdef.scale = doc.picdef.scale * 2.0
         showMandArtBitMap()
-
     }
 
     /// Divides scale by 2.0.
