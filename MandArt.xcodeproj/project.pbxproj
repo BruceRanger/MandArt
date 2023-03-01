@@ -14,6 +14,7 @@
 		882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED2293409FE003ACB0B /* PictureDefinition.swift */; };
 		882BAED929346C92003ACB0B /* Hue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED829346C92003ACB0B /* Hue.swift */; };
 		8845506629AE3C8D008F202A /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 8845506529AE3C8D008F202A /* Resources */; };
+		884752A629AFE73400FBECC2 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884752A529AFE73400FBECC2 /* WelcomeView.swift */; };
 		88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88511CB22948B3FF009B5CF6 /* MandMath.swift */; };
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
 /* End PBXBuildFile section */
@@ -27,11 +28,12 @@
 		882BAED2293409FE003ACB0B /* PictureDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureDefinition.swift; sourceTree = "<group>"; };
 		882BAED829346C92003ACB0B /* Hue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hue.swift; sourceTree = "<group>"; };
 		8845506529AE3C8D008F202A /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
+		884752A429AFE6BC00FBECC2 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		884752A529AFE73400FBECC2 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		88511CB22948B3FF009B5CF6 /* MandMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandMath.swift; sourceTree = "<group>"; };
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
 		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
-		88CF1E2629AEFE4B00D933F6 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MandArt.app; path = /Users/denisecase/Documents/MandArt/build/Debug/MandArt.app; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
 				889E3F23293AE0B6009944AC /* Documentation.docc */,
 				88A1716629913A0800A85AED /* Sources */,
+				884752A429AFE6BC00FBECC2 /* MandArt.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
+				884752A529AFE73400FBECC2 /* WelcomeView.swift */,
 				8806E113293A5011005F5CB4 /* MandArtApp.swift */,
 				8806E114293A5011005F5CB4 /* MandArtDocument.swift */,
 				882BAED2293409FE003ACB0B /* PictureDefinition.swift */,
@@ -96,7 +100,7 @@
 			);
 			name = MandArt;
 			productName = MandArt;
-			productReference = 88CF1E2629AEFE4B00D933F6 /* MandArt.app */;
+			productReference = 884752A429AFE6BC00FBECC2 /* MandArt.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -153,6 +157,7 @@
 				882BAED929346C92003ACB0B /* Hue.swift in Sources */,
 				889E3F24293AE0B6009944AC /* Documentation.docc in Sources */,
 				6A3AEC0F26F879E700D7E31A /* ContentView.swift in Sources */,
+				884752A629AFE73400FBECC2 /* WelcomeView.swift in Sources */,
 				8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
 				88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */,

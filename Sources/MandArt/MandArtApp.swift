@@ -21,32 +21,26 @@ import SwiftUI
 @main
 struct MandArtApp: App {
 
+  // set window size constants
+
+  let h: CGFloat = 550
+  let w: CGFloat = 667
+
   var body: some Scene {
-    WindowGroup("Welcome to MandArt") {
-      VStack {
-        Spacer()
-        Button("Click to open a sample MandArt") {
-          // close current window and open new document
-          NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
-          NSDocumentController.shared.newDocument("default.mandart")
-        }
-        Spacer()
-        Text("See menu: File > New to create a new MandArt document.")
-        Spacer()
-        Text("See menu: Help > MandArt Help to learn more.")
-        Spacer()
-      } // end VStack
-      .frame(
-        minWidth: 400,
-        maxWidth: 800,
-        minHeight: 200,
-        maxHeight: 400
-      )
+
+    WindowGroup("") {
+      WelcomeView()
+        .background(Color.white)
+        .frame(minWidth:w, minHeight:h)
+
       .onAppear {
+        if let window = NSApplication.shared.windows.first {
+          window.setContentSize(NSSize(width: w, height: h))
+          window.styleMask.insert(.resizable)
+        }
         NSWindow.allowsAutomaticWindowTabbing = false
       }
     }
-
     DocumentGroup(newDocument: { MandArtDocument() }) { _ in
       ContentView()
         .onAppear {
@@ -54,7 +48,7 @@ struct MandArtApp: App {
         }
     }
     .commands {
-      // Make all modifications to the MENU in here
+      // Make all modifications to the MENU here
 
       // we don't need the Edit/pasteboard menu item (cut/copy/paste/delete)
       // so we'll replace it with nothing
@@ -76,6 +70,7 @@ struct MandArtApp: App {
       CommandGroup(replacing: CommandGroupPlacement.help) {
         Link(displayText, destination: url)
       }
-    } // end .commands
-  } // end body
-} // end app
+
+    }
+  }
+}

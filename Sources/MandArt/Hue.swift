@@ -105,20 +105,6 @@ class Hue: Codable, Identifiable, ObservableObject {
     )
   }
 
-  /**
-   Print to the console a string representing this Hue
-  after selecting a new printable color
-  Use either opton to display the color in either this format:
-     000-027-255
-   Or this format, so we can add to the
-      list of printable colors:
-     [0, 27, 255], // printable crayon
-  */
-  func printColorInfo() {
-    let strR = String(format: "%d", Int(r))
-    let strG = String(format: "%d", Int(g))
-    let strB = String(format: "%d", Int(b))
-  }
 }
 
 // MARK: Equatable

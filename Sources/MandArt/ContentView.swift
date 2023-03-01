@@ -1273,7 +1273,6 @@ struct ContentView: View {
                     doc.updateHueWithColorPick(
                       index: i, newColorPick: newColor
                     )
-                    hue.printColorInfo()
                   }
 
                 if !isPrintable {
