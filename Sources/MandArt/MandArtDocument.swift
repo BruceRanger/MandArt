@@ -56,10 +56,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
         }
     }
 
-
-    
     var docName: String = "unknown"
-    //var savedFileName: String?
 
     // tell the system we support only reading / writing mandart files
     //static var readableContentTypes = [UTType.json]
