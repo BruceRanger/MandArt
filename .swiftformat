@@ -1,0 +1,38 @@
+## File options
+
+ --exclude Pods
+ --swiftversion 5.3
+
+
+ ## Enabled rules
+
+
+ ## Configuration of specific rules
+
+ ### Else
+ --elseposition same-line
+
+ ### Others
+ --indent 2
+ --linebreaks lf ##default
+ --maxwidth 100
+ --patternlet hoist ##default
+ --stripunusedargs always
+ --trimwhitespace always
+ --voidtype void
+--rules braces
+--allman false
+
+ ## Disabled rules
+
+ ### SwiftFormat also removes from funcs, so let's let SwiftLint takes care of it.
+ --disable redundantReturn
+
+ ### SwiftFormat also removes from end of scope, which is against our empty line guidelines.
+ --disable blankLinesAtEndOfScope
+
+ ### SwiftFormat also removes from start of scope, which is against our empty line guidelines.
+ --disable blankLinesAtStartOfScope
+
+ --disable trailingCommas
+ --disable spaceAroundBraces

@@ -20,61 +20,65 @@ import SwiftUI
 @available(macOS 12.0, *)
 @main
 struct MandArtApp: App {
-    /// The body of the app; kicks off the opening page.
-    ///  It creates a WindowGroup and DocumentGroup.
-    var body: some Scene {
-        WindowGroup(windowGroupName) {
-            VStack {
-                Spacer()
-                Button("Click to open a sample MandArt") {
-                    // close current window and open new document
+  /// The body of the app; kicks off the opening page.
+  ///  It creates a WindowGroup and DocumentGroup.
+  var body: some Scene {
+    WindowGroup(windowGroupName) {
+      VStack {
+        Spacer()
+        Button("Click to open a sample MandArt") {
+          // close current window and open new document
 
-                    NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
+          NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
 
-                    NSDocumentController.shared.newDocument(defaultFileName)
-                }
-                Spacer()
-                Text("See menu: File > New to create a new MandArt document.")
-                Spacer()
-                Text("See menu: Help > MandArt Help to learn more.")
-                Spacer()
-            } // end VStack
-            .frame(minWidth: 400, maxWidth: 800,
-                   minHeight: 200, maxHeight: 400)
-            .onAppear {
-                NSWindow.allowsAutomaticWindowTabbing = false
-            }
+          NSDocumentController.shared.newDocument(defaultFileName)
         }
+        Spacer()
+        Text("See menu: File > New to create a new MandArt document.")
+        Spacer()
+        Text("See menu: Help > MandArt Help to learn more.")
+        Spacer()
+      } // end VStack
+      .frame(
+        minWidth: 400,
+        maxWidth: 800,
+        minHeight: 200,
+        maxHeight: 400
+      )
+      .onAppear {
+        NSWindow.allowsAutomaticWindowTabbing = false
+      }
+    }
 
-        DocumentGroup(newDocument: { MandArtDocument() }) { _ in
-            ContentView()
-                .onAppear {
-                    NSWindow.allowsAutomaticWindowTabbing = false
-                }
+    DocumentGroup(newDocument: { MandArtDocument() }) { _ in
+      ContentView()
+        .onAppear {
+          NSWindow.allowsAutomaticWindowTabbing = false
         }
-        .commands {
-            // Make all modifications to the MENU in here
+    }
+    .commands {
+      // Make all modifications to the MENU in here
 
-            // we don't need the Edit/pasteboard menu item (cut/copy/paste/delete)
-            // so we'll replace it with nothing
-            CommandGroup(replacing: CommandGroupPlacement.pasteboard) {}
+      // we don't need the Edit/pasteboard menu item (cut/copy/paste/delete)
+      // so we'll replace it with nothing
+      CommandGroup(replacing: CommandGroupPlacement.pasteboard) {}
 
-            // we don't need the Edit/Emoji and Symbols menu item
-            // so we could turn it off using Objective-C
-            // but that seems extreme, so we'll leave it in
+      // we don't need the Edit/Emoji and Symbols menu item
+      // so we could turn it off using Objective-C
+      // but that seems extreme, so we'll leave it in
 
-            // we don't need the View / Tab bar menu item
-            // so we turned it off above using
-            // NSWindow.allowsAutomaticWindowTabbing = false
+      // we don't need the View / Tab bar menu item
+      // so we turned it off above using
+      // NSWindow.allowsAutomaticWindowTabbing = false
 
-            // Help has "Search" & "MandArt Help" by default
-            // let's replace the MandArt help option with a Link
-            // to our hosted documenation on GitHub Pages
-            let displayText: String = "MandArt Help"
-            let url: URL = .init(string: "https://denisecase.github.io/MandArt-Docs/documentation/mandart/")!
-            CommandGroup(replacing: CommandGroupPlacement.help) {
-                Link(displayText, destination: url)
-            }
-        } // end .commands
-    } // end body
+      // Help has "Search" & "MandArt Help" by default
+      // let's replace the MandArt help option with a Link
+      // to our hosted documenation on GitHub Pages
+      let displayText: String = "MandArt Help"
+      let url: URL = .init(string: "https://denisecase.github.io/MandArt-Docs/documentation/mandart/")!
+      CommandGroup(replacing: CommandGroupPlacement.help) {
+        Link(displayText, destination: url)
+      }
+    } // end .commands
+  } // end body
 } // end app

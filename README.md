@@ -22,7 +22,8 @@ SwiftUI macOS app to create custom art using the Mandelbrot set.
 
 ```
 swiftlint --fix --config .swiftlint.yml Sources/MandArt
-swiftformat Sources/MandArt --swiftversion 5
+
+swiftformat Sources/MandArt --swiftversion 5 --config .swiftformat
 
 swiftlint lint --config .swiftlint.yml Sources/MandArt/Hue.swift
 swiftlint lint --config .swiftlint.yml Sources/MandArt/PictureDefinition.swift
