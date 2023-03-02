@@ -20,7 +20,7 @@ struct ContentView: View {
   @EnvironmentObject var doc: MandArtDocument
   
   // set width of the first column (user inputs)
-  let inputWidth: Double = 300
+  let inputWidth: Double = 340
   
   @State private var moved: Double = 0.0
   @State private var startTime: Date?
@@ -905,7 +905,7 @@ struct ContentView: View {
                 .multilineTextAlignment(.trailing)
                 .frame(maxWidth: 60)
                 .help(
-                  "Enter the minimum value for the square of the distance from the origin of the Mandelbrot coordinate system. A larger value will smooth the color gradient, but slow down the calculation."
+                  "Enter min value for square of distance from origin. A larger value will smooth the color gradient, but slow down the calculation."
                 )
               }
               
@@ -1316,20 +1316,24 @@ struct ContentView: View {
                   } // end ZStack for popup
                   .transition(.scale)
                 } // end if self.showingPrintablePopups[i]
-                
-                TextField("r", value: $hue.r, formatter: ContentView.fmt0to255)
+
+                // enter red
+
+                TextField("255", value: $hue.r, formatter: ContentView.fmt0to255)
                 { isStarted in
                   if isStarted {
                     self.readyForColors()
                   }
                 }
-                  .onChange(of: hue.r) { newValue in
+                .onChange(of: hue.r) { newValue in
                     doc.updateHueWithColorNumberR(
                       index: i, newValue: newValue
                     )
                   }
-                
-                TextField("g", value: $hue.g, formatter: ContentView.fmt0to255)
+
+                // enter green
+
+                TextField("255", value: $hue.g, formatter: ContentView.fmt0to255)
                 { isStarted in
                   if isStarted {
                     self.readyForColors()
@@ -1340,8 +1344,10 @@ struct ContentView: View {
                       index: i, newValue: newValue
                     )
                   }
-                
-                TextField("b", value: $hue.b, formatter: ContentView.fmt0to255)
+
+                // enter blue
+
+                TextField("255", value: $hue.b, formatter: ContentView.fmt0to255)
                 { isStarted in
                   if isStarted {
                     self.readyForColors()
@@ -1449,7 +1455,7 @@ struct ContentView: View {
                   let nRows = arrColors.count / nColumns
                   ForEach(0 ..< nRows) { rowIndex in
                     HStack(spacing: 0) {
-                      ForEach(0 ..< nColumns) { columnIndex in
+                      ForEach(0 ..< 64) { columnIndex in
                         let index = rowIndex * nColumns + columnIndex
                         Rectangle()
                           .fill(arrColors[index])
@@ -1493,7 +1499,7 @@ struct ContentView: View {
                   let nRows = arrColors.count / nColumns
                   ForEach(0 ..< nRows) { rowIndex in
                     HStack(spacing: 0) {
-                      ForEach(0 ..< nColumns) { columnIndex in
+                      ForEach(0 ..< 64) { columnIndex in
                         let index = rowIndex * nColumns + columnIndex
                         Rectangle()
                           .fill(arrColors[index])
@@ -1533,11 +1539,11 @@ struct ContentView: View {
                   let arrColors = arrCGs.map { cgColor in
                     Color(cgColor)
                   }
-                  let nColumns = 32
                   
+                  let nColumns = 32
                   ForEach(0 ..< arrColors.count / nColumns) { rowIndex in
                     HStack(spacing: 0) {
-                      ForEach(0 ..< nColumns) { columnIndex in
+                      ForEach(0 ..< 32) { columnIndex in
                         let index = rowIndex * nColumns + columnIndex
                         let color = arrColors[index]
                         let nsColor = NSColor(color)

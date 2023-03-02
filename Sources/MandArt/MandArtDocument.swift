@@ -116,12 +116,21 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     do {
       data = try JSONEncoder().encode(self.picdef)
     } catch {
-      print("!!error encoding self.picdef")
-      exit(1)
+      print("Error encoding picdef.")
+      print("Closing all windows and exiting with error code 98.")
+      NSApplication.shared.windows.forEach { $0.close() }
+      NSApplication.shared.terminate(nil)
+      exit(98)
     }
-    let fileWrapper = FileWrapper(regularFileWithContents: data)
+    if data == Data() {
+      print("Error encoding picdef.")
+      print("Closing all windows and exiting with error code 99.")
+      NSApplication.shared.windows.forEach { $0.close() }
+      NSApplication.shared.terminate(nil)
+      exit(99)
+    }
 
-    // trigger state from this window / json document to get a current img
+    // trigger state change to force a current image
     self.picdef.imageHeight += 1
     self.picdef.imageHeight -= 1
 

@@ -80,9 +80,10 @@ struct WelcomeImage: View {
       .resizable()
       .aspectRatio(contentMode: .fit)
       .frame(height: h/2)
+      .cornerRadius(20) 
       .scaleEffect(scale)
       .rotationEffect(.degrees(angle))
-      .animation(Animation.interpolatingSpring(mass: 1, stiffness: 50, damping: 5, initialVelocity: 0))
+      //.animation(Animation.interpolatingSpring(mass: 1, stiffness: 50, damping: 5, initialVelocity: 0))
       .onAppear {
         angle = -10
         withAnimation(Animation.interpolatingSpring(mass: 1, stiffness: 50, damping: 5, initialVelocity: 0)) {
