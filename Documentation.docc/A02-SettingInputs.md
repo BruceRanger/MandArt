@@ -25,7 +25,7 @@ The app is written in the Swift computer language and uses SwiftUI for the inter
 
 ### Mandelbrot and Mini-Mands
 
-![Fig 1](Picture1.png)
+![Mandelbrot](MandArtDefaultExample.png)
 
 The above picture shows us the region of the x-y plane where the action will take place. 
 The black area is the major part of the Mandelbrot set, 
@@ -38,14 +38,14 @@ The other versions of it we’ll call **Mini-Mands**.
 
 ### Welcome Screen
 
-![Welcome Screen](WelcomeScreen.png)
+![Welcome Screen](WindowWelcome.png)
 
 This image shows the welcome screen in the app. Click on the Get Started button to begin.
 
 
 ### MandArt Main Window
 
-![Opening Main Window](OpeningMandArt.png)
+![Main Window after Opening](WindowMainOnOpening.png)
 
 This shows the main window after opening. 
 The window isn't big enough to show the whole picture, 
@@ -115,14 +115,14 @@ If a value near 1 is chosen, the blocks of colors will show up as solid bands.
 
 ### Finding Interesting Areas 
 
-![Finding Interesting Areas](CheckTheWhiteSpots.png)
+![Finding Interesting Areas](FullWindowLimeSpots.png)
 
 This shows typical areas where you might look for interesting images. 
 They seem to be in areas that are near where two black areas come together. 
 
 ### Interesting Example 
 
-![Interesting Example](InterestingArea.png)
+![Interesting Spirals](FullWindowInterestingSpirals.png)
 
 Here we show an image that has been moved to a new center, rotated, and zoomed in by a factor of about 2,880,000/430 = 6,698. 
 

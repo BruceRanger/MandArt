@@ -29,3 +29,16 @@ Open System Settings / Displays / Color Profile - and on the drop-down,
 select the sRGB option as shown below. 
 
 ![Color Profile](SystemSettings-Displays-ColorProfile-sRGB.png)
+
+### Visible Scroll Bars
+
+There's typically a scroll bar on the right side of the input area,
+unless your monitor is tall enough to see all the inputs without it. 
+
+If you'd like to make your scrollbar visible all the time 
+(rather than just when working in the input area), you'll use
+Mac settings again.
+
+Open System Settings / Appearance / Show Scroll Bars - and select always.
+
+![Show Scrollbars](SystemSettings-Appearance-Scrollbar.png)
