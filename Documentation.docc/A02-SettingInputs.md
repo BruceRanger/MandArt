@@ -152,18 +152,28 @@ which is far from the Mini-Mand destination, is set by one variable and that nea
 Only trial and error and artistic preference will determine the best values. 
 Likewise for the number of defined colors and the number of blocks of color.
 
-### Joining Colors with Gradiants
+### Checking Color Gradient between Adjacent Colors
 
 If we define only a few colors,
-the gradients joining a pair of colors may go through regions of color that don’t look so good. 
+the gradients joining a pair of adjacent colors may go through regions of color that don’t look very good. 
 
-To see what a gradient between two defined colors looks like, 
-input a number for the left-hand number. 
-The program will select the right-hand number. Click *Go*. 
+To see what a gradient between two adjacent colors looks like, 
+input a number for the left-hand number.
+
+For example, enter 1 for the left-hand number to check the gradient between 1 and the next adjacent color (in this case, 2).
+The program selects the right-hand number automatically. 
+
+Click *Go*. 
+
+![Checking Gradient](CheckingGradient.png)
 
 After that, just enter a different number to see that gradient. 
+
+Check the gradient between each set of adjacent colors.
+
 If the gradient shows a region of color you don’t like, 
 you can change one or both colors or you can add an intermediate color. 
+
 We’ll come back to finding an intermediate color after we discuss coloring.
 
 ### Specifying Colors
@@ -191,7 +201,6 @@ So, a set of 292 colors that should print well is also available.
 - The button **A** displays all 512 colors. 
 
 ![Colors - All](Colors-All.png)
-
 
 - The button **AP** displays the 292 colors in the format of the screen colors, 
 so it is obvious that many of the best colors are missing. 
