@@ -107,3 +107,12 @@ All we really have to know is that i^2 = -1 and that an i in front of a number m
 The initial value of z(n) is 0 + i0. The values of x0 and y0 remain fixed while we iterate. 
 
 That’s just part of the definition of the Mandelbrot set.
+
+### Exploration
+
+For help getting started see <doc:A01-GettingStarted>.
+
+Learn about all the ways to explore custom MandArt at <doc:A02-SettingInputs>.
+
+Get help with common challenges at <doc:A03-Challenges>.
+

@@ -14,35 +14,39 @@ This article shows how to get started creating and saving a custom MandArt image
 
 ### Get MandArt
 
-First, you'll want to get a copy of the MandArt App. You'll need a Mac.
+First, you'll want to get a copy of the MandArt App. 
+You'll need a Mac that runs version 12.0 (Monterey) or higher.
 
 ### Start MandArt
 
-Download install the app and open it on your machine.
+Download and install the app and then open it on your machine.
 
 ### Welcome Screen
 
-The welcome screen offers a chance to open a sample MandArt and start editing from there. We recommend this if this is your first time using the app. 
+When the app starts up, you'll see the welcome screen. 
+Click the **Get Started** button on the welcome screen to begin.
 
 ### Menu
 
-The menu is a pretty standard Mac menu. You can use File / New to make a new document or File / Open... to find one on your machine. 
+The menu is a pretty standard Mac menu. 
+Use File / New to make a new MandArt data document or File / Open... to find one on your machine. 
 
 ### Customize Inputs
 
 Customize the inputs and watch MandArt update. 
-For more information about each calculated field, see <doc:A02-SettingInputs>.
+For more information about each input field, see <doc:A02-SettingInputs>.
 
 ### Save MandArt
 
+To save your MandArt inputs, 
+use File / Save on the menu or click the **Save Data** button in the top left.
 
-To save your MandArt inputs as a picture definition, remember to click File / Save.
-
-Definitions are in JSON (a simple and common data format) and allow you to save and share your MandArt with others. 
+The data is stored in a document with a .mandart extension.
+Inputs are stored in JSON format (a simple and common data format). 
 
 ### Save a Printed Image
 
-Use the 🌅 button up at the top to save your generated image as a .png file. 
+To save your generated image as a .png file, click the **Save Image**button in the top left.
 
 ### Open Saved MandArt
 
@@ -55,6 +59,12 @@ File / Open Recent is useful if you've got some previous MandArt documents from 
 You can save and share your MandArt document files with others so they can open them in MandArt as well.
 
 ### Exploration
+
+Learn about all the ways to explore custom MandArt at <doc:A02-SettingInputs>.
+
+Get help with common challenges at <doc:A03-Challenges>.
+
+Read more about the math and the Mandlebrot set at <doc:A04-MoreAboutTheMath>.
 
 Have fun! 
 

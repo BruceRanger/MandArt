@@ -242,3 +242,11 @@ Now the first two gradients should look good.
 
 Check the gradient between each two adjacent colors, 
 including the last color (which will be adjacent to the first color in the list) to make sure the intermediate colors look good.
+
+### Exploration
+
+For help getting started see <doc:A01-GettingStarted>.
+
+Get help with common challenges at <doc:A03-Challenges>.
+
+Read more about the math and the Mandlebrot set at <doc:A04-MoreAboutTheMath>.

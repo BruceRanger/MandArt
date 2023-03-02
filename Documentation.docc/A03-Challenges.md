@@ -42,3 +42,12 @@ Mac settings again.
 Open System Settings / Appearance / Show Scroll Bars - and select always.
 
 ![Show Scrollbars](SystemSettings-Appearance-Scrollbar.png)
+
+### Exploration
+
+For help getting started see <doc:A01-GettingStarted>.
+
+Learn about all the ways to explore custom MandArt at <doc:A02-SettingInputs>.
+
+Read more about the math and the Mandlebrot set at <doc:A04-MoreAboutTheMath>.
+
