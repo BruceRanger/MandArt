@@ -1318,6 +1318,11 @@ struct ContentView: View {
                 } // end if self.showingPrintablePopups[i]
                 
                 TextField("r", value: $hue.r, formatter: ContentView.fmt0to255)
+                { isStarted in
+                  if isStarted {
+                    self.readyForColors()
+                  }
+                }
                   .onChange(of: hue.r) { newValue in
                     doc.updateHueWithColorNumberR(
                       index: i, newValue: newValue
@@ -1325,6 +1330,11 @@ struct ContentView: View {
                   }
                 
                 TextField("g", value: $hue.g, formatter: ContentView.fmt0to255)
+                { isStarted in
+                  if isStarted {
+                    self.readyForColors()
+                  }
+                }
                   .onChange(of: hue.g) { newValue in
                     doc.updateHueWithColorNumberG(
                       index: i, newValue: newValue
@@ -1332,6 +1342,11 @@ struct ContentView: View {
                   }
                 
                 TextField("b", value: $hue.b, formatter: ContentView.fmt0to255)
+                { isStarted in
+                  if isStarted {
+                    self.readyForColors()
+                  }
+                }
                   .onChange(of: hue.b) { newValue in
                     doc.updateHueWithColorNumberB(
                       index: i, newValue: newValue
@@ -1850,6 +1865,7 @@ struct ContentView: View {
     let newCenterX: Double = self.doc.picdef.xCenter + dCenterX
     return newCenterX
   }
+  
   /**
    Returns the new y to be the picture center y when user clicks on the picture.
    
