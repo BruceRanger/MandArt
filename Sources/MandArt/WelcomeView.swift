@@ -11,6 +11,7 @@ import AppKit
 let h: CGFloat = 550
 let w: CGFloat = 667
 
+@available(macOS 11.0, *)
 struct WelcomeView: View {
 
   var body: some View {
@@ -45,6 +46,7 @@ struct WelcomeView: View {
 
 }
 
+@available(macOS 10.15, *)
 struct WelcomeTitleView: View {
   var body: some View {
     VStack( spacing: 10) {
@@ -59,6 +61,7 @@ struct WelcomeTitleView: View {
   }
 }
 
+@available(macOS 11.0, *)
 struct WelcomeContentView: View {
   var body: some View {
       WelcomeImage()
@@ -67,7 +70,7 @@ struct WelcomeContentView: View {
   }
 }
 
-
+@available(macOS 10.15, *)
 struct WelcomeImage: View {
   @State private var scale: CGFloat = 1
   @State private var angle: Double = 0
@@ -100,6 +103,7 @@ struct WelcomeImage: View {
   }
 }
 
+@available(macOS 11.0, *)
 struct WelcomeDescription: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
@@ -121,6 +125,7 @@ struct WelcomeDescription: View {
   }
 }
 
+@available(macOS 10.15, *)
 struct ViewSizeKey: PreferenceKey {
   static var defaultValue: CGSize = .zero
 

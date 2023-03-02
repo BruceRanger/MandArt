@@ -61,7 +61,7 @@ The following process is used to create documentatation and host it in the
 
 ```
 swift package --allow-writing-to-directory ./docs \
-    generate-documentation --target MandArt \ --output-path ./docs \
+    generate-documentation --target MandArt --output-path ./docs \
     --disable-indexing \
     --transform-for-static-hosting  \
     --emit-digest \
