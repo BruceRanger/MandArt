@@ -40,7 +40,7 @@ The other versions of it we’ll call **Mini-Mands**.
 
 ![Welcome Screen](WindowWelcome.png)
 
-This image shows the welcome screen in the app. Click on the Get Started button to begin.
+This picture shows the welcome screen in the app. Click on the Get Started button to begin.
 
 
 ### MandArt Main Window
@@ -86,10 +86,9 @@ your way back.
 
 ### Customizing MandArt
 
-A number of variables are listed in the buttons in the green area. 
-You can change any of those values and hit return to update your art based on the new values. 
+A number of variables are listed in the green area. You can change any of those values and hit **tab**, **return**, or **enter** to use those new values. Sometime, you may have to hit return or enter twice.  
 
-The screen may go blank when you start to enter certain values, 
+The screen goes blank when you start to enter certain values, 
 because otherwise the program would update the image after each digit is entered. 
 This is a problem that SwiftUI will solve, hopefully. 
 
@@ -99,7 +98,7 @@ reference.
 
 ### Coloring MandArt
 
-The next set of variables relate to coloring the image. 
+The next set of variables relates to coloring the image. 
 Default values were chosen so that the initial image would be colored. 
 To reduce the number of colors that need to be entered, 
 the program will cycle through the defined colors as many times as necessary. 
