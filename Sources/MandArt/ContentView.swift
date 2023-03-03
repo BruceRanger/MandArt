@@ -843,11 +843,12 @@ struct ContentView: View {
                     isStarted ? pauseUpdates() : showMandArtBitMap()
                   }
                   .onSubmit {
+                    print ("onSubmit: scale")
                     showMandArtBitMap()
                   }
                   .textFieldStyle(.roundedBorder)
                   .multilineTextAlignment(.trailing)
-                  .frame(maxWidth: 100)
+                  .frame(maxWidth: 160)
                   .help("Enter the magnification of the image.")
                 }
 
@@ -1642,7 +1643,7 @@ struct ContentView: View {
     let formatter = NumberFormatter()
     formatter.maximumFractionDigits = 0
     formatter.minimum = 1
-    formatter.maximum = 10000
+    formatter.maximum = 10_000
     return formatter
   }
 
@@ -1650,7 +1651,7 @@ struct ContentView: View {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.isPartialStringValidationEnabled = true
-    formatter.maximumFractionDigits = 8
+    formatter.maximumFractionDigits = 16
     formatter.maximum = 2.0
     formatter.minimum = -2.0
     return formatter
@@ -1659,17 +1660,17 @@ struct ContentView: View {
   static var fmtRotationTheta: NumberFormatter {
     let formatter = NumberFormatter()
     formatter.maximumFractionDigits = 1
-    formatter.minimum = -359
-    formatter.maximum = 359
+    formatter.minimum = -359.9
+    formatter.maximum = 359.9
     return formatter
   }
 
   static var fmtScale: NumberFormatter {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
-    formatter.maximumFractionDigits = 8
+ //   formatter.maximumFractionDigits = 8
     formatter.minimum = 1
-    formatter.maximum = 100_000_000_000
+    formatter.maximum = 10_000_000_000_000_000
     return formatter
   }
 
@@ -1915,6 +1916,7 @@ struct ContentView: View {
   }
 
   fileprivate func showMandArtBitMap() {
+    print("showMandArtBitMap")
     self.activeDisplayState = ActiveDisplayChoice.MandArt
     self.readyForPicture()
   }
