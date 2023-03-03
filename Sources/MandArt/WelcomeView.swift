@@ -75,24 +75,9 @@ struct WelcomeImage: View {
   @State private var scale: CGFloat = 1
   @State private var angle: Double = 0
 
-/**
- Get the highest resolution application icon image (for use on the welcome screen).
- */
-  func getAppIconImage() -> NSImage? {
-    guard let iconData = NSApplication.shared.applicationIconImage.tiffRepresentation as NSData?,
-          let icon = NSImage(data: iconData as Data),
-          let representation = NSBitmapImageRep(data: iconData as Data),
-          let cgImage = representation.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
-      return nil
-    }
-    let size = CGSize(width: cgImage.width, height: cgImage.height)
-    return NSImage(cgImage: cgImage, size: size)
-  }
-
   var body: some View {
-
-   // Image(nsImage: NSApp.applicationIconImage)
-    Image(nsImage: getAppIconImage()!)
+    
+    Image("Welcome")
       .resizable()
       .aspectRatio(contentMode: .fit)
       .frame(height: h/2)
