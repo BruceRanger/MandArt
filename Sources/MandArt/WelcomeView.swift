@@ -75,7 +75,6 @@ struct WelcomeImage: View {
   @State private var scale: CGFloat = 1
   @State private var angle: Double = 0
 
-
 /**
  Get the highest resolution application icon image (for use on the welcome screen).
  */
@@ -90,15 +89,14 @@ struct WelcomeImage: View {
     return NSImage(cgImage: cgImage, size: size)
   }
 
-
   var body: some View {
 
-   //Image(nsImage: NSApp.applicationIconImage)
+   // Image(nsImage: NSApp.applicationIconImage)
     Image(nsImage: getAppIconImage()!)
       .resizable()
       .aspectRatio(contentMode: .fit)
       .frame(height: h/2)
-      .cornerRadius(20) 
+      .cornerRadius(20)
       .scaleEffect(scale)
       .rotationEffect(.degrees(angle))
       .onAppear {
@@ -151,7 +149,3 @@ struct ViewSizeKey: PreferenceKey {
     value = nextValue()
   }
 }
-
-
-
-

@@ -31,7 +31,7 @@ struct MandArtApp: App {
     WindowGroup("") {
       WelcomeView()
         .background(Color.white)
-        .frame(minWidth:w, minHeight:h)
+        .frame(minWidth: w, minHeight: h)
 
       .onAppear {
         if let window = NSApplication.shared.windows.first {

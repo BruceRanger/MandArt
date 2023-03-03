@@ -25,6 +25,10 @@ swiftlint --fix --config .swiftlint.yml Sources/MandArt
 
 swiftformat Sources/MandArt --swiftversion 5 --config .swiftformat
 
+swiftlint lint --config .swiftlint.yml Sources/MandArt
+
+OR
+
 swiftlint lint --config .swiftlint.yml Sources/MandArt/Hue.swift
 swiftlint lint --config .swiftlint.yml Sources/MandArt/PictureDefinition.swift
 swiftlint lint --config .swiftlint.yml Sources/MandArt/MandArtDocument.swift

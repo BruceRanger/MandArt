@@ -72,18 +72,19 @@ identifier_name:
     warning: 30
     error: 40
   excluded:
+    - i
     - id
     - x
     - y
     - r
     - g
     - b
-    - yY
     - a
     - u
     - v
     - w
     - h
+    - p
     - xX
     - yY
     - x0
