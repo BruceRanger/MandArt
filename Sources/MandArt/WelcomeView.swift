@@ -35,11 +35,9 @@ struct WelcomeView: View {
     .onPreferenceChange(ViewSizeKey.self) { size in
       let width = size.width
       let height = size.height
-      let window = NSApplication.shared.windows.first
       let screenRect = NSScreen.main?.frame ?? .zero
       let center = CGPoint(x: screenRect.midX, y: screenRect.midY)
       let newFrame = NSRect(x: center.x - width / 2, y: center.y - height / 2, width: width, height: height)
-      window?.setFrame(newFrame, display: true)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
   }
@@ -76,7 +74,6 @@ struct WelcomeImage: View {
   @State private var angle: Double = 0
 
   var body: some View {
-    
     Image("Welcome")
       .resizable()
       .aspectRatio(contentMode: .fit)
