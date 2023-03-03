@@ -829,7 +829,7 @@ struct ContentView: View {
                   }
                   .textFieldStyle(.roundedBorder)
                   .multilineTextAlignment(.trailing)
-                  .frame(maxWidth: 50)
+                  .frame(maxWidth: 60)
                   .help("Enter the angle to rotate the image clockwise, in degrees.")
                 }
 
@@ -1658,7 +1658,7 @@ struct ContentView: View {
 
   static var fmtRotationTheta: NumberFormatter {
     let formatter = NumberFormatter()
-    formatter.maximumFractionDigits = 0
+    formatter.maximumFractionDigits = 1
     formatter.minimum = -359
     formatter.maximum = 359
     return formatter
