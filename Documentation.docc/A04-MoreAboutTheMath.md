@@ -40,7 +40,7 @@ Since our computers don’t work with complex numbers, and they seem a little sc
 we use a little math to get to real numbers. Then we can use the real x and y values of geometry. 
 For each pixel location in the
 image, the program starts with that location and computes a new location. The new location is tested to see if it
-exceeds rSqLimit. If it does, the program records the number of iterations required to get there. If not, it checks
+exceeds some maximum value that we choose. If it does, the program records the number of iterations required to get there. If not, it checks
 to see if the number of iterations has reached the maximum allowable number of iterations. If it does, it records
 that number and goes on to the next pixel. If not, it computes a new location.
 
@@ -49,7 +49,7 @@ from the origin must grow to infinity if that distance ever exceeds 2. Since squ
 expensive calculation, we just use the distance squared, so the **distance** must grow to infinity if the **distance
 squared** exceeds 4. We call the distance from the origin, r, so we compute r^2 and call it rSq.
 
-We will use the number of iterations to help to define a color for that location.
+We use the number of iterations to help to define a color for that location.
 
 What if we iterate many times and r^2 never exceeds the limit of 4? We call that limit rSqLimit. In general, we
 can’t be sure that r^2 will ever exceed 4, so we pick a large number and say that, if we don’t exceed rSqLimit in
@@ -59,7 +59,7 @@ We use the variable, iterationsMax, for the maximum number of iterations to try.
 iterationsMax = 10,000. Any time you find a black shape that doesn’t look like a Mini-Mand, it means you need
 to increase iterationsMax. You define the RGB colors used in the image and their order. You also define the
 numbers of blocks of color to be used, nBlocks. We start with six colors and 60 blocks. The colors we used are,
-in order: lime, yellow, red, magenta, blue, and cyan. The program finds the minimum number of iterations used
+in order: lime, yellow, red, magenta, blue, and cyan.These are six of the eight corners of the RGB color cube. The program finds the minimum number of iterations used
 at any location in the picture so that our coloring can start somewhere on the edge of our picture.
 
 Why would we ever choose a value for rSqLimit greater than 4? This has to do with color smoothing. We find

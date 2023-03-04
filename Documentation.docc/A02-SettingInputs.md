@@ -250,13 +250,13 @@ hit the **Go** button to draw a gradient between them.
 The resulting picture shows a gray area in the middle. 
 Gray doesn’t usually look good in a picture, so you may want to change it. 
 
+![Lime to magenta gradient](LimeToMagentaGradient.png)
+
 ### Fixing an Unpleasant Intermediate Color
 
-To fix a poor transition color (e.g., gray), 
-we'll first add the intermediate grey to our color list between the two adjacent colors we're workin on, 
-and then select a better intermediate color.
+To fix a poor intermediate color (e.g., gray).
 
-1. Add a new color.
+1. click the **Add New Ccolor** button.
 2. Click in its displayed colored area. 
 3. Use the Color Picker Eyedropper to select a color near the middle of the gray area of the gradient. 
 4. Verify the new color displays the unfortunate intermediate color.
