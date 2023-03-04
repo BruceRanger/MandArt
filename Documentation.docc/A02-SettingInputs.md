@@ -186,6 +186,10 @@ Click the eyedropper, and then click on any color on your screen to select that 
 
 ![ColorPicker with Eyedropper](ColorPickerWithEyeDrop.png)
 
+To get the eyedropper to work properly, you may need to adjust your Color Profile. Open System Settings / Displays / Color Profile and, on the drop-down, select the sRGB option as shown below.
+
+![ColorProfile](SystemSettings-Displays-ColorProfile-sRGB)
+
 
 ### Viewing Color Options In the App
 
@@ -211,9 +215,12 @@ It also shows the RGB values.
 
 ![Colors - Printable](Colors-Printable.png)
 
-The **A** colors can be shown in six different orders (Rgb, Rbg, Grb, Gbr, Brg, and Bgr), but the upper-left is
+The **A**, **AP**, and **P** colors can be shown in six different orders (Rgb, Rbg, Grb, Gbr, Brg, and Bgr), but the upper-left is
 always black and the lower-right is always white. The different orders just make it easier to see the color
 groupings.
+The following pictures show the A colors in Rgb and Bgr orders.
+![Rgb order](Rgb.png)
+![Bgr order](Bgr.png)
 
 The pictures of the colors can be dismissed by clicking on the little **X** button at the top.
 
@@ -237,11 +244,11 @@ can be adjusted.
 
 Getting back to finding an intermediate color in a gradient: We’ll try an example. 
 
-Make the first color lime (0, 255, 0) and the second color magenta (255, 0, 255) and 
+Make the first color for the gradient lime (0, 255, 0) and the second color magenta (255, 0, 255) and 
 hit the **Go** button to draw a gradient between them.
 
 The resulting picture shows a gray area in the middle. 
-Grey doesn't usually make a good transition color.
+Gray doesn’t usually look good in a picture, so you may want to change it. 
 
 ### Fixing an Unpleasant Intermediate Color
 
