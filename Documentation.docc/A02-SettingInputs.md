@@ -220,7 +220,7 @@ always black and the lower-right is always white. The different orders just make
 groupings.
 The following pictures show the A colors in Rgb and Bgr orders.
 ![Rgb order](Rgb.png)
-![Bgr order](Bgr.png)
+![Bgr order](Brg.png)
 
 The pictures of the colors can be dismissed by clicking on the little **X** button at the top.
 
