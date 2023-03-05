@@ -1071,7 +1071,7 @@ struct ContentView: View {
                   }
                   .textFieldStyle(.roundedBorder)
                   .multilineTextAlignment(.trailing)
-                  .frame(maxWidth: 50)
+                  .frame(maxWidth: 60)
                 }
                 .padding(.horizontal)
                 .help(
@@ -1734,9 +1734,9 @@ struct ContentView: View {
   static var fmtChangeInMinIteration: NumberFormatter {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
-    formatter.maximumFractionDigits = 0
-    formatter.minimum = 0
-    formatter.maximum = 100
+    formatter.maximumFractionDigits = 3
+    formatter.minimum = -1000
+    formatter.maximum = 1000
     return formatter
   }
 
