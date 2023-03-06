@@ -18,70 +18,12 @@ SwiftUI macOS app to create custom art using the Mandelbrot set.
 
 - [Documentation](https://denisecase.github.io/MandArt-Docs/documentation/mandart/)
 
-## Dev Notes: Formatting and Linting
+## MandArt Timeline
 
-```
-swiftlint --fix --config .swiftlint.yml Sources/MandArt
-
-swiftformat Sources/MandArt --swiftversion 5 --config .swiftformat
-
-swiftlint lint --config .swiftlint.yml Sources/MandArt
-
-OR
-
-swiftlint lint --config .swiftlint.yml Sources/MandArt/Hue.swift
-swiftlint lint --config .swiftlint.yml Sources/MandArt/PictureDefinition.swift
-swiftlint lint --config .swiftlint.yml Sources/MandArt/MandArtDocument.swift
-swiftlint lint --config .swiftlint.yml Sources/MandArt/MandArtApp.swift
-swiftlint lint --config .swiftlint.yml Sources/MandArt/MandMath.swift
-swiftlint lint --config .swiftlint.yml Sources/MandArt/ContentView.swift
-
-```
-
-## Dev Notes: Periphery
-
-First, build, then run:
-
-```
-xcodebuild -scheme MandArt -destination 'platform=macOS' -derivedDataPath 'DerivedData' clean build
-
-periphery scan --skip-build --index-store-path 'DerivedData/MandArt/Index.noindex/DataStore/'
-
-```
-
-
-
-
-
-## Dev Notes: How to Create Documentation
-
-The following process is used to create documentatation and host it in the
-[MandArt-Docs](https://github.com/denisecase/MandArt-Docs) repo.
-
-1. Add or uncomment Package.swift in the root folder of MandArt repo. 
-2. Move Documentation.docc from root to Sources/MandArt with the .swift files. 
-3. Open Terminal, in the root MandArt repository folder.
-4. In Terminal, run
-
-```
-swift package --allow-writing-to-directory ./docs \
-    generate-documentation --target MandArt --output-path ./docs \
-    --disable-indexing \
-    --transform-for-static-hosting  \
-    --emit-digest \
-    --target MandArt \
-    --hosting-base-path 'MandArt-Docs'
-```
-
-
-After generating Docs
-
-1. Copy MandArt/docs to MandArt-Docs/docs 
-2. Commit and push MandArt-Docs to GitHub (using VS Code)
-
-In MandArt:
-
-1. Remove or comment out Package.swift.
-2. Move Documentation.docc back to root.
-3. Delete the /docs folder.
-
+- 1985-08-30. Idea started with [1985 Scientific American article on the Mandlebrot set](https://www.scientificamerican.com/article/mandelbrot-set/). 
+- 2019-06-03. SwiftUI released.
+- 2020-06-24. "Learn SwiftUI" added to list.
+- 2020-06-29. Started Mand3 using Swift UI.
+- 2020-07-15. Started Mand4 using Storyboard. 
+- 2020-08-14. Started Mand5 using SwiftUI.
+- 2023-03-04. MandArt beta release.
