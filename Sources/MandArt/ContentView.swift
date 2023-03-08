@@ -8,6 +8,42 @@
  Revised and updated 2021-2023
  All rights reserved.
  */
+/*
+import SwiftUI
+
+struct ContentView: View {
+  @State var document = MyDocument()
+  
+  var body: some View {
+    VStack {
+      // Your app UI here
+      
+      Button("Save As...") {
+        let panel = NSSavePanel()
+        panel.allowedFileTypes = ["txt"]
+        panel.begin { result in
+          if result == .OK, let url = panel.url {
+            document.save(to: url, ofType: "txt") { error in
+              if let error = error {
+                print("Failed to save document: \(error.localizedDescription)")
+              } else {
+                print("Document saved successfully.")
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}*/
+
+class MyDocument: NSDocument {
+  // Your document data and implementation here
+}
+
+
+
+
 import AppKit // keypress
 import Foundation // trig functions
 import SwiftUI // views
@@ -20,7 +56,7 @@ struct ContentView: View {
   @EnvironmentObject var doc: MandArtDocument
 
   // set width of the first column (user inputs)
-  let inputWidth: Double = 340
+  let inputWidth: Double = 380
 
   @State private var moved: Double = 0.0
   @State private var startTime: Date?
@@ -682,10 +718,35 @@ struct ContentView: View {
 
             Group {
               HStack {
+                
+                
+                
+                
                 Button("Save Data") {
                   doc.saveMandArtDataFile()
                 }
                 .help("Save MandArt data file.")
+                
+                
+                Button("Save Data As...") {
+//                  let panel = NSSavePanel()
+//                  panel.allowedFileTypes = ["txt"]
+//                  panel.begin { result in
+//                    if result == .OK, let url = panel.url {
+//                      doc.save(to: url, ofType: "txt") { error in
+//                        if let error = error {
+//                          print("Failed to save document: \(error.localizedDescription)")
+//                        } else {
+//                          print("Document saved successfully.")
+//                        }
+//                      }
+//                    }
+//                  }
+                }
+                
+                
+                
+                
 
                 Button("Save Image") {
                   doc.saveMandArtImage()
@@ -781,7 +842,7 @@ struct ContentView: View {
                   .textFieldStyle(.roundedBorder)
                   .multilineTextAlignment(.trailing)
                   .padding(4)
-                  .frame(maxWidth: 120)
+                  .frame(maxWidth: 170)
                   .help(
                     "Enter the x value in the Mandelbrot coordinate system for the center of the image."
                   )
@@ -804,7 +865,7 @@ struct ContentView: View {
                   .textFieldStyle(.roundedBorder)
                   .multilineTextAlignment(.trailing)
                   .padding(4)
-                  .frame(maxWidth: 120)
+                  .frame(maxWidth: 170)
                   .help(
                     "Enter the Y value in the Mandelbrot coordinate system for the center of the image."
                   )
@@ -1670,7 +1731,7 @@ struct ContentView: View {
     formatter.numberStyle = .decimal
  //   formatter.maximumFractionDigits = 8
     formatter.minimum = 1
-    formatter.maximum = 10_000_000_000_000_000
+    formatter.maximum = 100_000_000_000_000_000
     return formatter
   }
 

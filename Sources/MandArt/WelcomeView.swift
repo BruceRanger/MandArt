@@ -23,7 +23,7 @@ struct WelcomeView: View {
     }
     .padding()
     .frame(minWidth: w, minHeight: h)
-    .background(Color.white)
+    .background(Color(.windowBackgroundColor))
     .ignoresSafeArea()
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .overlay(
