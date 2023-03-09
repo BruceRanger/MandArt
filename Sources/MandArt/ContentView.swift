@@ -728,7 +728,7 @@ struct ContentView: View {
                 .help("Save MandArt data file.")
                 
                 
-                Button("Save Data As...") {
+        //        Button("Save Data As...") {
 //                  let panel = NSSavePanel()
 //                  panel.allowedFileTypes = ["txt"]
 //                  panel.begin { result in
@@ -742,7 +742,7 @@ struct ContentView: View {
 //                      }
 //                    }
 //                  }
-                }
+      //          }
                 
                 
                 
