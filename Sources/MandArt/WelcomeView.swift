@@ -51,7 +51,7 @@ struct WelcomeTitleView: View {
       Text("Welcome to MandArt")
         .font(.title)
         .fontWeight(.bold)
-      Text("Version 0.1 (beta)")
+      Text("   ")
         .font(.headline)
         .foregroundColor(.secondary)
     }
