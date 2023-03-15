@@ -1936,7 +1936,7 @@ struct ContentView: View {
     self.readyForGradient()
   }
 
-  // Get the app ready to draw a MandArt picture. 
+  // Get the app ready to draw a MandArt picture.
   fileprivate func readyForPicture() {
     self.drawIt = true
     self.drawColors = false
