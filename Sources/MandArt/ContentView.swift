@@ -1932,7 +1932,7 @@ struct ContentView: View {
   }
 
   fileprivate func showGradient() {
-    self.activeDisplayState = ActiveDisplayChoice.Gradient 
+    self.activeDisplayState = ActiveDisplayChoice.Gradient
     self.readyForGradient()
   }
 
