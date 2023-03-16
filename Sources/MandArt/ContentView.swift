@@ -1460,11 +1460,11 @@ struct ContentView: View {
                   let arrColors = arrCGs.map { cgColor in
                     Color(cgColor)
                   }
-                  let nColumns = 64
+                  let nColumns = 32  //64
                   let nRows = arrColors.count / nColumns
                   ForEach(0 ..< nRows) { rowIndex in
                     HStack(spacing: 0) {
-                      ForEach(0 ..< 64) { columnIndex in
+                      ForEach(0 ..< nColumns) { columnIndex in
                         let index = rowIndex * nColumns + columnIndex
                         Rectangle()
                           .fill(arrColors[index])
@@ -1504,11 +1504,11 @@ struct ContentView: View {
                   let arrColors = arrCGs.map { cgColor in
                     Color(cgColor)
                   }
-                  let nColumns = 64
+                  let nColumns = 32 //64
                   let nRows = arrColors.count / nColumns
                   ForEach(0 ..< nRows) { rowIndex in
                     HStack(spacing: 0) {
-                      ForEach(0 ..< 64) { columnIndex in
+                      ForEach(0 ..< nColumns) { columnIndex in
                         let index = rowIndex * nColumns + columnIndex
                         Rectangle()
                           .fill(arrColors[index])
