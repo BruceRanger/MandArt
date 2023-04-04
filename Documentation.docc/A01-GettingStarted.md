@@ -44,6 +44,11 @@ use File / Save on the menu or click the **Save Data** button in the top left.
 The data is stored in a document with a .mandart extension.
 Inputs are stored in JSON format (a simple and common data format). 
 
+**Warning**
+Saving a data file is actually a bit tricky because MandArt uses SwiftUI and Apple hasn't put in a Save As ... menu item yet. Therefore, even if you rename the file and save it again, it just overwrites the original file.
+
+So, we have to work around the problem. When the file is originally saved, you get to tell it where to put the file. Since you may want to make changes and re-save the file, we have to go to the folder where the file is saved and copy or duplicate the file using a new name. MandArt doesn't know about this new file so it can't overwrite it.
+
 ### Save a Printed Image
 
 To save your generated image as a .png file, click the **Save Image**button in the top left.
