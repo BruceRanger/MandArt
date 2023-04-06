@@ -51,7 +51,7 @@ So, we have to work around the problem. When the file is originally saved, you g
 
 ### Save a Printed Image
 
-To save your generated image as a .png file, click the **Save Image**button in the top left.
+To save your generated image as a .png file, click the **Save Image** button in the top left.
 
 ### Open Saved MandArt
 
