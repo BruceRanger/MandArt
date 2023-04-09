@@ -692,10 +692,10 @@ struct ContentView: View {
 
 
 
-                Button("Save Data") {
+     /*          Button("Save Data") {
                   doc.saveMandArtDataFile()
                 }
-                .help("Save MandArt data file.")
+                .help("Save MandArt data file.")*/
 
 
 
