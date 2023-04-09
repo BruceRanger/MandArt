@@ -19,6 +19,10 @@ SwiftUI macOS app to create custom art using the Mandelbrot set.
 
 - [Documentation](https://denisecase.github.io/MandArt-Docs/documentation/mandart/)
 
+## MandArt Discoveries
+
+- [MandArt-Discoveries](https://github.com/denisecase/MandArt-Discoveries)
+
 ## MandArt Timeline
 
 - 1985-08-30. Idea started with [1985 Scientific American article on the Mandlebrot set](https://www.scientificamerican.com/article/mandelbrot-set/). 
