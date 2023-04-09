@@ -1,9 +1,9 @@
 /**
  ContentView.swift
  MandArt
- 
+
  The main view in the MandArt project, responsible for displaying the user interface.
- 
+
  Created by Bruce Johnson on 9/20/21.
  Revised and updated 2021-2023
  All rights reserved.
@@ -16,6 +16,7 @@ class MyDocument: NSDocument {
 import AppKit // keypress
 import Foundation // trig functions
 import SwiftUI // views
+import UniformTypeIdentifiers
 
 var contextImageGlobal: CGImage?
 var fIterGlobal = [[Double]]()
@@ -47,7 +48,7 @@ struct ContentView: View {
 
   /**
    Gets an image to display on the right side of the app
-   
+
    - Returns: An optional CGImage or nil
    */
   func getImage() -> CGImage? {
@@ -75,10 +76,10 @@ struct ContentView: View {
 
   /**
    Function to create and return a user-created MandArt bitmap
-   
+
    - Parameters:
    - colors: array of colors
-   
+
    - Returns: optional CGImage with the bitmap or nil
    */
   fileprivate func getPictureImage(_ colors: inout [[Double]]) -> CGImage? {
@@ -349,13 +350,13 @@ struct ContentView: View {
 
   /**
    Function to create and return a gradient bitmap
-   
+
    - Parameters:
    - imageHeight: Int bitmap image height in pixels
    - imageWidth: Int bitmap image width in pixels
    - nLeft: int number of the left hand color, starting with 1 (not 0)
    - colors: array of colors (for the whole picture)
-   
+
    - Returns: optional CGImage with the bitmap or nil
    */
   fileprivate func getGradientImage(
@@ -475,10 +476,10 @@ struct ContentView: View {
 
   /**
    Function to create and return a user-colored MandArt bitmap
-   
+
    - Parameters:
    - colors: array of colors
-   
+
    - Returns: optional CGImage with the colored bitmap or nil
    */
   fileprivate func getColorImage(_ colors: inout [[Double]]) -> CGImage? {
@@ -687,21 +688,26 @@ struct ContentView: View {
 
             Group {
               HStack {
-                
-                
-                
-                
+
+
+
+
                 Button("Save Data") {
                   doc.saveMandArtDataFile()
                 }
                 .help("Save MandArt data file.")
-                
+
 
 
                 Button("Save Image") {
                   doc.saveMandArtImage()
                 }
                 .help("Save MandArt image file.")
+
+                Button("Save Image Inputs") {
+                  saveMandArtImageInputs()
+                }
+                .help("Save MandArt image inputs.")
               }
 
               Divider()
@@ -988,7 +994,7 @@ struct ContentView: View {
               Divider()
 
               Group { // NEAR FAR GROUP
-                // Spacing 1 with Slider
+                      // Spacing 1 with Slider
                 Text("Spacing far from MiniMand (near to edge)")
                 HStack {
                   Text("1")
@@ -1337,10 +1343,10 @@ struct ContentView: View {
                   }
                 }
                 .onChange(of: hue.r) { newValue in
-                    doc.updateHueWithColorNumberR(
-                      index: i, newValue: newValue
-                    )
-                  }
+                  doc.updateHueWithColorNumberR(
+                    index: i, newValue: newValue
+                  )
+                }
 
                 // enter green
 
@@ -1349,11 +1355,11 @@ struct ContentView: View {
                     self.readyForColors()
                   }
                 }
-                  .onChange(of: hue.g) { newValue in
-                    doc.updateHueWithColorNumberG(
-                      index: i, newValue: newValue
-                    )
-                  }
+                .onChange(of: hue.g) { newValue in
+                  doc.updateHueWithColorNumberG(
+                    index: i, newValue: newValue
+                  )
+                }
 
                 // enter blue
 
@@ -1362,11 +1368,11 @@ struct ContentView: View {
                     self.readyForColors()
                   }
                 }
-                  .onChange(of: hue.b) { newValue in
-                    doc.updateHueWithColorNumberB(
-                      index: i, newValue: newValue
-                    )
-                  }
+                .onChange(of: hue.b) { newValue in
+                  doc.updateHueWithColorNumberB(
+                    index: i, newValue: newValue
+                  )
+                }
 
                 Button(role: .destructive) {
                   doc.deleteHue(index: i)
@@ -1605,16 +1611,16 @@ struct ContentView: View {
   /**
    tapGesture is a variable that defines a drag gesture
    for the user interaction in the user interface.
-   
+
    The gesture is of type some Gesture
    and uses the DragGesture struct from the SwiftUI framework.
-   
+
    The minimum distance for the drag gesture is set to 0 units,
    and the coordinate space for the gesture is set to .local.
-   
+
    The onChanged closure is triggered
    when the gesture is changed by the user's interaction.
-   
+
    The onEnded closure is triggered
    when the user lifts the mouse off the screen,
    indicating the tap gesture has completed.
@@ -1679,7 +1685,7 @@ struct ContentView: View {
   static var fmtScale: NumberFormatter {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
- //   formatter.maximumFractionDigits = 8
+    //   formatter.maximumFractionDigits = 8
     formatter.minimum = 1
     formatter.maximum = 100_000_000_000_000_000
     return formatter
@@ -1814,9 +1820,9 @@ struct ContentView: View {
 
   /**
    Returns the new x to be the picture center x when user drags in the picture.
-   
+
    - Parameter tap: information about the drag
-   
+
    - Returns: Double new center x
    */
   private func getCenterXFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
@@ -1837,9 +1843,9 @@ struct ContentView: View {
 
   /**
    Returns the new y to be the picture center y when user drags in the picture.
-   
+
    - Parameter tap: information about the drag
-   
+
    - Returns: Double new center y
    */
   private func getCenterYFromDrag(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
@@ -1860,9 +1866,9 @@ struct ContentView: View {
 
   /**
    Returns the new x to be the picture center x when user clicks on the picture.
-   
+
    - Parameter tap: information about the tap
-   
+
    - Returns: Double new center x = current x + (tapX - (imagewidth / 2.0)/ scale
    */
   private func getCenterXFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
@@ -1883,9 +1889,9 @@ struct ContentView: View {
 
   /**
    Returns the new y to be the picture center y when user clicks on the picture.
-   
+
    - Parameter tap: information about the tap
-   
+
    - Returns: Double new center y = current y + ( (imageHeight / 2.0)/ scale - tapY)
    */
   private func getCenterYFromTap(_ tap: _ChangedGesture<DragGesture>.Value) -> Double {
@@ -1936,7 +1942,7 @@ struct ContentView: View {
     self.readyForGradient()
   }
 
-  // Get the app ready to draw a MandArt picture. 
+  // Get the app ready to draw a MandArt picture.
   fileprivate func readyForPicture() {
     self.drawIt = true
     self.drawColors = false
@@ -1970,14 +1976,14 @@ struct ContentView: View {
 
   /**
    Trigger a tab key press event
-   
+
    You can add this to each numeric field's
    onSubmit() logic so that hitting RETURN
    would also tab to the next field.
-   
+
    Not currently used as it doesn't know the TextField it was
    called on, so it can't go to the next field.
-   
+
    - Parameter textField: The `NSTextField` to trigger the tab event on.
    */
   func triggerTab(on textField: NSTextField) {
@@ -1996,4 +2002,53 @@ struct ContentView: View {
     )!
     textField.window?.sendEvent(keyEvent)
   }
+
+  // Save the image inputs to a file.
+  func saveMandArtImageInputs() {
+    let winTitle = doc.getCurrentWindowTitle()
+    let justname = winTitle.replacingOccurrences(of: ".mandart", with: "")
+    let fname = justname + ".mandart"
+    var data: Data
+    do {
+      data = try JSONEncoder().encode(doc.picdef)
+    } catch {
+      print("Error encoding picdef.")
+      print("Closing all windows and exiting with error code 98.")
+      NSApplication.shared.windows.forEach { $0.close() }
+      NSApplication.shared.terminate(nil)
+      exit(98)
+    }
+    if data == Data() {
+      print("Error encoding picdef.")
+      print("Closing all windows and exiting with error code 99.")
+      NSApplication.shared.windows.forEach { $0.close() }
+      NSApplication.shared.terminate(nil)
+      exit(99)
+    }
+
+    // trigger state change to force a current image
+    doc.picdef.imageHeight += 1
+    doc.picdef.imageHeight -= 1
+
+    let currImage = contextImageGlobal!
+    let savePanel = NSSavePanel()
+    savePanel.title = "Choose directory and name for image inputs file"
+    savePanel.nameFieldStringValue = fname
+    savePanel.canCreateDirectories = true
+    savePanel.allowedContentTypes = [UTType.json, UTType.mandartDocType]
+    savePanel.begin { (result) in
+      if result == .OK {
+        do {
+          try data.write(to: savePanel.url!)
+        } catch {
+          print("Error saving file: \(error.localizedDescription)")
+        }
+        print("Image inputs saved successfully to \(savePanel.url!)")
+      } else {
+        print("Error saving image inputs")
+      }
+    }
+  }
+
 }
+
