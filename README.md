@@ -13,7 +13,7 @@ SwiftUI macOS app to create custom art using the Mandelbrot set.
 
 - Applied Physics Engineering
 - [Bruce Johnson](https://github.com/bruceranger)
-- {App Store Connect](https://appstoreconnect.apple.com)
+- [App Store Connect](https://appstoreconnect.apple.com)
 
 ## Learn More
 
