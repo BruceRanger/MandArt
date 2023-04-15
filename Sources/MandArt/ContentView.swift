@@ -122,6 +122,8 @@ struct ContentView: View {
     var p = 0.0
     var test1 = 0.0
     var test2 = 0.0
+    
+    print("rSq", rSq)
 
     rSqMax = 1.01 * (rSqLimit + 2) * (rSqLimit + 2)
     gGML = log(log(rSqMax)) - log(log(rSqLimit))
@@ -730,7 +732,9 @@ struct ContentView: View {
                     formatter:
                       ContentView.fmtImageWidthHeight
                   ) { isStarted in
-                    isStarted ? pauseUpdates() : showMandArtBitMap()
+        //            print("In width, checking isStarted:",isStarted)
+         //           isStarted ? pauseUpdates() : showMandArtBitMap()
+                    isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
                     showMandArtBitMap()
@@ -751,7 +755,8 @@ struct ContentView: View {
                     value: $doc.picdef.imageHeight,
                     formatter: ContentView.fmtImageWidthHeight
                   ) { isStarted in
-                    isStarted ? pauseUpdates() : showMandArtBitMap()
+          //          isStarted ? pauseUpdates() : showMandArtBitMap()
+                    isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
                     showMandArtBitMap()
@@ -790,7 +795,8 @@ struct ContentView: View {
                     value: $doc.picdef.xCenter,
                     formatter: ContentView.fmtXY
                   ) { isStarted in
-                    isStarted ? pauseUpdates() : showMandArtBitMap()
+        //            isStarted ? pauseUpdates() : showMandArtBitMap()
+                    isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
                     showMandArtBitMap()
@@ -812,7 +818,8 @@ struct ContentView: View {
                     value: $doc.picdef.yCenter,
                     formatter: ContentView.fmtXY
                   ) { isStarted in
-                    isStarted ? pauseUpdates() : showMandArtBitMap()
+         //           isStarted ? pauseUpdates() : showMandArtBitMap()
+                    isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
                     showMandArtBitMap()
@@ -839,7 +846,8 @@ struct ContentView: View {
                     value: $doc.picdef.theta,
                     formatter: ContentView.fmtRotationTheta
                   ) { isStarted in
-                    isStarted ? pauseUpdates() : showMandArtBitMap()
+        //           isStarted ? pauseUpdates() : showMandArtBitMap()
+                    isStarted ? pauseUpdates() : readyForColors()
                   }
                   .onSubmit {
                     showMandArtBitMap()
@@ -857,15 +865,15 @@ struct ContentView: View {
                     value: $doc.picdef.scale,
                     formatter: ContentView.fmtScale
                   ) { isStarted in
-                    isStarted ? pauseUpdates() : showMandArtBitMap()
+         //           isStarted ? pauseUpdates() : showMandArtBitMap()
+                    isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
-                    print ("onSubmit: scale")
                     showMandArtBitMap()
                   }
                   .textFieldStyle(.roundedBorder)
                   .multilineTextAlignment(.trailing)
-                  .frame(maxWidth: 160)
+                  .frame(maxWidth: 180)
                   .help("Enter the magnification of the image.")
                 }
 
@@ -892,7 +900,8 @@ struct ContentView: View {
                   value: $doc.picdef.iterationsMax,
                   formatter: ContentView.fmtSharpeningItMax
                 ) { isStarted in
-                  isStarted ? pauseUpdates() : showMandArtBitMap()
+       //           isStarted ? pauseUpdates() : showMandArtBitMap()
+                  isStarted ? pauseUpdates() : self.readyForColors()
                 }
                 .onSubmit {
                   showMandArtBitMap()
@@ -914,7 +923,8 @@ struct ContentView: View {
                   value: $doc.picdef.rSqLimit,
                   formatter: ContentView.fmtSmootingRSqLimit
                 ) { isStarted in
-                  isStarted ? pauseUpdates() : showMandArtBitMap()
+         //         isStarted ? pauseUpdates() : showMandArtBitMap()
+                  isStarted ? pauseUpdates() : self.readyForColors()
                 }
                 .onSubmit {
                   showMandArtBitMap()
@@ -1685,7 +1695,8 @@ struct ContentView: View {
   static var fmtScale: NumberFormatter {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
-    //   formatter.maximumFractionDigits = 8
+    formatter.isPartialStringValidationEnabled = true
+    formatter.maximumFractionDigits = 1
     formatter.minimum = 1
     formatter.maximum = 100_000_000_000_000_000
     return formatter
