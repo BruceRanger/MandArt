@@ -1678,7 +1678,7 @@ struct ContentView: View {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.isPartialStringValidationEnabled = true
-    formatter.maximumFractionDigits = 16
+    formatter.maximumFractionDigits = 17
     formatter.maximum = 2.0
     formatter.minimum = -2.0
     return formatter
