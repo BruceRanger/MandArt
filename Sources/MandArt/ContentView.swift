@@ -17,6 +17,7 @@ import AppKit // keypress
 import Foundation // trig functions
 import SwiftUI // views
 import UniformTypeIdentifiers
+import CoreGraphics // for image scrollview?
 
 var contextImageGlobal: CGImage?
 var fIterGlobal = [[Double]]()
@@ -1425,8 +1426,20 @@ struct ContentView: View {
             let image: CGImage = getImage()!
             GeometryReader {_ in
               ZStack(alignment: .topLeading) {
-                Image(image, scale: 1.0, label: Text("Test"))
-                  .gesture(self.tapGesture)
+                
+                // WRAP THE IMAGE IN A SCROLLVIEW
+                ScrollView([.horizontal, .vertical]) {
+                  // THIS IS THE BITMAP IMAGE
+                  
+                  // Image 1200 x 1000 often needs scroll bars
+                  Image(image, scale: 1.0, label: Text("Test"))
+                    .resizable() // add for scroll?
+                    .aspectRatio(contentMode: .fit) // add for scroll?
+                    .gesture(self.tapGesture)
+
+                  
+                }  // END BITMAP SCROLLVIEW
+                .frame(minWidth: 600, minHeight: 400)
               }
             }
 
