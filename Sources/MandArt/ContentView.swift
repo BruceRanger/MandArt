@@ -725,8 +725,8 @@ struct ContentView: View {
               HStack {
                 VStack {
                   Text("Image")
-
                   Text("width, px:")
+                  Text("(imageWidth)")
                   TextField(
                     "1100",
                     value: $doc.picdef.imageWidth,
@@ -749,8 +749,8 @@ struct ContentView: View {
 
                 VStack {
                   Text("Image")
-
-                  Text("height, px:")
+                  Text("height, px")
+                  Text("(imageHeight)")
                   TextField(
                     "1000",
                     value: $doc.picdef.imageHeight,
@@ -791,6 +791,7 @@ struct ContentView: View {
                 VStack { // each input has a vertical container with a Text label & TextField for data
                   Text("Enter center x")
                   Text("Between -2 and 2")
+                  Text("(xCenter)")
                   TextField(
                     "-0.75",
                     value: $doc.picdef.xCenter,
@@ -814,6 +815,7 @@ struct ContentView: View {
                 VStack { // each input has a vertical container with a Text label & TextField for data
                   Text("Enter center y")
                   Text("Between -2 and 2")
+                  Text("(yCenter)")
                   TextField(
                     "0.0",
                     value: $doc.picdef.yCenter,
@@ -841,6 +843,7 @@ struct ContentView: View {
               HStack {
                 VStack {
                   Text("Rotate (º)")
+                  Text("(theta)")
 
                   TextField(
                     "0",
@@ -856,11 +859,11 @@ struct ContentView: View {
                   .textFieldStyle(.roundedBorder)
                   .multilineTextAlignment(.trailing)
                   .frame(maxWidth: 60)
-                  .help("Enter the angle to rotate the image clockwise, in degrees.")
+                  .help("Enter the angle to rotate the image counterclockwise, in degrees.")
                 }
 
                 VStack {
-                  Text("Scale")
+                  Text("Scale (scale)")
                   TextField(
                     "430",
                     value: $doc.picdef.scale,
@@ -976,7 +979,7 @@ struct ContentView: View {
               //  Show Row (HStack) of Gradient Content Next
 
               HStack {
-                Text("Draw gradient from color")
+                Text("Draw gradient from color (leftNumber)")
 
                 TextField(
                   "1",
@@ -1007,6 +1010,7 @@ struct ContentView: View {
               Group { // NEAR FAR GROUP
                       // Spacing 1 with Slider
                 Text("Spacing far from MiniMand (near to edge)")
+                Text("(spacingColorFar)")
                 HStack {
                   Text("1")
 
@@ -1040,6 +1044,7 @@ struct ContentView: View {
 
                 // Spacing 2 with Slider
                 Text("Spacing near to MiniMand (far from edge)")
+                Text("(spacingColorNear)")
                 HStack {
                   Text("5")
 
@@ -1076,7 +1081,7 @@ struct ContentView: View {
 
               Group {
                 // Min Iterations with Slider
-                Text("Change in minimum iteration:")
+                Text("Change in minimum iteration (dFIterMin)")
                 HStack {
                   Text("-5")
 
@@ -1108,7 +1113,7 @@ struct ContentView: View {
                 // END Min Iterations with Slider
 
                 // nblocks with slider
-                Text("Number of Color Blocks:")
+                Text("Number of Color Blocks (nBlocks)")
 
                 HStack {
                   Text("10")
