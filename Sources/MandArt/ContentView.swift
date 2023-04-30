@@ -2034,7 +2034,10 @@ struct ContentView: View {
     let fname = justname + ".mandart"
     var data: Data
     do {
-      data = try JSONEncoder().encode(doc.picdef)
+      //     data = try JSONEncoder().encode(doc.picdef)
+      let encoder = JSONEncoder()
+      encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+      data = try encoder.encode(doc.picdef)
     } catch {
       print("Error encoding picdef.")
       print("Closing all windows and exiting with error code 98.")
