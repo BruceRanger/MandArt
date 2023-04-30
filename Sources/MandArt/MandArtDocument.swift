@@ -138,9 +138,40 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
   }
 
   func getImageComment() -> String {
-    let xString = String(picdef.xCenter)
-    let yString = String(picdef.yCenter)
-    let comment = "x is \(xString) and y is \(yString)"
+    let a = String(picdef.dFIterMin)
+    let b = String(picdef.imageHeight)
+    let c = String(picdef.imageWidth)
+    let d = String(picdef.iterationsMax)
+    let e = String(picdef.leftNumber)
+    let f = String(picdef.nBlocks)
+    let g = String(picdef.rSqLimit)
+    let h = String(picdef.scale)
+    let i = String(picdef.spacingColorFar)
+    let j = String(picdef.spacingColorNear)
+    let k = String(picdef.theta)
+    let l = String(picdef.xCenter)
+    let m = String(picdef.yCenter)
+    let n = String(picdef.yY)
+ //   let xString = String(picdef.xCenter)
+ //   let yString = String(picdef.yCenter)
+    
+    
+    let comment = "dFIterMin is \(a) \n" +
+                  "imageHeight is \(b) \n" +
+                  "imageWidth is \(c) \n" +
+                  "iterationsMax is \(d) \n" +
+                  "leftNumber is \(e) \n" +
+                  "nBlocks is \(f) \n" +
+                  "rSqLimit is \(g) \n" +
+                  "scale is \(h) \n" +
+                  "spacingColorFar is \(i) \n" +
+                  "spacingColorNear is \(j) \n" +
+                  "theta is \(k) \n" +
+                  "xCenter is \(l) \n" +
+                  "yCenter is \(m) \n" +
+                  "yY is \(n) \n" +    
+                  " "
+    
     return comment
   }
 
