@@ -1444,7 +1444,7 @@ struct ContentView: View {
 
                   
                 }  // END BITMAP SCROLLVIEW
-                .frame(minWidth: 600, minHeight: 400)
+                .frame(minWidth: 1200, minHeight: 1000)
               }
             }
 
