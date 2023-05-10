@@ -86,7 +86,7 @@ your way back.
 
 ### Customizing MandArt
 
-A number of variables are listed in the green area. You can change any of those values and hit **tab**, **return**, or **enter** to use those new values. Sometime, you may have to hit return or enter twice.  
+A number of variables are listed in the green area. You can change any of those values and hit **tab**, **return**, or **enter** to use those new values. Sometime, you may have to hit return or enter twice.  And tab sometimes doesn't work as expected, but hitting return or enter fixes it.
 
 The screen goes blank when you start to enter certain values, 
 because otherwise the program would update the image after each digit is entered. 

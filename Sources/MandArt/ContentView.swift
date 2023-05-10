@@ -692,16 +692,6 @@ struct ContentView: View {
             Group {
               HStack {
 
-
-
-
-     /*          Button("Save Data") {
-                  doc.saveMandArtDataFile()
-                }
-                .help("Save MandArt data file.")*/
-
-
-
                 Button("Save Image") {
                   doc.saveMandArtImage()
                 }
@@ -733,13 +723,10 @@ struct ContentView: View {
                     formatter:
                       ContentView.fmtImageWidthHeight
                   ) { isStarted in
-        //            print("In width, checking isStarted:",isStarted)
                     isStarted ? pauseUpdates() : showMandArtBitMap()
-         //           isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
                     showMandArtBitMap()
-                    self.triggerTab(on: self.textFieldImageHeight)
                   }
                   .textFieldStyle(.roundedBorder)
                   .multilineTextAlignment(.trailing)
@@ -756,12 +743,10 @@ struct ContentView: View {
                     value: $doc.picdef.imageHeight,
                     formatter: ContentView.fmtImageWidthHeight
                   ) { isStarted in
-          //          isStarted ? pauseUpdates() : showMandArtBitMap()
                     isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
                     showMandArtBitMap()
-                    self.triggerTab(on: self.textFieldImageHeight)
                   }
                   .textFieldStyle(.roundedBorder)
                   .multilineTextAlignment(.trailing)
@@ -797,7 +782,6 @@ struct ContentView: View {
                     value: $doc.picdef.xCenter,
                     formatter: ContentView.fmtXY
                   ) { isStarted in
-        //            isStarted ? pauseUpdates() : showMandArtBitMap()
                     isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
@@ -821,12 +805,10 @@ struct ContentView: View {
                     value: $doc.picdef.yCenter,
                     formatter: ContentView.fmtXY
                   ) { isStarted in
-         //           isStarted ? pauseUpdates() : showMandArtBitMap()
                     isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
                     showMandArtBitMap()
-                    self.triggerTab(on: self.textFieldY)
                   }
                   .textFieldStyle(.roundedBorder)
                   .multilineTextAlignment(.trailing)
@@ -850,7 +832,6 @@ struct ContentView: View {
                     value: $doc.picdef.theta,
                     formatter: ContentView.fmtRotationTheta
                   ) { isStarted in
-        //           isStarted ? pauseUpdates() : showMandArtBitMap()
                     isStarted ? pauseUpdates() : readyForColors()
                   }
                   .onSubmit {
@@ -869,7 +850,6 @@ struct ContentView: View {
                     value: $doc.picdef.scale,
                     formatter: ContentView.fmtScale
                   ) { isStarted in
-         //           isStarted ? pauseUpdates() : showMandArtBitMap()
                     isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
@@ -904,7 +884,6 @@ struct ContentView: View {
                   value: $doc.picdef.iterationsMax,
                   formatter: ContentView.fmtSharpeningItMax
                 ) { isStarted in
-       //           isStarted ? pauseUpdates() : showMandArtBitMap()
                   isStarted ? pauseUpdates() : self.readyForColors()
                 }
                 .onSubmit {
@@ -927,7 +906,6 @@ struct ContentView: View {
                   value: $doc.picdef.rSqLimit,
                   formatter: ContentView.fmtSmootingRSqLimit
                 ) { isStarted in
-         //         isStarted ? pauseUpdates() : showMandArtBitMap()
                   isStarted ? pauseUpdates() : self.readyForColors()
                 }
                 .onSubmit {
@@ -2001,35 +1979,6 @@ struct ContentView: View {
     self.readyForPicture()
     self.doc.picdef.scale = self.doc.picdef.scale / 2.0
     self.showMandArtBitMap()
-  }
-
-  /**
-   Trigger a tab key press event
-
-   You can add this to each numeric field's
-   onSubmit() logic so that hitting RETURN
-   would also tab to the next field.
-
-   Not currently used as it doesn't know the TextField it was
-   called on, so it can't go to the next field.
-
-   - Parameter textField: The `NSTextField` to trigger the tab event on.
-   */
-  func triggerTab(on textField: NSTextField) {
-    let keyCode = NSEvent.SpecialKey.tab.rawValue
-    let keyEvent = NSEvent.keyEvent(
-      with: .keyDown,
-      location: NSPoint(),
-      modifierFlags: [],
-      timestamp: 0,
-      windowNumber: 0,
-      context: nil,
-      characters: "\t",
-      charactersIgnoringModifiers: "\t",
-      isARepeat: false,
-      keyCode: UInt16(keyCode)
-    )!
-    textField.window?.sendEvent(keyEvent)
   }
 
   // Save the image inputs to a file.
