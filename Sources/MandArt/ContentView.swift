@@ -734,8 +734,8 @@ struct ContentView: View {
                       ContentView.fmtImageWidthHeight
                   ) { isStarted in
         //            print("In width, checking isStarted:",isStarted)
-         //           isStarted ? pauseUpdates() : showMandArtBitMap()
-                    isStarted ? pauseUpdates() : self.readyForColors()
+                    isStarted ? pauseUpdates() : showMandArtBitMap()
+         //           isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
                     showMandArtBitMap()
