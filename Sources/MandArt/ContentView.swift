@@ -85,6 +85,9 @@ struct ContentView: View {
    */
   fileprivate func getPictureImage(_ colors: inout [[Double]]) -> CGImage? {
     // draws image
+    
+    print("getPictureImage")
+    
     let imageHeight: Int = self.doc.picdef.imageHeight
     let imageWidth: Int = self.doc.picdef.imageWidth
     let iterationsMax: Double = self.doc.picdef.iterationsMax
@@ -123,8 +126,6 @@ struct ContentView: View {
     var p = 0.0
     var test1 = 0.0
     var test2 = 0.0
-    
-    print("rSq", rSq)
 
     rSqMax = 1.01 * (rSqLimit + 2) * (rSqLimit + 2)
     gGML = log(log(rSqMax)) - log(log(rSqLimit))
@@ -492,6 +493,9 @@ struct ContentView: View {
     let iterationsMax: Double = self.doc.picdef.iterationsMax
     let dFIterMin: Double = self.doc.picdef.dFIterMin
     let nBlocks: Int = self.doc.picdef.nBlocks
+    
+    print("nBlocks", nBlocks)
+    
     let nColors: Int = self.doc.picdef.hues.count
     let spacingColorFar: Double = self.doc.picdef.spacingColorFar
     let spacingColorNear: Double = self.doc.picdef.spacingColorNear
@@ -720,10 +724,10 @@ struct ContentView: View {
                   TextField(
                     "1100",
                     value: $doc.picdef.imageWidth,
-                    formatter:
-                      ContentView.fmtImageWidthHeight
+                    formatter: ContentView.fmtImageWidthHeight
                   ) { isStarted in
-                    isStarted ? pauseUpdates() : showMandArtBitMap()
+      //              isStarted ? pauseUpdates() : showMandArtBitMap()
+                    isStarted ? pauseUpdates() : self.readyForColors()
                   }
                   .onSubmit {
                     showMandArtBitMap()
@@ -779,7 +783,7 @@ struct ContentView: View {
                   Text("(xCenter)")
                   TextField(
                     "-0.75",
-                    value: $doc.picdef.xCenter,
+   0                 value: $doc.picdef.xCenter,
                     formatter: ContentView.fmtXY
                   ) { isStarted in
                     isStarted ? pauseUpdates() : self.readyForColors()
@@ -1406,6 +1410,7 @@ struct ContentView: View {
       ScrollView(showsIndicators: true) {
         VStack {
           if activeDisplayState == ActiveDisplayChoice.MandArt {
+
             let image: CGImage = getImage()!
             GeometryReader {_ in
               ZStack(alignment: .topLeading) {
@@ -1952,6 +1957,7 @@ struct ContentView: View {
   // Get the app ready to draw a MandArt picture.
   fileprivate func readyForPicture() {
     self.drawIt = true
+    self.drawGradient = false
     self.drawColors = false
   }
 
@@ -1959,6 +1965,7 @@ struct ContentView: View {
   fileprivate func readyForGradient() {
     self.drawIt = false
     self.drawGradient = true
+    self.drawColors = false
   }
 
   fileprivate func resetAllPopupsToFalse() {
