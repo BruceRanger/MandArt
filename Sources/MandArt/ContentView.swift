@@ -783,7 +783,7 @@ struct ContentView: View {
                   Text("(xCenter)")
                   TextField(
                     "-0.75",
-   0                 value: $doc.picdef.xCenter,
+                    value: $doc.picdef.xCenter,
                     formatter: ContentView.fmtXY
                   ) { isStarted in
                     isStarted ? pauseUpdates() : self.readyForColors()
