@@ -1669,9 +1669,10 @@ struct ContentView: View {
 
   static var fmtImageWidthHeight: NumberFormatter {
     let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
     formatter.maximumFractionDigits = 0
     formatter.minimum = 1
-    formatter.maximum = 10_000
+    formatter.maximum = 100_000
     return formatter
   }
 
