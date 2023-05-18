@@ -86,14 +86,13 @@ your way back.
 
 ### Customizing MandArt
 
-A number of variables are listed in the green area. You can change any of those values and hit **tab**, **return**, or **enter** to use those new values. Sometime, you may have to hit return or enter twice.  And tab sometimes doesn't work as expected, but hitting return or enter fixes it.
+A number of variables are listed in the green area. You can change any of those values and hit **tab**, **return**, or **enter** to use those new values. Sometime, you may have to hit return or enter twice.  You can avoid this by entering any commas in the input instead of letting the program do it.
 
 The screen goes blank when you start to enter certain values, 
 because otherwise the program would update the image after each digit is entered. 
 This is a problem that SwiftUI will solve, hopefully. 
 
-These values allow you to fine-tune the image or input a set of values that you found in another
-reference.
+These values allow you to fine-tune the image or input a set of values that you found in another reference.
 
 
 ### Coloring MandArt
