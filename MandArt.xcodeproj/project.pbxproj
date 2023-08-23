@@ -17,6 +17,11 @@
 		884752A629AFE73400FBECC2 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884752A529AFE73400FBECC2 /* WelcomeView.swift */; };
 		88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88511CB22948B3FF009B5CF6 /* MandMath.swift */; };
 		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
+		88A133CE2A9677C500A6E3CA /* GradientPixelGridBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A133CD2A9677C500A6E3CA /* GradientPixelGridBuilder.swift */; };
+		88A133D02A96780C00A6E3CA /* GradientImageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A133CF2A96780C00A6E3CA /* GradientImageBuilder.swift */; };
+		88A2719A2A96848B00766654 /* ArtGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271992A96848B00766654 /* ArtGenerator.swift */; };
+		88A2719E2A96871A00766654 /* ArtPixelGridBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A2719D2A96871A00766654 /* ArtPixelGridBuilder.swift */; };
+		88A271A02A968A6900766654 /* ArtImageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A2719F2A968A6900766654 /* ArtImageBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +37,12 @@
 		88511CB22948B3FF009B5CF6 /* MandMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandMath.swift; sourceTree = "<group>"; };
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
 		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
+		88A133CD2A9677C500A6E3CA /* GradientPixelGridBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientPixelGridBuilder.swift; sourceTree = "<group>"; };
+		88A133CF2A96780C00A6E3CA /* GradientImageBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientImageBuilder.swift; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
+		88A271992A96848B00766654 /* ArtGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtGenerator.swift; sourceTree = "<group>"; };
+		88A2719D2A96871A00766654 /* ArtPixelGridBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtPixelGridBuilder.swift; sourceTree = "<group>"; };
+		88A2719F2A968A6900766654 /* ArtImageBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtImageBuilder.swift; sourceTree = "<group>"; };
 		C57920042A1673C900E0CD98 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -72,15 +82,44 @@
 		88A1716729913A1E00A85AED /* MandArt */ = {
 			isa = PBXGroup;
 			children = (
-				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
-				884752A529AFE73400FBECC2 /* WelcomeView.swift */,
+				88A271962A967E6400766654 /* Models */,
+				88A271942A967DF200766654 /* Utilities */,
+				88A271932A967DEA00766654 /* Views */,
 				8806E113293A5011005F5CB4 /* MandArtApp.swift */,
-				8806E114293A5011005F5CB4 /* MandArtDocument.swift */,
-				882BAED2293409FE003ACB0B /* PictureDefinition.swift */,
-				882BAED829346C92003ACB0B /* Hue.swift */,
-				88511CB22948B3FF009B5CF6 /* MandMath.swift */,
 			);
 			path = MandArt;
+			sourceTree = "<group>";
+		};
+		88A271932A967DEA00766654 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				884752A529AFE73400FBECC2 /* WelcomeView.swift */,
+				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		88A271942A967DF200766654 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				88A133CF2A96780C00A6E3CA /* GradientImageBuilder.swift */,
+				88511CB22948B3FF009B5CF6 /* MandMath.swift */,
+				88A133CD2A9677C500A6E3CA /* GradientPixelGridBuilder.swift */,
+				88A271992A96848B00766654 /* ArtGenerator.swift */,
+				88A2719D2A96871A00766654 /* ArtPixelGridBuilder.swift */,
+				88A2719F2A968A6900766654 /* ArtImageBuilder.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		88A271962A967E6400766654 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8806E114293A5011005F5CB4 /* MandArtDocument.swift */,
+				882BAED829346C92003ACB0B /* Hue.swift */,
+				882BAED2293409FE003ACB0B /* PictureDefinition.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,8 +148,9 @@
 		6A3AEC0126F879E700D7E31A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					6A3AEC0826F879E700D7E31A = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -155,6 +195,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				882BAED929346C92003ACB0B /* Hue.swift in Sources */,
+				88A271A02A968A6900766654 /* ArtImageBuilder.swift in Sources */,
+				88A133D02A96780C00A6E3CA /* GradientImageBuilder.swift in Sources */,
+				88A133CE2A9677C500A6E3CA /* GradientPixelGridBuilder.swift in Sources */,
+				88A2719A2A96848B00766654 /* ArtGenerator.swift in Sources */,
+				88A2719E2A96871A00766654 /* ArtPixelGridBuilder.swift in Sources */,
 				889E3F24293AE0B6009944AC /* Documentation.docc in Sources */,
 				6A3AEC0F26F879E700D7E31A /* ContentView.swift in Sources */,
 				884752A629AFE73400FBECC2 /* WelcomeView.swift in Sources */,

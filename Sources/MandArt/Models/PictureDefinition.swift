@@ -33,8 +33,8 @@ struct PictureDefinition: Codable, Identifiable {
   var scale: Double = 430.0
   var iterationsMax: Double = 10000.0
   var rSqLimit: Double = 400.0
-  var imageWidth: Int = 1100
-  var imageHeight: Int = 1000
+  var imageWidth: Int = 550 // 1100
+  var imageHeight: Int = 500 //1000
   var nBlocks: Int = 60
   var spacingColorFar: Double = 5.0
   var spacingColorNear: Double = 15.0
@@ -115,6 +115,16 @@ struct PictureDefinition: Codable, Identifiable {
     self.dFIterMin = dFIterMin
     self.leftNumber = leftNumber
     self.hues = hues
+  }
+
+
+  // Get a color [Double] based on a number starting at one
+  func getColorGivenNumberStartingAtOne(_ number: Int) -> [Double]? {
+    let index = number - 1
+    guard index >= 0 && index < hues.count else {
+      return nil // Handle out-of-bounds index
+    }
+    return [hues[index].r, hues[index].g, hues[index].b]
   }
 
 }

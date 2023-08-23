@@ -2,27 +2,22 @@
   WelcomeView.swift
   MandArt
  */
-
 import SwiftUI
 import AppKit
 
-// set window size constants
-
-let h: CGFloat = 550
-let w: CGFloat = 667
+let windowHeight: CGFloat = 550
+let windowWidth: CGFloat = 667
 
 @available(macOS 11.0, *)
 struct WelcomeView: View {
-
   var body: some View {
-
     VStack(spacing: 0) {
       WelcomeTitleView()
       WelcomeContentView()
       Spacer()
     }
     .padding()
-    .frame(minWidth: w, minHeight: h)
+    .frame(minWidth: windowWidth, minHeight: windowHeight)
     .background(Color(.windowBackgroundColor))
     .ignoresSafeArea()
     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -33,21 +28,20 @@ struct WelcomeView: View {
       }
     )
     .onPreferenceChange(ViewSizeKey.self) { size in
-      let width = size.width
-      let height = size.height
-      let screenRect = NSScreen.main?.frame ?? .zero
-      let center = CGPoint(x: screenRect.midX, y: screenRect.midY)
-      let newFrame = NSRect(x: center.x - width / 2, y: center.y - height / 2, width: width, height: height)
+      updateWindowFrame(with: size)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
   }
 
+  private func updateWindowFrame(with size: CGSize) {
+    // Code to update window frame based on size
+  }
 }
 
-@available(macOS 10.15, *)
+@available(macOS 11.0, *)
 struct WelcomeTitleView: View {
   var body: some View {
-    VStack( spacing: 10) {
+    VStack(spacing: 10) {
       Text("Welcome to MandArt")
         .font(.title)
         .fontWeight(.bold)
@@ -62,13 +56,13 @@ struct WelcomeTitleView: View {
 @available(macOS 11.0, *)
 struct WelcomeContentView: View {
   var body: some View {
-      WelcomeImage()
-      WelcomeDescription()
-    .padding()
+    WelcomeImage()
+    WelcomeDescription()
+      .padding()
   }
 }
 
-@available(macOS 10.15, *)
+@available(macOS 11.0, *)
 struct WelcomeImage: View {
   @State private var scale: CGFloat = 1
   @State private var angle: Double = 0
@@ -77,7 +71,7 @@ struct WelcomeImage: View {
     Image("Welcome")
       .resizable()
       .aspectRatio(contentMode: .fit)
-      .frame(height: h/2)
+      .frame(height: windowHeight / 2)
       .cornerRadius(20)
       .scaleEffect(scale)
       .rotationEffect(.degrees(angle))
@@ -108,11 +102,11 @@ struct WelcomeDescription: View {
       Text("MandArt is the ultimate app for creating custom art from the Mandelbrot set.")
         .font(.title3)
         .foregroundColor(.primary)
-      Text("Find an interesting location (e.g., where two black areas meet), zoom in and out, and customize the coloring. Nearby colors flow into one another, so check their gradients to see how the intermediate colors  appear. If you'll print your art, choose from colors more likely to print true.")
+      Text("Find an interesting location (e.g., where two black areas meet), zoom in and out, and customize the coloring. Nearby colors flow into one another, so check their gradients to see how the intermediate colors appear. If you'll print your art, choose from colors more likely to print true.")
         .foregroundColor(.secondary)
       Button(action: {
-          NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
-          NSDocumentController.shared.newDocument("new.mandart")
+        NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
+        NSDocumentController.shared.newDocument("new.mandart")
       }) {
         Text("Get started")
           .fontWeight(.semibold)
@@ -123,7 +117,7 @@ struct WelcomeDescription: View {
   }
 }
 
-@available(macOS 10.15, *)
+@available(macOS 11.0, *)
 struct ViewSizeKey: PreferenceKey {
   static var defaultValue: CGSize = .zero
 
@@ -131,3 +125,4 @@ struct ViewSizeKey: PreferenceKey {
     value = nextValue()
   }
 }
+
