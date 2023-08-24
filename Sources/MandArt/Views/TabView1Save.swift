@@ -1,29 +1,32 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct GroupBasicsView: View {
+struct TabView1Save: View {
   @ObservedObject var doc: MandArtDocument
 
   var body: some View {
-    Group {
-      Section(header: Text("")) {
-        HStack {
-          Button("Save Image") {
+
+    VStack {
+
+      Section(header:
+                Text("Save Your Work")
+        .font(.headline)
+        .fontWeight(.medium)
+        .padding(.bottom) 
+      ) {
+
+          Button("Save Image (as .png)") {
             doc.saveMandArtImage()
           }
-          .help("Save MandArt image file.")
+          .help("Save MandArt image as .png.")
 
-          Button("Save Image Inputs") {
+          Button("Save Image Inputs (as data file)") {
             saveMandArtImageInputs()
           }
-          .help("Save MandArt image inputs.")
-        }
-
-        Divider()
-      }
-    }
-    .fixedSize(horizontal: true, vertical: true)
-  }
+          .help("Save MandArt image inputs as .mandart.")
+        }// end section
+      } // end vstack
+  } // end body
 
   // Save the image inputs to a file.
   func saveMandArtImageInputs() {
@@ -54,7 +57,7 @@ struct GroupBasicsView: View {
     doc.picdef.imageHeight += 1
     doc.picdef.imageHeight -= 1
 
-    let currImage = contextImageGlobal!
+    var currImage = contextImageGlobal!
     let savePanel = NSSavePanel()
     savePanel.title = "Choose directory and name for image inputs file"
     savePanel.nameFieldStringValue = fname

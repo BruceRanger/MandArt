@@ -2,6 +2,9 @@ import SwiftUI
 
 extension ContentView {
 
+
+  
+
   /**
    Calculates the x-coordinate of the picture's center after a user's drag gesture.
 

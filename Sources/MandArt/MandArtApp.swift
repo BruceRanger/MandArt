@@ -11,14 +11,14 @@ struct MandArtApp: App {
     static let defaultPercentWidth: CGFloat = 0.8
     static let defaultPercentHeight: CGFloat = 0.8
 
-    static func defaultWidth() -> CGFloat {
+    internal static func defaultWidth() -> CGFloat {
       if let screenWidth = NSScreen.main?.visibleFrame.width {
         return screenWidth * defaultPercentWidth
       }
       return defaultOpeningWidth
     }
 
-    static func defaultHeight() -> CGFloat {
+    internal static func defaultHeight() -> CGFloat {
       if let screenHeight = NSScreen.main?.visibleFrame.height {
         return screenHeight * defaultPercentHeight
       }
