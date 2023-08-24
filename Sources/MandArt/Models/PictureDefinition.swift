@@ -33,8 +33,8 @@ struct PictureDefinition: Codable, Identifiable {
   var scale: Double = 430.0
   var iterationsMax: Double = 10000.0
   var rSqLimit: Double = 400.0
-  var imageWidth: Int = 550 // 1100
-  var imageHeight: Int = 500 //1000
+  var imageWidth: Int =  1100
+  var imageHeight: Int = 1000
   var nBlocks: Int = 60
   var spacingColorFar: Double = 5.0
   var spacingColorNear: Double = 15.0

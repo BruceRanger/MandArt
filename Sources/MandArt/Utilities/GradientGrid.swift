@@ -1,27 +1,18 @@
 import Foundation
 
-// Parameter struct for pixel grid calculation
-struct PixelGridCalculationParameters {
-  let imageWidth: Int
-  let imageHeight: Int
-  let colorLeft: [Double]
-  let colorRight: [Double]
-  let gradientThreshold: Double
-  let bytesPerPixel: Int
-  let rasterBufferPtr: UnsafeMutablePointer<UInt8>
-}
+struct GradientGrid {
 
-struct GradientImageParameters {
-  let imageWidth: Int
-  let imageHeight: Int
-  let leftColorRGBArray: [Double]
-  let rightColorRGBArray: [Double]
-}
+  struct GradientGridInputs {
+    let imageWidth: Int
+    let imageHeight: Int
+    let colorLeft: [Double]
+    let colorRight: [Double]
+    let gradientThreshold: Double
+    let bytesPerPixel: Int
+    let rasterBufferPtr: UnsafeMutablePointer<UInt8>
+  }
 
-struct GradientPixelGridBuilder {
-
-  // Calculate pixel grid for the gradient image
-  static func calculatePixelGrid(using parameters: PixelGridCalculationParameters) {
+  static func calculate(using parameters: GradientGridInputs) {
     let imageWidth = parameters.imageWidth
     let imageHeight = parameters.imageHeight
     let colorLeft = parameters.colorLeft
