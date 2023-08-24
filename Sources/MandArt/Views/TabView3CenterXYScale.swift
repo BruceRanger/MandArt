@@ -33,7 +33,9 @@ struct TabView3CenterXYScale: View {
               placeholder: "-0.75",
               value: $doc.picdef.xCenter,
               formatter: MAFormatters.fmtXY
-            )
+            ) {
+              activeDisplayState = .MandArt // on lose focus
+            }
             .textFieldStyle(.roundedBorder)
             .multilineTextAlignment(.trailing)
             .padding(4)

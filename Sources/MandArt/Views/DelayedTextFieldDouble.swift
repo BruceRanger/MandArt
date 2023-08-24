@@ -2,27 +2,42 @@ import SwiftUI
 
 @available(macOS 11.0, *)
 struct DelayedTextFieldDouble: View {
+  var title: String?
   var placeholder: String
-  var formatter: NumberFormatter
   @Binding var value: Double
-  var onEditingChanged: ((Bool) -> Void)?
+  var formatter: NumberFormatter
+  var onCommit: () -> Void
 
-  @State private var stringValue: String
+  @State private var inputValue: Double
 
-  init(placeholder: String, value: Binding<Double>, formatter: NumberFormatter, onEditingChanged: ((Bool) -> Void)? = nil) {
+  init(title: String? = nil, placeholder: String, value: Binding<Double>, formatter: NumberFormatter, onCommit: @escaping () -> Void = {}) {
+    self.title = title
     self.placeholder = placeholder
     self._value = value
     self.formatter = formatter
-    self.onEditingChanged = onEditingChanged
-    self._stringValue = State(initialValue: formatter.string(from: NSNumber(value: value.wrappedValue)) ?? "")
+    self.onCommit = onCommit
+    self._inputValue = State(initialValue: value.wrappedValue)
   }
 
   var body: some View {
-    TextField(placeholder, text: $stringValue, onEditingChanged: { isEditing in
-      if let newValue = formatter.number(from: stringValue)?.doubleValue {
-        value = newValue
+    VStack{
+      if let title = title {
+        Text(title)
       }
-      onEditingChanged?(isEditing)
-    })
+    }
+    TextField(
+      placeholder,
+      value: $inputValue,
+      formatter: formatter,
+      onEditingChanged: { isEditing in
+        if !isEditing {
+          self.value = self.inputValue
+          onCommit()
+        }
+      }
+    )
+    .textFieldStyle(RoundedBorderTextFieldStyle())
+    .multilineTextAlignment(.trailing)
   }
 }
+
