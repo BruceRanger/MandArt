@@ -37,14 +37,12 @@ struct ArtGrid {
     let dFIterMin = parameters.dFIterMin
     let hues = parameters.hues
 
-
     // Iterate over each row (vertical iteration)
     for row in 0 ..< imageHeight {
       // Iterate over each column (horizontal iteration)
       for column in 0 ..< imageWidth {
         // Calculate pixel index and perform calculations
         // ...
-
 
       }
     }

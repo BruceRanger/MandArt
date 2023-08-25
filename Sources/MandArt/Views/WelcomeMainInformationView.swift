@@ -1,11 +1,12 @@
 import SwiftUI
 import AppKit
 
+
 @available(macOS 11.0, *)
 struct WelcomeMainInformationView: View {
 
-  @AppStorage("shouldShowWelcome") var shouldShowWelcome: Bool = true
-
+  @EnvironmentObject var appState: AppState
+  let showWelcomeScreen: Bool
 
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
@@ -21,16 +22,21 @@ struct WelcomeMainInformationView: View {
         NSApp.sendAction(#selector(NSWindow.performClose(_:)), to: nil, from: nil)
         NSDocumentController.shared.newDocument("new.mandart")
       }) {
-        Text("Get started")
+        Text("Click here to open default MandArt document and get started")
           .fontWeight(.semibold)
       }
       .buttonStyle(.bordered)
       .controlSize(.large)
-      Toggle(isOn: $shouldShowWelcome) {
-        Text("Show welcome screen when starting MandArt")
+
+      Toggle(isOn: $appState.showWelcomeScreen) {
+        Text("Show welcome screen when starting")
       }
-
-
+      .onTapGesture {
+        // do nothing else
+      }
+      .onChange(of: appState.showWelcomeScreen) { newValue in
+        UserDefaults.standard.setValue(newValue, forKey: "shouldShowWelcome")
+      }
 
     }
   }

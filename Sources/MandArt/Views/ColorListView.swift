@@ -22,9 +22,7 @@ struct ColorListView: View {
     }
   }
 
-
   var body: some View {
-
 
     // Wrap the list in a geometry reader so it will
     // shrink when items are deleted
@@ -146,12 +144,9 @@ struct ColorListView: View {
         }
       } // end list
       .frame(height: geometry.size.height)
-    } // end color list geometry reader
-    .frame(
-      minHeight: 0,
-      maxHeight: 220
-    )
-    .fixedSize(horizontal: false, vertical: false)
 
-  }
+    } // end geometry reader
+    .frame(maxHeight: .infinity)
+
+  } // end body
 }

@@ -1,10 +1,9 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct TabView2Size: View {
+struct TabViewSize: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
-
 
   // Calculated variable for the image aspect ratio.
   // Uses user-specified image height and width.
@@ -24,10 +23,10 @@ struct TabView2Size: View {
                 Text("Set Image Size")
         .font(.headline)
         .fontWeight(.medium)
-        .padding(.bottom) 
+        .padding(.bottom)
       ) {
 
-        HStack{
+        HStack {
 
           VStack {
 
@@ -39,6 +38,7 @@ struct TabView2Size: View {
               value: $doc.picdef.imageWidth,
               formatter: MAFormatters.fmtImageWidthHeight
             ) {
+              print("Width loses focus")
               activeDisplayState = .MandArt // on lose focus
             }
             .textFieldStyle(.roundedBorder)
@@ -56,12 +56,12 @@ struct TabView2Size: View {
               value: $doc.picdef.imageHeight,
               formatter: MAFormatters.fmtImageWidthHeight
             ) {
+              print("Height loses focus")
               activeDisplayState = .MandArt
             }
             .frame(maxWidth: 80)
             .help("Enter the height, in pixels, of the image.")
           } // end vstack
-
 
           VStack {
             Text("Aspect")

@@ -2,7 +2,6 @@ import Foundation
 
 struct MAFormatters {
 
-
   // USER INPUT CUSTOM FORMATTERS - BASIC  .........................
 
   static var fmtImageWidthHeight: NumberFormatter {
@@ -133,6 +132,5 @@ struct MAFormatters {
     formatter.maximum = 255
     return formatter
   }
-  
-  
+
 }

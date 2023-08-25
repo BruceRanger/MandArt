@@ -20,7 +20,7 @@ struct DelayedTextFieldDouble: View {
   }
 
   var body: some View {
-    VStack{
+    VStack {
       if let title = title {
         Text(title)
       }
@@ -40,4 +40,3 @@ struct DelayedTextFieldDouble: View {
     .multilineTextAlignment(.trailing)
   }
 }
-

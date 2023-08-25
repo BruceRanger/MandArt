@@ -1,7 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct TabView3CenterXYScale: View {
+struct TabViewFind: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
 
@@ -50,7 +50,7 @@ struct TabView3CenterXYScale: View {
             Text("Between -2 and 2")
             Text("(yCenter)")
             DelayedTextFieldDouble(
-              placeholder:"0.0",
+              placeholder: "0.0",
               value: $doc.picdef.yCenter,
               formatter: MAFormatters.fmtXY
             )
@@ -72,7 +72,7 @@ struct TabView3CenterXYScale: View {
             Text("(theta)")
 
             DelayedTextFieldDouble(
-              placeholder:"0",
+              placeholder: "0",
               value: $doc.picdef.theta,
               formatter: MAFormatters.fmtRotationTheta
             )
@@ -85,7 +85,7 @@ struct TabView3CenterXYScale: View {
           VStack {
             Text("Scale (scale)")
             DelayedTextFieldDouble(
-              placeholder:"430",
+              placeholder: "430",
               value: $doc.picdef.scale,
               formatter: MAFormatters.fmtScale
             )
@@ -114,7 +114,7 @@ struct TabView3CenterXYScale: View {
           Text("Sharpening (iterationsMax):")
 
           DelayedTextFieldDouble(
-            placeholder:"10,000",
+            placeholder: "10,000",
             value: $doc.picdef.iterationsMax,
             formatter: MAFormatters.fmtSharpeningItMax
           )
@@ -131,7 +131,7 @@ struct TabView3CenterXYScale: View {
           Text("Color smoothing (rSqLimit):")
 
           DelayedTextFieldDouble(
-            placeholder:"400",
+            placeholder: "400",
             value: $doc.picdef.rSqLimit,
             formatter: MAFormatters.fmtSmootingRSqLimit
           )
@@ -174,7 +174,6 @@ struct TabView3CenterXYScale: View {
 
       } // end section
     } // end vstack
-
 
   } // end body
 }

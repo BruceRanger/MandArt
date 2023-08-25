@@ -1,19 +1,54 @@
 import SwiftUI
 import AppKit
 
+class AppState: ObservableObject {
+  @Published var showWelcomeScreen: Bool = UserDefaults.standard.object(forKey: "shouldShowWelcome") as? Bool ?? true
+}
+
+struct WindowAccessor: NSViewRepresentable {
+  var callback: (NSWindow?) -> Void
+
+  func makeNSView(context: Context) -> NSView {
+    let view = NSView()
+    DispatchQueue.main.async {
+      // Post the window containing the view to callback
+      self.callback(view.window)
+    }
+    return view
+  }
+
+  func updateNSView(_ nsView: NSView, context: Context) {}
+}
+
+
 @available(macOS 12.0, *)
 @main
 struct MandArtApp: App {
 
-  struct AppConstants {
+  @StateObject internal var appState: AppState
+  @State private var showingWelcome: Bool
+
+  init() {
+    let initialState = UserDefaults.standard.object(forKey: "shouldShowWelcome") as? Bool ?? true
+    _appState = StateObject(wrappedValue: AppState())
+    _showingWelcome = State(initialValue: initialState)
+  }
+
+
+  internal struct AppConstants {
     static let defaultOpeningWidth: CGFloat = 800.0
     static let defaultOpeningHeight: CGFloat = 600.0
     static let defaultPercentWidth: CGFloat = 0.8
     static let defaultPercentHeight: CGFloat = 0.8
+    static let dockAndPreviewsWidth: CGFloat = 200.0
+    static let minWelcomeWidth: CGFloat = 500.0
+    static let minWelcomeHeight: CGFloat = 500.0
+    static let heightMargin: CGFloat = 50.0
+
 
     internal static func defaultWidth() -> CGFloat {
       if let screenWidth = NSScreen.main?.visibleFrame.width {
-        return screenWidth * defaultPercentWidth
+        return min(screenWidth * defaultPercentWidth, screenWidth - dockAndPreviewsWidth)
       }
       return defaultOpeningWidth
     }
@@ -24,22 +59,45 @@ struct MandArtApp: App {
       }
       return defaultOpeningHeight
     }
-  }
+
+    internal static func maxWelcomeWidth() -> CGFloat {
+      if let screenWidth = NSScreen.main?.visibleFrame.width {
+        return screenWidth * 0.66
+      }
+      return minWelcomeWidth
+    }
+
+    internal static func maxWelcomeHeight() -> CGFloat {
+      if let screenHeight = NSScreen.main?.visibleFrame.height {
+        return screenHeight * 0.8
+      }
+      return minWelcomeHeight
+    }
+
+    internal static func maxDocumentWidth() -> CGFloat {
+      if let screenWidth = NSScreen.main?.visibleFrame.width {
+        return screenWidth - dockAndPreviewsWidth
+      }
+      return defaultOpeningWidth
+    }
+
+    internal static func maxDocumentHeight() -> CGFloat {
+      if let screenHeight = NSScreen.main?.visibleFrame.height {
+        return screenHeight - heightMargin
+      }
+      return defaultOpeningHeight
+    }
 
 
-  @AppStorage("shouldShowWelcome") var shouldShowWelcome: Bool = true
-
-  init() {
-    let value = UserDefaults.standard.bool(forKey: "shouldShowWelcome")
-    print("Starting up. Should show welcome: \(value)")
   }
 
   var body: some Scene {
 
     WindowGroup {
 
-      if shouldShowWelcome {
+      if showingWelcome {
         WelcomeView()
+          .environmentObject(appState)
           .onAppear {
             NSWindow.allowsAutomaticWindowTabbing = false
           }
@@ -53,12 +111,18 @@ struct MandArtApp: App {
 
     }
 
-    DocumentGroup(newDocument: { MandArtDocument() }) { _ in
+    DocumentGroup(newDocument: { MandArtDocument() }) { file in
+      let doc = file.document as? MandArtDocument
       ContentView()
         .frame(
-          width: AppConstants.defaultWidth(),
-          height: AppConstants.defaultHeight()
+          width: AppConstants.maxDocumentWidth(),
+          height: AppConstants.maxDocumentHeight()
         )
+        .background(WindowAccessor { window in
+          if let window = window, let uniqueIdentifier = doc?.picdef.id {
+            window.setFrameAutosaveName("Document Window \(uniqueIdentifier.uuidString)")
+          }
+        })
         .onAppear {
           NSWindow.allowsAutomaticWindowTabbing = false
         }

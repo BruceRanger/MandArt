@@ -154,8 +154,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     let n = String(picdef.yY)
  //   let xString = String(picdef.xCenter)
  //   let yString = String(picdef.yCenter)
-    
-    
+
     let comment = "dFIterMin is \(a) \n" +
                   "imageHeight is \(b) \n" +
                   "imageWidth is \(c) \n" +
@@ -169,9 +168,9 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
                   "theta is \(k) \n" +
                   "xCenter is \(l) \n" +
                   "yCenter is \(m) \n" +
-                  "yY is \(n) \n" +    
+                  "yY is \(n) \n" +
                   " "
-    
+
     return comment
   }
 
@@ -223,7 +222,6 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     }
   }
 
-
   func saveMandArtImage() {
     beforeSaveImage()
     guard let cgImage = contextImageGlobal else {
@@ -260,14 +258,12 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
           let description = comment
           try self.setPNGDescription(imageURL: imageURL, description: description)
 
-
         } catch let error {
           print("Error saving image: \(error)")
         }
       }
     }
   }
-
 
   /**
    Create a snapshot of the current state of the document for serialization
@@ -457,7 +453,6 @@ extension String {
 extension UTType {
   static let mandartDocType = UTType(importedAs: "org.bhj.mandart")
 }
-
 
 /** Extend CGImage to add pngData()
  requires Cocoa

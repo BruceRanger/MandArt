@@ -1,7 +1,6 @@
 import Foundation
 import CoreGraphics
 
-
 struct ArtImageShapeInputs {
   let imageHeight: Int
   let imageWidth: Int
@@ -23,8 +22,6 @@ struct ArtImageColorInputs {
 }
 
 var fIterGlobal = [[Double]]()
-
-
 
 struct ArtImage {
 
@@ -52,9 +49,6 @@ struct ArtImage {
     )
   }
 
- 
-
-
   /**
    Function to create and return a user-created MandArt bitmap
 
@@ -67,8 +61,8 @@ struct ArtImage {
 
     print("getPictureImage")
 
+    let imageWidth = shapeInputs.imageWidth
     let imageHeight = shapeInputs.imageHeight
-    let imageWidth = shapeInputs.imageHeight
     let iterationsMax = shapeInputs.iterationsMax
     let scale = shapeInputs.scale
     let xCenter = shapeInputs.xCenter
@@ -214,8 +208,6 @@ struct ArtImage {
     // address individual RGBA components easily.
     let rasterBufferPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: rasterBufferSize)
 
-
-
     // Create CGBitmapContext for drawing and converting into image for display
     let context =
     CGContext(
@@ -329,7 +321,6 @@ struct ArtImage {
     contextImageGlobal = contextImage
     return contextImage
   }
-
 
   /**
    Function to create and return a user-colored MandArt bitmap
@@ -554,6 +545,5 @@ struct ArtImage {
 
     return context
   }
-
 
 }

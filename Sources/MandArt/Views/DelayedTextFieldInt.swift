@@ -3,7 +3,7 @@ import SwiftUI
 @available(macOS 11.0, *)
 struct DelayedTextFieldInt: View {
 
-  var title: String? = nil
+  var title: String?
   var placeholder: String
   @Binding var value: Int
   var formatter: NumberFormatter

@@ -1,13 +1,12 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct TabView5ColorTuning: View {
+struct TabViewTune: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
 
   var body: some View {
     VStack(spacing: 20) {
-
 
       VStack(spacing: 10) {
         Text("Spacing far from MiniMand (near to edge)")
@@ -66,5 +65,3 @@ struct TabView5ColorTuning: View {
     .padding()
   }
 }
-
-

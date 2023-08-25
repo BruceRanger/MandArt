@@ -9,8 +9,8 @@ extension MandArtApp {
 
       CommandMenu("Welcome") {
         Button("Show Welcome Screen") {
-          let controller = WelcomeWindowController()
-          controller.showWindow(nil)
+          let controller = WelcomeWindowController(appState: self.appState)
+          controller.showWindow(self)
           controller.window?.makeKeyAndOrderFront(nil)
         }
       }

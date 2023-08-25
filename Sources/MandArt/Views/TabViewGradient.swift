@@ -1,9 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-
-
-struct TabView4Gradient: View {
+struct TabViewGradient: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
 
@@ -30,9 +28,8 @@ struct TabView4Gradient: View {
                 Text("Test Gradient for Adjacent Colors")
         .font(.headline)
         .fontWeight(.medium)
-        .padding(.bottom) 
+        .padding(.bottom)
       ) {
-
 
         HStack {
           Text("Show gradient from color (leftNumber)")

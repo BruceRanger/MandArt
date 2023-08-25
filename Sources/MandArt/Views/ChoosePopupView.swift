@@ -7,7 +7,6 @@ struct ChoosePopupView: View {
 
   var body: some View {
 
-
     Group {
       // HSTACK START WITH RED
       HStack {
@@ -127,9 +126,7 @@ struct ChoosePopupView: View {
         .padding([.bottom], 2)
       } // END  HSTACK START WITH BLUE
 
-     
     }
 
-    
   }
 }

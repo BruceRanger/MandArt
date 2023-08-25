@@ -10,32 +10,36 @@ struct TabbedView: View {
 
     TabView(selection: $selectedTab) {
 
-      TabView1Save(doc: doc)
-            .tabItem {
-          Label("1.Save", systemImage: "circle")
+      TabViewSize(doc: doc, activeDisplayState: $activeDisplayState)
+              .tabItem {
+          Label("1.Size", systemImage: "aspectratio")
         }.tag(0)
 
-
-      TabView2Size(doc: doc, activeDisplayState:$activeDisplayState)
-              .tabItem {
-          Label("2.Size", systemImage: "aspectratio")
+      TabViewFind(doc: doc, activeDisplayState: $activeDisplayState)
+        .tabItem {
+          Label("2.Find", systemImage: "arrow.up")
         }.tag(1)
 
-      TabView3CenterXYScale(doc:doc,activeDisplayState:$activeDisplayState)
+      TabViewPalette(doc: doc, activeDisplayState: $activeDisplayState)
         .tabItem {
-          Label("3.XYScale", systemImage: "arrow.up")
+          Label("3.Color", systemImage: "paintbrush")
         }.tag(2)
 
-      TabView4Gradient(doc:doc, activeDisplayState: $activeDisplayState)
+      TabViewGradient(doc: doc, activeDisplayState: $activeDisplayState)
         .tabItem {
           Label("4.Test", systemImage: "paintbrush")
         }.tag(3)
 
-      TabView5ColorTuning(doc:doc, activeDisplayState: $activeDisplayState)
+      TabViewTune(doc: doc, activeDisplayState: $activeDisplayState)
         .tabItem {
           Label("5.Tune", systemImage: "paintpalette")
         }.tag(4)
 
-    }
-  }
+      TabViewSave(doc: doc)
+        .tabItem {
+          Label("6.Save", systemImage: "circle")
+        }.tag(5)
+
+    } // end tabview
+  } // end body
 }

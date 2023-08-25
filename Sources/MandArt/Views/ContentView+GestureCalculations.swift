@@ -2,9 +2,6 @@ import SwiftUI
 
 extension ContentView {
 
-
-  
-
   /**
    Calculates the x-coordinate of the picture's center after a user's drag gesture.
 
@@ -23,7 +20,6 @@ extension ContentView {
     return self.doc.picdef.xCenter + dCenterX
   }
 
-
   /**
    Calculates the y-coordinate of the picture's center after a user's drag gesture.
 
@@ -41,7 +37,6 @@ extension ContentView {
     let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
     return self.doc.picdef.yCenter + dCenterY
   }
-
 
   /**
    Calculates the x-coordinate of the picture's center after a user's tap gesture.
@@ -64,7 +59,6 @@ extension ContentView {
     return self.doc.picdef.xCenter + dCenterX
   }
 
-
   /**
    Calculates the y-coordinate of the picture's center after a user's tap gesture.
 
@@ -85,6 +79,5 @@ extension ContentView {
     let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
     return self.doc.picdef.yCenter + dCenterY
   }
-
 
 }

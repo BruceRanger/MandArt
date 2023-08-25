@@ -11,7 +11,6 @@ struct GradientImage {
     let gradientThreshold: Double
   }
 
-
   static func createCGContext(
     width: Int,
     height: Int,
@@ -34,7 +33,6 @@ struct GradientImage {
 
     return context
   }
-
 
   static func createCGImage(using params: GradientImageInputs) -> CGImage? {
 
@@ -73,7 +71,7 @@ struct GradientImage {
         let pixelColor = [
           UInt8((1 - t) * params.leftColorRGBArray[0] + t * params.rightColorRGBArray[0]), // R
           UInt8((1 - t) * params.leftColorRGBArray[1] + t * params.rightColorRGBArray[1]), // G
-          UInt8((1 - t) * params.leftColorRGBArray[2] + t * params.rightColorRGBArray[2])  // B
+          UInt8((1 - t) * params.leftColorRGBArray[2] + t * params.rightColorRGBArray[2]),  // B
         ]
 
         let pixelAddress = context.data!.assumingMemoryBound(to: UInt8.self) + (v * context.bytesPerRow) + (u * BYTES_PER_PIXEL)
@@ -90,6 +88,5 @@ struct GradientImage {
     context.data?.deallocate()
     return gradientImage
   }
-  
-}
 
+}

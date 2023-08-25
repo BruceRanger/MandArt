@@ -21,7 +21,7 @@
 		88A133D02A96780C00A6E3CA /* GradientImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A133CF2A96780C00A6E3CA /* GradientImage.swift */; };
 		88A2719E2A96871A00766654 /* ArtGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A2719D2A96871A00766654 /* ArtGrid.swift */; };
 		88A271A02A968A6900766654 /* ArtImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A2719F2A968A6900766654 /* ArtImage.swift */; };
-		88A271A22A97158200766654 /* TabView1Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271A12A97158200766654 /* TabView1Save.swift */; };
+		88A271A22A97158200766654 /* TabViewSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271A12A97158200766654 /* TabViewSave.swift */; };
 		88A271A82A971C1C00766654 /* MAFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271A72A971C1C00766654 /* MAFormatters.swift */; };
 		88A271AA2A977AF300766654 /* ContentView+GestureCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271A92A977AF300766654 /* ContentView+GestureCalculations.swift */; };
 		88A271AC2A97843400766654 /* WelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271AB2A97843400766654 /* WelcomeHeaderView.swift */; };
@@ -32,15 +32,20 @@
 		88A271B72A979A0E00766654 /* MandArtApp+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271B62A979A0E00766654 /* MandArtApp+Menu.swift */; };
 		88C357FB2A97BC13007E7A92 /* DelayedTextFieldInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C357FA2A97BC13007E7A92 /* DelayedTextFieldInt.swift */; };
 		88C357FD2A97C518007E7A92 /* DelayedTextFieldDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C357FC2A97C518007E7A92 /* DelayedTextFieldDouble.swift */; };
-		88C357FF2A97D61B007E7A92 /* TabView2Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C357FE2A97D61B007E7A92 /* TabView2Size.swift */; };
-		88C358012A97D675007E7A92 /* TabView3CenterXYScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358002A97D675007E7A92 /* TabView3CenterXYScale.swift */; };
-		88C358032A97D72E007E7A92 /* TabView4Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358022A97D72E007E7A92 /* TabView4Gradient.swift */; };
-		88C358052A97D7A0007E7A92 /* TabView5ColorTuning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358042A97D7A0007E7A92 /* TabView5ColorTuning.swift */; };
+		88C357FF2A97D61B007E7A92 /* TabViewSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C357FE2A97D61B007E7A92 /* TabViewSize.swift */; };
+		88C358012A97D675007E7A92 /* TabViewFind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358002A97D675007E7A92 /* TabViewFind.swift */; };
+		88C358032A97D72E007E7A92 /* TabViewGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358022A97D72E007E7A92 /* TabViewGradient.swift */; };
+		88C358052A97D7A0007E7A92 /* TabViewTune.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358042A97D7A0007E7A92 /* TabViewTune.swift */; };
 		88C358072A97D983007E7A92 /* TabbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358062A97D983007E7A92 /* TabbedView.swift */; };
 		88C358092A97E38A007E7A92 /* ColorListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358082A97E38A007E7A92 /* ColorListView.swift */; };
 		88C3580B2A97E9F9007E7A92 /* ChoosePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3580A2A97E9F9007E7A92 /* ChoosePopupView.swift */; };
 		88C3580E2A97EB6F007E7A92 /* PopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3580D2A97EB6F007E7A92 /* PopupViewModel.swift */; };
 		88C358102A980312007E7A92 /* SliderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3580F2A980312007E7A92 /* SliderTextView.swift */; };
+		88C358122A98101F007E7A92 /* TabViewPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358112A98101F007E7A92 /* TabViewPalette.swift */; };
+		88C358142A985CD1007E7A92 /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358132A985CD1007E7A92 /* ImageViewModel.swift */; };
+		88C358162A985DA3007E7A92 /* PopupAllColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358152A985DA3007E7A92 /* PopupAllColors.swift */; };
+		88C358182A985DE5007E7A92 /* PopupAllPrintableColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358172A985DE5007E7A92 /* PopupAllPrintableColors.swift */; };
+		88C3581A2A985E14007E7A92 /* PopupPrintableColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358192A985E14007E7A92 /* PopupPrintableColors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,7 +66,7 @@
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
 		88A2719D2A96871A00766654 /* ArtGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtGrid.swift; sourceTree = "<group>"; };
 		88A2719F2A968A6900766654 /* ArtImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtImage.swift; sourceTree = "<group>"; };
-		88A271A12A97158200766654 /* TabView1Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView1Save.swift; sourceTree = "<group>"; };
+		88A271A12A97158200766654 /* TabViewSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewSave.swift; sourceTree = "<group>"; };
 		88A271A72A971C1C00766654 /* MAFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAFormatters.swift; sourceTree = "<group>"; };
 		88A271A92A977AF300766654 /* ContentView+GestureCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+GestureCalculations.swift"; sourceTree = "<group>"; };
 		88A271AB2A97843400766654 /* WelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeHeaderView.swift; sourceTree = "<group>"; };
@@ -72,15 +77,20 @@
 		88A271B62A979A0E00766654 /* MandArtApp+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MandArtApp+Menu.swift"; sourceTree = "<group>"; };
 		88C357FA2A97BC13007E7A92 /* DelayedTextFieldInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedTextFieldInt.swift; sourceTree = "<group>"; };
 		88C357FC2A97C518007E7A92 /* DelayedTextFieldDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedTextFieldDouble.swift; sourceTree = "<group>"; };
-		88C357FE2A97D61B007E7A92 /* TabView2Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView2Size.swift; sourceTree = "<group>"; };
-		88C358002A97D675007E7A92 /* TabView3CenterXYScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView3CenterXYScale.swift; sourceTree = "<group>"; };
-		88C358022A97D72E007E7A92 /* TabView4Gradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView4Gradient.swift; sourceTree = "<group>"; };
-		88C358042A97D7A0007E7A92 /* TabView5ColorTuning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView5ColorTuning.swift; sourceTree = "<group>"; };
+		88C357FE2A97D61B007E7A92 /* TabViewSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewSize.swift; sourceTree = "<group>"; };
+		88C358002A97D675007E7A92 /* TabViewFind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewFind.swift; sourceTree = "<group>"; };
+		88C358022A97D72E007E7A92 /* TabViewGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewGradient.swift; sourceTree = "<group>"; };
+		88C358042A97D7A0007E7A92 /* TabViewTune.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewTune.swift; sourceTree = "<group>"; };
 		88C358062A97D983007E7A92 /* TabbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedView.swift; sourceTree = "<group>"; };
 		88C358082A97E38A007E7A92 /* ColorListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorListView.swift; sourceTree = "<group>"; };
 		88C3580A2A97E9F9007E7A92 /* ChoosePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePopupView.swift; sourceTree = "<group>"; };
 		88C3580D2A97EB6F007E7A92 /* PopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewModel.swift; sourceTree = "<group>"; };
 		88C3580F2A980312007E7A92 /* SliderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTextView.swift; sourceTree = "<group>"; };
+		88C358112A98101F007E7A92 /* TabViewPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewPalette.swift; sourceTree = "<group>"; };
+		88C358132A985CD1007E7A92 /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
+		88C358152A985DA3007E7A92 /* PopupAllColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAllColors.swift; sourceTree = "<group>"; };
+		88C358172A985DE5007E7A92 /* PopupAllPrintableColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAllPrintableColors.swift; sourceTree = "<group>"; };
+		88C358192A985E14007E7A92 /* PopupPrintableColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupPrintableColors.swift; sourceTree = "<group>"; };
 		C57920042A1673C900E0CD98 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -136,7 +146,7 @@
 			children = (
 				884752A529AFE73400FBECC2 /* WelcomeView.swift */,
 				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
-				88A271A12A97158200766654 /* TabView1Save.swift */,
+				88A271A12A97158200766654 /* TabViewSave.swift */,
 				88A271A92A977AF300766654 /* ContentView+GestureCalculations.swift */,
 				88A271AB2A97843400766654 /* WelcomeHeaderView.swift */,
 				88A271AD2A97844200766654 /* WelcomeMainImageView.swift */,
@@ -144,14 +154,18 @@
 				88A271B12A97860700766654 /* WelcomeMainView.swift */,
 				88C357FA2A97BC13007E7A92 /* DelayedTextFieldInt.swift */,
 				88C357FC2A97C518007E7A92 /* DelayedTextFieldDouble.swift */,
-				88C357FE2A97D61B007E7A92 /* TabView2Size.swift */,
-				88C358002A97D675007E7A92 /* TabView3CenterXYScale.swift */,
-				88C358022A97D72E007E7A92 /* TabView4Gradient.swift */,
-				88C358042A97D7A0007E7A92 /* TabView5ColorTuning.swift */,
+				88C357FE2A97D61B007E7A92 /* TabViewSize.swift */,
+				88C358002A97D675007E7A92 /* TabViewFind.swift */,
+				88C358022A97D72E007E7A92 /* TabViewGradient.swift */,
+				88C358042A97D7A0007E7A92 /* TabViewTune.swift */,
 				88C358062A97D983007E7A92 /* TabbedView.swift */,
 				88C358082A97E38A007E7A92 /* ColorListView.swift */,
 				88C3580A2A97E9F9007E7A92 /* ChoosePopupView.swift */,
 				88C3580F2A980312007E7A92 /* SliderTextView.swift */,
+				88C358112A98101F007E7A92 /* TabViewPalette.swift */,
+				88C358152A985DA3007E7A92 /* PopupAllColors.swift */,
+				88C358172A985DE5007E7A92 /* PopupAllPrintableColors.swift */,
+				88C358192A985E14007E7A92 /* PopupPrintableColors.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -191,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				88C3580D2A97EB6F007E7A92 /* PopupViewModel.swift */,
+				88C358132A985CD1007E7A92 /* ImageViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -268,16 +283,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				88C357FB2A97BC13007E7A92 /* DelayedTextFieldInt.swift in Sources */,
+				88C358162A985DA3007E7A92 /* PopupAllColors.swift in Sources */,
 				88A271B52A9790DB00766654 /* WelcomeWindowController.swift in Sources */,
 				882BAED929346C92003ACB0B /* Hue.swift in Sources */,
 				88C357FD2A97C518007E7A92 /* DelayedTextFieldDouble.swift in Sources */,
 				88A271A02A968A6900766654 /* ArtImage.swift in Sources */,
-				88C358032A97D72E007E7A92 /* TabView4Gradient.swift in Sources */,
-				88C357FF2A97D61B007E7A92 /* TabView2Size.swift in Sources */,
+				88C358032A97D72E007E7A92 /* TabViewGradient.swift in Sources */,
+				88C357FF2A97D61B007E7A92 /* TabViewSize.swift in Sources */,
+				88C3581A2A985E14007E7A92 /* PopupPrintableColors.swift in Sources */,
 				88A133D02A96780C00A6E3CA /* GradientImage.swift in Sources */,
 				88A271B72A979A0E00766654 /* MandArtApp+Menu.swift in Sources */,
+				88C358122A98101F007E7A92 /* TabViewPalette.swift in Sources */,
 				88A133CE2A9677C500A6E3CA /* GradientGrid.swift in Sources */,
+				88C358182A985DE5007E7A92 /* PopupAllPrintableColors.swift in Sources */,
 				88A2719E2A96871A00766654 /* ArtGrid.swift in Sources */,
+				88C358142A985CD1007E7A92 /* ImageViewModel.swift in Sources */,
 				889E3F24293AE0B6009944AC /* Documentation.docc in Sources */,
 				88C3580B2A97E9F9007E7A92 /* ChoosePopupView.swift in Sources */,
 				88A271A82A971C1C00766654 /* MAFormatters.swift in Sources */,
@@ -288,10 +308,10 @@
 				88C358102A980312007E7A92 /* SliderTextView.swift in Sources */,
 				8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */,
 				88A271AC2A97843400766654 /* WelcomeHeaderView.swift in Sources */,
-				88C358012A97D675007E7A92 /* TabView3CenterXYScale.swift in Sources */,
+				88C358012A97D675007E7A92 /* TabViewFind.swift in Sources */,
 				88C358072A97D983007E7A92 /* TabbedView.swift in Sources */,
-				88A271A22A97158200766654 /* TabView1Save.swift in Sources */,
-				88C358052A97D7A0007E7A92 /* TabView5ColorTuning.swift in Sources */,
+				88A271A22A97158200766654 /* TabViewSave.swift in Sources */,
+				88C358052A97D7A0007E7A92 /* TabViewTune.swift in Sources */,
 				88A271AA2A977AF300766654 /* ContentView+GestureCalculations.swift in Sources */,
 				88A271B22A97860700766654 /* WelcomeMainView.swift in Sources */,
 				88A271AE2A97844200766654 /* WelcomeMainImageView.swift in Sources */,

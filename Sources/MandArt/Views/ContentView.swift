@@ -28,7 +28,6 @@ struct ContentView: View {
   @EnvironmentObject var doc: MandArtDocument
   @ObservedObject var popupViewModel = PopupViewModel()
 
-
   internal var leftGradientIsValid: Bool {
     var isValid = false
     let leftNum = doc.picdef.leftNumber
@@ -44,7 +43,6 @@ struct ContentView: View {
     return 1
   }
 
-
   // set width of the first column (user inputs)
   let inputWidth: Double = 380
 
@@ -55,58 +53,8 @@ struct ContentView: View {
 
   @State private var textFieldImageHeight: NSTextField = .init()
   @State private var textFieldY: NSTextField = .init()
- 
 
-  /**
-   Gets an image to display on the right side of the app
-
-   - Returns: An optional CGImage or nil
-   */
-  func getImage() -> CGImage? {
-    var colors: [[Double]] = self.doc.picdef.hues.map { [$0.r, $0.g, $0.b] }
-
-    switch activeDisplayState {
-      case .MandArt:
-        let art = ArtImage(picdef: self.doc.picdef)
-        let img = art.getPictureImage(colors: &colors)
-        return img
-      case .Gradient:
-        if leftGradientIsValid {
-          return getGradientImage()
-        }
-        return nil
-      case .Colors:
-        let art = ArtImage(picdef: self.doc.picdef)
-        let img = art.getColorImage(colors: &colors)
-        return img
-    }
-  }
-
-  func getGradientImage() -> CGImage? {
-    print("getGradientImage")
-    let leftNumber = self.doc.picdef.leftNumber
-    let rightNumber = calculatedRightNumber
-
-    guard let leftColorRGBArray = self.doc.picdef.getColorGivenNumberStartingAtOne(leftNumber) else {
-      return nil // Handle the error case properly
-    }
-    guard let rightColorRGBArray = self.doc.picdef.getColorGivenNumberStartingAtOne(rightNumber) else {
-      return nil // Handle the error case properly
-    }
-
-    let gradientParameters = GradientImage.GradientImageInputs(
-      imageWidth: self.doc.picdef.imageWidth,
-      imageHeight: self.doc.picdef.imageHeight,
-      leftColorRGBArray: leftColorRGBArray,
-      rightColorRGBArray: rightColorRGBArray,
-      gradientThreshold: self.doc.picdef.yY
-    )
-
-    return GradientImage.createCGImage(using: gradientParameters)
-  }
-
-
-  // To swap a GeometryReader for an Image on button click in SwiftUI,
+   // To swap a GeometryReader for an Image on button click in SwiftUI,
   // you can use a state variable to keep track of
   // what should be displayed,
   // and change this state variable when buttons are pressed.
@@ -120,23 +68,13 @@ struct ContentView: View {
       // FIRST COLUMN - VSTACK IS FOR INSTRUCTIONS
       VStack(alignment: .center, spacing: 5) {
 
-        GeometryReader { geometry in
+        GeometryReader { _ in
           ScrollView(showsIndicators: true) {
             Text("MandArt")
               .font(.title)
-              TabbedView(doc:doc, activeDisplayState: $activeDisplayState)
+              TabbedView(doc: doc, activeDisplayState: $activeDisplayState)
           }
         } // end input scoll bar geometry reader
-
-        ChoosePopupView(doc:doc)
-
-        HStack {
-          Button("Add New Color") { doc.addHue() }
-            .help("Add a new color.")
-            .padding([.bottom], 2)
-        }
-
-        ColorListView(doc:doc, activeDisplayState:$activeDisplayState)
 
       } // end VStack for user instructions, rest is 2nd col
       .frame(width: inputWidth)
@@ -147,27 +85,43 @@ struct ContentView: View {
       // RIGHT COLUMN IS FOR IMAGES......................
 
       ScrollView(showsIndicators: true) {
-        VStack {
+        VStack(alignment: .leading) {
           if activeDisplayState == .MandArt {
 
-            let image: CGImage = getImage()!
-            GeometryReader {_ in
-              ZStack(alignment: .topLeading) {
-                
-                ScrollView([.horizontal, .vertical]) {
-                    Image(image, scale: 1.0, label: Text("Test"))
-                    .gesture(self.tapGesture)
+            let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
 
-                }
-                .frame(width: MandArtApp.AppConstants.defaultWidth(), height: MandArtApp.AppConstants.defaultHeight(), alignment: .topLeading)
-              }
-            }
-
-          } else if activeDisplayState == ActiveDisplayChoice.Gradient {
-            let image: CGImage = getImage()!
             GeometryReader { _ in
               ZStack(alignment: .topLeading) {
-                Image(image, scale: 1.0, label: Text("Test"))
+                ScrollView([.horizontal, .vertical], showsIndicators: true) {
+                  if let cgImage = viewModel.getImage() {
+                    Image(decorative: cgImage, scale: 1.0)
+                      .resizable()
+                      .frame(width: CGFloat(cgImage.width), alignment: .topLeading)
+                      .gesture(self.tapGesture)
+                  } else {
+                    Text("No Image Available")
+                      .foregroundColor(.gray)
+                  }
+                } // scrollview
+              } // zstack
+            } // geo reader
+
+            .frame(width: MandArtApp.AppConstants.defaultWidth(), height: MandArtApp.AppConstants.defaultHeight(), alignment: .topLeading)
+
+          } else if activeDisplayState == ActiveDisplayChoice.Gradient {
+            let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
+            GeometryReader { _ in
+              ZStack(alignment: .topLeading) {
+                if let cgImage = viewModel.getImage() {
+                  Image(decorative: cgImage, scale: 1.0)
+                    .resizable()
+                    .frame(width: CGFloat(cgImage.width), alignment: .topLeading)
+                    .gesture(self.tapGesture)
+                } else {
+                  Text("No Image Available")
+                    .foregroundColor(.gray)
+                }
+
               }
             }
           }
@@ -195,169 +149,30 @@ struct ContentView: View {
 
           // IF USER WANTED TO SEE ALL SCREEN COLORS
           if iAll != nil {
-            ZStack {
-              Color.white
-                .opacity(0.5)
-              VStack {
-                Button(action: {
-                  popupViewModel.showingAllColorsPopups[iAll!] = false
-                }) {
-                  Image(systemName: "xmark.circle")
-                }
-                VStack {
-                  let arrCGs = MandMath.getAllCGColorsList(iSort: iAll!)
-                  let arrColors = arrCGs.map { cgColor in
-                    Color(cgColor)
-                  }
-                  let nColumns = 32  //64
-                  let nRows = arrColors.count / nColumns
-                  ForEach(0 ..< nRows) { rowIndex in
-                    HStack(spacing: 0) {
-                      ForEach(0 ..< nColumns) { columnIndex in
-                        let index = rowIndex * nColumns + columnIndex
-                        Rectangle()
-                          .fill(arrColors[index])
-                          .frame(width: 17, height: 27)
-                          .cornerRadius(4)
-                          .padding(1)
-                      }
-                    }
-                  }
-                } // end VStack of color options
-                Spacer()
-              } // end VStack
-              .padding()
-              .background(Color.white)
-              .cornerRadius(8)
-              .shadow(radius: 10)
-              .padding()
-            } // end ZStack for popup
-            .transition(.scale)
-          } // end if popup
+            PopupAllColors( popupViewModel: popupViewModel)
+          }
 
-          // IF USER WANTED TO SEE ALL PRINTABLE COLORS
-          // WITH PLACEHOLDERS
-
+          // IF USER WANTED TO SEE ALL PRINTABLE COLORS WITH PLACEHOLDERS
           if iAP != nil {
-            ZStack {
-              Color.white
-                .opacity(0.5)
-              VStack {
-                Button(action: {
-                  popupViewModel.showingAllPrintableColorsPopups[iAP!] = false
-                }) {
-                  Image(systemName: "xmark.circle")
-                }
-                VStack {
-                  let arrCGs = MandMath.getAllPrintableCGColorsList(iSort: iAP!)
-                  let arrColors = arrCGs.map { cgColor in
-                    Color(cgColor)
-                  }
-                  let nColumns = 32 //64
-                  let nRows = arrColors.count / nColumns
-                  ForEach(0 ..< nRows) { rowIndex in
-                    HStack(spacing: 0) {
-                      ForEach(0 ..< nColumns) { columnIndex in
-                        let index = rowIndex * nColumns + columnIndex
-                        Rectangle()
-                          .fill(arrColors[index])
-                          .frame(width: 17, height: 27)
-                          .cornerRadius(4)
-                          .padding(1)
-                      }
-                    }
-                  }
-                } // end VStack of color options
-                Spacer()
-              } // end VStack
-              .padding()
-              .background(Color.white)
-              .cornerRadius(8)
-              .shadow(radius: 10)
-              .padding()
-            } // end ZStack for popup
-            .transition(.scale)
-          } // end if popup
+            PopupAllPrintableColors(popupViewModel: popupViewModel)
+          }
 
-          // IF USER WANTED TO SEE ONLY PRINTABLE COLORS
-          // * WITHOUT * PLACEHOLDERS
-
+          // ONLY PRINTABLE COLORS WITHOUT PLACEHOLDERS
           if iP != nil {
-            ZStack {
-              Color.white
-                .opacity(0.5)
-              VStack {
-                Button(action: {
-                  popupViewModel.showingPrintableColorsPopups[iP!] = false
-                }) {
-                  Image(systemName: "xmark.circle")
-                }
-                VStack {
-                  let arrCGs = MandMath.getPrintableCGColorListSorted(iSort: iP!)
-                  let arrColors = arrCGs.map { cgColor in
-                    Color(cgColor)
-                  }
+            PopupPrintableColors(popupViewModel: popupViewModel)
+          }
 
-                  let nColumns = 32
-                  ForEach(0 ..< arrColors.count / nColumns) { rowIndex in
-                    HStack(spacing: 0) {
-                      ForEach(0 ..< 32) { columnIndex in
-                        let index = rowIndex * nColumns + columnIndex
-                        let color = arrColors[index]
-                        let nsColor = NSColor(color)
-                        let red = nsColor.redComponent
-                        let green = nsColor.greenComponent
-                        let blue = nsColor.blueComponent
-
-                        let colorValueR = "\(Int(red * 255))"
-                        let colorValueG = "\(Int(green * 255))"
-                        let colorValueB = "\(Int(blue * 255))"
-
-                        VStack {
-                          Rectangle()
-                            .fill(arrColors[index])
-                            .frame(width: 30, height: 30)
-                            .cornerRadius(4)
-                            .padding(1)
-
-                          Text(colorValueR)
-                            .font(.system(size: 10))
-                            .background(Color.white)
-                          Text(colorValueG)
-                            .font(.system(size: 10))
-                            .background(Color.white)
-                          Text(colorValueB)
-                            .font(.system(size: 10))
-                            .background(Color.white)
-                        } // end Zstack of rect, rgb values
-                      } // end for each column of colors
-                    } // end HStack of colors
-                  } // end for each color
-                } // end VStack of color options
-                Spacer()
-              } // end VStack
-              .padding()
-              .background(Color.white)
-              .cornerRadius(8)
-              .shadow(radius: 10)
-              .padding()
-            } // end ZStack for popup
-            .transition(.scale)
-          } // end if popup
         } // end VStack right side (picture space)
         .padding(2)
+        Spacer()
       } // end image scroll view
       .padding(2)
-
-
 
     } // end Opening HStack
     .onAppear {
       activeDisplayState = .MandArt
     }
   } // end view body
-
-
 
   /**
    tapGesture is a variable that defines a drag gesture
@@ -386,11 +201,10 @@ struct ContentView: View {
           if self.startTime == nil {
             self.startTime = value.time
           }
-
         }
       }
       .onEnded { tap in
-        if (self.activeDisplayState == .MandArt){
+        if self.activeDisplayState == .MandArt {
           // if we haven't moved very much, treat it as a tap event
           if self.moved < 2, self.moved > -2 {
             doc.picdef.xCenter = getCenterXFromTap(tap)
@@ -410,61 +224,4 @@ struct ContentView: View {
       }
   } // end tapGesture
 
-  // HELPER FUNCTIONS ..................................
-
-  // Save the image inputs to a file.
-  func saveMandArtImageInputs() {
-    let winTitle = doc.getCurrentWindowTitle()
-    let justname = winTitle.replacingOccurrences(of: ".mandart", with: "")
-    let fname = justname + ".mandart"
-    var data: Data
-    do {
-      //     data = try JSONEncoder().encode(doc.picdef)
-      let encoder = JSONEncoder()
-      encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-      data = try encoder.encode(doc.picdef)
-    } catch {
-      print("Error encoding picdef.")
-      print("Closing all windows and exiting with error code 98.")
-      NSApplication.shared.windows.forEach { $0.close() }
-      NSApplication.shared.terminate(nil)
-      exit(98)
-    }
-    if data == Data() {
-      print("Error encoding picdef.")
-      print("Closing all windows and exiting with error code 99.")
-      NSApplication.shared.windows.forEach { $0.close() }
-      NSApplication.shared.terminate(nil)
-      exit(99)
-    }
-
-    // trigger state change to force a current image
-    doc.picdef.imageHeight += 1
-    doc.picdef.imageHeight -= 1
-
-    var currImage = contextImageGlobal!
-    let savePanel = NSSavePanel()
-    savePanel.title = "Choose directory and name for image inputs file"
-    savePanel.nameFieldStringValue = fname
-    savePanel.canCreateDirectories = true
-    savePanel.allowedContentTypes = [UTType.json, UTType.mandartDocType]
-    savePanel.begin { (result) in
-      if result == .OK {
-        do {
-          try data.write(to: savePanel.url!)
-        } catch {
-          print("Error saving file: \(error.localizedDescription)")
-        }
-        print("Image inputs saved successfully to \(savePanel.url!)")
-      } else {
-        print("Error saving image inputs")
-      }
-    }
-  }
-
-
-
 }
-
-
-

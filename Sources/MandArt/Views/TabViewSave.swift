@@ -1,7 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct TabView1Save: View {
+struct TabViewSave: View {
   @ObservedObject var doc: MandArtDocument
 
   var body: some View {
@@ -9,10 +9,10 @@ struct TabView1Save: View {
     VStack {
 
       Section(header:
-                Text("Save Your Work")
+                Text("Save Your Art")
         .font(.headline)
         .fontWeight(.medium)
-        .padding(.bottom) 
+        .padding(.bottom)
       ) {
 
           Button("Save Image (as .png)") {
@@ -25,6 +25,17 @@ struct TabView1Save: View {
           }
           .help("Save MandArt image inputs as .mandart.")
         }// end section
+
+      Section(header:
+                Text("Check Colors Before Printing")
+        .font(.headline)
+        .fontWeight(.medium)
+        .padding([.bottom, .top])
+      ) {
+
+        ChoosePopupView(doc: doc)
+
+      } // end second section
       } // end vstack
   } // end body
 
@@ -75,6 +86,6 @@ struct TabView1Save: View {
         print("Error saving image inputs")
       }
     }
-  }
+  } // end function
 
 }

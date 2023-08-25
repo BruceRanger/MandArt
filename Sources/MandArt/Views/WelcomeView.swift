@@ -1,4 +1,3 @@
-
 import SwiftUI
 import AppKit
 
@@ -10,10 +9,10 @@ struct Constants {
   static let descriptionHeightFactor: CGFloat = 0.4
 }
 
-
 @available(macOS 11.0, *)
 struct WelcomeView: View {
 
+  @EnvironmentObject var appState: AppState
 
   var body: some View {
     VStack(spacing: 0) {
@@ -36,28 +35,21 @@ struct WelcomeView: View {
       updateWindowFrame(with: size)
     }
 
-    
-    
   }
-
-  
 
   private func updateWindowFrame(with size: CGSize) {
     // Code to update window frame based on size
   }
 
-
   var screenSize: CGSize {
     // Fetching the main screen's size
     guard let screen = NSScreen.main else {
-      return CGSize(width: Constants.windowWidth, height: Constants.windowHeight)  
+      return CGSize(width: Constants.windowWidth, height: Constants.windowHeight)
     }
     return screen.frame.size
   }
 
-
 }
-
 
 @available(macOS 11.0, *)
 struct ViewSizeKey: PreferenceKey {
@@ -67,4 +59,3 @@ struct ViewSizeKey: PreferenceKey {
     value = nextValue()
   }
 }
-
