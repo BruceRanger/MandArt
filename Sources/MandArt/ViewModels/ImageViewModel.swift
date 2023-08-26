@@ -50,7 +50,6 @@ class ImageViewModel: ObservableObject {
   }
 
   func getGradientImage() -> CGImage? {
-    print("getGradientImage")
     let leftNumber = doc.picdef.leftNumber
     let rightNumber = getCalculatedRightNumber(leftGradientIsValid: getLeftGradientIsValid())
 

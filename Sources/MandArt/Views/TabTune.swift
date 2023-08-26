@@ -6,6 +6,8 @@ struct TabTune: View {
   @Binding var activeDisplayState: ActiveDisplayChoice
 
   var body: some View {
+
+    ScrollView {
     VStack(spacing: 20) {
 
       VStack(spacing: 10) {
@@ -63,7 +65,8 @@ struct TabTune: View {
       }
       Spacer()
 
-    } // end vstack
+    } //  vstack
+  } // scrollview
     .padding()
   }
 }

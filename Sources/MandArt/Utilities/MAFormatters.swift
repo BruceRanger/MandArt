@@ -2,15 +2,22 @@ import Foundation
 
 struct MAFormatters {
 
+  private static func createCommaFormatter(maxFractionDigits: Int, min: NSNumber? = nil, max: NSNumber? = nil) -> NumberFormatter {
+    let formatter = MACommaNumberFormatter()
+    formatter.maximumFractionDigits = maxFractionDigits
+    formatter.minimum = min
+    formatter.maximum = max
+    return formatter
+  }
+
   // USER INPUT CUSTOM FORMATTERS - BASIC  .........................
 
+  static var fmtScale: NumberFormatter {
+    return createCommaFormatter(maxFractionDigits: 0, min: 1, max: 100_000_000_000_000_000)
+  }
+
   static var fmtImageWidthHeight: NumberFormatter {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal
-    formatter.maximumFractionDigits = 0
-    formatter.minimum = 1
-    formatter.maximum = 100_000
-    return formatter
+    return createCommaFormatter(maxFractionDigits: 0, min: 1, max: 100_000)
   }
 
   static var fmtXY: NumberFormatter {
@@ -31,34 +38,14 @@ struct MAFormatters {
     return formatter
   }
 
-  static var fmtScale: NumberFormatter {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal
-    formatter.isPartialStringValidationEnabled = true
-    formatter.maximumFractionDigits = 1
-    formatter.minimum = 1
-    formatter.maximum = 100_000_000_000_000_000
-    return formatter
-  }
-
   // USER INPUT CUSTOM FORMATTERS - GRADIENT  ....................
 
   static var fmtSharpeningItMax: NumberFormatter {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal
-    formatter.maximumFractionDigits = 8
-    formatter.minimum = 1
-    formatter.maximum = 100_000_000
-    return formatter
+    return createCommaFormatter(maxFractionDigits: 8, min: 1, max: 100_000_000)
   }
 
   static var fmtSmootingRSqLimit: NumberFormatter {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal
-    formatter.maximumFractionDigits = 0
-    formatter.minimum = 1
-    formatter.maximum = 100_000_000
-    return formatter
+    return createCommaFormatter(maxFractionDigits: 0, min: 1, max: 100_000_000)
   }
 
   static var fmtHoldFractionGradient: NumberFormatter {

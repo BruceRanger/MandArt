@@ -8,7 +8,7 @@ struct DelayedTextFieldDouble: View {
   var formatter: NumberFormatter
   var onCommit: () -> Void
 
-  @State private var inputValue: Double
+  @State private var stringValue: String
 
   init(title: String? = nil, placeholder: String, value: Binding<Double>, formatter: NumberFormatter, onCommit: @escaping () -> Void = {}) {
     self.title = title
@@ -16,7 +16,7 @@ struct DelayedTextFieldDouble: View {
     self._value = value
     self.formatter = formatter
     self.onCommit = onCommit
-    self._inputValue = State(initialValue: value.wrappedValue)
+    self._stringValue = State(initialValue: formatter.string(from: NSNumber(value: value.wrappedValue)) ?? "")
   }
 
   var body: some View {
@@ -24,19 +24,24 @@ struct DelayedTextFieldDouble: View {
       if let title = title {
         Text(title)
       }
-    }
-    TextField(
-      placeholder,
-      value: $inputValue,
-      formatter: formatter,
-      onEditingChanged: { isEditing in
+      TextField(placeholder, text: $stringValue, onEditingChanged: { isEditing in
         if !isEditing {
-          self.value = self.inputValue
-          onCommit()
+          // Convert string to double only on editing completion
+          if let num = formatter.number(from: stringValue) {
+            value = num.doubleValue
+            onCommit()
+          }
         }
+      })
+      .onChange(of: value) { newValue in
+        // Update stringValue with formatted string
+        stringValue = formatter.string(from: NSNumber(value: newValue)) ?? ""
       }
-    )
-    .textFieldStyle(RoundedBorderTextFieldStyle())
-    .multilineTextAlignment(.trailing)
+      .textFieldStyle(RoundedBorderTextFieldStyle())
+      .multilineTextAlignment(.trailing)
+    }
+    .onAppear {
+      stringValue = formatter.string(from: NSNumber(value: value)) ?? ""
+    }
   }
 }

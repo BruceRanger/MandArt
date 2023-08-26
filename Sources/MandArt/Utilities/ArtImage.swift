@@ -59,8 +59,6 @@ struct ArtImage {
    */
   internal func getPictureImage(colors: inout [[Double]]) -> CGImage? {
 
-    print("getPictureImage")
-
     let imageWidth = shapeInputs.imageWidth
     let imageHeight = shapeInputs.imageHeight
     let iterationsMax = shapeInputs.iterationsMax

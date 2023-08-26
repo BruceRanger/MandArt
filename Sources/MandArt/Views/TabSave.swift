@@ -7,6 +7,7 @@ struct TabSave: View {
 
   var body: some View {
 
+    ScrollView {
     VStack {
 
       Section(header:
@@ -16,16 +17,16 @@ struct TabSave: View {
         .padding(.bottom)
       ) {
 
-          Button("Save Image (as .png)") {
-            doc.saveMandArtImage()
-          }
-          .help("Save MandArt image as .png.")
+        Button("Save Image (as .png)") {
+          doc.saveMandArtImage()
+        }
+        .help("Save MandArt image as .png.")
 
-          Button("Save Image Inputs (as data file)") {
-            saveMandArtImageInputs()
-          }
-          .help("Save MandArt image inputs as .mandart.")
-        }// end section
+        Button("Save Image Inputs (as data file)") {
+          saveMandArtImageInputs()
+        }
+        .help("Save MandArt image inputs as .mandart.")
+      }// end section
 
       Section(header:
                 Text("Check Colors Before Printing")
@@ -39,8 +40,9 @@ struct TabSave: View {
       } // end second section
       Spacer()
 
-      } // end vstack
-  } // end body
+    } //  vstack
+  } // scroll
+  } //  body
 
   // Save the image inputs to a file.
   func saveMandArtImageInputs() {

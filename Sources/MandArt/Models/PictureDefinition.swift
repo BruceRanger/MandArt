@@ -27,6 +27,7 @@ import SwiftUI
  // The user input information defining a MandArt picture.
 @available(macOS 12.0, *)
 struct PictureDefinition: Codable, Identifiable, Equatable {
+
   var id = UUID()
   var xCenter: Double = -0.75
   var yCenter: Double = 0.0

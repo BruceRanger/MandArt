@@ -46,6 +46,7 @@
 		88C3581C2A98EA45007E7A92 /* PanelUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3581B2A98EA45007E7A92 /* PanelUI.swift */; };
 		88C3581E2A98EA53007E7A92 /* PanelDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */; };
 		88C358212A99A08D007E7A92 /* PopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358202A99A08D007E7A92 /* PopupManager.swift */; };
+		88C358252A9A6941007E7A92 /* MACommaNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358242A9A6941007E7A92 /* MACommaNumberFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		88C3581B2A98EA45007E7A92 /* PanelUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelUI.swift; sourceTree = "<group>"; };
 		88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelDisplay.swift; sourceTree = "<group>"; };
 		88C358202A99A08D007E7A92 /* PopupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupManager.swift; sourceTree = "<group>"; };
+		88C358242A9A6941007E7A92 /* MACommaNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACommaNumberFormatter.swift; sourceTree = "<group>"; };
 		C57920042A1673C900E0CD98 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -180,6 +182,7 @@
 				88A2719D2A96871A00766654 /* ArtGrid.swift */,
 				88A2719F2A968A6900766654 /* ArtImage.swift */,
 				88A271A72A971C1C00766654 /* MAFormatters.swift */,
+				88C358242A9A6941007E7A92 /* MACommaNumberFormatter.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				88A271AA2A977AF300766654 /* ContentView+GestureCalculations.swift in Sources */,
 				88A271B22A97860700766654 /* WelcomeMainView.swift in Sources */,
 				88A271AE2A97844200766654 /* WelcomeMainImageView.swift in Sources */,
+				88C358252A9A6941007E7A92 /* MACommaNumberFormatter.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
 				88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */,
 				88A271B02A97845300766654 /* WelcomeMainInformationView.swift in Sources */,
