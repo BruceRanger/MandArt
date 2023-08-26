@@ -49,7 +49,7 @@ struct GradientImage {
       return nil
     }
 
-    let gradientParameters = GradientGrid.GradientGridInputs(
+    let gradientGridInputs = GradientGrid.GradientGridInputs(
       imageWidth: params.imageWidth,
       imageHeight: params.imageHeight,
       colorLeft: params.leftColorRGBArray,
@@ -59,28 +59,7 @@ struct GradientImage {
       rasterBufferPtr: context.data!.assumingMemoryBound(to: UInt8.self)
     )
 
-    GradientGrid.calculate(using: gradientParameters)
-
-    // Draw the pixels
-    for v in 0 ..< params.imageHeight {
-      for u in 0 ..< params.imageWidth {
-        let pixelValue = gradientParameters.rasterBufferPtr[v * context.bytesPerRow + u * BYTES_PER_PIXEL]
-        let t = Double(pixelValue) / 255.0
-
-        // Interpolate between leftColor and rightColor based on pixelValue
-        let pixelColor = [
-          UInt8((1 - t) * params.leftColorRGBArray[0] + t * params.rightColorRGBArray[0]), // R
-          UInt8((1 - t) * params.leftColorRGBArray[1] + t * params.rightColorRGBArray[1]), // G
-          UInt8((1 - t) * params.leftColorRGBArray[2] + t * params.rightColorRGBArray[2]),  // B
-        ]
-
-        let pixelAddress = context.data!.assumingMemoryBound(to: UInt8.self) + (v * context.bytesPerRow) + (u * BYTES_PER_PIXEL)
-        pixelAddress[0] = pixelColor[0] // R
-        pixelAddress[1] = pixelColor[1] // G
-        pixelAddress[2] = pixelColor[2] // B
-        pixelAddress[3] = UInt8(255)    // Alpha
-      }
-    }
+    GradientGrid.calculateGradientGrid(using: gradientGridInputs)
 
     guard let gradientImage = context.makeImage() else {
       return nil

@@ -12,7 +12,7 @@ struct GradientGrid {
     let rasterBufferPtr: UnsafeMutablePointer<UInt8>
   }
 
-  static func calculate(using parameters: GradientGridInputs) {
+  static func calculateGradientGrid(using parameters: GradientGridInputs) {
     let imageWidth = parameters.imageWidth
     let imageHeight = parameters.imageHeight
     let colorLeft = parameters.colorLeft
@@ -21,12 +21,12 @@ struct GradientGrid {
     let bytesPerPixel = parameters.bytesPerPixel
     let rasterBufferPtr = parameters.rasterBufferPtr
 
-    print("calc gradient grid....")
-    print("image width = \(imageWidth)")
-    print("image height = \(imageHeight)")
-    print("colorLeft = \(colorLeft)")
-    print("colorRight = \(colorRight)")
-    print("gradientThreshold = \(gradientThreshold)")
+    print("BHJ: calculating gradient grid given inputs:")
+    print("  imageWidth = \(imageWidth)")
+    print("  imageHeight = \(imageHeight)")
+    print("  colorLeft = \(colorLeft)")
+    print("  colorRight = \(colorRight)")
+    print("  gradientThreshold = \(gradientThreshold)")
 
     // Iterate over each row (vertical iteration)
     for row in 0 ..< imageHeight {

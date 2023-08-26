@@ -62,11 +62,11 @@ class ImageViewModel: ObservableObject {
     }
 
     let gradientParameters = GradientImage.GradientImageInputs(
-      imageWidth: self.doc.picdef.imageWidth,
-      imageHeight: self.doc.picdef.imageHeight,
+      imageWidth: 500, // self.doc.picdef.imageWidth,
+      imageHeight: 500, // self.doc.picdef.imageHeight,
       leftColorRGBArray: leftColorRGBArray,
       rightColorRGBArray: rightColorRGBArray,
-      gradientThreshold: self.doc.picdef.yY
+      gradientThreshold: 0.0 // self.doc.picdef.yY
     )
     return GradientImage.createCGImage(using: gradientParameters)
   }
