@@ -18,10 +18,10 @@ struct TabSavePopup: View {
 
   var body: some View {
 
-    // HSTACK START WITH RED
+    // BLUES ***AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
     Section(header:
-              Text("Start with Blues")
+              Text("Start with Blues") 
       .font(.headline)
       .fontWeight(.medium)
       .padding([ .top])
@@ -29,7 +29,7 @@ struct TabSavePopup: View {
 
       HStack {
 
-        Text("Sort by Rgb:")
+        Text("Sort by Rgb [0]:")
 
         Button("All") {
           resetAllPopupsToFalse()
@@ -52,7 +52,7 @@ struct TabSavePopup: View {
       }
 
       HStack {
-        Text("Sort by Grb:")
+        Text("Sort by Grb [2]:")
         Button("All") {
           resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[2] = true
@@ -73,7 +73,7 @@ struct TabSavePopup: View {
 
     } // end section
 
-    // HSTACK START WITH GREEN
+    // GREENS ***AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
     Section(header:
               Text("Start with Greens")
@@ -82,7 +82,7 @@ struct TabSavePopup: View {
       .padding([ .top])
     ) {
       HStack {
-        Text("Sort by Rbg:")
+        Text("Sort by Rbg [1]:")
         Button("All") {
           resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[1] = true
@@ -103,7 +103,7 @@ struct TabSavePopup: View {
       } // END HSTACK
 
       HStack {
-        Text("Sort by Brg:")
+        Text("Sort by Brg [4]:")
         Button("All") {
           resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[4] = true
@@ -123,7 +123,7 @@ struct TabSavePopup: View {
 
     } // end section
 
-    // HSTACK START WITH BLUE
+    // REDS ***AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
     Section(header:
               Text("Start with Reds")
@@ -134,7 +134,7 @@ struct TabSavePopup: View {
 
       HStack {
 
-        Text("Sort by Gbr:")
+        Text("Sort by Gbr [3]:")
         Button("All") {
           resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[3] = true
@@ -154,7 +154,7 @@ struct TabSavePopup: View {
 
       HStack {
 
-        Text("Sort by Bgr:")
+        Text("Sort by Bgr [5]:")
         Button("All") {
           resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[5] = true
