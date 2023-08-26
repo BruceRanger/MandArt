@@ -38,31 +38,6 @@ struct ContentView: View {
         PanelDisplay(doc: doc, activeDisplayState: $activeDisplayState)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
       } // hstack
-//      .overlay(
-//        ZStack {
-//          // Popup background with corner radius
-//          RoundedRectangle(cornerRadius: 10)
-//            .fill(Color.white)
-//
-//          VStack {
-//            // Custom close button at the top
-//            Button(action: {
-//              // Close action
-//            }) {
-//              Image(systemName: "xmark.circle.fill")
-//                .font(.title)
-//                .foregroundColor(.gray)
-//            }
-//            .padding(.top, 10)
-//
-//            ScrollView {
-//              // Your popup content here
-//            }
-//          }
-//          .padding()
-//        }
-//          .frame(maxWidth: .infinity, maxHeight: .infinity)
-//      )
 
       .overlay(
         ScrollView {
