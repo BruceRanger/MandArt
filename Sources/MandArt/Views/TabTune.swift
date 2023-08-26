@@ -1,7 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct TabViewTune: View {
+struct TabTune: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
 
@@ -61,6 +61,8 @@ struct TabViewTune: View {
           )
         )
       }
+      Spacer()
+
     } // end vstack
     .padding()
   }

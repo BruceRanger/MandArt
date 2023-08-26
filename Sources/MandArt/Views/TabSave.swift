@@ -1,8 +1,10 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct TabViewSave: View {
+struct TabSave: View {
   @ObservedObject var doc: MandArtDocument
+  @ObservedObject var popupManager = PopupManager()
+
 
   var body: some View {
 
@@ -30,12 +32,14 @@ struct TabViewSave: View {
                 Text("Check Colors Before Printing")
         .font(.headline)
         .fontWeight(.medium)
-        .padding([.bottom, .top])
+        .padding( .top)
       ) {
 
-        ChoosePopupView(doc: doc)
+        TabSavePopup(popupManager: popupManager)
 
       } // end second section
+      Spacer()
+      
       } // end vstack
   } // end body
 

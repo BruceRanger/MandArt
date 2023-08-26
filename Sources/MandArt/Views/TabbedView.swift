@@ -3,43 +3,54 @@ import UniformTypeIdentifiers
 
 struct TabbedView: View {
   @ObservedObject var doc: MandArtDocument
+  @ObservedObject var popupManager = PopupManager()
+
   @Binding var activeDisplayState: ActiveDisplayChoice
   @State private var selectedTab = 0
+
+
+
+  init(doc: MandArtDocument,
+       popupManager: PopupManager,
+       activeDisplayState: Binding<ActiveDisplayChoice>
+  ) {
+    self.doc = doc
+    self.popupManager = popupManager
+    self._activeDisplayState = activeDisplayState
+  }
 
   var body: some View {
 
     TabView(selection: $selectedTab) {
 
-      TabViewSize(doc: doc, activeDisplayState: $activeDisplayState)
+      TabFind(doc: doc, activeDisplayState: $activeDisplayState)
               .tabItem {
-          Label("1.Size", systemImage: "aspectratio")
+          Label("1.Find", systemImage: "aspectratio")
         }.tag(0)
 
-      TabViewFind(doc: doc, activeDisplayState: $activeDisplayState)
+
+      TabColor(doc: doc, activeDisplayState: $activeDisplayState)
         .tabItem {
-          Label("2.Find", systemImage: "arrow.up")
+          Label("2.Color", systemImage: "paintbrush")
         }.tag(1)
 
-      TabViewPalette(doc: doc, activeDisplayState: $activeDisplayState)
+      TabTune(doc: doc, activeDisplayState: $activeDisplayState)
         .tabItem {
-          Label("3.Color", systemImage: "paintbrush")
+          Label("3.Tune", systemImage: "paintpalette")
         }.tag(2)
 
-      TabViewGradient(doc: doc, activeDisplayState: $activeDisplayState)
+      TabSave(doc: doc,
+              popupManager: popupManager)
+
         .tabItem {
-          Label("4.Test", systemImage: "paintbrush")
+          Label("4.Save", systemImage: "circle")
         }.tag(3)
 
-      TabViewTune(doc: doc, activeDisplayState: $activeDisplayState)
-        .tabItem {
-          Label("5.Tune", systemImage: "paintpalette")
-        }.tag(4)
-
-      TabViewSave(doc: doc)
-        .tabItem {
-          Label("6.Save", systemImage: "circle")
-        }.tag(5)
-
     } // end tabview
+    .onChange(of: selectedTab) { newValue in
+      activeDisplayState = .MandArt
+    }
+    .padding(2)
   } // end body
+  
 }

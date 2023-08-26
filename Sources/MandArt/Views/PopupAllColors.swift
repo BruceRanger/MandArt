@@ -2,13 +2,14 @@ import SwiftUI
 
 struct PopupAllColors: View {
 
-  var iAll: Int?
-  var popupViewModel: PopupViewModel
+  @Binding var iAll: Int?
+  @Binding var showingAllColorsPopups: [Bool]
 
-  init(iAll: Int? = nil, popupViewModel: PopupViewModel) {
-    self.iAll = iAll
-    self.popupViewModel = popupViewModel
+  init(iAll: Binding<Int?>, showingAllColorsPopups: Binding<[Bool]>) {
+    self._iAll = iAll
+    self._showingAllColorsPopups = showingAllColorsPopups
   }
+
 
   var body: some View {
 
@@ -17,7 +18,7 @@ struct PopupAllColors: View {
         .opacity(0.5)
       VStack {
         Button(action: {
-          popupViewModel.showingAllColorsPopups[iAll!] = false
+          showingAllColorsPopups[iAll!] = false
         }) {
           Image(systemName: "xmark.circle")
         }

@@ -2,7 +2,10 @@ import SwiftUI
 import AppKit
 
 class AppState: ObservableObject {
-  @Published var showWelcomeScreen: Bool = UserDefaults.standard.object(forKey: "shouldShowWelcome") as? Bool ?? true
+  @Published var shouldShowWelcomeWhenStartingUp: Bool = UserDefaults.standard.object(forKey: "shouldShowWelcomeWhenStartingUp") as? Bool ?? true
+  @Published var iAP: Int?
+  @Published var iAll: Int?
+  @Published var iP: Int?
 }
 
 struct WindowAccessor: NSViewRepresentable {
@@ -11,7 +14,6 @@ struct WindowAccessor: NSViewRepresentable {
   func makeNSView(context: Context) -> NSView {
     let view = NSView()
     DispatchQueue.main.async {
-      // Post the window containing the view to callback
       self.callback(view.window)
     }
     return view
@@ -25,15 +27,15 @@ struct WindowAccessor: NSViewRepresentable {
 @main
 struct MandArtApp: App {
 
+  @StateObject private var defaultDocument = MandArtDocument()
   @StateObject internal var appState: AppState
-  @State private var showingWelcome: Bool
+  @State private var shouldShowWelcomeWhenStartingUp: Bool
 
   init() {
-    let initialState = UserDefaults.standard.object(forKey: "shouldShowWelcome") as? Bool ?? true
+    let initialState = UserDefaults.standard.object(forKey: "shouldShowWelcomeWhenStartingUp") as? Bool ?? true
     _appState = StateObject(wrappedValue: AppState())
-    _showingWelcome = State(initialValue: initialState)
+    _shouldShowWelcomeWhenStartingUp = State(initialValue: initialState)
   }
-
 
   internal struct AppConstants {
     static let defaultOpeningWidth: CGFloat = 800.0
@@ -94,39 +96,41 @@ struct MandArtApp: App {
   var body: some Scene {
 
     WindowGroup {
-
-      if showingWelcome {
+      if shouldShowWelcomeWhenStartingUp {
         WelcomeView()
           .environmentObject(appState)
           .onAppear {
             NSWindow.allowsAutomaticWindowTabbing = false
           }
       } else {
-        ContentView()
-          .environmentObject(MandArtDocument())
+        ContentView(doc: defaultDocument)
+          .background(WindowAccessor { window in
+            if let window = window {
+              let uniqueIdentifier = defaultDocument.picdef.id
+              window.setFrameAutosaveName("Document Window \(uniqueIdentifier.uuidString)")
+            }
+          })
           .onAppear {
             NSWindow.allowsAutomaticWindowTabbing = false
           }
       }
-
     }
+
 
     DocumentGroup(newDocument: { MandArtDocument() }) { file in
-      let doc = file.document as? MandArtDocument
-      ContentView()
-        .frame(
-          width: AppConstants.maxDocumentWidth(),
-          height: AppConstants.maxDocumentHeight()
-        )
-        .background(WindowAccessor { window in
-          if let window = window, let uniqueIdentifier = doc?.picdef.id {
-            window.setFrameAutosaveName("Document Window \(uniqueIdentifier.uuidString)")
+      let doc = file.document
+        ContentView(doc: doc)
+          .background(WindowAccessor { window in
+            if let window = window {
+              let uniqueIdentifier = doc.picdef.id
+              window.setFrameAutosaveName("Document Window \(uniqueIdentifier.uuidString)")
+            }
+          })
+          .onAppear {
+            NSWindow.allowsAutomaticWindowTabbing = false
           }
-        })
-        .onAppear {
-          NSWindow.allowsAutomaticWindowTabbing = false
-        }
-    }
+      } // DG
+
 
     .commands {
      appMenuCommands()

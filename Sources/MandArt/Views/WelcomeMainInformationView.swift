@@ -28,14 +28,14 @@ struct WelcomeMainInformationView: View {
       .buttonStyle(.bordered)
       .controlSize(.large)
 
-      Toggle(isOn: $appState.showWelcomeScreen) {
+      Toggle(isOn: $appState.shouldShowWelcomeWhenStartingUp) {
         Text("Show welcome screen when starting")
       }
       .onTapGesture {
         // do nothing else
       }
-      .onChange(of: appState.showWelcomeScreen) { newValue in
-        UserDefaults.standard.setValue(newValue, forKey: "shouldShowWelcome")
+      .onChange(of: appState.shouldShowWelcomeWhenStartingUp) { newValue in
+        UserDefaults.standard.setValue(newValue, forKey: "shouldShowWelcomeWhenStartingUp")
       }
 
     }

@@ -2,25 +2,36 @@ import SwiftUI
 
 struct PopupAllPrintableColors: View {
 
-  var iAP: Int?
-  var popupViewModel: PopupViewModel
+  @Binding var iAP: Int?
+  @Binding var showingAllPrintableColorsPopups: [Bool]
 
-  init( iAP: Int? = nil, popupViewModel: PopupViewModel) {
-     self.iAP = iAP
-    self.popupViewModel = popupViewModel
+  init(iAP: Binding<Int?>, showingAllPrintableColorsPopups: Binding<[Bool]>) {
+    self._iAP = iAP
+    self._showingAllPrintableColorsPopups = showingAllPrintableColorsPopups
   }
+
 
   var body: some View {
 
-    ZStack {
+    ZStack(alignment: .topLeading) {
       Color.white
         .opacity(0.5)
-      VStack {
-        Button(action: {
-          popupViewModel.showingAllPrintableColorsPopups[iAP!] = false
-        }) {
-          Image(systemName: "xmark.circle")
+      VStack(alignment: .leading, spacing: 10) {
+
+
+        HStack{
+          Button(action: {
+            showingAllPrintableColorsPopups[iAP!] = false
+          }) {
+            Image(systemName: "xmark.circle")
+              .padding(10)
+
+          }
+          Spacer()
         }
+
+
+
         VStack {
           let arrCGs = MandMath.getAllPrintableCGColorsList(iSort: iAP!)
           let arrColors = arrCGs.map { cgColor in

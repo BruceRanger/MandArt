@@ -1,14 +1,3 @@
-/**
- ContentView.swift
- MandArt
-
- The main view in the MandArt project, responsible for displaying the user interface.
-
- Created by Bruce Johnson on 9/20/21.
- Revised and updated 2021-2023
- All rights reserved.
- */
-
 import AppKit // keypress
 import Foundation // trig functions
 import SwiftUI // views
@@ -25,203 +14,165 @@ enum ActiveDisplayChoice {
 
 @available(macOS 12.0, *)
 struct ContentView: View {
-  @EnvironmentObject var doc: MandArtDocument
-  @ObservedObject var popupViewModel = PopupViewModel()
 
-  internal var leftGradientIsValid: Bool {
-    var isValid = false
-    let leftNum = doc.picdef.leftNumber
-    let lastPossible = doc.picdef.hues.count
-    isValid = leftNum >= 1 && leftNum <= lastPossible
-    return isValid
-  }
-
-  internal var calculatedRightNumber: Int {
-    if leftGradientIsValid, doc.picdef.leftNumber < doc.picdef.hues.count {
-      return doc.picdef.leftNumber + 1
-    }
-    return 1
-  }
-
-  // set width of the first column (user inputs)
-  let inputWidth: Double = 380
+  @EnvironmentObject var appState: AppState
+  @ObservedObject var doc: MandArtDocument
+  @StateObject var popupManager = PopupManager()
+  @State var activeDisplayState: ActiveDisplayChoice = .MandArt
 
   @State private var moved: Double = 0.0
   @State private var startTime: Date?
-  @State private var activeDisplayState = ActiveDisplayChoice.MandArt
   @State private var previousPicdef: PictureDefinition?
-
   @State private var textFieldImageHeight: NSTextField = .init()
   @State private var textFieldY: NSTextField = .init()
 
-   // To swap a GeometryReader for an Image on button click in SwiftUI,
-  // you can use a state variable to keep track of
-  // what should be displayed,
-  // and change this state variable when buttons are pressed.
+  let widthOfInputPanel: Double = 400
+
   var body: some View {
-    HStack(alignment: .top, spacing: 1) {
-      // instructions on left, picture on right
-      // Left (first) VStack is left side with user stuff
-      // Right (second) VStack is for mandart, gradient, or colors
-      // Sspacing is between VStacks (the two columns)
+    GeometryReader { geometry in
+      HStack(alignment: .top, spacing: 0)  {
+        PanelUI(doc: doc,
+                popupManager: popupManager,activeDisplayState: $activeDisplayState)
+          .frame(width: widthOfInputPanel)
 
-      // FIRST COLUMN - VSTACK IS FOR INSTRUCTIONS
-      VStack(alignment: .center, spacing: 5) {
+        PanelDisplay(doc: doc, activeDisplayState: $activeDisplayState)
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+      } // hstack
+//      .overlay(
+//        ZStack {
+//          // Popup background with corner radius
+//          RoundedRectangle(cornerRadius: 10)
+//            .fill(Color.white)
+//
+//          VStack {
+//            // Custom close button at the top
+//            Button(action: {
+//              // Close action
+//            }) {
+//              Image(systemName: "xmark.circle.fill")
+//                .font(.title)
+//                .foregroundColor(.gray)
+//            }
+//            .padding(.top, 10)
+//
+//            ScrollView {
+//              // Your popup content here
+//            }
+//          }
+//          .padding()
+//        }
+//          .frame(maxWidth: .infinity, maxHeight: .infinity)
+//      )
 
-        GeometryReader { _ in
-          ScrollView(showsIndicators: true) {
-            Text("MandArt")
-              .font(.title)
-              TabbedView(doc: doc, activeDisplayState: $activeDisplayState)
-          }
-        } // end input scoll bar geometry reader
+      .overlay(
+        ScrollView {
 
-      } // end VStack for user instructions, rest is 2nd col
-      .frame(width: inputWidth)
-      .padding(2)
-
-      // SECOND COLUMN - VSTACK - IS FOR IMAGES
-
-      // RIGHT COLUMN IS FOR IMAGES......................
-
-      ScrollView(showsIndicators: true) {
-        VStack(alignment: .leading) {
-          if activeDisplayState == .MandArt {
-
-            let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
-
-            GeometryReader { _ in
-              ZStack(alignment: .topLeading) {
-                ScrollView([.horizontal, .vertical], showsIndicators: true) {
-                  if let cgImage = viewModel.getImage() {
-                    Image(decorative: cgImage, scale: 1.0)
-                      .resizable()
-                      .frame(width: CGFloat(cgImage.width), alignment: .topLeading)
-                      .gesture(self.tapGesture)
-                  } else {
-                    Text("No Image Available")
-                      .foregroundColor(.gray)
-                  }
-                } // scrollview
-              } // zstack
-            } // geo reader
-
-            .frame(width: MandArtApp.AppConstants.defaultWidth(), height: MandArtApp.AppConstants.defaultHeight(), alignment: .topLeading)
-
-          } else if activeDisplayState == ActiveDisplayChoice.Gradient {
-            let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
-            GeometryReader { _ in
-              ZStack(alignment: .topLeading) {
-                if let cgImage = viewModel.getImage() {
-                  Image(decorative: cgImage, scale: 1.0)
-                    .resizable()
-                    .frame(width: CGFloat(cgImage.width), alignment: .topLeading)
-                    .gesture(self.tapGesture)
-                } else {
-                  Text("No Image Available")
-                    .foregroundColor(.gray)
-                }
-
-              }
+            if popupManager.showingAllColorsPopups[0] {
+              PopupAllColors(iAll: $popupManager.iAll,
+                             showingAllColorsPopups: $popupManager.showingAllColorsPopups)
             }
-          }
 
-          // User will click buttons on the user input side
-          // of the main screen, but we'll show the colors on the
-          // right side of the main screen (here)
+            else if popupManager.showingAllPrintableColorsPopups[0] {
+              PopupAllPrintableColors(iAP: $popupManager.iAP,
+                                      showingAllPrintableColorsPopups: $popupManager.showingAllPrintableColorsPopups)
+            }
 
-          // this checks to see which button the user clicked
-          // it will set one of the following to "true"
-          // and that's the one we'll show.
+            else if popupManager.showingPrintableColorsPopups[0] {
+              PopupPrintableColors(iP: $popupManager.iP,
+                                   showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
+            }
 
-          // There are six of each - depending on the sort order
-          // for example
-          // RGB is the first (index = 0)
-          // RBG (blue & green reversed) is the second or index 1
 
-          // THere are 3 buttons for each color sort order (e.g. RGB)
-          // ALL screen colors
-          // ALL PRINTABLE colors (uses white squares as placeholders)
-          // just the PRINTABLE colors (no white square placeholders)
-          let iAll = popupViewModel.showingAllColorsPopups.firstIndex(of: true)
-          let iAP = popupViewModel.showingAllPrintableColorsPopups.firstIndex(of: true)
-          let iP = popupViewModel.showingPrintableColorsPopups.firstIndex(of: true)
+            else if popupManager.showingAllColorsPopups[1] {
+              PopupAllColors(iAll: $popupManager.iAll,
+                             showingAllColorsPopups: $popupManager.showingAllColorsPopups)
+            }
 
-          // IF USER WANTED TO SEE ALL SCREEN COLORS
-          if iAll != nil {
-            PopupAllColors( popupViewModel: popupViewModel)
-          }
+            else if popupManager.showingAllPrintableColorsPopups[1] {
+              PopupAllPrintableColors(iAP: $popupManager.iAP,
+                                      showingAllPrintableColorsPopups: $popupManager.showingAllPrintableColorsPopups)
+            }
 
-          // IF USER WANTED TO SEE ALL PRINTABLE COLORS WITH PLACEHOLDERS
-          if iAP != nil {
-            PopupAllPrintableColors(popupViewModel: popupViewModel)
-          }
+            else if popupManager.showingPrintableColorsPopups[1] {
+              PopupPrintableColors(iP: $popupManager.iP,
+                                   showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
+            }
 
-          // ONLY PRINTABLE COLORS WITHOUT PLACEHOLDERS
-          if iP != nil {
-            PopupPrintableColors(popupViewModel: popupViewModel)
-          }
 
-        } // end VStack right side (picture space)
-        .padding(2)
-        Spacer()
-      } // end image scroll view
-      .padding(2)
+            else if popupManager.showingAllColorsPopups[2] {
+              PopupAllColors(iAll: $popupManager.iAll,
+                             showingAllColorsPopups: $popupManager.showingAllColorsPopups)
+            }
 
-    } // end Opening HStack
-    .onAppear {
-      activeDisplayState = .MandArt
-    }
-  } // end view body
+            else if popupManager.showingAllPrintableColorsPopups[2] {
+              PopupAllPrintableColors(iAP: $popupManager.iAP,
+                                      showingAllPrintableColorsPopups: $popupManager.showingAllPrintableColorsPopups)
+            }
 
-  /**
-   tapGesture is a variable that defines a drag gesture
-   for the user interaction in the user interface.
+            else if popupManager.showingPrintableColorsPopups[2] {
+              PopupPrintableColors(iP: $popupManager.iP,
+                                   showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
+            }
 
-   The gesture is of type some Gesture
-   and uses the DragGesture struct from the SwiftUI framework.
+            else if popupManager.showingAllColorsPopups[3] {
+              PopupAllColors(iAll: $popupManager.iAll,
+                             showingAllColorsPopups: $popupManager.showingAllColorsPopups)
+            }
 
-   The minimum distance for the drag gesture is set to 0 units,
-   and the coordinate space for the gesture is set to .local.
+            else if popupManager.showingAllPrintableColorsPopups[3] {
+              PopupAllPrintableColors(iAP: $popupManager.iAP,
+                                      showingAllPrintableColorsPopups: $popupManager.showingAllPrintableColorsPopups)
+            }
 
-   The onChanged closure is triggered
-   when the gesture is changed by the user's interaction.
+            else if popupManager.showingPrintableColorsPopups[3] {
+              PopupPrintableColors(iP: $popupManager.iP,
+                                   showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
+            }
 
-   The onEnded closure is triggered
-   when the user lifts the mouse off the screen,
-   indicating the tap gesture has completed.
-   */
-  var tapGesture: some Gesture {
-    DragGesture(minimumDistance: 0, coordinateSpace: .local)
-      .onChanged { value in
-        if self.activeDisplayState == .MandArt {
-          // store distance the touch has moved as a sum of all movements
-          self.moved += value.translation.width + value.translation.height
-          // only set the start time if it's the first event
-          if self.startTime == nil {
-            self.startTime = value.time
-          }
+            else if popupManager.showingAllColorsPopups[4] {
+              PopupAllColors(iAll: $popupManager.iAll,
+                             showingAllColorsPopups: $popupManager.showingAllColorsPopups)
+            }
+
+            else if popupManager.showingAllPrintableColorsPopups[4] {
+              PopupAllPrintableColors(iAP: $popupManager.iAP,
+                                      showingAllPrintableColorsPopups: $popupManager.showingAllPrintableColorsPopups)
+            }
+
+            else if popupManager.showingPrintableColorsPopups[4] {
+              PopupPrintableColors(iP: $popupManager.iP,
+                                   showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
+            }
+
+
+
+            else if popupManager.showingAllColorsPopups[5] {
+              PopupAllColors(iAll: $popupManager.iAll,
+                             showingAllColorsPopups: $popupManager.showingAllColorsPopups)
+            }
+
+            else if popupManager.showingAllPrintableColorsPopups[5] {
+              PopupAllPrintableColors(iAP: $popupManager.iAP,
+                                      showingAllPrintableColorsPopups: $popupManager.showingAllPrintableColorsPopups)
+            }
+
+            else  if popupManager.showingPrintableColorsPopups[5] {
+              PopupPrintableColors(iP: $popupManager.iP,
+                                   showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
+            }
+
+
+
+
         }
+          .edgesIgnoringSafeArea(.top) // Cover entire window
+      )
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .padding(.leading, 0)
+      .onAppear {
+        activeDisplayState = .MandArt
       }
-      .onEnded { tap in
-        if self.activeDisplayState == .MandArt {
-          // if we haven't moved very much, treat it as a tap event
-          if self.moved < 2, self.moved > -2 {
-            doc.picdef.xCenter = getCenterXFromTap(tap)
-            doc.picdef.yCenter = getCenterYFromTap(tap)
-            activeDisplayState = .MandArt // redraw after new center
-          }
-          // if we have moved a lot, treat it as a drag event
-          else {
-            doc.picdef.xCenter = getCenterXFromDrag(tap)
-            doc.picdef.yCenter = getCenterYFromDrag(tap)
-            activeDisplayState = .MandArt // redraw after drag
-          }
-          // reset tap event states
-          self.moved = 0
-          self.startTime = nil
-        }
-      }
-  } // end tapGesture
-
+    } // geo
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+  } // body
 }
