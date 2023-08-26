@@ -21,13 +21,6 @@ struct GradientGrid {
     let bytesPerPixel = parameters.bytesPerPixel
     let rasterBufferPtr = parameters.rasterBufferPtr
 
-    print("BHJ: calculating gradient grid given inputs:")
-    print("  imageWidth = \(imageWidth)")
-    print("  imageHeight = \(imageHeight)")
-    print("  colorLeft = \(colorLeft)")
-    print("  colorRight = \(colorRight)")
-    print("  gradientThreshold = \(gradientThreshold)")
-
     // Iterate over each row (vertical iteration)
     for row in 0 ..< imageHeight {
       // Iterate over each column (horizontal iteration)
