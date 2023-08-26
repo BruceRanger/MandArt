@@ -39,6 +39,7 @@ struct TabSavePopup: View {
 
         Button("All Printable") {
           resetAllPopupsToFalse()
+          print("true/false", popupManager.showingAllPrintableColorsPopups[0])
           popupManager.showingAllPrintableColorsPopups[0] = true
         }
         .padding([.bottom], 2)
