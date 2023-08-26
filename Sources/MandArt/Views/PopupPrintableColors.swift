@@ -12,20 +12,16 @@ struct PopupPrintableColors: View {
 
   var body: some View {
 
-    ZStack(alignment: .topLeading) {
+    ZStack {
       Color.white
         .opacity(0.5)
-      VStack(alignment: .leading, spacing: 10) {
+      VStack {
 
-        HStack {
           Button(action: {
-            showingPrintableColorsPopups[iP!] = false
+            showingPrintableColorsPopups = Array(repeating: false, count: 6)
           }) {
             Image(systemName: "xmark.circle")
-              .padding(10)
           }
-          Spacer()
-        }
 
         VStack {
           let arrCGs = MandMath.getPrintableCGColorListSorted(iSort: iP!)
