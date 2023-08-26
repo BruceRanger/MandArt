@@ -5,7 +5,6 @@ struct TabSave: View {
   @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager = PopupManager()
 
-
   var body: some View {
 
     VStack {
@@ -39,7 +38,7 @@ struct TabSave: View {
 
       } // end second section
       Spacer()
-      
+
       } // end vstack
   } // end body
 

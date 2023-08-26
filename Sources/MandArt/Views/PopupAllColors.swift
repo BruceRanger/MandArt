@@ -10,7 +10,6 @@ struct PopupAllColors: View {
     self._showingAllColorsPopups = showingAllColorsPopups
   }
 
-
   var body: some View {
 
     ZStack {
@@ -18,7 +17,7 @@ struct PopupAllColors: View {
         .opacity(0.5)
       VStack {
         Button(action: {
-          showingAllColorsPopups[iAll!] = false
+          showingAllColorsPopups = Array(repeating: false, count: 6)
         }) {
           Image(systemName: "xmark.circle")
         }

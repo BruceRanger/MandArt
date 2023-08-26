@@ -22,7 +22,6 @@ struct WindowAccessor: NSViewRepresentable {
   func updateNSView(_ nsView: NSView, context: Context) {}
 }
 
-
 @available(macOS 12.0, *)
 @main
 struct MandArtApp: App {
@@ -46,7 +45,6 @@ struct MandArtApp: App {
     static let minWelcomeWidth: CGFloat = 500.0
     static let minWelcomeHeight: CGFloat = 500.0
     static let heightMargin: CGFloat = 50.0
-
 
     internal static func defaultWidth() -> CGFloat {
       if let screenWidth = NSScreen.main?.visibleFrame.width {
@@ -90,7 +88,6 @@ struct MandArtApp: App {
       return defaultOpeningHeight
     }
 
-
   }
 
   var body: some Scene {
@@ -116,7 +113,6 @@ struct MandArtApp: App {
       }
     }
 
-
     DocumentGroup(newDocument: { MandArtDocument() }) { file in
       let doc = file.document
         ContentView(doc: doc)
@@ -130,7 +126,6 @@ struct MandArtApp: App {
             NSWindow.allowsAutomaticWindowTabbing = false
           }
       } // DG
-
 
     .commands {
      appMenuCommands()

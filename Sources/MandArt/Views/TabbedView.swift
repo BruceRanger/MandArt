@@ -8,8 +8,6 @@ struct TabbedView: View {
   @Binding var activeDisplayState: ActiveDisplayChoice
   @State private var selectedTab = 0
 
-
-
   init(doc: MandArtDocument,
        popupManager: PopupManager,
        activeDisplayState: Binding<ActiveDisplayChoice>
@@ -27,7 +25,6 @@ struct TabbedView: View {
               .tabItem {
           Label("1.Find", systemImage: "aspectratio")
         }.tag(0)
-
 
       TabColor(doc: doc, activeDisplayState: $activeDisplayState)
         .tabItem {
@@ -47,10 +44,10 @@ struct TabbedView: View {
         }.tag(3)
 
     } // end tabview
-    .onChange(of: selectedTab) { newValue in
+    .onChange(of: selectedTab) { _ in
       activeDisplayState = .MandArt
     }
     .padding(2)
   } // end body
-  
+
 }

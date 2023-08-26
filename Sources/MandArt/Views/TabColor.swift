@@ -37,8 +37,6 @@ struct TabColor: View {
 
       }// end section
 
-
-
       Section(header:
                 Text("Test Gradient between Adjacent Colors")
         .font(.headline)
@@ -71,10 +69,6 @@ struct TabColor: View {
           .help("Draw a gradient between two adjoining colors.")
         } // end hstack
       } // end section
-
-
-
-
 
       Spacer() // Pushes everything above it to take as little space as possible
 

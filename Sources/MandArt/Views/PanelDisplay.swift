@@ -2,7 +2,6 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct PanelDisplay: View {
-  
 
   @ObservedObject var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
@@ -11,7 +10,6 @@ struct PanelDisplay: View {
   @State private var startTime: Date?
 
   var body: some View {
-    
 
       VStack(alignment: .leading) {
 
@@ -48,24 +46,15 @@ struct PanelDisplay: View {
                   .foregroundColor(.gray)
               }
 
-            } //scroll
+            } // scroll
           } // zstack
 
         }
 
-
-
-
-
       } // end VStack right side (picture space)
       .padding(2)
 
-
-
-  } //body
-
-
-
+  } // body
 
   /**
    tapGesture is a variable that defines a drag gesture
@@ -117,7 +106,6 @@ struct PanelDisplay: View {
       }
 
   }
-
 
   /**
    Returns the new x to be the picture center x when user drags in the picture.
@@ -211,5 +199,4 @@ struct PanelDisplay: View {
     return newCenterY
   }
 
-  
 }

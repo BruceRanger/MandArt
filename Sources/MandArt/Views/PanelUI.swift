@@ -2,7 +2,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct PanelUI: View {
-  
+
   @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager = PopupManager()
 
@@ -23,13 +23,14 @@ struct PanelUI: View {
       VStack {
         Text("MandArt Inputs")
           .font(.title)
+          .padding(.top)
 
-        TabbedView(doc: doc,popupManager: popupManager,
+        TabbedView(doc: doc, popupManager: popupManager,
                    activeDisplayState: $activeDisplayState
                   )
         Spacer()
       }
-      .frame(width:.infinity)
+      .frame(width: .infinity)
 
   }
 }

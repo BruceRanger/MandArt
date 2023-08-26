@@ -27,8 +27,6 @@ struct TabFind: View {
 
     VStack {
 
-
-
         Section(header:
                   Text("Set Image Size")
           .font(.headline)
@@ -82,14 +80,8 @@ struct TabFind: View {
 
           } // end hstack
         } // end section
-    
-
 
         Divider()
-
-
-
-
 
       Section(header:
                 Text("")
@@ -215,7 +207,6 @@ struct TabFind: View {
           )
         }
 
-
         // Hold fraction with Slider
         HStack {
           Text("Hold fraction (yY)")
@@ -248,7 +239,6 @@ struct TabFind: View {
       Spacer()
 
     } // end vstack
-
 
   } // end body
 }

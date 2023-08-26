@@ -1,7 +1,6 @@
 import SwiftUI
 import Combine
 
-
 class PopupManager: ObservableObject {
 
   @Published var showingAllColorsPopups: [Bool] = Array(repeating: false, count: 6)
@@ -10,7 +9,6 @@ class PopupManager: ObservableObject {
   @Published var iAP: Int?
   @Published var showingAllPrintableColorsPopups: [Bool] = Array(repeating: false, count: 6)
   @Published var iP: Int?
-
 
   private var cancellables: [AnyCancellable] = []
 

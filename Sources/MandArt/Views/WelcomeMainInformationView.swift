@@ -1,7 +1,6 @@
 import SwiftUI
 import AppKit
 
-
 @available(macOS 11.0, *)
 struct WelcomeMainInformationView: View {
 

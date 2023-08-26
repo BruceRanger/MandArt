@@ -17,18 +17,15 @@ struct PopupPrintableColors: View {
         .opacity(0.5)
       VStack(alignment: .leading, spacing: 10) {
 
-
         HStack {
           Button(action: {
             showingPrintableColorsPopups[iP!] = false
           }) {
             Image(systemName: "xmark.circle")
-              .padding(10) 
+              .padding(10)
           }
           Spacer()
         }
-
-
 
         VStack {
           let arrCGs = MandMath.getPrintableCGColorListSorted(iSort: iP!)

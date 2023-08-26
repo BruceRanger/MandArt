@@ -5,7 +5,7 @@ extension MandArtApp {
   func appMenuCommands() -> some Commands {
     Group {
       // Disable "New Window" option
-      CommandGroup(replacing: .newItem) {}
+      // CommandGroup(replacing: .newItem) {}
 
       CommandMenu("Welcome") {
         Button("Show Welcome Screen") {
