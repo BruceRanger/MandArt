@@ -5,9 +5,12 @@ class PopupManager: ObservableObject {
 
   enum ShowingCube {
     case None
-    case Red
-    case Green
-    case Blue
+    case APRed
+    case APGreen
+    case APBlue
+    case AllRed
+    case AllGreen
+    case AllBlue
   }
 
 

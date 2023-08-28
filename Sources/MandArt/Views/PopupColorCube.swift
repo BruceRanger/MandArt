@@ -27,11 +27,17 @@ struct PopupColorCube: View {
         VStack {
           var arrCGs: [CGColor] {
             switch popupManager.showingCube {
-              case .Red:
+            case .AllRed:
                 return MandMath.getAllPrintableCGColorsList(iSort: 0)
-              case .Green:
+              case .AllGreen:
                 return MandMath.getAllPrintableCGColorsList(iSort: 2)
-              case .Blue:
+              case .AllBlue:
+                return MandMath.getAllPrintableCGColorsList(iSort: 4)
+              case .APRed:
+                return MandMath.getAllPrintableCGColorsList(iSort: 0)
+              case .APGreen:
+                return MandMath.getAllPrintableCGColorsList(iSort: 2)
+              case .APBlue:
                 return MandMath.getAllPrintableCGColorsList(iSort: 4)
               case .None:
                 return []  // You might want to handle this case as well

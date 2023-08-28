@@ -380,7 +380,6 @@ enum MandMath {
   }
 
   static let colorInts = [0, 36, 73, 109, 146, 182, 219, 255]
-
   static let printableColorListRGB = printableColorList.sorted { lhs, rhs -> Bool in
     if lhs[0] != rhs[0] {
       // Sort by first column red

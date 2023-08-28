@@ -22,10 +22,7 @@ struct TabSavePopup: View {
         Text("Sort by Blues")
           .font(.headline)
           .fontWeight(.medium)
-        Button("Cube View"){
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingCube = .Blue
-        }
+        
       }
 
       HStack {
@@ -40,7 +37,7 @@ struct TabSavePopup: View {
 
         Button("All/Printable") {
           popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllPrintableColorsPopups[0] = true
+          popupManager.showingCube = .APBlue
         }
         .padding([.bottom], 2)
 
@@ -52,25 +49,7 @@ struct TabSavePopup: View {
 
       }
 
-      HStack {
-        Text("Red-Green:")
-        Button("All") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllColorsPopups[2] = true
-        }
-        .padding([.bottom], 2)
-        Button("All/Printable") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllPrintableColorsPopups[2] = true
-        }
-        .padding([.bottom], 2)
-        Button("Printable") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[2] = true
-        }
-        .padding([.bottom], 2)
 
-      }
 
     }
     Divider()
@@ -81,10 +60,7 @@ struct TabSavePopup: View {
         Text("Sort by Greens")
           .font(.headline)
           .fontWeight(.medium)
-        Button("Cube View"){
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingCube = .Green
-        }
+        
       }
       HStack {
         Text("Blue-Red:")
@@ -96,7 +72,7 @@ struct TabSavePopup: View {
 
         Button("All/Printable") {
           popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllPrintableColorsPopups[1] = true
+          popupManager.showingCube = .APGreen
         }
         .padding([.bottom], 2)
 
@@ -107,24 +83,7 @@ struct TabSavePopup: View {
         .padding([.bottom], 2)
       } // END HSTACK
 
-      HStack {
-        Text("Red-Blue:")
-        Button("All") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllColorsPopups[4] = true
-        }
-        .padding([.bottom], 2)
-        Button("All/Printable") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllPrintableColorsPopups[4] = true
-        }
-        .padding([.bottom], 2)
-        Button("Printable") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[4] = true
-        }
-        .padding([.bottom], 2)
-      }
+
      
 
     }
@@ -135,10 +94,7 @@ struct TabSavePopup: View {
         Text("Sort by Reds")
           .font(.headline)
           .fontWeight(.medium)
-        Button("Cube View"){
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingCube = .Red
-        }
+
       }
 
       HStack {
@@ -151,8 +107,7 @@ struct TabSavePopup: View {
         .padding([.bottom], 2)
         Button("All/Printable") {
           popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllPrintableColorsPopups[3] = true
-        }
+          popupManager.showingCube = .APRed        }
         .padding([.bottom], 2)
         Button("Printable") {
           popupManager.resetAllPopupsToFalse()
@@ -161,25 +116,7 @@ struct TabSavePopup: View {
         .padding([.bottom], 2)
       } // END HSTACK
 
-      HStack {
 
-        Text("Green-Blue:")
-        Button("All") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllColorsPopups[5] = true
-        }
-        .padding([.bottom], 2)
-        Button("All/Printable") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllPrintableColorsPopups[5] = true
-        }
-        .padding([.bottom], 2)
-        Button("Printable") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[5] = true
-        }
-        .padding([.bottom], 2)
-      } // END  HSTACK START WITH BLUE
     }
 
   }
