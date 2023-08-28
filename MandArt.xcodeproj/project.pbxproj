@@ -42,8 +42,6 @@
 		88C358102A980312007E7A92 /* SliderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3580F2A980312007E7A92 /* SliderTextView.swift */; };
 		88C358122A98101F007E7A92 /* TabColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358112A98101F007E7A92 /* TabColor.swift */; };
 		88C358142A985CD1007E7A92 /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358132A985CD1007E7A92 /* ImageViewModel.swift */; };
-		88C358162A985DA3007E7A92 /* PopupAllColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358152A985DA3007E7A92 /* PopupAllColors.swift */; };
-		88C358182A985DE5007E7A92 /* PopupAllPrintableColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358172A985DE5007E7A92 /* PopupAllPrintableColors.swift */; };
 		88C3581A2A985E14007E7A92 /* PopupPrintableColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358192A985E14007E7A92 /* PopupPrintableColors.swift */; };
 		88C3581C2A98EA45007E7A92 /* PanelUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3581B2A98EA45007E7A92 /* PanelUI.swift */; };
 		88C3581E2A98EA53007E7A92 /* PanelDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */; };
@@ -90,8 +88,6 @@
 		88C3580F2A980312007E7A92 /* SliderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTextView.swift; sourceTree = "<group>"; };
 		88C358112A98101F007E7A92 /* TabColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabColor.swift; sourceTree = "<group>"; };
 		88C358132A985CD1007E7A92 /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
-		88C358152A985DA3007E7A92 /* PopupAllColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAllColors.swift; sourceTree = "<group>"; };
-		88C358172A985DE5007E7A92 /* PopupAllPrintableColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAllPrintableColors.swift; sourceTree = "<group>"; };
 		88C358192A985E14007E7A92 /* PopupPrintableColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupPrintableColors.swift; sourceTree = "<group>"; };
 		88C3581B2A98EA45007E7A92 /* PanelUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelUI.swift; sourceTree = "<group>"; };
 		88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelDisplay.swift; sourceTree = "<group>"; };
@@ -171,8 +167,6 @@
 				88C358042A97D7A0007E7A92 /* TabTune.swift */,
 				88A271A12A97158200766654 /* TabSave.swift */,
 				88C3580A2A97E9F9007E7A92 /* TabSavePopup.swift */,
-				88C358152A985DA3007E7A92 /* PopupAllColors.swift */,
-				88C358172A985DE5007E7A92 /* PopupAllPrintableColors.swift */,
 				88C358192A985E14007E7A92 /* PopupPrintableColors.swift */,
 				880250E02A9D21B00076E001 /* PopupColorCube.swift */,
 			);
@@ -300,7 +294,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				88C357FB2A97BC13007E7A92 /* DelayedTextFieldInt.swift in Sources */,
-				88C358162A985DA3007E7A92 /* PopupAllColors.swift in Sources */,
 				88A271B52A9790DB00766654 /* WelcomeWindowController.swift in Sources */,
 				882BAED929346C92003ACB0B /* Hue.swift in Sources */,
 				88C357FD2A97C518007E7A92 /* DelayedTextFieldDouble.swift in Sources */,
@@ -310,7 +303,6 @@
 				88A271B72A979A0E00766654 /* MandArtApp+Menu.swift in Sources */,
 				88C358122A98101F007E7A92 /* TabColor.swift in Sources */,
 				88A133CE2A9677C500A6E3CA /* GradientGrid.swift in Sources */,
-				88C358182A985DE5007E7A92 /* PopupAllPrintableColors.swift in Sources */,
 				88A2719E2A96871A00766654 /* ArtGrid.swift in Sources */,
 				88C358142A985CD1007E7A92 /* ImageViewModel.swift in Sources */,
 				889E3F24293AE0B6009944AC /* Documentation.docc in Sources */,

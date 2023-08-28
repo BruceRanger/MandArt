@@ -59,6 +59,12 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     self.picdef = PictureDefinition(hues: hues)
   }
 
+  func getUserCGColorList() -> [CGColor] {
+    return self.picdef.hues.map { hue in
+      return CGColor(red: CGFloat(hue.r / 255.0), green: CGFloat(hue.g / 255.0), blue: CGFloat(hue.b / 255.0), alpha: 1.0)
+    }
+  }
+
   /**
    Initialize a document with our picdef property
    - Parameter configuration: config

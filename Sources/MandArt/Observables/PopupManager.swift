@@ -13,13 +13,6 @@ class PopupManager: ObservableObject {
     case AllBlue
   }
 
-
-  @Published var showingAllColorsPopups: [Bool] = Array(repeating: false, count: 6)
-  @Published var iAll: Int?
-
-  @Published var showingAllPrintableColorsPopups: [Bool] = Array(repeating: false, count: 6)
-  @Published var iAP: Int?
-
   @Published var showingPrintableColorsPopups: [Bool] = Array(repeating: false, count: 6)
   @Published var iP: Int?
 
@@ -28,15 +21,6 @@ class PopupManager: ObservableObject {
   private var cancellables: [AnyCancellable] = []
 
   init() {
-    $showingAllColorsPopups
-      .map { $0.firstIndex(of: true) }
-      .assign(to: \.iAll, on: self)
-      .store(in: &cancellables)
-
-    $showingAllPrintableColorsPopups
-      .map { $0.firstIndex(of: true) }
-      .assign(to: \.iAP, on: self)
-      .store(in: &cancellables)
 
     $showingPrintableColorsPopups
       .map { $0.firstIndex(of: true) }
@@ -45,9 +29,7 @@ class PopupManager: ObservableObject {
   }
 
   func resetAllPopupsToFalse() {
-    showingAllColorsPopups = Array(repeating: false, count: 6)
     showingPrintableColorsPopups = Array(repeating: false, count: 6)
-    showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
     showingCube = .None
 
   }

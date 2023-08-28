@@ -104,9 +104,9 @@ enum MandMath {
   static func getPrintableCGColorListSorted(iSort: Int) -> [CGColor] {
     var lst: [CGColor] = []
     switch iSort {
-    
+
     // SORT FOR PRINTABLES *********************************
-    
+
     case 0: // rgb
       lst = MandMath.printableColorListRGB.map { colorValues in
         let red = CGFloat(colorValues[0]) / 255.0
@@ -153,6 +153,10 @@ enum MandMath {
     return lst
   }
 
+  static func getUserCGColorsList() {
+
+  }
+
        /**
     Get ALL screen colors to display as little squares
     Parameter: iSort indicates the order to present the colors
@@ -163,12 +167,11 @@ enum MandMath {
         */
   static func getAllCGColorsList(iSort: Int) -> [CGColor] {
     var allColors: [CGColor] = []
-    
+
         // SORT FOR ALL (LEFT) *********************************
 
-    
     switch iSort {
-    
+
     case 0: // rgb
 
       for r in self.colorInts {
@@ -183,7 +186,6 @@ enum MandMath {
         }
       }
     case 1: // rbg
-    
 
       for r in self.colorInts {
         for b in self.colorInts {
@@ -197,7 +199,6 @@ enum MandMath {
         }
       }
     case 2: // grb
-    
 
       for g in self.colorInts {
         for r in self.colorInts {
@@ -211,7 +212,6 @@ enum MandMath {
         }
       }
     case 3: // gbr
-    
 
       for g in self.colorInts {
         for b in self.colorInts {
@@ -225,7 +225,6 @@ enum MandMath {
         }
       }
     case 4: // brg
-    
 
       for b in self.colorInts {
         for r in self.colorInts {
@@ -239,7 +238,6 @@ enum MandMath {
         }
       }
     default: // bgr
-    
 
       for b in self.colorInts {
         for g in self.colorInts {
@@ -267,13 +265,13 @@ enum MandMath {
         */
   static func getAllPrintableCGColorsList(iSort: Int) -> [CGColor] {
     // middle column of popup buttons
-    
+
     var allColors: [CGColor] = []
-    
+
         // SORT FOR ALL PRINTABLES (MIDDLE) *********************************
 
     switch iSort {
-    
+
     case 0: // rgb
       for r in self.colorInts {
         for g in self.colorInts {

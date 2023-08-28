@@ -10,28 +10,25 @@ struct TabSavePopup: View {
       self.popupManager = popupManager
     }
 
- 
-
   var body: some View {
 
-
    Divider()
-    Group{
+    Group {
 
       HStack(alignment: .top) {
-        Text("Sort by Blues")
+        Text("Sort by Mostly Blue")
           .font(.headline)
           .fontWeight(.medium)
-        
+
       }
 
       HStack {
 
-        Text("Green-Red:")
+        Text("Then Green, Red:")
 
         Button("All") {
           popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllColorsPopups[0] = true
+          popupManager.showingCube = .AllBlue
         }
         .padding([.bottom], 2)
 
@@ -49,24 +46,22 @@ struct TabSavePopup: View {
 
       }
 
-
-
     }
     Divider()
 
     Group {
 
       HStack(alignment: .top) {
-        Text("Sort by Greens")
+        Text("Sort by Mostly Green")
           .font(.headline)
           .fontWeight(.medium)
-        
+
       }
       HStack {
-        Text("Blue-Red:")
+        Text("Then Blue, Red:")
         Button("All") {
           popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllColorsPopups[1] = true
+          popupManager.showingCube = .AllGreen
         }
         .padding([.bottom], 2)
 
@@ -83,26 +78,21 @@ struct TabSavePopup: View {
         .padding([.bottom], 2)
       } // END HSTACK
 
-
-     
-
     }
     Divider()
     Group {
 
       HStack(alignment: .top) {
-        Text("Sort by Reds")
+        Text("Sort by Mostly Red")
           .font(.headline)
           .fontWeight(.medium)
-
       }
 
       HStack {
-
-        Text("Blue-Green:")
+        Text("Then Blue, Green:")
         Button("All") {
           popupManager.resetAllPopupsToFalse()
-          popupManager.showingAllColorsPopups[3] = true
+          popupManager.showingCube = .AllRed
         }
         .padding([.bottom], 2)
         Button("All/Printable") {
@@ -115,7 +105,6 @@ struct TabSavePopup: View {
         }
         .padding([.bottom], 2)
       } // END HSTACK
-
 
     }
 
