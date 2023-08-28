@@ -3,12 +3,24 @@ import Combine
 
 class PopupManager: ObservableObject {
 
+  enum ShowingCube {
+    case None
+    case Red
+    case Green
+    case Blue
+  }
+
+
   @Published var showingAllColorsPopups: [Bool] = Array(repeating: false, count: 6)
   @Published var iAll: Int?
-  @Published var showingPrintableColorsPopups: [Bool] = Array(repeating: false, count: 6)
-  @Published var iAP: Int?
+
   @Published var showingAllPrintableColorsPopups: [Bool] = Array(repeating: false, count: 6)
+  @Published var iAP: Int?
+
+  @Published var showingPrintableColorsPopups: [Bool] = Array(repeating: false, count: 6)
   @Published var iP: Int?
+
+  @Published var showingCube: ShowingCube = .None
 
   private var cancellables: [AnyCancellable] = []
 
@@ -18,14 +30,22 @@ class PopupManager: ObservableObject {
       .assign(to: \.iAll, on: self)
       .store(in: &cancellables)
 
-    $showingPrintableColorsPopups
-      .map { $0.firstIndex(of: true) }
-      .assign(to: \.iP, on: self)
-      .store(in: &cancellables)
-
     $showingAllPrintableColorsPopups
       .map { $0.firstIndex(of: true) }
       .assign(to: \.iAP, on: self)
       .store(in: &cancellables)
+
+    $showingPrintableColorsPopups
+      .map { $0.firstIndex(of: true) }
+      .assign(to: \.iP, on: self)
+      .store(in: &cancellables)
+  }
+
+  func resetAllPopupsToFalse() {
+    showingAllColorsPopups = Array(repeating: false, count: 6)
+    showingPrintableColorsPopups = Array(repeating: false, count: 6)
+    showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
+    showingCube = .None
+
   }
 }

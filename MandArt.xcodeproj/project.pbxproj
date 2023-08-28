@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6A3AEC0F26F879E700D7E31A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3AEC0E26F879E700D7E31A /* ContentView.swift */; };
 		6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A3AEC1026F879F500D7E31A /* Assets.xcassets */; };
+		880250DF2A9D1FA10076E001 /* ContentViewPopups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880250DE2A9D1FA10076E001 /* ContentViewPopups.swift */; };
+		880250E12A9D21B00076E001 /* PopupColorCube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880250E02A9D21B00076E001 /* PopupColorCube.swift */; };
 		8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E113293A5011005F5CB4 /* MandArtApp.swift */; };
 		8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E114293A5011005F5CB4 /* MandArtDocument.swift */; };
 		882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED2293409FE003ACB0B /* PictureDefinition.swift */; };
@@ -53,6 +55,8 @@
 		6A3AEC0E26F879E700D7E31A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6A3AEC1026F879F500D7E31A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A3AEC1826F879F500D7E31A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		880250DE2A9D1FA10076E001 /* ContentViewPopups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewPopups.swift; sourceTree = "<group>"; };
+		880250E02A9D21B00076E001 /* PopupColorCube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupColorCube.swift; sourceTree = "<group>"; };
 		8806E113293A5011005F5CB4 /* MandArtApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandArtApp.swift; sourceTree = "<group>"; };
 		8806E114293A5011005F5CB4 /* MandArtDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandArtDocument.swift; sourceTree = "<group>"; };
 		882BAED2293409FE003ACB0B /* PictureDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureDefinition.swift; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				6A3AEC0E26F879E700D7E31A /* ContentView.swift */,
+				880250DE2A9D1FA10076E001 /* ContentViewPopups.swift */,
 				88A271A92A977AF300766654 /* ContentView+GestureCalculations.swift */,
 				88C3581B2A98EA45007E7A92 /* PanelUI.swift */,
 				88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */,
@@ -169,6 +174,7 @@
 				88C358152A985DA3007E7A92 /* PopupAllColors.swift */,
 				88C358172A985DE5007E7A92 /* PopupAllPrintableColors.swift */,
 				88C358192A985E14007E7A92 /* PopupPrintableColors.swift */,
+				880250E02A9D21B00076E001 /* PopupColorCube.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -318,11 +324,13 @@
 				8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */,
 				88C358212A99A08D007E7A92 /* PopupManager.swift in Sources */,
 				88A271AC2A97843400766654 /* WelcomeHeaderView.swift in Sources */,
+				880250E12A9D21B00076E001 /* PopupColorCube.swift in Sources */,
 				88C358012A97D675007E7A92 /* TabFind.swift in Sources */,
 				88C3581E2A98EA53007E7A92 /* PanelDisplay.swift in Sources */,
 				88C358072A97D983007E7A92 /* TabbedView.swift in Sources */,
 				88A271A22A97158200766654 /* TabSave.swift in Sources */,
 				88C358052A97D7A0007E7A92 /* TabTune.swift in Sources */,
+				880250DF2A9D1FA10076E001 /* ContentViewPopups.swift in Sources */,
 				88A271AA2A977AF300766654 /* ContentView+GestureCalculations.swift in Sources */,
 				88A271B22A97860700766654 /* WelcomeMainView.swift in Sources */,
 				88A271AE2A97844200766654 /* WelcomeMainImageView.swift in Sources */,

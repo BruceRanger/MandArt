@@ -10,41 +10,42 @@ struct TabSavePopup: View {
       self.popupManager = popupManager
     }
 
-  func resetAllPopupsToFalse() {
-    popupManager.showingAllColorsPopups = Array(repeating: false, count: 6)
-    popupManager.showingPrintableColorsPopups = Array(repeating: false, count: 6)
-    popupManager.showingAllPrintableColorsPopups = Array(repeating: false, count: 6)
-  }
+ 
 
   var body: some View {
 
-    // BLUES ***AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
-    Section(header:
-              Text("Start with Blues") 
-      .font(.headline)
-      .fontWeight(.medium)
-      .padding([ .top])
-    ) {
+   Divider()
+    Group{
+
+      HStack(alignment: .top) {
+        Text("Sort by Blues")
+          .font(.headline)
+          .fontWeight(.medium)
+        Button("Cube View"){
+          popupManager.resetAllPopupsToFalse()
+          popupManager.showingCube = .Blue
+        }
+      }
 
       HStack {
 
-        Text("Sort by Rgb [0]:")
+        Text("Green-Red:")
 
         Button("All") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[0] = true
         }
         .padding([.bottom], 2)
 
-        Button("All Printable") {
-          resetAllPopupsToFalse()
+        Button("All/Printable") {
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllPrintableColorsPopups[0] = true
         }
         .padding([.bottom], 2)
 
         Button("Printable") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[0] = true
         }
         .padding([.bottom], 2)
@@ -52,126 +53,134 @@ struct TabSavePopup: View {
       }
 
       HStack {
-        Text("Sort by Grb [2]:")
+        Text("Red-Green:")
         Button("All") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[2] = true
         }
         .padding([.bottom], 2)
-        Button("All Printable") {
-          resetAllPopupsToFalse()
+        Button("All/Printable") {
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllPrintableColorsPopups[2] = true
         }
         .padding([.bottom], 2)
         Button("Printable") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[2] = true
         }
         .padding([.bottom], 2)
 
       }
 
-    } // end section
+    }
+    Divider()
 
-    // GREENS ***AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    Group {
 
-    Section(header:
-              Text("Start with Greens")
-      .font(.headline)
-      .fontWeight(.medium)
-      .padding([ .top])
-    ) {
+      HStack(alignment: .top) {
+        Text("Sort by Greens")
+          .font(.headline)
+          .fontWeight(.medium)
+        Button("Cube View"){
+          popupManager.resetAllPopupsToFalse()
+          popupManager.showingCube = .Green
+        }
+      }
       HStack {
-        Text("Sort by Rbg [1]:")
+        Text("Blue-Red:")
         Button("All") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[1] = true
         }
         .padding([.bottom], 2)
 
-        Button("All Printable") {
-          resetAllPopupsToFalse()
+        Button("All/Printable") {
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllPrintableColorsPopups[1] = true
         }
         .padding([.bottom], 2)
 
         Button("Printable") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[1] = true
         }
         .padding([.bottom], 2)
       } // END HSTACK
 
       HStack {
-        Text("Sort by Brg [4]:")
+        Text("Red-Blue:")
         Button("All") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[4] = true
         }
         .padding([.bottom], 2)
-        Button("All Printable") {
-          resetAllPopupsToFalse()
+        Button("All/Printable") {
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllPrintableColorsPopups[4] = true
         }
         .padding([.bottom], 2)
         Button("Printable") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[4] = true
         }
         .padding([.bottom], 2)
       }
+     
 
-    } // end section
+    }
+    Divider()
+    Group {
 
-    // REDS ***AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-    Section(header:
-              Text("Start with Reds")
-      .font(.headline)
-      .fontWeight(.medium)
-      .padding([ .top])
-    ) {
+      HStack(alignment: .top) {
+        Text("Sort by Reds")
+          .font(.headline)
+          .fontWeight(.medium)
+        Button("Cube View"){
+          popupManager.resetAllPopupsToFalse()
+          popupManager.showingCube = .Red
+        }
+      }
 
       HStack {
 
-        Text("Sort by Gbr [3]:")
+        Text("Blue-Green:")
         Button("All") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[3] = true
         }
         .padding([.bottom], 2)
-        Button("All Printable") {
-          resetAllPopupsToFalse()
+        Button("All/Printable") {
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllPrintableColorsPopups[3] = true
         }
         .padding([.bottom], 2)
         Button("Printable") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[3] = true
         }
         .padding([.bottom], 2)
-      } // END HSTACK 
+      } // END HSTACK
 
       HStack {
 
-        Text("Sort by Bgr [5]:")
+        Text("Green-Blue:")
         Button("All") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllColorsPopups[5] = true
         }
         .padding([.bottom], 2)
-        Button("All Printable") {
-          resetAllPopupsToFalse()
+        Button("All/Printable") {
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingAllPrintableColorsPopups[5] = true
         }
         .padding([.bottom], 2)
         Button("Printable") {
-          resetAllPopupsToFalse()
+          popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[5] = true
         }
         .padding([.bottom], 2)
       } // END  HSTACK START WITH BLUE
-    } // end section
+    }
 
   }
 }
