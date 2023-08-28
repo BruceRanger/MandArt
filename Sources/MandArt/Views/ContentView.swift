@@ -27,8 +27,9 @@ struct ContentView: View {
   @State private var textFieldY: NSTextField = .init()
 
   let widthOfInputPanel: Double = 400
-
+  
   var body: some View {
+  
     GeometryReader { _ in
       HStack(alignment: .top, spacing: 0) {
         PanelUI(doc: doc,
@@ -41,6 +42,7 @@ struct ContentView: View {
 
       .overlay(
         ScrollView {
+
 
             if popupManager.showingAllColorsPopups[0] {
               PopupAllColors(iAll: $popupManager.iAll,

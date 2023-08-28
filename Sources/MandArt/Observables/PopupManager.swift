@@ -20,12 +20,12 @@ class PopupManager: ObservableObject {
 
     $showingPrintableColorsPopups
       .map { $0.firstIndex(of: true) }
-      .assign(to: \.iAP, on: self)
+      .assign(to: \.iP, on: self)
       .store(in: &cancellables)
 
     $showingAllPrintableColorsPopups
       .map { $0.firstIndex(of: true) }
-      .assign(to: \.iP, on: self)
+      .assign(to: \.iAP, on: self)
       .store(in: &cancellables)
   }
 }

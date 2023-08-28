@@ -170,7 +170,6 @@ enum MandMath {
     switch iSort {
     
     case 0: // rgb
-        print("ALL/LEFT: isort = case [0] sort by rgb")
 
       for r in self.colorInts {
         for g in self.colorInts {
@@ -185,7 +184,6 @@ enum MandMath {
       }
     case 1: // rbg
     
-        print("ALL/LEFT: isort = case [1] sort by rbg")
 
       for r in self.colorInts {
         for b in self.colorInts {
@@ -200,7 +198,6 @@ enum MandMath {
       }
     case 2: // grb
     
-            print("ALL/LEFT: isort = case [2] sort by grb")
 
       for g in self.colorInts {
         for r in self.colorInts {
@@ -215,7 +212,6 @@ enum MandMath {
       }
     case 3: // gbr
     
-            print("ALL/LEFT: isort = case [3] sort by gbr")
 
       for g in self.colorInts {
         for b in self.colorInts {
@@ -230,7 +226,6 @@ enum MandMath {
       }
     case 4: // brg
     
-            print("ALL/LEFT: isort = case [4] sort by brg")
 
       for b in self.colorInts {
         for r in self.colorInts {
@@ -245,7 +240,6 @@ enum MandMath {
       }
     default: // bgr
     
-            print("ALL/LEFT: isort = case [5] sort by bgr")
 
       for b in self.colorInts {
         for g in self.colorInts {
@@ -281,8 +275,6 @@ enum MandMath {
     switch iSort {
     
     case 0: // rgb
-        print("AP/CENTER: isort = case [0] sort by rgb")
-        
       for r in self.colorInts {
         for g in self.colorInts {
           for b in self.colorInts {
@@ -299,7 +291,6 @@ enum MandMath {
         }
       }
     case 1: // rbg
-        print("AP/CENTER: isort = case [1] sort by rbg")
 
       for r in self.colorInts {
         for b in self.colorInts {
@@ -317,7 +308,6 @@ enum MandMath {
         }
       }
     case 2: // grb
-            print("AP/CENTER: isort = case [2] sort by grb")
 
       for g in self.colorInts {
         for r in self.colorInts {
@@ -335,7 +325,6 @@ enum MandMath {
         }
       }
     case 3: // gbr
-            print("AP/CENTER: isort = case [3] sort by gbr")
 
       for g in self.colorInts {
         for b in self.colorInts {
@@ -353,7 +342,6 @@ enum MandMath {
         }
       }
     case 4: // brg
-            print("AP/CENTER: isort = case [4] sort by brg")
 
       for b in self.colorInts {
         for r in self.colorInts {
@@ -371,7 +359,6 @@ enum MandMath {
         }
       }
     default: // bgr
-            print("AP/CENTER: isort = case [5] sort by bgr")
 
       for b in self.colorInts {
         for g in self.colorInts {
