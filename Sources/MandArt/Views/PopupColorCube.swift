@@ -24,6 +24,8 @@ struct PopupColorCube: View {
 
         }
 
+        // TODO BHJ - call the mandmath case here (set iSort) .........
+        
         VStack {
           var arrCGs: [CGColor] {
             switch popupManager.showingCube {

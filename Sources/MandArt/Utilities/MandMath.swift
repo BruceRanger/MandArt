@@ -166,7 +166,6 @@ enum MandMath {
     
         // SORT FOR ALL (LEFT) *********************************
 
-    
     switch iSort {
     
     case 0: // rgb
@@ -271,6 +270,8 @@ enum MandMath {
     var allColors: [CGColor] = []
     
         // SORT FOR ALL PRINTABLES (MIDDLE) *********************************
+        
+        //  TODO BHJ add case 6 here for ALL PRINTABLE 
 
     switch iSort {
     
