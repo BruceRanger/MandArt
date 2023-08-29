@@ -27,9 +27,9 @@ struct ContentView: View {
   @State private var textFieldY: NSTextField = .init()
 
   let widthOfInputPanel: Double = 400
-  
+
   var body: some View {
-  
+
     GeometryReader { _ in
       HStack(alignment: .top, spacing: 0) {
         PanelUI(doc: doc,
@@ -41,7 +41,7 @@ struct ContentView: View {
       } // hstack
 
       .overlay(
-        ContentViewPopups(doc:doc, popupManager:popupManager, activeDisplayState:$activeDisplayState )
+        ContentViewPopups(doc: doc, popupManager: popupManager, activeDisplayState: $activeDisplayState)
       )
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .padding(.leading, 0)

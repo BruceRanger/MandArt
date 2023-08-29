@@ -1,15 +1,29 @@
 import SwiftUI
 
-
 struct PopupColorCube: View {
 
   @ObservedObject var popupManager: PopupManager
+  var hues: [Hue] // Not using Binding here
 
-  init(popupManager: PopupManager) {
+  init(popupManager: PopupManager, hues: [Hue]) {
     self.popupManager = popupManager
+    self.hues = hues
   }
 
-  
+// Example of what we know about user colors
+  // num (is the sort order)
+  // rgb value (need to convert to CGColor)
+  // Example below:
+  //
+//  var hues: [Hue] = [
+//    Hue(num: 1, r: 0.0, g: 255.0, b: 0.0),
+//    Hue(num: 2, r: 255.0, g: 255.0, b: 0.0),
+//    Hue(num: 3, r: 255.0, g: 0.0, b: 0.0),
+//    Hue(num: 4, r: 255.0, g: 0.0, b: 255.0),
+//    Hue(num: 5, r: 0.0, g: 0.0, b: 255.0),
+//    Hue(num: 6, r: 0.0, g: 255.0, b: 255.0),
+//  ]
+
   var body: some View {
 
     ZStack {
@@ -30,26 +44,26 @@ struct PopupColorCube: View {
           var arrCGs: [CGColor] {
             switch popupManager.showingCube {
             case .AllRed:
-                return MandMath.getAllPrintableCGColorsList(iSort: 0)
+                return MandMath.getAllCGColorsList(iSort: 3)
               case .AllGreen:
-                return MandMath.getAllPrintableCGColorsList(iSort: 2)
+                return MandMath.getAllCGColorsList(iSort: 1)
               case .AllBlue:
-                return MandMath.getAllPrintableCGColorsList(iSort: 4)
+                return MandMath.getAllCGColorsList(iSort: 0)
               case .APRed:
-                return MandMath.getAllPrintableCGColorsList(iSort: 0)
+                return MandMath.getAllPrintableCGColorsList(iSort: 3)
               case .APGreen:
-                return MandMath.getAllPrintableCGColorsList(iSort: 2)
+                return MandMath.getAllPrintableCGColorsList(iSort: 1)
               case .APBlue:
-                return MandMath.getAllPrintableCGColorsList(iSort: 4)
+                return MandMath.getAllPrintableCGColorsList(iSort: 0)
               case .None:
-                return []  // You might want to handle this case as well
+                return []
             }
           }
-
 
           let arrColors = arrCGs.map { cgColor in
             Color(cgColor)
           }
+
           let nColumns = 32 // 64
           let nRows = arrColors.count / nColumns
           VStack(spacing: 8) { // Add spacing between sets of 8 rows
@@ -69,7 +83,7 @@ struct PopupColorCube: View {
                   }
                 }
               }
-              .padding(.trailing, 8) // Add spacing between sets of rows
+              .padding(.trailing, 12) // Add spacing between sets of rows
             }
           }
 
