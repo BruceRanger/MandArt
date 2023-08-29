@@ -39,16 +39,22 @@ struct PopupColorCube: View {
         }
 
         // TODO BHJ - call the mandmath case here (set iSort) .........
+      
         
         VStack {
           var arrCGs: [CGColor] {
             switch popupManager.showingCube {
-            case .AllRed:
+            
+            // BHJ ALL COLORS (ON THE LEFT) 
+              case .AllRed:
                 return MandMath.getAllCGColorsList(iSort: 3)
               case .AllGreen:
                 return MandMath.getAllCGColorsList(iSort: 1)
               case .AllBlue:
-                return MandMath.getAllCGColorsList(iSort: 0)
+                return MandMath.getAllCGColorsList(iSort: 6) // BHJ
+                
+            // BHJ ALL / PRINTABLE COLORS (In the middle)
+              
               case .APRed:
                 return MandMath.getAllPrintableCGColorsList(iSort: 3)
               case .APGreen:
@@ -63,9 +69,11 @@ struct PopupColorCube: View {
           let arrColors = arrCGs.map { cgColor in
             Color(cgColor)
           }
+        
 
           let nColumns = 32 // 64
           let nRows = arrColors.count / nColumns
+          
           VStack(spacing: 8) { // Add spacing between sets of 8 rows
             ForEach(0 ..< nRows / 8, id: \.self) { setIndex in
               VStack(spacing: 0) {
