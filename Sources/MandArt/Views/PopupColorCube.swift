@@ -51,7 +51,7 @@ struct PopupColorCube: View {
               case .AllGreen:
                 return MandMath.getAllCGColorsList(iSort: 1)
               case .AllBlue:
-                return MandMath.getAllCGColorsList(iSort: 6) // BHJ
+                return MandMath.getAllCGColorsList(iSort: 0) // BHJ
                 
             // BHJ ALL / PRINTABLE COLORS (In the middle)
               
