@@ -47,7 +47,7 @@ struct PopupColorCube: View {
             
             // BHJ ALL COLORS (ON THE LEFT) 
               case .AllRed:
-                return MandMath.getAllCGColorsList(iSort: 3)
+                return MandMath.getAllCGColorsList(iSort: 6)
               case .AllGreen:
                 return MandMath.getAllCGColorsList(iSort: 1)
               case .AllBlue:
@@ -56,7 +56,7 @@ struct PopupColorCube: View {
             // BHJ ALL / PRINTABLE COLORS (In the middle)
               
               case .APRed:
-                return MandMath.getAllPrintableCGColorsList(iSort: 3)
+                return MandMath.getAllPrintableCGColorsList(iSort: 6)
               case .APGreen:
                 return MandMath.getAllPrintableCGColorsList(iSort: 1)
               case .APBlue:
@@ -71,7 +71,7 @@ struct PopupColorCube: View {
           }
         
 
-          let nColumns = 32 // 64
+          let nColumns = 8 // 32 // 64
           let nRows = arrColors.count / nColumns
           
           VStack(spacing: 8) { // Add spacing between sets of 8 rows
