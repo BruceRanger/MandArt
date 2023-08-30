@@ -44,3 +44,5 @@ You were successful! Now you can go to App Store Connect and submit your uploade
 1. Manage missing compliance (no encryption)
 1. Go back to the "App Store" tab and click "Save".
 1. Click "Submit for Review".
+
+Source: https://github.com/brucehjohnson/MandArt/blob/main/CARE_AND_FEEDING.md
