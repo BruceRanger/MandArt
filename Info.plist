@@ -58,9 +58,9 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.5</string>
+	<string>6</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.5</string>
+	<string>6</string>
 	<key>CFBundleGetInfoString</key>
 	<string></string>
 	<key>NSPrincipalClass</key>

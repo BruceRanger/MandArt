@@ -53,6 +53,7 @@ struct TabFind: View {
               .textFieldStyle(.roundedBorder)
               .multilineTextAlignment(.trailing)
               .frame(maxWidth: 80)
+              .padding(10)
               .help("Enter the width, in pixels, of the image.")
             } // end vstack
 
@@ -65,6 +66,7 @@ struct TabFind: View {
                 formatter: MAFormatters.fmtImageWidthHeight
               )
               .frame(maxWidth: 80)
+              .padding(10)
               .help("Enter the height, in pixels, of the image.")
             } // end vstack
 
