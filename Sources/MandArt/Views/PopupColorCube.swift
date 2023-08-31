@@ -70,7 +70,7 @@ struct PopupColorCube: View {
             Color(cgColor)
           }
         
-
+/*
           let nColumns = 8 // 32 // 64
           let nRows = arrColors.count / nColumns
           
@@ -94,6 +94,30 @@ struct PopupColorCube: View {
               .padding(.trailing, 12) // Add spacing between sets of rows
             }
           }
+          */
+          
+          
+          VStack(spacing: 10) { // Add spacing between sets of 8 rows
+            ForEach(0 ..< 8, id: \.self) { setIndex in  // makes 8 sets of 8x8 colors
+              VStack(spacing: 0) {
+                ForEach(0 ..< 8) { rowIndex in  // makes 8 rows of colors
+                  HStack(spacing: 0) {
+                    ForEach(0 ..< 8) { columnIndex in // makes 8 columns of colors
+                      let rowOffset = setIndex * 8
+                      let index = (rowIndex + rowOffset) * 8 + columnIndex
+                      Rectangle()
+                        .fill(arrColors[index])
+                        .frame(width: 27, height: 27) // Make each item square
+                        .cornerRadius(4)
+                        .padding(1)
+                    }
+                  }
+                }
+              }
+              .padding(.trailing, 12) // Add spacing between sets of rows
+            }
+          }
+          
 
         } // end VStack of color options
         Spacer()
