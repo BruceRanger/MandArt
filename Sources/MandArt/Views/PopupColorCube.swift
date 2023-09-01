@@ -1,4 +1,5 @@
 import SwiftUI
+import Foundation
 
 struct PopupColorCube: View {
 
@@ -10,51 +11,36 @@ struct PopupColorCube: View {
     self.hues = hues
   }
 
-// Example of what we know about user colors
-  // num (is the sort order)
-  // rgb value (need to convert to CGColor)
-  // Example below:
-  //
-//  var hues: [Hue] = [
-//    Hue(num: 1, r: 0.0, g: 255.0, b: 0.0),
-//    Hue(num: 2, r: 255.0, g: 255.0, b: 0.0),
-//    Hue(num: 3, r: 255.0, g: 0.0, b: 0.0),
-//    Hue(num: 4, r: 255.0, g: 0.0, b: 255.0),
-//    Hue(num: 5, r: 0.0, g: 0.0, b: 255.0),
-//    Hue(num: 6, r: 0.0, g: 255.0, b: 255.0),
-//  ]
-
   var body: some View {
 
-    ZStack {
+    ZStack(alignment: .top) { // Align to top
       Color.white
         .opacity(0.5)
+        .edgesIgnoringSafeArea(.all) // Cover the whole screen
+
       VStack {
         Button(action: {
           popupManager.showingCube = .None
-
         }) {
           Image(systemName: "xmark.circle")
-
         }
+        .padding(.top, 10)
 
-        // TODO BHJ - call the mandmath case here (set iSort) .........
-      
-        
         VStack {
           var arrCGs: [CGColor] {
             switch popupManager.showingCube {
-            
-            // BHJ ALL COLORS (ON THE LEFT) 
+
+                // BHJ ALL COLORS (ON THE LEFT) - set the mandmath isort
+
               case .AllRed:
                 return MandMath.getAllCGColorsList(iSort: 6)
               case .AllGreen:
                 return MandMath.getAllCGColorsList(iSort: 1)
               case .AllBlue:
-                return MandMath.getAllCGColorsList(iSort: 0) // BHJ
-                
-            // BHJ ALL / PRINTABLE COLORS (In the middle)
-              
+                return MandMath.getAllCGColorsList(iSort: 0)
+
+                // BHJ ALL / PRINTABLE COLORS (In the middle)  - set the mandmath isort
+
               case .APRed:
                 return MandMath.getAllPrintableCGColorsList(iSort: 6)
               case .APGreen:
@@ -69,67 +55,37 @@ struct PopupColorCube: View {
           let arrColors = arrCGs.map { cgColor in
             Color(cgColor)
           }
-        
 
-          let nColumns = 8 // 32 // 64
-          let nRows = arrColors.count / nColumns
-          
-          VStack(spacing: 8) { // Add spacing between sets of 8 rows
-            ForEach(0 ..< nRows / 8, id: \.self) { setIndex in
-              VStack(spacing: 0) {
-                ForEach(0 ..< 8) { rowIndex in
-                  HStack(spacing: 0) {
-                    ForEach(0 ..< nColumns) { columnIndex in
-                      let rowOffset = setIndex * 8
-                      let index = (rowIndex + rowOffset) * nColumns + columnIndex
-                      Rectangle()
-                        .fill(arrColors[index])
-                        .frame(width: 27, height: 27) // Make each item square
-                        .cornerRadius(4)
-                        .padding(1)
-                    }
-                  }
+          let nColumns = 8
+          let nRows = 8
+          let totalSlices = 8
+
+          VStack(spacing: 10) {
+            ForEach(0 ..< 2, id: \.self) { rowIndex in // 2 rows
+              HStack(spacing: 10) {
+                ForEach(0 ..< 4, id: \.self) { columnIndex in // 4 slices/row
+                  let sliceIndex = rowIndex * 4 + columnIndex
+                  let start = sliceIndex * nRows * nColumns
+                  let end = (sliceIndex + 1) * nRows * nColumns
+
+                 PopupColorSlice(arrColors: arrColors, start: start, end: end, nColumns: nColumns, nRows: nRows)
                 }
-              }
-              .padding(.trailing, 12) // Add spacing between sets of rows
-            }
-          }
-          
-          
-          
-    /*      VStack(spacing: 10) { // Add spacing between sets of 8 rows
-            ForEach(0 ..< 8, id: \.self) { setIndex in  // makes 8 sets of 8x8 colors
-              VStack(spacing: 0) {
-                ForEach(0 ..< 8) { rowIndex in  // makes 8 rows of colors
-                  HStack(spacing: 0) {
-                    ForEach(0 ..< 8) { columnIndex in // makes 8 columns of colors
-                      let rowOffset = setIndex * 8
-                      let index = (rowIndex + rowOffset) * 8 + columnIndex
-                      Rectangle()
-                        .fill(arrColors[index])
-                        .frame(width: 27, height: 27) // Make each item square
-                        .cornerRadius(4)
-                        .padding(1)
-                    }
-                  }
-                }
-              }
-              .padding(.trailing, 12) // Add spacing between sets of rows
-            }
-          }
-          */
-          
+              } // HStack
+            } // ForEach
+          }  // VStack
 
-        } // end VStack of color options
-        Spacer()
-      } // end VStack
-      .padding()
-      .background(Color.white)
-      .cornerRadius(8)
-      .shadow(radius: 10)
-      .padding()
-    } // end ZStack for popup
-    .transition(.scale)
+        } // vstack
+        .padding(.top, 2)
+        .background(Color.white)
+        .cornerRadius(8)
+        .shadow(radius: 10)
+        .padding()
 
-  } // end body
+      } // vstack with close button
+     // .transition(.scale)
+
+    } // zstack
+    .padding()
+
+  } // body
 }

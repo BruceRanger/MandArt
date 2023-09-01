@@ -11,6 +11,7 @@
 		6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A3AEC1026F879F500D7E31A /* Assets.xcassets */; };
 		880250DF2A9D1FA10076E001 /* ContentViewPopups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880250DE2A9D1FA10076E001 /* ContentViewPopups.swift */; };
 		880250E12A9D21B00076E001 /* PopupColorCube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880250E02A9D21B00076E001 /* PopupColorCube.swift */; };
+		880250EB2AA2050A0076E001 /* PopupColorSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880250EA2AA2050A0076E001 /* PopupColorSlice.swift */; };
 		8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E113293A5011005F5CB4 /* MandArtApp.swift */; };
 		8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806E114293A5011005F5CB4 /* MandArtDocument.swift */; };
 		882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882BAED2293409FE003ACB0B /* PictureDefinition.swift */; };
@@ -55,6 +56,7 @@
 		6A3AEC1826F879F500D7E31A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		880250DE2A9D1FA10076E001 /* ContentViewPopups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewPopups.swift; sourceTree = "<group>"; };
 		880250E02A9D21B00076E001 /* PopupColorCube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupColorCube.swift; sourceTree = "<group>"; };
+		880250EA2AA2050A0076E001 /* PopupColorSlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupColorSlice.swift; sourceTree = "<group>"; };
 		8806E113293A5011005F5CB4 /* MandArtApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandArtApp.swift; sourceTree = "<group>"; };
 		8806E114293A5011005F5CB4 /* MandArtDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandArtDocument.swift; sourceTree = "<group>"; };
 		882BAED2293409FE003ACB0B /* PictureDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureDefinition.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				88C3580A2A97E9F9007E7A92 /* TabSavePopup.swift */,
 				88C358192A985E14007E7A92 /* PopupPrintableColors.swift */,
 				880250E02A9D21B00076E001 /* PopupColorCube.swift */,
+				880250EA2AA2050A0076E001 /* PopupColorSlice.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				88C358142A985CD1007E7A92 /* ImageViewModel.swift in Sources */,
 				889E3F24293AE0B6009944AC /* Documentation.docc in Sources */,
 				88C3580B2A97E9F9007E7A92 /* TabSavePopup.swift in Sources */,
+				880250EB2AA2050A0076E001 /* PopupColorSlice.swift in Sources */,
 				88A271A82A971C1C00766654 /* MAFormatters.swift in Sources */,
 				88C3581C2A98EA45007E7A92 /* PanelUI.swift in Sources */,
 				88C358092A97E38A007E7A92 /* TabColorListView.swift in Sources */,
