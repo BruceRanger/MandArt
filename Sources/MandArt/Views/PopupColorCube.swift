@@ -71,33 +71,7 @@ struct PopupColorCube: View {
           }
         
 
-          let nColumns = 8 // 32 // 64
-          let nRows = arrColors.count / nColumns
-          
-          VStack(spacing: 8) { // Add spacing between sets of 8 rows
-            ForEach(0 ..< nRows / 8, id: \.self) { setIndex in
-              VStack(spacing: 0) {
-                ForEach(0 ..< 8) { rowIndex in
-                  HStack(spacing: 0) {
-                    ForEach(0 ..< nColumns) { columnIndex in
-                      let rowOffset = setIndex * 8
-                      let index = (rowIndex + rowOffset) * nColumns + columnIndex
-                      Rectangle()
-                        .fill(arrColors[index])
-                        .frame(width: 27, height: 27) // Make each item square
-                        .cornerRadius(4)
-                        .padding(1)
-                    }
-                  }
-                }
-              }
-              .padding(.trailing, 12) // Add spacing between sets of rows
-            }
-          }
-          
-          
-          
-   /*       let nColumns = 8 // 32 // 64
+    /*      let nColumns = 8 // 32 // 64
           let nRows = arrColors.count / nColumns
           
           VStack(spacing: 8) { // Add spacing between sets of 8 rows
@@ -121,6 +95,35 @@ struct PopupColorCube: View {
             }
           }
          */ 
+          
+
+          
+    //     let nColumns = 8 // 32 // 64
+          let nRows = arrColors.count / 8
+    //      let nRows = 64 / 8
+          
+          VStack(spacing: 10) { // Add spacing between sets of 8 rows
+            ForEach(0 ..< nRows/8, id: \.self) { setIndex in
+              VStack(spacing: 0) {
+                ForEach(0 ..< 8) { rowIndex in
+                  HStack(spacing: 0) {
+                    ForEach(0 ..< 8) { columnIndex in
+                      let rowOffset = setIndex * 8
+                      let index = (rowIndex + rowOffset) * 8 + columnIndex
+                      Rectangle()
+                        .fill(arrColors[index])
+                        .frame(width: 27, height: 27) // Make each item square
+                        .cornerRadius(4)
+                        .padding(1)
+                    }
+                  }
+                }
+              }
+              .padding(.trailing, 12) // Add spacing between sets of rows
+            }
+          }
+          
+          
           
 
         } // end VStack of color options
