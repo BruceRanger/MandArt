@@ -71,7 +71,7 @@ struct PopupColorCube: View {
           }
         
 
-    /*      let nColumns = 8 // 32 // 64
+          let nColumns = 32  // 8 // 32 // 64
           let nRows = arrColors.count / nColumns
           
           VStack(spacing: 8) { // Add spacing between sets of 8 rows
@@ -94,12 +94,13 @@ struct PopupColorCube: View {
               .padding(.trailing, 12) // Add spacing between sets of rows
             }
           }
-         */ 
+          
           
 
-          
+  /*        
     //     let nColumns = 8 // 32 // 64
-          let nRows = arrColors.count / 8
+    //      let nRows = arrColors.count / 8
+          let nRows = arrColors.count / 64
     //      let nRows = 64 / 8
           
           VStack(spacing: 10) { // Add spacing between sets of 8 rows
@@ -122,7 +123,7 @@ struct PopupColorCube: View {
               .padding(.trailing, 12) // Add spacing between sets of rows
             }
           }
-          
+      */    
           
           
 
