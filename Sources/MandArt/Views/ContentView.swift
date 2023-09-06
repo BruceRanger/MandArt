@@ -25,29 +25,32 @@ struct ContentView: View {
   @State private var previousPicdef: PictureDefinition?
   @State private var textFieldImageHeight: NSTextField = .init()
   @State private var textFieldY: NSTextField = .init()
-
-  let widthOfInputPanel: Double = 400
+  private let widthOfInputPanel: CGFloat = 400
 
   var body: some View {
 
     GeometryReader { _ in
-      HStack(alignment: .top, spacing: 0) {
-        PanelUI(doc: doc,
-                popupManager: popupManager, activeDisplayState: $activeDisplayState)
+
+      HStack(spacing: 0) {
+
+        PanelUI(doc: doc, popupManager: popupManager, activeDisplayState: $activeDisplayState)
           .frame(width: widthOfInputPanel)
+          .fixedSize(horizontal: true, vertical: false)
 
         PanelDisplay(doc: doc, activeDisplayState: $activeDisplayState)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
-      } // hstack
+      }
 
       .overlay(
         ContentViewPopups(doc: doc, popupManager: popupManager, activeDisplayState: $activeDisplayState)
       )
       .frame(maxWidth: .infinity, maxHeight: .infinity)
+      // .fixedSize(horizontal: false, vertical: false)
       .padding(.leading, 0)
       .onAppear {
         activeDisplayState = .MandArt
       }
+
     } // geo
     .frame(maxWidth: .infinity, maxHeight: .infinity)
   } // body
