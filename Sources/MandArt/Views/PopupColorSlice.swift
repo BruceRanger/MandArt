@@ -24,13 +24,13 @@ struct PopupColorSlice: View {
               if index <= end {
                 Rectangle()
                   .fill(arrColors[index])
-                  .frame(width: 25, height: 25)
+                  .frame(width: 30, height: 30)
                   .cornerRadius(4)
                   .padding(1)
               } else {
                 Rectangle()
                   .fill(Color.clear)  // Transparent Rectangle
-                  .frame(width: 25, height: 25)
+                  .frame(width: 30, height: 30)
                   .cornerRadius(4)
                   .padding(1)
               }

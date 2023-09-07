@@ -13,10 +13,63 @@ struct TabSavePopup: View {
   var body: some View {
 
    Divider()
+   
+      Text("These colors tend to print true, sorted by:")
+      
+      Group {
+
+      HStack {
+        
+        Button("r, g, b") {
+          popupManager.resetAllPopupsToFalse()
+          popupManager.showingPrintableColorsPopups[0] = true
+        }
+        .padding([.bottom], 2)
+        
+        Button("r, b, g") {
+          popupManager.resetAllPopupsToFalse()
+          popupManager.showingPrintableColorsPopups[1] = true
+        }
+        .padding([.bottom], 2)
+        
+        Button("g, r, b") {
+          popupManager.resetAllPopupsToFalse()
+          popupManager.showingPrintableColorsPopups[2] = true
+        }
+        .padding([.bottom], 2)
+
+      } // end HStack
+      
+       HStack {
+        
+        Button("g, b, r") {
+          popupManager.resetAllPopupsToFalse()
+          popupManager.showingPrintableColorsPopups[3] = true
+        }
+        .padding([.bottom], 2)
+        
+        Button("b, r, g") {
+          popupManager.resetAllPopupsToFalse()
+          popupManager.showingPrintableColorsPopups[4] = true
+        }
+        .padding([.bottom], 2)
+        
+        Button("b, g, r") {
+          popupManager.resetAllPopupsToFalse()
+          popupManager.showingPrintableColorsPopups[5] = true
+        }
+        .padding([.bottom], 2)
+
+      } // end HStack
+
+    } // end group
+    
+    Divider()
+   
     Group {
 
       HStack(alignment: .top) {
-        Text("Sort by Mostly Blue")
+        Text("Color cube with blue slices")
           .font(.headline)
           .fontWeight(.medium)
 
@@ -24,7 +77,7 @@ struct TabSavePopup: View {
 
       HStack {
 
-        Text("Then Green, Red:")
+  //      Text("Then Green, Red:")
 
         Button("All") {
           popupManager.resetAllPopupsToFalse()
@@ -38,27 +91,28 @@ struct TabSavePopup: View {
         }
         .padding([.bottom], 2)
 
-        Button("Printable") {
+   /*     Button("Printable") {
           popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[0] = true
+          popupManager.showingPrintableColorsPopups[2] = true
         }
         .padding([.bottom], 2)
-
+  */
       }
 
-    }
+    } // end group
+    
     Divider()
 
     Group {
 
       HStack(alignment: .top) {
-        Text("Sort by Mostly Green")
+        Text("Color cube with red slices")
           .font(.headline)
           .fontWeight(.medium)
 
       }
       HStack {
-        Text("Then Blue, Red:")
+  //      Text("Then Blue, Red:")
         Button("All") {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingCube = .AllGreen
@@ -71,11 +125,13 @@ struct TabSavePopup: View {
         }
         .padding([.bottom], 2)
 
-        Button("Printable") {
+  /*      Button("Printable") {
           popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[1] = true
+          popupManager.showingPrintableColorsPopups[4] = true
         }
         .padding([.bottom], 2)
+   */     
+        
       } // END HSTACK
 
     }
@@ -83,13 +139,13 @@ struct TabSavePopup: View {
     Group {
 
       HStack(alignment: .top) {
-        Text("Sort by Mostly Red")
+        Text("Collor cube with green slices")
           .font(.headline)
           .fontWeight(.medium)
       }
 
       HStack {
-        Text("Then Blue, Green:")
+ //       Text("Then Blue, Green:")
         Button("All") {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingCube = .AllRed
@@ -99,11 +155,14 @@ struct TabSavePopup: View {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingCube = .APRed        }
         .padding([.bottom], 2)
-        Button("Printable") {
+        
+   /*     Button("Printable") {
           popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[3] = true
+          popupManager.showingPrintableColorsPopups[5] = true
         }
         .padding([.bottom], 2)
+   */     
+        
       } // END HSTACK
 
     }

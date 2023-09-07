@@ -15,7 +15,7 @@ struct PopupPrintableColors: View {
     ZStack {
       Color.white
         .opacity(0.5)
-      VStack {
+      VStack(alignment: .center) {
 
           Button(action: {
             showingPrintableColorsPopups = Array(repeating: false, count: 6)
