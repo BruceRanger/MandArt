@@ -65,15 +65,15 @@ struct PopupColorCube: View {
       case .AllRed:
         return getColors(from: MandMath.getAllCGColorsList(iSort: 6))
       case .AllGreen:
-        return getColors(from: MandMath.getAllCGColorsList(iSort: 1))
+        return getColors(from: MandMath.getAllCGColorsList(iSort: 8))
       case .AllBlue:
-        return getColors(from: MandMath.getAllCGColorsList(iSort: 0))
+        return getColors(from: MandMath.getAllCGColorsList(iSort: 7))
       case .APRed:
         return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 6))
       case .APGreen:
-        return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 1))
+        return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 8))
       case .APBlue:
-        return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 0))
+        return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 7))
       case .None:
         return []
     }
