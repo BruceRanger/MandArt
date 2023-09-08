@@ -45,4 +45,4 @@ You were successful! Now you can go to App Store Connect and submit your uploade
 1. Go back to the "App Store" tab and click "Save" (in upper right).
 1. Click "Add for Review". Click "Submit to App Review". Verify process is complete.
 
-Source: https://github.com/brucehjohnson/MandArt/blob/main/CARE_AND_FEEDING.md
+Source: <https://denisecase.github.io/MandArt/CARE_AND_FEEDING.html>
