@@ -14,6 +14,7 @@ SwiftUI macOS app to create custom art using the Mandelbrot set.
 - Applied Physics Engineering
 - [Bruce Johnson](https://github.com/bruceranger)
 - [App Store Connect](https://appstoreconnect.apple.com)
+- [Care and Feeding of MandArt](CARE_AND_FEEDING.md)
 
 ## Learn More
 
