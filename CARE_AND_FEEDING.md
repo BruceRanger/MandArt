@@ -41,8 +41,8 @@ You were successful! Now you can go to App Store Connect and submit your uploade
 1. Add something in the "Describe What's New" box (e.g. "New art!").
 1. Scroll down to the "Build Section" and click the blue plus sign.
 1. Select the build you just uploaded (should match the version number). Hit "Done".
-1. Manage missing compliance (no encryption)
-1. Go back to the "App Store" tab and click "Save".
-1. Click "Submit for Review".
+1. Manage missing compliance (no encryption) - select "None..". Hit "Save".
+1. Go back to the "App Store" tab and click "Save" (in upper right).
+1. Click "Add for Review". Click "Submit to App Review". Verify process is complete.
 
 Source: https://github.com/brucehjohnson/MandArt/blob/main/CARE_AND_FEEDING.md
