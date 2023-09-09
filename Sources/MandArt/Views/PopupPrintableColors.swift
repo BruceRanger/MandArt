@@ -29,10 +29,10 @@ struct PopupPrintableColors: View {
             Color(cgColor)
           }
 
-          let nColumns = 32
+          let nColumns = 33
           ForEach(0 ..< arrColors.count / nColumns) { rowIndex in
             HStack(spacing: 0) {
-              ForEach(0 ..< 32) { columnIndex in
+              ForEach(0 ..< nColumns) { columnIndex in
                 let index = rowIndex * nColumns + columnIndex
                 let color = arrColors[index]
                 let nsColor = NSColor(color)
