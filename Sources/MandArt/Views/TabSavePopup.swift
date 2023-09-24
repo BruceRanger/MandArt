@@ -134,7 +134,8 @@ struct TabSavePopup: View {
         .padding([.bottom], 2)
         Button("All/Printable") {
           popupManager.clear()
-          popupManager.showingCube = .APRed        }
+          popupManager.showingCube = .APRed
+        }
         .padding([.bottom], 2)
 
       } // END HSTACK

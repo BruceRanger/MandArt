@@ -5,7 +5,7 @@ struct TabColor: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
 
-  internal var calculatedRightNumber: Int {
+  var calculatedRightNumber: Int {
     if doc.picdef.leftNumber >= 1 && doc.picdef.leftNumber < doc.picdef.hues.count {
       return doc.picdef.leftNumber + 1
     }
@@ -15,17 +15,14 @@ struct TabColor: View {
   var body: some View {
     ScrollView {
       VStack(alignment: .leading) {
-
         Section(header:
-                  Text("Choose Your Colors")
-          .font(.headline)
-          .fontWeight(.medium)
-          .frame(maxWidth: .infinity, alignment: .center)
+          Text("Choose Your Colors")
+            .font(.headline)
+            .fontWeight(.medium)
+            .frame(maxWidth: .infinity, alignment: .center)
 
         ) {
-
           HStack {
-
             Button("Add New Color") { doc.addHue() }
               .help("Add a new color.")
               .padding([.bottom], 2)
@@ -34,14 +31,13 @@ struct TabColor: View {
           TabColorListView(doc: doc, activeDisplayState: $activeDisplayState)
             .background(Color.red.opacity(0.5))
             .frame(height: 300)
-
-        }// end section
+        } // end section
 
         Section(header:
-                  Text("Test Gradient between Adjacent Colors")
-          .font(.headline)
-          .fontWeight(.medium)
-          .frame(maxWidth: .infinity, alignment: .center)
+          Text("Test Gradient between Adjacent Colors")
+            .font(.headline)
+            .fontWeight(.medium)
+            .frame(maxWidth: .infinity, alignment: .center)
 
         ) {
           HStack {
@@ -49,7 +45,7 @@ struct TabColor: View {
               .help("Choose the left color number.")
 
             Picker("Select a color number", selection: $doc.picdef.leftNumber) {
-              ForEach(1..<doc.picdef.hues.count + 1, id: \.self) { index in
+              ForEach(1 ..< doc.picdef.hues.count + 1, id: \.self) { index in
                 Text("\(index)")
               }
             }
@@ -78,12 +74,11 @@ struct TabColor: View {
         Divider()
 
         Section(header:
-                  Text("")
-          .font(.headline)
-          .fontWeight(.medium)
-          .frame(maxWidth: .infinity)
+          Text("")
+            .font(.headline)
+            .fontWeight(.medium)
+            .frame(maxWidth: .infinity)
         ) {
-
           VStack(alignment: .leading) {
             Text("Click and drag the color number to reorder.")
             Text("Click on the color to modify.")
@@ -93,10 +88,7 @@ struct TabColor: View {
         } // end section
 
         Spacer() // Pushes everything above it to take as little space as possible
-
       } // end vstack
-
     } // end scrollview
   } // end body
-
 }

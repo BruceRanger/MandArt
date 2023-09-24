@@ -4,7 +4,6 @@ import SwiftUI
 ///
 /// `ObservableObject` is a protocol from the SwiftUI framework. An object that conforms to the `ObservableObject` protocol can be used inside a View and when any of its `@Published` properties change, the UI will update to reflect those changes.
 class PopupManager: ObservableObject {
-
   /// Enum representing the various states of the color cube popup shown.
   enum ShowingCube {
     case None

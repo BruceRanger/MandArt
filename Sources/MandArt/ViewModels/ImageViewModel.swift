@@ -4,7 +4,6 @@ import SwiftUI
 /// A ViewModel serves as an intermediary between the Model (`MandArtDocument`) and the View.
 /// It is responsible for all the UI logic needed to prepare data for presentation by the View.
 class ImageViewModel: ObservableObject {
-
   /// The main document that the ViewModel interacts with to get and set data.
   @Published var doc: MandArtDocument
 
@@ -90,5 +89,4 @@ class ImageViewModel: ObservableObject {
     )
     return GradientImage.createCGImage(using: gradientParameters)
   }
-
 }

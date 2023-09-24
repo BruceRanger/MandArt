@@ -95,9 +95,7 @@ struct TabColorListView: View {
               }
             }
             .onChange(of: hue.r) { newValue in
-              doc.updateHueWithColorNumberR(
-                index: i, newValue: newValue
-              )
+              doc.updateHueWithColorComponent(index: i, r: newValue)
             }
 
             // enter green
@@ -108,9 +106,8 @@ struct TabColorListView: View {
               }
             }
             .onChange(of: hue.g) { newValue in
-              doc.updateHueWithColorNumberG(
-                index: i, newValue: newValue
-              )
+              doc.updateHueWithColorComponent(index: i, g: newValue)
+
             }
 
             // enter blue
@@ -121,9 +118,7 @@ struct TabColorListView: View {
               }
             }
             .onChange(of: hue.b) { newValue in
-              doc.updateHueWithColorNumberB(
-                index: i, newValue: newValue
-              )
+              doc.updateHueWithColorComponent(index: i, b: newValue)
             }
 
             Button(role: .destructive) {
