@@ -20,27 +20,14 @@ struct ContentViewPopups: View {
 
     ScrollView {
 
-      if popupManager.showingPrintableColorsPopups[0] {
-        PopupPrintableColors(iP: $popupManager.iP,
-                             showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
-      } else if popupManager.showingPrintableColorsPopups[1] {
-        PopupPrintableColors(iP: $popupManager.iP,
-                             showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
-      } else if popupManager.showingPrintableColorsPopups[2] {
-        PopupPrintableColors(iP: $popupManager.iP,
-                             showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
-      } else if popupManager.showingPrintableColorsPopups[3] {
-        PopupPrintableColors(iP: $popupManager.iP,
-                             showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
-      } else if popupManager.showingPrintableColorsPopups[4] {
-        PopupPrintableColors(iP: $popupManager.iP,
-                             showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
-      } else  if popupManager.showingPrintableColorsPopups[5] {
-        PopupPrintableColors(iP: $popupManager.iP,
-                             showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
-      } else if popupManager.showingCube != .None {
-        PopupColorCube(popupManager: popupManager, hues: doc.picdef.hues)
-
+      // there are 6 printable popups (one for each of 6 sorts)
+      ForEach(0..<6) { index in
+        if popupManager.showingPrintableColorsPopups[index] {
+          PopupPrintableColors(popupManager: popupManager,
+                               hues: doc.picdef.hues,
+                               iP: $popupManager.iP,
+                               showingPrintableColorsPopups: $popupManager.showingPrintableColorsPopups)
+        }
       }
     }
     .edgesIgnoringSafeArea(.top) // Cover entire window

@@ -73,7 +73,7 @@ struct TabSave: View {
     doc.picdef.imageHeight += 1
     doc.picdef.imageHeight -= 1
 
-    var currImage = contextImageGlobal!
+  //  var currImage = contextImageGlobal!
     let savePanel = NSSavePanel()
     savePanel.title = "Choose directory and name for image inputs file"
     savePanel.nameFieldStringValue = fname

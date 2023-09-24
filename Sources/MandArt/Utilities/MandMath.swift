@@ -4,11 +4,10 @@ import CoreGraphics // CG Color
 
  This is a Swift class that provides operations for MandArt.
 
- The operations are written in pure Swift,
- which allows for decoupling from SwiftUI and facilitates deploying in other ways.
 
  */
 import Foundation
+import AppKit // for NSColors
 
 enum MandMath {
 
@@ -101,6 +100,12 @@ enum MandMath {
     }
   }
 
+  struct RGBColor {
+    var red: CGFloat
+    var green: CGFloat
+    var blue: CGFloat
+  }
+
   static func getPrintableCGColorListSorted(iSort: Int) -> [CGColor] {
     var lst: [CGColor] = []
     switch iSort {
@@ -150,11 +155,8 @@ enum MandMath {
           return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
         }
     }
+    print(lst.count)
     return lst
-  }
-
-  static func getUserCGColorsList() {
-
   }
 
   /**
@@ -340,7 +342,7 @@ enum MandMath {
             allColors.append(color)
           }
         }
-        
+
         case 7:
 
         var b = self.colorInts[0]
@@ -430,7 +432,7 @@ enum MandMath {
             allColors.append(color)
           }
         }
-        
+
         case 8:
 
         var r = self.colorInts[0]
@@ -768,7 +770,7 @@ enum MandMath {
             }
           }
         }
-        
+
         case 7:
 
         var b = self.colorInts[0]
@@ -890,7 +892,7 @@ enum MandMath {
             }
           }
         }
-        
+
         case 8:
 
         var r = self.colorInts[0]
@@ -1107,7 +1109,7 @@ enum MandMath {
    let lst = MandMath.printableColorList
    */
   static let printableColorList = [
-    [0,0,0],
+    [0, 0, 0],
     [0, 73, 36],
     [0, 73, 73],
     [0, 73, 109],
@@ -1403,6 +1405,6 @@ enum MandMath {
     [255, 255, 255],
     [255, 255, 255],
     [255, 255, 255],
-    [255, 255, 255]
+    [255, 255, 255],
   ]
 }

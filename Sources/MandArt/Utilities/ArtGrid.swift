@@ -20,6 +20,7 @@ struct ArtGrid {
     let hues: [Hue]
   }
 
+  /* Not Used
   static func calculate(using parameters: ArtGridInputs) {
     let imageWidth = parameters.imageWidth
     let imageHeight = parameters.imageHeight
@@ -47,4 +48,6 @@ struct ArtGrid {
       }
     }
   }
+   */
+
 }

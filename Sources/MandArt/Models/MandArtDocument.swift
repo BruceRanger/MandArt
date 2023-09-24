@@ -202,7 +202,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     }
 
     // Create a CGImageDestination to write the image with metadata
-    guard let destination = CGImageDestinationCreateWithURL(imageURL as CFURL, kUTTypePNG, 1, nil) else {
+    guard let destination = CGImageDestinationCreateWithURL(imageURL as CFURL, UTType.png.identifier as CFString, 1, nil) else {
       throw NSError(domain: "com.bhj.mandart", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to create image destination"])
     }
 
@@ -467,7 +467,7 @@ extension UTType {
 extension CGImage {
   func pngData() -> Data? {
     let mutableData = CFDataCreateMutable(nil, 0)!
-    let dest = CGImageDestinationCreateWithData(mutableData, kUTTypePNG, 1, nil)!
+    let dest = CGImageDestinationCreateWithData(mutableData, UTType.png.identifier as CFString, 1, nil)!
     CGImageDestinationAddImage(dest, self, nil)
     if CGImageDestinationFinalize(dest) {
       return mutableData as Data

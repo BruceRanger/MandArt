@@ -12,26 +12,26 @@ struct TabSavePopup: View {
 
   var body: some View {
 
-   Divider()
-   
-      Text("These colors tend to print true, sorted by:")
-      
-      Group {
+    Divider()
+
+    Text("These colors tend to print true, sorted by:")
+
+    Group {
 
       HStack {
-        
+
         Button("r, g, b") {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[0] = true
         }
         .padding([.bottom], 2)
-        
+
         Button("r, b, g") {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[1] = true
         }
         .padding([.bottom], 2)
-        
+
         Button("g, r, b") {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[2] = true
@@ -39,21 +39,21 @@ struct TabSavePopup: View {
         .padding([.bottom], 2)
 
       } // end HStack
-      
-       HStack {
-        
+
+      HStack {
+
         Button("g, b, r") {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[3] = true
         }
         .padding([.bottom], 2)
-        
+
         Button("b, r, g") {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[4] = true
         }
         .padding([.bottom], 2)
-        
+
         Button("b, g, r") {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingPrintableColorsPopups[5] = true
@@ -63,9 +63,9 @@ struct TabSavePopup: View {
       } // end HStack
 
     } // end group
-    
+
     Divider()
-   
+
     Group {
 
       HStack(alignment: .top) {
@@ -76,8 +76,6 @@ struct TabSavePopup: View {
       }
 
       HStack {
-
-  //      Text("Then Green, Red:")
 
         Button("All") {
           popupManager.resetAllPopupsToFalse()
@@ -90,17 +88,10 @@ struct TabSavePopup: View {
           popupManager.showingCube = .APBlue
         }
         .padding([.bottom], 2)
-
-   /*     Button("Printable") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[2] = true
-        }
-        .padding([.bottom], 2)
-  */
       }
 
     } // end group
-    
+
     Divider()
 
     Group {
@@ -112,7 +103,6 @@ struct TabSavePopup: View {
 
       }
       HStack {
-  //      Text("Then Blue, Red:")
         Button("All") {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingCube = .AllGreen
@@ -125,13 +115,6 @@ struct TabSavePopup: View {
         }
         .padding([.bottom], 2)
 
-  /*      Button("Printable") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[4] = true
-        }
-        .padding([.bottom], 2)
-   */     
-        
       } // END HSTACK
 
     }
@@ -145,7 +128,6 @@ struct TabSavePopup: View {
       }
 
       HStack {
- //       Text("Then Blue, Green:")
         Button("All") {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingCube = .AllRed
@@ -155,14 +137,7 @@ struct TabSavePopup: View {
           popupManager.resetAllPopupsToFalse()
           popupManager.showingCube = .APRed        }
         .padding([.bottom], 2)
-        
-   /*     Button("Printable") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[5] = true
-        }
-        .padding([.bottom], 2)
-   */     
-        
+
       } // END HSTACK
 
     }

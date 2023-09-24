@@ -4,14 +4,19 @@ import Foundation
 struct PopupColorCube: View {
 
   @ObservedObject var popupManager: PopupManager
+
   var hues: [Hue]
 
-  init(popupManager: PopupManager, hues: [Hue]) {
+  init(
+    popupManager: PopupManager,
+       hues: [Hue]
+  ) {
     self.popupManager = popupManager
     self.hues = hues
   }
 
   var body: some View {
+
     ZStack(alignment: .top) {
       Color.white
         .opacity(0.5)
