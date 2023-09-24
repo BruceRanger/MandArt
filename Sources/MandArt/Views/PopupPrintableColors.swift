@@ -1,33 +1,14 @@
 import SwiftUI
-import AppKit
 
 struct PopupPrintableColors: View {
 
   @ObservedObject var popupManager: PopupManager
 
-  @Binding var iP: Int?
-  @Binding var showingPrintableColorsPopups: [Bool]
-
   var hues: [Hue]
 
-  let sortStrings: [String] = ["RGB", "RBG", "GRB", "GBR", "BRG", "BGR"]
-
-  init(
-    popupManager: PopupManager,
-    hues: [Hue],
-    iP: Binding<Int?>, showingPrintableColorsPopups: Binding<[Bool]>
-  ) {
-    self.popupManager = popupManager
-    self.hues = hues
-    self._iP = iP
-    self._showingPrintableColorsPopups = showingPrintableColorsPopups
-  }
-
-  func sortString(for iSort: Int) -> String? {
-    guard iSort >= 0 && iSort < sortStrings.count else {
-      return nil
-    }
-    return sortStrings[iSort]
+  /// Convert the current showingPrintables value to a string for display purposes.
+  var currentSort: String {
+    return "\(popupManager.showingPrintables)"
   }
 
   private var columnCount: Int {
@@ -46,7 +27,7 @@ struct PopupPrintableColors: View {
       VStack {
         HStack(alignment: .center) {
           closeButton
-          Text("Showing Selected Colors Likely To Print True Sorted by \(sortStrings[iP!])")
+          Text("Showing Selected Colors Likely To Print True Sorted by \(currentSort)")
         }
          colorContent
         Spacer()
@@ -61,7 +42,7 @@ struct PopupPrintableColors: View {
 
   private var closeButton: some View {
     Button(action: {
-      popupManager.showingPrintableColorsPopups = Array(repeating: false, count: 6)
+      popupManager.showingPrintables = .None
     }) {
       Image(systemName: "xmark.circle")
     }
@@ -74,7 +55,7 @@ struct PopupPrintableColors: View {
 
       VStack {
 
-        let arrCGs = MandMath.getPrintableCGColorListSorted(iSort: iP!)
+        let arrCGs = MandMath.getPrintableCGColorListSorted(sortType: popupManager.showingPrintables)
 
         let nColumns = 32
         ForEach(0 ..< arrCGs.count / nColumns) { rowIndex in

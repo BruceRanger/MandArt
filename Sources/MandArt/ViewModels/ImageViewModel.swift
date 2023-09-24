@@ -1,14 +1,31 @@
 import SwiftUI
 
+/// ImageViewModel: A ViewModel in the MVVM architecture pattern.
+/// A ViewModel serves as an intermediary between the Model (`MandArtDocument`) and the View.
+/// It is responsible for all the UI logic needed to prepare data for presentation by the View.
 class ImageViewModel: ObservableObject {
+
+  /// The main document that the ViewModel interacts with to get and set data.
   @Published var doc: MandArtDocument
+
+  /// A binding to track the current display state in the UI, e.g., whether the view is showing MandArt, Gradient, or Colors.
   @Binding var activeDisplayState: ActiveDisplayChoice
+
+  /// Initializes a new instance of the ViewModel.
+  ///
+  /// - Parameters:
+  ///   - doc: The main MandArtDocument.
+  ///   - activeDisplayState: A binding to the active display state.
 
   init(doc: MandArtDocument, activeDisplayState: Binding<ActiveDisplayChoice>) {
     self.doc = doc
     self._activeDisplayState = activeDisplayState
   }
 
+  /// Calculates the right color number based on the validity of the left gradient.
+  ///
+  /// - Parameter leftGradientIsValid: A boolean indicating if the left gradient is valid.
+  /// - Returns: The right color number.
   func getCalculatedRightNumber(leftGradientIsValid: Bool) -> Int {
     if leftGradientIsValid, doc.picdef.leftNumber < doc.picdef.hues.count {
       return doc.picdef.leftNumber + 1
@@ -16,6 +33,9 @@ class ImageViewModel: ObservableObject {
     return 1
   }
 
+  /// Determines if the left gradient is valid based on the left number.
+  ///
+  /// - Returns: A boolean indicating if the left gradient is valid.
   func getLeftGradientIsValid() -> Bool {
     var isValid = false
     let leftNum = doc.picdef.leftNumber
@@ -24,11 +44,9 @@ class ImageViewModel: ObservableObject {
     return isValid
   }
 
-  /**
-   Gets an image to display on the right side of the app
-
-   - Returns: An optional CGImage or nil
-   */
+  /// Retrieves the appropriate image to display based on the current active display state.
+  ///
+  /// - Returns: An optional `CGImage` depending on the active display state.
   func getImage() -> CGImage? {
     var colors: [[Double]] = doc.picdef.hues.map { [$0.r, $0.g, $0.b] }
 
@@ -49,6 +67,9 @@ class ImageViewModel: ObservableObject {
     }
   }
 
+  /// Generates a gradient image based on the left and right color values.
+  ///
+  /// - Returns: An optional `CGImage` representing the gradient.
   func getGradientImage() -> CGImage? {
     let leftNumber = doc.picdef.leftNumber
     let rightNumber = getCalculatedRightNumber(leftGradientIsValid: getLeftGradientIsValid())

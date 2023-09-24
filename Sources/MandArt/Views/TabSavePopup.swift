@@ -21,20 +21,20 @@ struct TabSavePopup: View {
       HStack {
 
         Button("r, g, b") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[0] = true
+          popupManager.clear()
+          popupManager.showingPrintables = .RGB
         }
         .padding([.bottom], 2)
 
         Button("r, b, g") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[1] = true
+          popupManager.clear()
+          popupManager.showingPrintables = .RBG
         }
         .padding([.bottom], 2)
 
         Button("g, r, b") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[2] = true
+          popupManager.clear()
+          popupManager.showingPrintables = .GRB
         }
         .padding([.bottom], 2)
 
@@ -43,20 +43,20 @@ struct TabSavePopup: View {
       HStack {
 
         Button("g, b, r") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[3] = true
+          popupManager.clear()
+          popupManager.showingPrintables = .GBR
         }
         .padding([.bottom], 2)
 
         Button("b, r, g") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[4] = true
+          popupManager.clear()
+          popupManager.showingPrintables = .BRG
         }
         .padding([.bottom], 2)
 
         Button("b, g, r") {
-          popupManager.resetAllPopupsToFalse()
-          popupManager.showingPrintableColorsPopups[5] = true
+          popupManager.clear()
+          popupManager.showingPrintables = .BGR
         }
         .padding([.bottom], 2)
 
@@ -64,7 +64,7 @@ struct TabSavePopup: View {
 
     } // end group
 
-    Divider()
+    Divider() // ================================
 
     Group {
 
@@ -72,19 +72,18 @@ struct TabSavePopup: View {
         Text("Color cube with blue slices")
           .font(.headline)
           .fontWeight(.medium)
-
       }
 
       HStack {
 
         Button("All") {
-          popupManager.resetAllPopupsToFalse()
+          popupManager.clear()
           popupManager.showingCube = .AllBlue
         }
         .padding([.bottom], 2)
 
         Button("All/Printable") {
-          popupManager.resetAllPopupsToFalse()
+          popupManager.clear()
           popupManager.showingCube = .APBlue
         }
         .padding([.bottom], 2)
@@ -104,13 +103,13 @@ struct TabSavePopup: View {
       }
       HStack {
         Button("All") {
-          popupManager.resetAllPopupsToFalse()
+          popupManager.clear()
           popupManager.showingCube = .AllGreen
         }
         .padding([.bottom], 2)
 
         Button("All/Printable") {
-          popupManager.resetAllPopupsToFalse()
+          popupManager.clear()
           popupManager.showingCube = .APGreen
         }
         .padding([.bottom], 2)
@@ -122,19 +121,19 @@ struct TabSavePopup: View {
     Group {
 
       HStack(alignment: .top) {
-        Text("Collor cube with green slices")
+        Text("Color cube with green slices")
           .font(.headline)
           .fontWeight(.medium)
       }
 
       HStack {
         Button("All") {
-          popupManager.resetAllPopupsToFalse()
+          popupManager.clear()
           popupManager.showingCube = .AllRed
         }
         .padding([.bottom], 2)
         Button("All/Printable") {
-          popupManager.resetAllPopupsToFalse()
+          popupManager.clear()
           popupManager.showingCube = .APRed        }
         .padding([.bottom], 2)
 

@@ -7,7 +7,6 @@ import CoreGraphics // CG Color
 
  */
 import Foundation
-import AppKit // for NSColors
 
 enum MandMath {
 
@@ -106,41 +105,41 @@ enum MandMath {
     var blue: CGFloat
   }
 
-  static func getPrintableCGColorListSorted(iSort: Int) -> [CGColor] {
+  static func getPrintableCGColorListSorted(sortType: PopupManager.ShowingPrintables) -> [CGColor] {
     var lst: [CGColor] = []
-    switch iSort {
+    switch sortType {
 
         // SORT FOR PRINTABLES *********************************
 
-      case 0: // rgb
+      case .RGB: // rgb
         lst = MandMath.printableColorListRGB.map { colorValues in
           let red = CGFloat(colorValues[0]) / 255.0
           let green = CGFloat(colorValues[1]) / 255.0
           let blue = CGFloat(colorValues[2]) / 255.0
           return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
         }
-      case 1: // rbg
+      case .RBG: // rbg
         lst = MandMath.printableColorListRBG.map { colorValues in
           let red = CGFloat(colorValues[0]) / 255.0
           let green = CGFloat(colorValues[1]) / 255.0
           let blue = CGFloat(colorValues[2]) / 255.0
           return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
         }
-      case 2: // grb
+      case .GRB: // grb
         lst = MandMath.printableColorListGRB.map { colorValues in
           let red = CGFloat(colorValues[0]) / 255.0
           let green = CGFloat(colorValues[1]) / 255.0
           let blue = CGFloat(colorValues[2]) / 255.0
           return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
         }
-      case 3: // gbr
+      case .GBR: // gbr
         lst = MandMath.printableColorListGBR.map { colorValues in
           let red = CGFloat(colorValues[0]) / 255.0
           let green = CGFloat(colorValues[1]) / 255.0
           let blue = CGFloat(colorValues[2]) / 255.0
           return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
         }
-      case 4: // brg
+      case .BRG: // brg
         lst = MandMath.printableColorListBRG.map { colorValues in
           let red = CGFloat(colorValues[0]) / 255.0
           let green = CGFloat(colorValues[1]) / 255.0

@@ -134,7 +134,6 @@
 		88A1716729913A1E00A85AED /* MandArt */ = {
 			isa = PBXGroup;
 			children = (
-				88C3581F2A99A070007E7A92 /* Observables */,
 				88C3580C2A97EB55007E7A92 /* ViewModels */,
 				88A271B32A9790C400766654 /* Controllers */,
 				88A271962A967E6400766654 /* Models */,
@@ -212,16 +211,9 @@
 			isa = PBXGroup;
 			children = (
 				88C358132A985CD1007E7A92 /* ImageViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		88C3581F2A99A070007E7A92 /* Observables */ = {
-			isa = PBXGroup;
-			children = (
 				88C358202A99A08D007E7A92 /* PopupManager.swift */,
 			);
-			path = Observables;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
