@@ -1,29 +1,37 @@
-import SwiftUI
 import Foundation
+import SwiftUI
 
 struct PopupColorCube: View {
-
   @ObservedObject var popupManager: PopupManager
+
+  @State var selectedColor: (r: Int, g: Int, b: Int)?
 
   var hues: [Hue]
 
   init(
     popupManager: PopupManager,
-       hues: [Hue]
+    hues: [Hue]
   ) {
     self.popupManager = popupManager
     self.hues = hues
   }
 
   var body: some View {
-
     ZStack(alignment: .top) {
       Color.white
         .opacity(0.5)
         .edgesIgnoringSafeArea(.all)
 
       VStack {
-        closeButton
+        HStack(alignment: .bottom) {
+          closeButton
+
+          Text("Showing Color Cube")
+
+          if let selected = selectedColor {
+            Text("Selected: (\(selected.r), \(selected.g), \(selected.b))")
+          }
+        }
         colorCubeContent
       }
       .padding()
@@ -53,7 +61,7 @@ struct PopupColorCube: View {
             let start = sliceIndex * 8 * 8
             // -1 to correctly end at the last index of the slice
             let end = (sliceIndex + 1) * 8 * 8 - 1
-            PopupColorSlice(arrColors: currentColors, start: start, end: end)
+            PopupColorSlice(selectedColor: $selectedColor, arrColors: currentColors, start: start, end: end)
           }
         }
       }
@@ -83,5 +91,4 @@ struct PopupColorCube: View {
         return []
     }
   }
-
 }

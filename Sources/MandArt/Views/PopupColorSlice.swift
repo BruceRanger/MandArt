@@ -2,6 +2,8 @@ import SwiftUI
 
 struct PopupColorSlice: View {
 
+  @Binding var selectedColor: (r: Int, g: Int, b: Int)?
+
   let arrColors: [Color]
   let start: Int
   let end: Int
@@ -21,19 +23,28 @@ struct PopupColorSlice: View {
           HStack(spacing: 0) {
             ForEach(0 ..< nColumns, id: \.self) { col in
               let index = start + row * nColumns + col
-              if index <= end {
-                Rectangle()
-                  .fill(arrColors[index])
-                  .frame(width: 30, height: 30)
-                  .cornerRadius(4)
-                  .padding(1)
-              } else {
-                Rectangle()
-                  .fill(Color.clear)  // Transparent Rectangle
-                  .frame(width: 30, height: 30)
-                  .cornerRadius(4)
-                  .padding(1)
+
+              Button(action: {
+                if let components = arrColors[index].colorComponents {
+                  selectedColor = (r: Int(components.red * 255), g: Int(components.green * 255), b: Int(components.blue * 255))
+                }
+              }) {
+                if index <= end {
+                  Rectangle()
+                    .fill(arrColors[index])
+                    .frame(width: 30, height: 30)
+                    .cornerRadius(4)
+                    .padding(1)
+                } else {
+                  Rectangle()
+                    .fill(Color.clear)  // Transparent Rectangle
+                    .frame(width: 30, height: 30)
+                    .cornerRadius(4)
+                    .padding(1)
+                }
               }
+              .buttonStyle(PlainButtonStyle())
+
             }
           }
         }

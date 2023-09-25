@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct PopupPrintableColors: View {
-
   @ObservedObject var popupManager: PopupManager
+
+  @State private var selectedColor: (r: Int, g: Int, b: Int)?
 
   var hues: [Hue]
 
@@ -18,20 +19,24 @@ struct PopupPrintableColors: View {
   }
 
   var body: some View {
-
     ZStack {
       Color.white
         .opacity(0.5)
         .edgesIgnoringSafeArea(.all)
 
       VStack {
-        HStack(alignment: .center) {
+        HStack(alignment: .bottom) {
           closeButton
           Text("Showing Selected Colors Likely To Print True Sorted by \(currentSort)")
-        }
-         colorContent
+          if let selected = selectedColor {
+            Text("Selected: (\(selected.r), \(selected.g), \(selected.b))")
+          }
+        } // hstack for button
+
+        colorContent
+
         Spacer()
-      }
+      } // vstack
       .padding()
       .background(Color.white)
       .cornerRadius(8)
@@ -50,11 +55,8 @@ struct PopupPrintableColors: View {
   }
 
   private var colorContent: some View {
-
     ScrollView {
-
       VStack {
-
         let arrCGs = MandMath.getPrintableCGColorListSorted(sortType: popupManager.showingPrintables)
 
         let nColumns = 32
@@ -69,28 +71,31 @@ struct PopupPrintableColors: View {
               let colorValueG = "\(Int(components[1] * 255))"
               let colorValueB = "\(Int(components[2] * 255))"
 
-              VStack {
-                Rectangle()
-                  .fill(Color(red: Double(components[0]), green: Double(components[1]), blue: Double(components[2])))
-                  .frame(width: 26, height: 26)
-                  .cornerRadius(4)
-                  .padding(1)
-                Text(colorValueR)
-                  .font(.system(size: 10))
-                  .background(Color.white)
-                Text(colorValueG)
-                  .font(.system(size: 10))
-                  .background(Color.white)
-                Text(colorValueB)
-                  .font(.system(size: 10))
-                  .background(Color.white)
-              } // end Zstack of rect, rgb values
+              Button(action: {
+                selectedColor = (r: Int(components[0] * 255), g: Int(components[1] * 255), b: Int(components[2] * 255))
+              }) {
+                VStack {
+                  Rectangle()
+                    .fill(Color(red: Double(components[0]), green: Double(components[1]), blue: Double(components[2])))
+                    .frame(width: 26, height: 26)
+                    .cornerRadius(4)
+                    .padding(1)
+                  Text(colorValueR)
+                    .font(.system(size: 10))
+                    .background(Color.white)
+                  Text(colorValueG)
+                    .font(.system(size: 10))
+                    .background(Color.white)
+                  Text(colorValueB)
+                    .font(.system(size: 10))
+                    .background(Color.white)
+                } // end vstack of rect, rgb values
+              }
+              .buttonStyle(PlainButtonStyle())
             } // end for each column of colors
           } // end HStack of colors
         } // end for each color
-
       } // end VStack of color options
-
     } // end scrollview
-  }
+  } // end color content
 }
