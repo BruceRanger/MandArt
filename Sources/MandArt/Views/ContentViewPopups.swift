@@ -39,7 +39,7 @@ struct ContentViewPopups: View {
   private var contentForPrintables: some View {
     switch popupManager.showingPrintables {
       case .RGB, .RBG, .GBR, .GRB, .BGR, .BRG:
-        return AnyView(PopupPrintableColors(popupManager: popupManager, hues: doc.picdef.hues))
+        return AnyView(PopupPrintableColors(doc: doc, popupManager: popupManager, hues: doc.picdef.hues))
       case .None:
         return AnyView(EmptyView())
 
@@ -50,7 +50,7 @@ struct ContentViewPopups: View {
   private var contentForCube: some View {
     switch popupManager.showingCube {
       case .APRed, .APGreen, .APBlue, .AllBlue, .AllRed, .AllGreen:
-        return AnyView(PopupColorCube(popupManager: popupManager, hues: doc.picdef.hues))
+        return AnyView(PopupColorCube(doc: doc, popupManager: popupManager, hues: doc.picdef.hues))
       case .None:
         return AnyView(EmptyView())
     }

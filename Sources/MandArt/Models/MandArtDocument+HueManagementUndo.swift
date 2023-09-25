@@ -18,6 +18,16 @@ extension MandArtDocument {
     }
   }
 
+  // Adds a new hue, and registers an undo action.
+  func addHue(r: Double, g: Double, b: Double, undoManager: UndoManager? = nil) {
+    picdef.hues.append(Hue(num: hueCount + 1, r: r, g: g, b: b))
+    undoManager?.registerUndo(withTarget: self) { doc in
+      withAnimation {
+        doc.deleteHue(index: doc.hueCount - 1, undoManager: undoManager)
+      }
+    }
+  }
+
   // Deletes the hue at an index, and registers an undo action.
   func deleteHue(index: Int, undoManager: UndoManager? = nil) {
     let oldHues = self.picdef.hues

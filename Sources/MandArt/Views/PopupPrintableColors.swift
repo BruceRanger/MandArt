@@ -1,11 +1,23 @@
 import SwiftUI
 
 struct PopupPrintableColors: View {
+
+  @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager: PopupManager
 
   @State private var selectedColor: (r: Int, g: Int, b: Int)?
 
   var hues: [Hue]
+
+  init(
+    doc: MandArtDocument,
+    popupManager: PopupManager,
+    hues: [Hue]
+  ) {
+    self.doc = doc
+    self.popupManager = popupManager
+    self.hues = hues
+  }
 
   /// Convert the current showingPrintables value to a string for display purposes.
   var currentSort: String {
@@ -18,6 +30,13 @@ struct PopupPrintableColors: View {
     return Int(screenWidth / boxWidth)
   }
 
+  private func handleColorSelection(components: [CGFloat]) {
+    selectedColor = (r: Int(components[0] * 255), g: Int(components[1] * 255), b: Int(components[2] * 255))
+    if let selected = selectedColor {
+      doc.addHue(r: Double(selected.r), g: Double(selected.g), b: Double(selected.b))
+    }
+  }
+
   var body: some View {
     ZStack {
       Color.white
@@ -27,9 +46,10 @@ struct PopupPrintableColors: View {
       VStack {
         HStack(alignment: .bottom) {
           closeButton
-          Text("Showing Selected Colors Likely To Print True Sorted by \(currentSort)")
+          Text("Click to add a color to your list. Showing Colors Likely To Print True Sorted by \(currentSort)")
           if let selected = selectedColor {
-            Text("Selected: (\(selected.r), \(selected.g), \(selected.b))")
+            Text("Added: (\(selected.r), \(selected.g), \(selected.b))")
+
           }
         } // hstack for button
 
@@ -72,7 +92,7 @@ struct PopupPrintableColors: View {
               let colorValueB = "\(Int(components[2] * 255))"
 
               Button(action: {
-                selectedColor = (r: Int(components[0] * 255), g: Int(components[1] * 255), b: Int(components[2] * 255))
+                handleColorSelection(components: c.components!)
               }) {
                 VStack {
                   Rectangle()

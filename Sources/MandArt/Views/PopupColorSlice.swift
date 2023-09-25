@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PopupColorSlice: View {
-
+  @ObservedObject var doc: MandArtDocument
   @Binding var selectedColor: (r: Int, g: Int, b: Int)?
 
   let arrColors: [Color]
@@ -9,6 +9,29 @@ struct PopupColorSlice: View {
   let end: Int
   let nColumns: Int = 8
   let nRows: Int = 8
+
+  init(
+    doc: MandArtDocument,
+    selectedColor: Binding<(r: Int, g: Int, b: Int)?>,
+    arrColors: [Color],
+    start: Int,
+    end: Int
+  ) {
+    self.doc = doc
+    self._selectedColor = selectedColor
+    self.arrColors = arrColors
+    self.start = start
+    self.end = end
+  }
+
+  private func handleColorSelection(color: Color) {
+    if let components = color.colorComponents {
+      selectedColor = (r: Int(components.red * 255), g: Int(components.green * 255), b: Int(components.blue * 255))
+      if let selected = selectedColor {
+        doc.addHue(r: Double(selected.r), g: Double(selected.g), b: Double(selected.b))
+      }
+    }
+  }
 
   var body: some View {
 
@@ -25,8 +48,8 @@ struct PopupColorSlice: View {
               let index = start + row * nColumns + col
 
               Button(action: {
-                if let components = arrColors[index].colorComponents {
-                  selectedColor = (r: Int(components.red * 255), g: Int(components.green * 255), b: Int(components.blue * 255))
+                if index <= end {
+                  handleColorSelection(color: arrColors[index])
                 }
               }) {
                 if index <= end {

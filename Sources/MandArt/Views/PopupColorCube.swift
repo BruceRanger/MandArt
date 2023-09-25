@@ -2,16 +2,19 @@ import Foundation
 import SwiftUI
 
 struct PopupColorCube: View {
-  @ObservedObject var popupManager: PopupManager
 
+  @ObservedObject var doc: MandArtDocument
+  @ObservedObject var popupManager: PopupManager
   @State var selectedColor: (r: Int, g: Int, b: Int)?
 
   var hues: [Hue]
 
   init(
+    doc: MandArtDocument,
     popupManager: PopupManager,
     hues: [Hue]
   ) {
+    self.doc = doc
     self.popupManager = popupManager
     self.hues = hues
   }
@@ -26,10 +29,11 @@ struct PopupColorCube: View {
         HStack(alignment: .bottom) {
           closeButton
 
-          Text("Showing Color Cube")
+          Text("Click to add a color to your list. Showing Color Cube.")
 
           if let selected = selectedColor {
-            Text("Selected: (\(selected.r), \(selected.g), \(selected.b))")
+            Text("Added: (\(selected.r), \(selected.g), \(selected.b))")
+
           }
         }
         colorCubeContent
@@ -61,7 +65,7 @@ struct PopupColorCube: View {
             let start = sliceIndex * 8 * 8
             // -1 to correctly end at the last index of the slice
             let end = (sliceIndex + 1) * 8 * 8 - 1
-            PopupColorSlice(selectedColor: $selectedColor, arrColors: currentColors, start: start, end: end)
+            PopupColorSlice(doc: doc, selectedColor: $selectedColor, arrColors: currentColors, start: start, end: end)
           }
         }
       }
