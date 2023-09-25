@@ -37,14 +37,15 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
   // when picdef is changed,
   // all views using that document will be reloaded
   @Published var picdef: PictureDefinition
-  var imageDescriptionManager = ImageDescriptionManager(picdef: PictureDefinition(hues: []))
 
-  /**
-   A simple initializer that creates a new demo picture
-   */
+  var pngCommenter = PngCommenter(picdef: PictureDefinition(hues: []))
+  var pngSaver = PngSaver(pngCommenter: PngCommenter(picdef: PictureDefinition(hues: [])))
+
+  // MARK: - Initializers
+
+  /// Default initializer for a new demo picture
   init() {
-    self.docName = "unknown"  // Initialize this first
-    let hues: [Hue] = [
+    let hues = [
       Hue(num: 1, r: 0.0, g: 255.0, b: 0.0),
       Hue(num: 2, r: 255.0, g: 255.0, b: 0.0),
       Hue(num: 3, r: 255.0, g: 0.0, b: 0.0),
@@ -53,40 +54,33 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
       Hue(num: 6, r: 0.0, g: 255.0, b: 255.0),
     ]
     self.picdef = PictureDefinition(hues: hues)
-
-    self.imageDescriptionManager = ImageDescriptionManager(picdef: self.picdef)
-
+    self.pngCommenter = PngCommenter(picdef: self.picdef)
+    self.pngSaver = PngSaver(pngCommenter: self.pngCommenter)
   }
 
-  /**
-   Initialize a document with our picdef property
-   - Parameter configuration: config
-   */
+  /// Initializer to read a document from disk
   init(configuration: ReadConfiguration) throws {
     guard let data = configuration.file.regularFileContents else {
       throw CocoaError(.fileReadCorruptFile)
     }
-    self.docName = configuration.file.filename!
+    self.docName = configuration.file.filename ?? "unknown"
     self.picdef = try JSONDecoder().decode(PictureDefinition.self, from: data)
-    self.imageDescriptionManager = ImageDescriptionManager(picdef: self.picdef)
-
+    self.pngCommenter = PngCommenter(picdef: self.picdef)
+    self.pngSaver = PngSaver(pngCommenter: self.pngCommenter)
     print("Opening data file = ", self.docName)
   }
 
-  /**
-   Get the current window title (shows data file name).
-   */
-  func getCurrentWindowTitle() -> String {
-    guard let mainWindow = NSApp.mainWindow else {
-      return ""
-    }
-    return mainWindow.title
-  }
+  // MARK: - Snapshot and Serialization
 
-  func getUserCGColorList() -> [CGColor] {
-    return self.picdef.hues.map { hue in
-      return CGColor(red: CGFloat(hue.r / 255.0), green: CGFloat(hue.g / 255.0), blue: CGFloat(hue.b / 255.0), alpha: 1.0)
-    }
+  /**
+   Create a snapshot of the current state of the document for serialization
+   while the live self remains editiable by the user
+   - Parameter contentType: the standard type we use
+   - Returns: picture definition
+   */
+  @available(macOS 12.0, *)
+  func snapshot(contentType _: UTType) throws -> PictureDefinition {
+    self.picdef // return the current state
   }
 
   /**
@@ -105,43 +99,61 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     return fileWrapper
   }
 
-  // Save the MandArt data to a file.
+  // MARK: - File Handling
+
+  // Save the image inputs to a file.
+  func saveMandArtImageInputs() {
+    var data: Data
+    do {
+      let encoder = JSONEncoder()
+      encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+      data = try encoder.encode(picdef)
+    } catch {
+      handleError(MandArtError.encodingError)
+      return
+    }
+    if data.isEmpty {
+      handleError(MandArtError.emptyData)
+      return
+    }
+
+    // trigger state change to force a current image
+    picdef.imageHeight += 1
+    picdef.imageHeight -= 1
+
+    //  var currImage = contextImageGlobal!
+    let savePanel = NSSavePanel()
+    savePanel.title = "Choose directory and name for image inputs file"
+    savePanel.nameFieldStringValue = dataFileName
+    savePanel.canCreateDirectories = true
+    savePanel.allowedContentTypes = [UTType.mandartDocType]
+
+    savePanel.begin { (result) in
+      if result == .OK {
+        do {
+          try data.write(to: savePanel.url!)
+        } catch {
+          print("Error saving file: \(error.localizedDescription)")
+        }
+        print("Image inputs saved successfully to \(savePanel.url!)")
+
+        // Update the window title with the saved file name (without its extension)
+        if let fileName = savePanel.url?.lastPathComponent {
+          let justName = fileName.replacingOccurrences(of: Constants.dotMandart, with: "")
+          NSApp.mainWindow?.title = justName
+        }
+      } else {
+        print("Error saving image inputs")
+      }
+    }
+  }
+
   func saveMandArtDataFile() {
     // first, save the data file and wait for it to complete
     DispatchQueue.main.async {
       // Trigger a "File > Save" menu event to update the app's UI.
       NSApp.sendAction(#selector(NSDocument.save(_:)), to: nil, from: self)
     }
-  }
-
-  func beforeSaveImage() {
-    var data: Data
-    do {
-      data = try JSONEncoder().encode(self.picdef)
-    } catch {
-      print("Error encoding picdef.")
-      print("Closing all windows and exiting with error code 98.")
-      NSApplication.shared.windows.forEach { $0.close() }
-      NSApplication.shared.terminate(nil)
-      exit(98)
-    }
-    if data == Data() {
-      print("Error encoding picdef.")
-      print("Closing all windows and exiting with error code 99.")
-      NSApplication.shared.windows.forEach { $0.close() }
-      NSApplication.shared.terminate(nil)
-      exit(99)
-    }
-    // trigger state change to force a current image
-    self.picdef.imageHeight += 1
-    self.picdef.imageHeight -= 1
-  }
-
-  func getDefaultImageFileName() -> String {
-    let winTitle = self.getCurrentWindowTitle()
-    let justname = winTitle.replacingOccurrences(of: ".mandart", with: "")
-    let imageFileName = justname + ".png"
-    return imageFileName
   }
 
   func initSavePanel(fn: String) -> NSSavePanel {
@@ -153,65 +165,70 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
   }
 
   func saveMandArtImage() {
-    beforeSaveImage()
+    print("calling saveMandArtImage")
+
+    guard pngSaver.beforeSaveImage(for: picdef) else {
+      print("Error preparing image for saving.")
+      return
+    }
+
     guard let cgImage = contextImageGlobal else {
       print("Error: No context image available.")
       return
     }
-    let imageFileName: String = getDefaultImageFileName()
-    let comment: String = imageDescriptionManager.generateImageComment()
+
     let savePanel: NSSavePanel = initSavePanel(fn: imageFileName)
 
-    let ciImage = CIImage(cgImage: cgImage)
-
-    // Set the description attribute in the PNG metadata
-    let pngMetadata: [String: Any] = [
-      kCGImagePropertyPNGDescription as String: comment
-    ]
-
-    savePanel.begin { result in
+    savePanel.begin { [weak self] result in
       if result == .OK, let url = savePanel.url {
-        let context = CIContext(options: nil)
+        self?.pngSaver.saveImage(cgImage, to: url)
+      }
+    }
+  }
 
-        // Get the CIImage PNG representation
-        guard let pngData = context.pngRepresentation(of: ciImage, format: .RGBA8, colorSpace: ciImage.colorSpace!) else {
-          print("Error: Failed to generate PNG data.")
-          return
-        }
+  // MARK: - Helper Functions
 
-        do {
-          try pngData.write(to: url, options: .atomic)
-          print("Saved image to: \(url)")
-          // After saving, update image metadata with description
-          if let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil),
-             let imageType = CGImageSourceGetType(imageSource),
-             let mutableData = CFDataCreateMutableCopy(nil, 0, pngData as CFData),
-             let destination = CGImageDestinationCreateWithData(mutableData, imageType, 1, nil) {
+  var currentWindowTitle: String {
+    return NSApp.mainWindow?.title ?? ""
+  }
 
-            CGImageDestinationAddImageFromSource(destination, imageSource, 0, pngMetadata as CFDictionary)
-            if CGImageDestinationFinalize(destination) {
-              try? (mutableData as Data).write(to: url, options: .atomic)
-              print("Description added to the image: \(comment)")
-            } else {
-              print("Error adding metadata to the image")
-            }
-          }
-        } catch let error {
-          print("Error saving image: \(error)")
-        }
-      } // end if okay
-    } // end save begin
-  } // end save function
+  var dataFileName: String {
+    return baseFileName + Constants.dotMandart
+  }
 
-  /**
-   Create a snapshot of the current state of the document for serialization
-   while the live self remains editiable by the user
-   - Parameter contentType: the standard type we use
-   - Returns: picture definition
-   */
-  @available(macOS 12.0, *)
-  func snapshot(contentType _: UTType) throws -> PictureDefinition {
-    self.picdef // return the current state
+  var imageFileName: String {
+    return baseFileName + Constants.dotPng
+  }
+
+  private var baseFileName: String {
+    let title = currentWindowTitle.isEmpty ? "MyArt" : currentWindowTitle
+
+    // Strip off the .mandart extension if it exists
+    if title.hasSuffix(Constants.dotMandart) {
+      return title.replacingOccurrences(of: Constants.dotMandart, with: "")
+    }
+    return title
+  }
+
+  var userCGColorList: [CGColor] {
+    return picdef.hues.map { hue in
+      CGColor(red: CGFloat(hue.r / 255.0), green: CGFloat(hue.g / 255.0), blue: CGFloat(hue.b / 255.0), alpha: 1.0)
+    }
+  }
+
+  func handleError(_ error: MandArtError) {
+    print(error.localizedDescription)
+    // Here you can also display an alert to the user or handle the error in other ways
+    // For now, we will just log and exit the application
+    NSApplication.shared.windows.forEach { $0.close() }
+    NSApplication.shared.terminate(nil)
+  }
+
+  // MARK: - Constants
+
+  private struct Constants {
+    static let dotMandart = ".mandart"
+    static let dotPng = ".png"
   }
 
 }

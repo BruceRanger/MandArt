@@ -2,15 +2,16 @@ import Foundation
 import ImageIO
 import UniformTypeIdentifiers
 
-public class ImageDescriptionManager {
+public class PngCommenter {
 
   let picdef: PictureDefinition
+  let fullDomain: String = "com.bhj.mandart"
 
   init(picdef: PictureDefinition) {
     self.picdef = picdef
   }
 
-  func generateImageComment() -> String {
+  func getComment() -> String {
     let comment = """
         dFIterMin is \(picdef.dFIterMin)
         imageHeight is \(picdef.imageHeight)
@@ -34,22 +35,22 @@ public class ImageDescriptionManager {
   func setPNGDescription(imageURL: URL, description: String) throws {
     // Get the image data
     guard let imageData = try? Data(contentsOf: imageURL) else {
-      throw NSError(domain: "com.bhj.mandart", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to read image data"])
+      throw NSError(domain: fullDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to read image data"])
     }
 
     // Create a CGImageSource from the image data
     guard let imageSource = CGImageSourceCreateWithData(imageData as CFData, nil) else {
-      throw NSError(domain: "com.bhj.mandart", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to create image source"])
+      throw NSError(domain: fullDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to create image source"])
     }
 
     // Create a CGImageDestination to write the image with metadata
     guard let destination = CGImageDestinationCreateWithURL(imageURL as CFURL, UTType.png.identifier as CFString, 1, nil) else {
-      throw NSError(domain: "com.bhj.mandart", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to create image destination"])
+      throw NSError(domain: fullDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to create image destination"])
     }
 
     // Get the image properties dictionary
     guard let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any] else {
-      throw NSError(domain: "com.bhj.mandart", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to get image properties"])
+      throw NSError(domain: fullDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to get image properties"])
     }
 
     // Create a mutable copy of the properties dictionary
@@ -65,7 +66,7 @@ public class ImageDescriptionManager {
 
     // Finalize the destination to write the image with metadata to disk
     guard CGImageDestinationFinalize(destination) else {
-      throw NSError(domain: "com.bhj.mandart", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to write image with metadata to disk"])
+      throw NSError(domain: fullDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to write image with metadata to disk"])
     }
   }
 
