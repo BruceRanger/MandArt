@@ -88,23 +88,16 @@ struct TabColor: View {
           }
           
   //     {
-
-  //        TabSavePopup(popupManager: popupManager)
-
+          TabSavePopup(popupManager: popupManager)
    //     }   
           
         } // end section
-        
-               //{
-
-          TabSavePopup(popupManager: popupManager)
-
+      //{
+  //        TabSavePopup(popupManager: popupManager)
       // } 
-        
-        
 
         Spacer() // Pushes everything above it to take as little space as possible
       } // end vstack
     } // end scrollview
   } // end body
-}
+} // end View
