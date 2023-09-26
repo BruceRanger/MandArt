@@ -3,6 +3,7 @@ import UniformTypeIdentifiers
 
 struct TabColor: View {
   @ObservedObject var doc: MandArtDocument
+  @ObservedObject var popupManager = PopupManager()
   @Binding var activeDisplayState: ActiveDisplayChoice
 
   var calculatedRightNumber: Int {
@@ -85,7 +86,22 @@ struct TabColor: View {
             Text("Click \(Image(systemName: "exclamationmark.circle")) to learn more.")
             Text("Some colors may not print true. See Tab 4.Save to explore options.")
           }
+          
+  //     {
+
+  //        TabSavePopup(popupManager: popupManager)
+
+   //     }   
+          
         } // end section
+        
+               //{
+
+          TabSavePopup(popupManager: popupManager)
+
+      // } 
+        
+        
 
         Spacer() // Pushes everything above it to take as little space as possible
       } // end vstack
