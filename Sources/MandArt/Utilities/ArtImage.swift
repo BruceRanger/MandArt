@@ -58,6 +58,8 @@ struct ArtImage {
    - Returns: optional CGImage with the bitmap or nil
    */
   internal func getPictureImage(colors: inout [[Double]]) -> CGImage? {
+  
+//    print("fIterGlobal[0][0] picture begin", fIterGlobal[0][0])
 
     let imageWidth = shapeInputs.imageWidth
     let imageHeight = shapeInputs.imageHeight
@@ -317,6 +319,9 @@ struct ArtImage {
     let contextImage = context.makeImage()!
     rasterBufferPtr.deallocate()
     contextImageGlobal = contextImage
+    
+ //   print("fIterGlobal[0][0] picture end", fIterGlobal[0][0])
+    
     return contextImage
   }
 
@@ -329,6 +334,8 @@ struct ArtImage {
    - Returns: optional CGImage with the colored bitmap or nil
    */
   internal func getColorImage(colors: inout [[Double]]) -> CGImage? {
+  
+ //   print("fIterGlobal[0][0] color begin", fIterGlobal[0][0])
 
     if fIterGlobal.isEmpty {
       print("Error: fIterGlobal is empty")
@@ -518,6 +525,9 @@ struct ArtImage {
     contextImage = context.makeImage()!
     rasterBufferPtr.deallocate()
     contextImageGlobal = contextImage
+    
+ //   print("fIterGlobal[0][0] color end", fIterGlobal[0][0])
+    
     return contextImage
   }
 

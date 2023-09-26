@@ -51,15 +51,18 @@ class ImageViewModel: ObservableObject {
 
     switch activeDisplayState {
       case .MandArt:
+      print("MandArt")
         let art = ArtImage(picdef: doc.picdef)
         let img = art.getPictureImage(colors: &colors)
         return img
       case .Gradient:
+      print("Gradient")
         if getLeftGradientIsValid() {
           return getGradientImage()
         }
         return nil
       case .Colors:
+      print("Colors")
         let art = ArtImage(picdef: doc.picdef)
         let img = art.getColorImage(colors: &colors)
         return img

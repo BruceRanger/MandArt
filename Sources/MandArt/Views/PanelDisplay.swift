@@ -49,6 +49,24 @@ struct PanelDisplay: View {
             } // scroll
           } // zstack
 
+        } else if activeDisplayState == ActiveDisplayChoice.Colors {
+
+          let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
+
+          ZStack(alignment: .topLeading) {
+            ScrollView([.horizontal, .vertical], showsIndicators: true) {
+
+              if let cgImage = viewModel.getImage() {
+                Image(decorative: cgImage, scale: 1.0)
+                  .frame(width: CGFloat(cgImage.width), alignment: .topLeading)
+              } else {
+                Text("No Image Available")
+                  .foregroundColor(.gray)
+              }
+
+            } // scroll
+          } // zstack
+
         }
 
       } // end VStack right side (picture space)
