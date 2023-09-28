@@ -74,6 +74,37 @@ struct TabTune: View {
           self.activeDisplayState = .Colors
         }
       }
+      
+        // Hold fraction with Slider
+          HStack {
+            Text("Hold fraction (yY)")
+          }
+          HStack {
+            Text("0")
+            Slider(value: $doc.picdef.yY, in: 0 ... 1, step: 0.1)
+              .help(
+                "Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient."
+              )
+            Text("1")
+
+            TextField(
+              "0",
+              value: $doc.picdef.yY,
+              formatter: MAFormatters.fmtHoldFractionGradient
+            )
+            .textFieldStyle(.roundedBorder)
+            .multilineTextAlignment(.trailing)
+            .frame(maxWidth: 50)
+            .help(
+              "Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient."
+            )
+            .onChange(of: doc.picdef.yY) { _ in
+          self.activeDisplayState = .Colors
+        }
+          }
+          .padding(.horizontal)
+          // END Hold fraction with Slider
+      
       Spacer()
 
     } //  vstack

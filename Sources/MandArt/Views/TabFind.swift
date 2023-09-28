@@ -210,7 +210,7 @@ struct TabFind: View {
             )
           }
 
-          // Hold fraction with Slider
+   /*       // Hold fraction with Slider
           HStack {
             Text("Hold fraction (yY)")
           }
@@ -238,7 +238,7 @@ struct TabFind: View {
         }
           }
           .padding(.horizontal)
-          // END Hold fraction with Slider
+          // END Hold fraction with Slider  */
 
         } // end section
 
