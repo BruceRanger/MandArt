@@ -12,7 +12,7 @@ struct TabTune: View {
 
       VStack(spacing: 10) {
         Text("Spacing far from MiniMand (near to edge)")
-        SliderTextfieldView(
+        SliderTextView(
           range: 1...20,
           step: 1,
           placeholder: "5",
@@ -20,25 +20,27 @@ struct TabTune: View {
           helpText: "Enter the value for the color spacing near the edges of the image, away from MiniMand.",
           value: $doc.picdef.spacingColorFar
         )
+        .onChange(of: doc.picdef.spacingColorFar) { _ in
+          self.activeDisplayState = .Colors
+        }
       }
 
       VStack(spacing: 10) {
         Text("Spacing near to MiniMand (far from edge)")
-        SliderTextfieldView(
+        SliderTextView(
           range: 5...50,
           step: 5,
           placeholder: "15",
           formatter: MAFormatters.fmtSpacingFarFromEdge,
           helpText: "Enter the value for the color spacing away from the edges of the image, near the MiniMand.",
           value: $doc.picdef.spacingColorNear
-
         )
       }
 
       // dFIterMin
       VStack(spacing: 10) {
         Text("Change in minimum iteration (dFIterMin)")
-        SliderTextfieldView(
+        SliderTextView(
           range: -5...20,
           step: 1,
           placeholder: "0",
@@ -51,7 +53,7 @@ struct TabTune: View {
       // nBlocks
       VStack(spacing: 10) {
         Text("Number of Color Blocks (nBlocks)")
-        SliderTextfieldView(
+        SliderTextView(
           range: 10...100,
           step: 10,
           placeholder: "60",

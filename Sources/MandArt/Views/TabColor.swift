@@ -86,13 +86,13 @@ struct TabColor: View {
             Text("Click \(Image(systemName: "exclamationmark.circle")) to learn more.")
             Text("Some colors may not print true. See Tab 4.Save to explore options.")
           }
-          
+
   //     {
           TabSavePopup(popupManager: popupManager)
    //     }   
-          
+
         } // end section
-      //{
+      // {
   //        TabSavePopup(popupManager: popupManager)
       // } 
 
