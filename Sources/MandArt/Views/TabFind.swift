@@ -233,6 +233,9 @@ struct TabFind: View {
             .help(
               "Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient."
             )
+            .onChange(of: doc.picdef.yY) { _ in
+          self.activeDisplayState = .Colors
+        }
           }
           .padding(.horizontal)
           // END Hold fraction with Slider

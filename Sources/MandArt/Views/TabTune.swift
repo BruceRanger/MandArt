@@ -35,6 +35,9 @@ struct TabTune: View {
           helpText: "Enter the value for the color spacing away from the edges of the image, near the MiniMand.",
           value: $doc.picdef.spacingColorNear
         )
+        .onChange(of: doc.picdef.spacingColorNear) { _ in
+          self.activeDisplayState = .Colors
+        }
       }
 
       // dFIterMin
@@ -48,6 +51,9 @@ struct TabTune: View {
           helpText: "Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.",
           value: $doc.picdef.dFIterMin
         )
+        .onChange(of: doc.picdef.dFIterMin) { _ in
+          self.activeDisplayState = .Colors
+        }
       }
 
       // nBlocks
@@ -64,6 +70,9 @@ struct TabTune: View {
             set: { doc.picdef.nBlocks = Int($0) }
           )
         )
+        .onChange(of: doc.picdef.nBlocks) { _ in
+          self.activeDisplayState = .Colors
+        }
       }
       Spacer()
 
