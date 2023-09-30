@@ -66,7 +66,7 @@ struct TabColor: View {
             .help("Display a gradient to review the transition between adjoining colors.")
 
             Button("Display Art") {
-              activeDisplayState = .Colors // BHJ
+              activeDisplayState = .Colors // BHJ after gradient, I think this is safe?
             }
             .help("Display art again after checking gradients.")
           } // end hstack

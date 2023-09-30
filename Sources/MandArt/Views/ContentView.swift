@@ -7,7 +7,7 @@ import CoreGraphics // for image scrollview?
 var contextImageGlobal: CGImage?
 
 enum ActiveDisplayChoice {
-  case MandArt
+  case MandArtFull
   case Gradient
   case Colors
 }
@@ -18,7 +18,7 @@ struct ContentView: View {
   @EnvironmentObject var appState: AppState
   @ObservedObject var doc: MandArtDocument
   @StateObject var popupManager = PopupManager()
-  @State var activeDisplayState: ActiveDisplayChoice = .MandArt
+  @State var activeDisplayState: ActiveDisplayChoice = .MandArtFull
 
   @State private var moved: Double = 0.0
   @State private var startTime: Date?
@@ -46,9 +46,6 @@ struct ContentView: View {
       )
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .padding(.leading, 0)
-      .onAppear {
-        activeDisplayState = .MandArt
-      }
 
     } // geo
     .frame(maxWidth: .infinity, maxHeight: .infinity)

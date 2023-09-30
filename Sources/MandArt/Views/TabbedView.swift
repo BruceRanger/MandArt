@@ -10,8 +10,7 @@ struct TabbedView: View {
 
   init(doc: MandArtDocument,
        popupManager: PopupManager,
-       activeDisplayState: Binding<ActiveDisplayChoice>)
-  {
+       activeDisplayState: Binding<ActiveDisplayChoice>) {
     self.doc = doc
     self.popupManager = popupManager
     self._activeDisplayState = activeDisplayState

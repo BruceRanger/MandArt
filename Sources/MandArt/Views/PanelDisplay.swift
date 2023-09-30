@@ -14,7 +14,7 @@ struct PanelDisplay: View {
 
       let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
 
-      if self.activeDisplayState == .MandArt || self.activeDisplayState == .Colors {
+      if self.activeDisplayState == .MandArtFull || self.activeDisplayState == .Colors {
 
         ZStack(alignment: .topLeading) {
 
@@ -69,7 +69,7 @@ struct PanelDisplay: View {
   var tapGesture: some Gesture {
     DragGesture(minimumDistance: 0, coordinateSpace: .local)
       .onChanged { value in
-        if self.activeDisplayState != .Gradient {
+        if activeDisplayState == .MandArtFull || activeDisplayState == .Colors {
           // store distance touch has moved as a sum of all movements
           self.moved += value.translation.width + value.translation.height
           // only set the start time if it's the first event
@@ -79,18 +79,18 @@ struct PanelDisplay: View {
         }
       }
       .onEnded { tap in
-        if self.activeDisplayState != .Gradient {
+        if activeDisplayState == .MandArtFull || activeDisplayState == .Colors {
           // if not moved much, treat it as a tap event
           if self.moved < 2, self.moved > -2 {
             self.doc.picdef.xCenter = self.getCenterXFromTap(tap)
             self.doc.picdef.yCenter = self.getCenterYFromTap(tap)
-            self.activeDisplayState = .MandArt // redraw after new center
+            print("onTapped xy")
           }
           // if we moved a lot, treat it as a drag event
           else {
             self.doc.picdef.xCenter = self.getCenterXFromDrag(tap)
             self.doc.picdef.yCenter = self.getCenterYFromDrag(tap)
-            self.activeDisplayState = .MandArt // redraw after drag
+            print("onDragged xy")
           }
           // reset tap event states
           self.moved = 0

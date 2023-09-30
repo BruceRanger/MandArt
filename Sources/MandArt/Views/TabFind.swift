@@ -56,8 +56,8 @@ struct TabFind: View {
               .padding(10)
               .help("Enter the width, in pixels, of the image.")
               .onChange(of: doc.picdef.imageWidth) { _ in
-                print("onChange width")
-                activeDisplayState = .MandArt
+                print("TabFind: onChange width")
+                activeDisplayState = .MandArtFull
               }
 
             } // end vstack
@@ -74,8 +74,8 @@ struct TabFind: View {
               .padding(10)
               .help("Enter the height, in pixels, of the image.")
               .onChange(of: doc.picdef.imageHeight) { _ in
-                print("onChange height")
-                activeDisplayState = .MandArt
+                print("TabFind: onChange height")
+                activeDisplayState = .MandArtFull
               }
 
             } // end vstack
@@ -119,8 +119,8 @@ struct TabFind: View {
                 "Enter the x value in the Mandelbrot coordinate system for the center of the image."
               )
               .onChange(of: doc.picdef.xCenter) { _ in
-                print("onChange x")
-                activeDisplayState = .MandArt
+                print("TabFind: onChange x")
+                activeDisplayState = .MandArtFull
               }
             } // end vstack
 
@@ -140,8 +140,8 @@ struct TabFind: View {
                 "Enter the Y value in the Mandelbrot coordinate system for the center of the image."
               )
               .onChange(of: doc.picdef.yCenter) { _ in
-                print("onChange y")
-                activeDisplayState = .MandArt
+                print("TabFind: onChange y")
+                activeDisplayState = .MandArtFull
               }
             }
           } // end HStack for XY
@@ -163,8 +163,8 @@ struct TabFind: View {
               .frame(maxWidth: 60)
               .help("Enter the angle to rotate the image counterclockwise, in degrees.")
               .onChange(of: doc.picdef.theta) { _ in
-                print("onChange theta")
-                activeDisplayState = .MandArt
+                print("TabFind: onChange theta")
+                activeDisplayState = .MandArtFull
               }
             }
 
@@ -181,8 +181,8 @@ struct TabFind: View {
               .frame(maxWidth: 180)
               .help("Enter the magnification (may take a while).")
               .onChange(of: doc.picdef.scale) { _ in
-                print("onChange scale")
-                activeDisplayState = .MandArt
+                print("TabFind: onChange scale")
+                activeDisplayState = .MandArtFull
               }
             }
 
@@ -216,8 +216,8 @@ struct TabFind: View {
             )
             .frame(maxWidth: 70)
             .onChange(of: doc.picdef.iterationsMax) { _ in
-              print("onChange iterationsMax")
-              activeDisplayState = .MandArt
+              print("TabFind: onChange iterationsMax")
+              activeDisplayState = .MandArtFull
             }
           }
           .padding(.horizontal)
@@ -237,8 +237,8 @@ struct TabFind: View {
               "Enter min value for square of distance from origin. A larger value will smooth the color gradient, but slow down the calculation."
             )
             .onChange(of: doc.picdef.rSqLimit) { _ in
-              print("onChange rSqLimit")
-              activeDisplayState = .MandArt
+              print("TabFind: onChange rSqLimit")
+              activeDisplayState = .MandArtFull
             }
           }
 

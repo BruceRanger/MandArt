@@ -21,8 +21,8 @@ struct TabTune: View {
           value: $doc.picdef.spacingColorFar
         )
         .onChange(of: doc.picdef.spacingColorFar) { _ in
-          print("onChange spacingColorFar")
-          self.activeDisplayState = .Colors
+          print("TabTune: onChange spacingColorFar")
+          activeDisplayState = .Colors
         }
       }
 
@@ -37,8 +37,8 @@ struct TabTune: View {
           value: $doc.picdef.spacingColorNear
         )
         .onChange(of: doc.picdef.spacingColorNear) { _ in
-          print("onChange spacingColorNear")
-          self.activeDisplayState = .Colors
+          print("TabTune: onChange spacingColorNear")
+          activeDisplayState = .Colors
         }
       }
 
@@ -54,7 +54,7 @@ struct TabTune: View {
           value: $doc.picdef.dFIterMin
         )
         .onChange(of: doc.picdef.dFIterMin) { _ in
-          print("onChange dFIterMin")
+          print("TabTune: onChange dFIterMin")
           activeDisplayState = .Colors
         }
       }
@@ -74,7 +74,7 @@ struct TabTune: View {
           )
         )
         .onChange(of: doc.picdef.nBlocks) { _ in
-          print("onChange nBlocks")
+          print("TabTune: onChange nBlocks")
           activeDisplayState = .Colors
         }
       }
@@ -103,7 +103,7 @@ struct TabTune: View {
               "Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient."
             )
             .onChange(of: doc.picdef.yY) { _ in
-              print("onChange yY")
+              print("TabTune: onChange yY")
               activeDisplayState = .Colors
             }
           }

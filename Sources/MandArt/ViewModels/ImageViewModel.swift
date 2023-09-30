@@ -50,8 +50,8 @@ class ImageViewModel: ObservableObject {
     var colors: [[Double]] = doc.picdef.hues.map { [$0.r, $0.g, $0.b] }
 
     switch activeDisplayState {
-      case .MandArt:
-      print("MandArt")
+      case .MandArtFull:
+      print("MandArtFull")
         let art = ArtImage(picdef: doc.picdef)
         let img = art.getPictureImage(colors: &colors)
         return img
