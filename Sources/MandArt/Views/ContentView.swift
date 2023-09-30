@@ -45,7 +45,6 @@ struct ContentView: View {
         ContentViewPopups(doc: doc, popupManager: popupManager, activeDisplayState: $activeDisplayState)
       )
       .frame(maxWidth: .infinity, maxHeight: .infinity)
-      // .fixedSize(horizontal: false, vertical: false)
       .padding(.leading, 0)
       .onAppear {
         activeDisplayState = .MandArt

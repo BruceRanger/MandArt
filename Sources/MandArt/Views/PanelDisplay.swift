@@ -2,7 +2,6 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct PanelDisplay: View {
-
   @ObservedObject var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
   @State private var selectedTab = 0
@@ -11,67 +10,43 @@ struct PanelDisplay: View {
 
   var body: some View {
 
-      VStack(alignment: .leading) {
+    VStack(alignment: .leading) {
 
-        if activeDisplayState == .MandArt {
+      let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
 
-          let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
-            ZStack(alignment: .topLeading) {
-              ScrollView([.horizontal, .vertical], showsIndicators: true) {
+      if self.activeDisplayState == .MandArt || self.activeDisplayState == .Colors {
 
-                if let cgImage = viewModel.getImage() {
-                  Image(decorative: cgImage, scale: 1.0)
-                    .frame(width: CGFloat(cgImage.width), height: CGFloat(cgImage.height))
-                    .gesture(self.tapGesture)
-                } else {
-                  Text("No Image Available")
-                    .foregroundColor(.gray)
-                }
+        ZStack(alignment: .topLeading) {
 
-              } // scrollview
-            } // zstack
+          ScrollView([.horizontal, .vertical], showsIndicators: true) {
 
-        } else if activeDisplayState == ActiveDisplayChoice.Gradient {
+            if let cgImage = viewModel.getImage() {
+              Image(decorative: cgImage, scale: 1.0)
+                .frame(width: CGFloat(cgImage.width), height: CGFloat(cgImage.height))
+                .gesture(self.tapGesture)
+            } else {
+              Text("No Image Available")
+                .foregroundColor(.gray)
+            }
+          } // scrollview
+        } // zstack
 
-          let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
+      } else if self.activeDisplayState == .Gradient {
+        ZStack(alignment: .topLeading) {
+          ScrollView([.horizontal, .vertical], showsIndicators: true) {
+            if let cgImage = viewModel.getImage() {
+              Image(decorative: cgImage, scale: 1.0)
+                .frame(width: CGFloat(cgImage.width), alignment: .topLeading)
+            } else {
+              Text("No Image Available")
+                .foregroundColor(.gray)
+            }
+          } // scroll
+        } // zstack
 
-          ZStack(alignment: .topLeading) {
-            ScrollView([.horizontal, .vertical], showsIndicators: true) {
-
-              if let cgImage = viewModel.getImage() {
-                Image(decorative: cgImage, scale: 1.0)
-                  .frame(width: CGFloat(cgImage.width), alignment: .topLeading)
-              } else {
-                Text("No Image Available")
-                  .foregroundColor(.gray)
-              }
-
-            } // scroll
-          } // zstack
-
-        } else if activeDisplayState == ActiveDisplayChoice.Colors {
-
-          let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
-
-          ZStack(alignment: .topLeading) {
-            ScrollView([.horizontal, .vertical], showsIndicators: true) {
-
-              if let cgImage = viewModel.getImage() {
-                Image(decorative: cgImage, scale: 1.0)
-                  .frame(width: CGFloat(cgImage.width), alignment: .topLeading)
-              } else {
-                Text("No Image Available")
-                  .foregroundColor(.gray)
-              }
-
-            } // scroll
-          } // zstack
-
-        }
-
-      } // end VStack right side (picture space)
-      .padding(2)
-
+      }
+    } // end VStack right side (picture space)
+    .padding(2)
   } // body
 
   /**
@@ -94,8 +69,8 @@ struct PanelDisplay: View {
   var tapGesture: some Gesture {
     DragGesture(minimumDistance: 0, coordinateSpace: .local)
       .onChanged { value in
-        if self.activeDisplayState == .MandArt {
-          // store distance the touch has moved as a sum of all movements
+        if self.activeDisplayState != .Gradient {
+          // store distance touch has moved as a sum of all movements
           self.moved += value.translation.width + value.translation.height
           // only set the start time if it's the first event
           if self.startTime == nil {
@@ -104,25 +79,24 @@ struct PanelDisplay: View {
         }
       }
       .onEnded { tap in
-        if self.activeDisplayState == .MandArt {
-          // if we haven't moved very much, treat it as a tap event
+        if self.activeDisplayState != .Gradient {
+          // if not moved much, treat it as a tap event
           if self.moved < 2, self.moved > -2 {
-            doc.picdef.xCenter = getCenterXFromTap(tap)
-            doc.picdef.yCenter = getCenterYFromTap(tap)
-            activeDisplayState = .MandArt // redraw after new center
+            self.doc.picdef.xCenter = self.getCenterXFromTap(tap)
+            self.doc.picdef.yCenter = self.getCenterYFromTap(tap)
+            self.activeDisplayState = .MandArt // redraw after new center
           }
-          // if we have moved a lot, treat it as a drag event
+          // if we moved a lot, treat it as a drag event
           else {
-            doc.picdef.xCenter = getCenterXFromDrag(tap)
-            doc.picdef.yCenter = getCenterYFromDrag(tap)
-            activeDisplayState = .MandArt // redraw after drag
+            self.doc.picdef.xCenter = self.getCenterXFromDrag(tap)
+            self.doc.picdef.yCenter = self.getCenterYFromDrag(tap)
+            self.activeDisplayState = .MandArt // redraw after drag
           }
           // reset tap event states
           self.moved = 0
           self.startTime = nil
         }
       }
-
   }
 
   /**
@@ -216,5 +190,4 @@ struct PanelDisplay: View {
     let newCenterY: Double = self.doc.picdef.yCenter + dCenterY
     return newCenterY
   }
-
 }

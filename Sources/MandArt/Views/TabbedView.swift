@@ -10,23 +10,19 @@ struct TabbedView: View {
 
   init(doc: MandArtDocument,
        popupManager: PopupManager,
-       activeDisplayState: Binding<ActiveDisplayChoice>
-  ) {
+       activeDisplayState: Binding<ActiveDisplayChoice>) {
     self.doc = doc
     self.popupManager = popupManager
     self._activeDisplayState = activeDisplayState
   }
 
   var body: some View {
-
     TabView(selection: $selectedTab) {
-
       TabFind(doc: doc, activeDisplayState: $activeDisplayState)
-              .tabItem {
+        .tabItem {
           Label("1.Find", systemImage: "aspectratio")
         }.tag(0)
 
-   //   TabColor(doc: doc, activeDisplayState: $activeDisplayState)
       TabColor(doc: doc, popupManager: popupManager, activeDisplayState: $activeDisplayState)
         .tabItem {
           Label("2.Color", systemImage: "paintbrush")
@@ -38,16 +34,10 @@ struct TabbedView: View {
         }.tag(2)
 
       TabSave(doc: doc, popupManager: popupManager)
-
         .tabItem {
           Label("4.Save", systemImage: "circle")
         }.tag(3)
-
     } // end tabview
-    .onChange(of: selectedTab) { _ in
-      activeDisplayState = .MandArt
-    }
     .padding(2)
   } // end body
-
 }

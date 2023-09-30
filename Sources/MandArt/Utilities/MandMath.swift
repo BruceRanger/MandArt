@@ -154,7 +154,7 @@ enum MandMath {
           return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
         }
     }
-    print(lst.count)
+    print(lst.count) // BHJ
     return lst
   }
 

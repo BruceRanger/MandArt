@@ -30,7 +30,6 @@ struct PanelUI: View {
                   )
         Spacer()
       }
-     // .frame(width: .infinity)
 
   }
 }

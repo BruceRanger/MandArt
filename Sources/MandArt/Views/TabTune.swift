@@ -21,6 +21,7 @@ struct TabTune: View {
           value: $doc.picdef.spacingColorFar
         )
         .onChange(of: doc.picdef.spacingColorFar) { _ in
+          print("onChange spacingColorFar")
           self.activeDisplayState = .Colors
         }
       }
@@ -36,6 +37,7 @@ struct TabTune: View {
           value: $doc.picdef.spacingColorNear
         )
         .onChange(of: doc.picdef.spacingColorNear) { _ in
+          print("onChange spacingColorNear")
           self.activeDisplayState = .Colors
         }
       }
@@ -52,7 +54,8 @@ struct TabTune: View {
           value: $doc.picdef.dFIterMin
         )
         .onChange(of: doc.picdef.dFIterMin) { _ in
-          self.activeDisplayState = .Colors
+          print("onChange dFIterMin")
+          activeDisplayState = .Colors
         }
       }
 
@@ -71,10 +74,11 @@ struct TabTune: View {
           )
         )
         .onChange(of: doc.picdef.nBlocks) { _ in
-          self.activeDisplayState = .Colors
+          print("onChange nBlocks")
+          activeDisplayState = .Colors
         }
       }
-      
+
         // Hold fraction with Slider
           HStack {
             Text("Hold fraction (yY)")
@@ -99,12 +103,13 @@ struct TabTune: View {
               "Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient."
             )
             .onChange(of: doc.picdef.yY) { _ in
-          self.activeDisplayState = .Colors
-        }
+              print("onChange yY")
+              activeDisplayState = .Colors
+            }
           }
           .padding(.horizontal)
           // END Hold fraction with Slider
-      
+
       Spacer()
 
     } //  vstack
