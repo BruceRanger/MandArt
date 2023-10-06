@@ -1,30 +1,25 @@
 import SwiftUI
 
-/// ImageViewModel: A ViewModel in the MVVM architecture pattern.
-/// A ViewModel serves as an intermediary between the Model (`MandArtDocument`) and the View.
-/// It is responsible for all the UI logic needed to prepare data for presentation by the View.
 class ImageViewModel: ObservableObject {
-  /// The main document that the ViewModel interacts with to get and set data.
   @Published var doc: MandArtDocument
-
-  /// A binding to track the current display state in the UI, e.g., whether the view is showing MandArt, Gradient, or Colors.
   @Binding var activeDisplayState: ActiveDisplayChoice
 
-  /// Initializes a new instance of the ViewModel.
-  ///
-  /// - Parameters:
-  ///   - doc: The main MandArtDocument.
-  ///   - activeDisplayState: A binding to the active display state.
+  private var previousPicdef: PictureDefinition?
+  private var cachedArtImage: CGImage? {
+        didSet {
+          if cachedArtImage != nil {
+            DispatchQueue.main.async {
+              self.activeDisplayState = .Colors
+            }
+          }
+        }
+      }
 
   init(doc: MandArtDocument, activeDisplayState: Binding<ActiveDisplayChoice>) {
     self.doc = doc
     self._activeDisplayState = activeDisplayState
   }
 
-  /// Calculates the right color number based on the validity of the left gradient.
-  ///
-  /// - Parameter leftGradientIsValid: A boolean indicating if the left gradient is valid.
-  /// - Returns: The right color number.
   func getCalculatedRightNumber(leftGradientIsValid: Bool) -> Int {
     if leftGradientIsValid, doc.picdef.leftNumber < doc.picdef.hues.count {
       return doc.picdef.leftNumber + 1
@@ -32,9 +27,6 @@ class ImageViewModel: ObservableObject {
     return 1
   }
 
-  /// Determines if the left gradient is valid based on the left number.
-  ///
-  /// - Returns: A boolean indicating if the left gradient is valid.
   func getLeftGradientIsValid() -> Bool {
     var isValid = false
     let leftNum = doc.picdef.leftNumber
@@ -43,30 +35,61 @@ class ImageViewModel: ObservableObject {
     return isValid
   }
 
-  /// Retrieves the appropriate image to display based on the current active display state.
-  ///
-  /// - Returns: An optional `CGImage` depending on the active display state.
+  private var keyVariablesChanged: Bool {
+    guard let previousPicdef = previousPicdef else {
+      self.previousPicdef = doc.picdef
+      return true
+    }
+
+    let hasChanged =
+    previousPicdef.imageWidth != doc.picdef.imageWidth ||
+    previousPicdef.imageHeight != doc.picdef.imageHeight ||
+    previousPicdef.xCenter != doc.picdef.xCenter ||
+    previousPicdef.yCenter != doc.picdef.yCenter ||
+    previousPicdef.theta != doc.picdef.theta ||
+    previousPicdef.scale != doc.picdef.scale ||
+    previousPicdef.iterationsMax != doc.picdef.iterationsMax ||
+    previousPicdef.rSqLimit != doc.picdef.rSqLimit
+
+    if hasChanged {
+      self.previousPicdef = doc.picdef
+    }
+
+    return hasChanged
+  }
   func getImage() -> CGImage? {
+    print("getImage() called with \(activeDisplayState)")
+
     var colors: [[Double]] = doc.picdef.hues.map { [$0.r, $0.g, $0.b] }
 
     switch activeDisplayState {
+
       case .MandArtFull:
       print("MandArtFull")
+      if  cachedArtImage == nil || keyVariablesChanged {
+          print("   YES Full calculation required")
+          print("       cachedArtImage nil: TRUE")
+          let art = ArtImage(picdef: doc.picdef)
+          cachedArtImage = art.getPictureImage(colors: &colors)
+          return cachedArtImage
+        } else {
+          print("  NO Full calculation required")
+          return cachedArtImage
+        }
+      case .Colors:
+        print("Colors")
         let art = ArtImage(picdef: doc.picdef)
-        let img = art.getPictureImage(colors: &colors)
-        return img
+        cachedArtImage = art.getColorImage(colors: &colors)
+        return cachedArtImage
+
       case .Gradient:
-      print("Gradient")
+        print("Gradient")
         if getLeftGradientIsValid() {
           return getGradientImage()
         }
-        return nil
-      case .Colors:
-      print("Colors")
-        let art = ArtImage(picdef: doc.picdef)
-        let img = art.getColorImage(colors: &colors)
-        return img
     }
+    return nil
+
   }
 
   /// Generates a gradient image based on the left and right color values.
