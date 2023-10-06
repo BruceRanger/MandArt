@@ -10,6 +10,7 @@ struct DelayedTextFieldInt: View {
   var onCommit: () -> Void
 
   @State private var inputValue: Int
+  @State private var initialValue: Int
 
   init(title: String? = nil, placeholder: String, value: Binding<Int>, formatter: NumberFormatter, onCommit: @escaping () -> Void = {}) {
     self.title = title
@@ -18,6 +19,7 @@ struct DelayedTextFieldInt: View {
     self.formatter = formatter
     self.onCommit = onCommit
     self._inputValue = State(initialValue: value.wrappedValue)
+    self._initialValue = State(initialValue: value.wrappedValue)
   }
 
   var body: some View {
@@ -31,13 +33,28 @@ struct DelayedTextFieldInt: View {
         formatter: formatter,
         onEditingChanged: { isEditing in
           if !isEditing {
-            self.value = self.inputValue
-            onCommit()
+            if self.inputValue != self.initialValue {
+              self.value = self.inputValue
+              onCommit()
+              self.initialValue = self.inputValue // Update initialValue for next editing session
+            }
           }
         }
       )
+      .onChange(of: value) { newValue in
+        // Update inputValue and initialValue when external value changes
+        if newValue != initialValue {
+          inputValue = newValue
+          initialValue = newValue
+        }
+      }
       .textFieldStyle(RoundedBorderTextFieldStyle())
       .multilineTextAlignment(.trailing)
+    }
+    .onAppear {
+      // Set initialValue and inputValue when the view appears
+      initialValue = value
+      inputValue = value
     }
   }
 }
