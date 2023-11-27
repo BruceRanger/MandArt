@@ -22,6 +22,16 @@ struct TabFind: View {
     doc.picdef.scale = scale
   }
 
+  func zoomInCustom(n:Double) {
+    scale *= n
+    doc.picdef.scale = scale
+  }
+
+  func zoomOutCustom(n:Double) {
+    scale /= n
+    doc.picdef.scale = scale
+  }
+
   func aspectRatio() -> Double {
     let h = Double(doc.picdef.imageHeight)
     let w = Double(doc.picdef.imageWidth)
@@ -146,9 +156,10 @@ struct TabFind: View {
             }
           } // end HStack for XY
 
-          //  Show Row (HStack) of Scale Next
+          //  Show Row (HStack) of Rotate and Zoom Next
 
           HStack {
+
             VStack {
               Text("Rotate (º)")
                 .help("Enter degress to rotate (theta).")
@@ -168,6 +179,7 @@ struct TabFind: View {
               }
             }
 
+            /*
             VStack {
               Text("Scale (scale)")
               DelayedTextFieldDouble(
@@ -185,21 +197,65 @@ struct TabFind: View {
                 activeDisplayState = .MandArtFull
               }
             }
+             */
+
+            Divider()
 
             VStack {
-              Text("Zoom")
+              Text("Zoom By 2")
 
               HStack {
                 Button("+") { zoomIn() }
                   .help("Zoom in by factor of 2 (may take a while).")
-
+                Text("2")
                 Button("-") { zoomOut() }
                   .help("Zoom out by factor of 2 (may take a while).")
+              }
+            }
+
+            Divider()
+
+
+            VStack {
+              Text("Custom Zoom")
+
+              HStack {
+                Button("+") { zoomInCustom(n:5) }
+                  .help("Zoom in by N (may take a while).")
+                Text("5")
+                Button("-") { zoomOutCustom(n:5) }
+                  .help("Zoom out by N (may take a while).")
               }
             }
           }
 
           //  Divider()
+
+          HStack {
+            Text("Scale (scale)")
+            Text(String(format: "%.0f", doc.picdef.scale))
+              .padding(1)
+              .help("Magnification (scale).")
+
+            /*
+             DelayedTextFieldDouble(
+              placeholder: "430",
+              // value: $scale,
+              value: $doc.picdef.scale,
+              formatter: MAFormatters.fmtScale
+            )
+            .textFieldStyle(.roundedBorder)
+            .multilineTextAlignment(.trailing)
+            .frame(maxWidth: 180)
+            .help("Enter the magnification (may take a while).")
+            .onChange(of: doc.picdef.scale) { _ in
+              print("TabFind: onChange scale")
+              activeDisplayState = .MandArtFull
+            }
+
+             */
+          }
+          .padding(.horizontal)
 
           HStack {
             Text("Sharpening (iterationsMax):")
