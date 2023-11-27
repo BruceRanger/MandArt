@@ -48,7 +48,6 @@
 		88C3581E2A98EA53007E7A92 /* PanelDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */; };
 		88C358212A99A08D007E7A92 /* PopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358202A99A08D007E7A92 /* PopupManager.swift */; };
 		88C358252A9A6941007E7A92 /* MACommaNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358242A9A6941007E7A92 /* MACommaNumberFormatter.swift */; };
-		88EF98202AC0D203005A3ABC /* MandArtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF981F2AC0D203005A3ABC /* MandArtTests.swift */; };
 		88EF98282AC0D3DC005A3ABC /* Color+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF98272AC0D3DC005A3ABC /* Color+Components.swift */; };
 		88EF982A2AC0D6EB005A3ABC /* Hue+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF98292AC0D6EB005A3ABC /* Hue+Equatable.swift */; };
 		88EF982C2AC0D78E005A3ABC /* String+Subscripting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF982B2AC0D78E005A3ABC /* String+Subscripting.swift */; };
@@ -119,8 +118,7 @@
 		88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelDisplay.swift; sourceTree = "<group>"; };
 		88C358202A99A08D007E7A92 /* PopupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupManager.swift; sourceTree = "<group>"; };
 		88C358242A9A6941007E7A92 /* MACommaNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACommaNumberFormatter.swift; sourceTree = "<group>"; };
-		88EF981D2AC0D203005A3ABC /* MandArtTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MandArtTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		88EF981F2AC0D203005A3ABC /* MandArtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandArtTests.swift; sourceTree = "<group>"; };
+		88EF981D2AC0D203005A3ABC /* MandArtTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MandArtTests.xctest; path = /Users/denisecase/Documents/MandArt/build/Debug/MandArtTests.xctest; sourceTree = "<absolute>"; };
 		88EF98272AC0D3DC005A3ABC /* Color+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Components.swift"; sourceTree = "<group>"; };
 		88EF98292AC0D6EB005A3ABC /* Hue+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hue+Equatable.swift"; sourceTree = "<group>"; };
 		88EF982B2AC0D78E005A3ABC /* String+Subscripting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Subscripting.swift"; sourceTree = "<group>"; };
@@ -166,8 +164,6 @@
 				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
 				88A1716629913A0800A85AED /* Sources */,
 				C57920042A1673C900E0CD98 /* MandArt.app */,
-				88EF981D2AC0D203005A3ABC /* MandArtTests.xctest */,
-				88EF981E2AC0D203005A3ABC /* MandArtTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -270,14 +266,6 @@
 				88C358202A99A08D007E7A92 /* PopupManager.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		88EF981E2AC0D203005A3ABC /* MandArtTests */ = {
-			isa = PBXGroup;
-			children = (
-				88EF981F2AC0D203005A3ABC /* MandArtTests.swift */,
-			);
-			path = MandArtTests;
 			sourceTree = "<group>";
 		};
 		88EF98262AC0D37D005A3ABC /* Extensions */ = {
@@ -454,7 +442,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88EF98202AC0D203005A3ABC /* MandArtTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
