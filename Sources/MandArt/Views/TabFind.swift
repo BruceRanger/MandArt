@@ -5,31 +5,43 @@ struct TabFind: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
   @State private var scale: Double
+  @State private var scaleMultiplier: Double = 5.0000
+  @State private var didChange: Bool = false
+  @State private var scaleString: String = ""
 
   init(doc: MandArtDocument, activeDisplayState: Binding<ActiveDisplayChoice>) {
     self._doc = ObservedObject(initialValue: doc)
     self._activeDisplayState = activeDisplayState
     self._scale = State(initialValue: doc.picdef.scale)
+    _scaleString = State(initialValue: String(format: "%.0f", doc.picdef.scale))
   }
 
   func zoomIn() {
     scale *= 2.0
+    scale = scale.rounded() // Round to the nearest integer
     doc.picdef.scale = scale
+    didChange = !didChange // force redraw
   }
 
   func zoomOut() {
     scale /= 2.0
+    scale = scale.rounded() // Round to the nearest integer
     doc.picdef.scale = scale
+    didChange = !didChange // force redraw
   }
 
-  func zoomInCustom(n:Double) {
+  func zoomInCustom(n: Double) {
     scale *= n
+    scale = scale.rounded() // Round to the nearest integer
     doc.picdef.scale = scale
+    didChange = !didChange // force redraw
   }
 
-  func zoomOutCustom(n:Double) {
+  func zoomOutCustom(n: Double) {
     scale /= n
+    scale = scale.rounded() // Round to the nearest integer
     doc.picdef.scale = scale
+    didChange = !didChange // force redraw
   }
 
   func aspectRatio() -> Double {
@@ -156,6 +168,33 @@ struct TabFind: View {
             }
           } // end HStack for XY
 
+          HStack {
+            Text("Scale (scale)")
+            TextField("Scale", text: $scaleString, onCommit: {
+              if let newScale = Double(scaleString) {
+                doc.picdef.scale = newScale.rounded()
+              }
+            })
+            .textFieldStyle(.roundedBorder)
+            .multilineTextAlignment(.trailing)
+            .frame(maxWidth: 180)
+            .help("Enter the magnification (may take a while).")
+            .onAppear {
+              scaleString = String(format: "%.0f", doc.picdef.scale)
+            }
+            .onChange(of: doc.picdef.scale) { _ in
+              print("TabFind: onChange scale")
+              // Update scaleString whenever doc changes
+              let newScaleString = String(format: "%.0f", doc.picdef.scale)
+              if newScaleString != scaleString {
+                scaleString = newScaleString
+              }
+              didChange = !didChange
+              activeDisplayState = .MandArtFull
+            }
+          }
+          .padding(.horizontal)
+
           //  Show Row (HStack) of Rotate and Zoom Next
 
           HStack {
@@ -179,31 +218,9 @@ struct TabFind: View {
               }
             }
 
-            /*
-            VStack {
-              Text("Scale (scale)")
-              DelayedTextFieldDouble(
-                placeholder: "430",
-                // value: $scale,
-                value: $doc.picdef.scale,
-                formatter: MAFormatters.fmtScale
-              )
-              .textFieldStyle(.roundedBorder)
-              .multilineTextAlignment(.trailing)
-              .frame(maxWidth: 180)
-              .help("Enter the magnification (may take a while).")
-              .onChange(of: doc.picdef.scale) { _ in
-                print("TabFind: onChange scale")
-                activeDisplayState = .MandArtFull
-              }
-            }
-             */
-
             Divider()
-
             VStack {
               Text("Zoom By 2")
-
               HStack {
                 Button("+") { zoomIn() }
                   .help("Zoom in by factor of 2 (may take a while).")
@@ -212,50 +229,33 @@ struct TabFind: View {
                   .help("Zoom out by factor of 2 (may take a while).")
               }
             }
-
             Divider()
-
 
             VStack {
               Text("Custom Zoom")
-
               HStack {
-                Button("+") { zoomInCustom(n:5) }
-                  .help("Zoom in by N (may take a while).")
-                Text("5")
-                Button("-") { zoomOutCustom(n:5) }
-                  .help("Zoom out by N (may take a while).")
+                Button("+") { zoomInCustom(n: scaleMultiplier) }
+                  .help("Zoom in by multiplier (may take a while).")
+                DelayedTextFieldDouble(
+                  placeholder: String(format: "%.4f", scaleMultiplier),
+                  value: $scaleMultiplier,
+                  formatter: MAFormatters.fmtScaleMultiplier
+                )
+                .textFieldStyle(.roundedBorder)
+                .multilineTextAlignment(.trailing)
+                .frame(minWidth: 60, maxWidth: 80 )
+                .help("Enter the angle to rotate the image counterclockwise, in degrees.")
+                .onChange(of: doc.picdef.theta) { _ in
+                  print("TabFind: onChange theta")
+                  activeDisplayState = .MandArtFull
+                }
+                Button("-") { zoomOutCustom(n: scaleMultiplier) }
+                  .help("Zoom out by multiplier (may take a while).")
               }
             }
           }
 
           //  Divider()
-
-          HStack {
-            Text("Scale (scale)")
-            Text(String(format: "%.0f", doc.picdef.scale))
-              .padding(1)
-              .help("Magnification (scale).")
-
-            /*
-             DelayedTextFieldDouble(
-              placeholder: "430",
-              // value: $scale,
-              value: $doc.picdef.scale,
-              formatter: MAFormatters.fmtScale
-            )
-            .textFieldStyle(.roundedBorder)
-            .multilineTextAlignment(.trailing)
-            .frame(maxWidth: 180)
-            .help("Enter the magnification (may take a while).")
-            .onChange(of: doc.picdef.scale) { _ in
-              print("TabFind: onChange scale")
-              activeDisplayState = .MandArtFull
-            }
-
-             */
-          }
-          .padding(.horizontal)
 
           HStack {
             Text("Sharpening (iterationsMax):")

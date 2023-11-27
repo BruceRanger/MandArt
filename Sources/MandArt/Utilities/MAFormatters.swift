@@ -12,8 +12,16 @@ struct MAFormatters {
 
   // USER INPUT CUSTOM FORMATTERS - BASIC  .........................
 
+//  static var fmtScale: NumberFormatter {
+//    return createCommaFormatter(maxFractionDigits: 0, min: 1, max: 100_000_000_000_000_000)
+//  }
+
   static var fmtScale: NumberFormatter {
-    return createCommaFormatter(maxFractionDigits: 0, min: 1, max: 100_000_000_000_000_000)
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.isPartialStringValidationEnabled = true
+    formatter.maximumFractionDigits = 0
+    return formatter
   }
 
   static var fmtImageWidthHeight: NumberFormatter {
@@ -35,6 +43,14 @@ struct MAFormatters {
     formatter.maximumFractionDigits = 1
     formatter.minimum = -359.9
     formatter.maximum = 359.9
+    return formatter
+  }
+
+  static var fmtScaleMultiplier: NumberFormatter {
+    let formatter = NumberFormatter()
+    formatter.maximumFractionDigits = 4
+    formatter.minimum = -99.9999
+    formatter.maximum = 99.9999
     return formatter
   }
 
