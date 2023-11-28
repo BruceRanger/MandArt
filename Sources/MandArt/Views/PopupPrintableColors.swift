@@ -2,7 +2,6 @@ import SwiftUI
 
 @available(macOS 12.0, *)
 struct PopupPrintableColors: View {
-
   @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager: PopupManager
 
@@ -26,7 +25,8 @@ struct PopupPrintableColors: View {
   }
 
   private var columnCount: Int {
-    guard let screenWidth = NSScreen.main?.frame.width else { return 32 } // Default to 32 if screen width cannot be determined
+    guard let screenWidth = NSScreen.main?.frame.width
+    else { return 32 } // Default to 32 if screen width cannot be determined
     let boxWidth: CGFloat = 30.0 + 2 // 30 for the rectangle width and 2 for padding
     return Int(screenWidth / boxWidth)
   }
@@ -50,7 +50,6 @@ struct PopupPrintableColors: View {
           Text("Click to add a color to your list. Showing Colors Likely To Print True Sorted by \(currentSort)")
           if let selected = selectedColor {
             Text("Added: (\(selected.r), \(selected.g), \(selected.b))")
-
           }
         } // hstack for button
 

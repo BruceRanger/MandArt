@@ -11,9 +11,9 @@ struct TabFindScale: View {
   @State private var scaleString: String = ""
 
   init(doc: MandArtDocument, activeDisplayState: Binding<ActiveDisplayChoice>) {
-    self._doc = ObservedObject(initialValue: doc)
-    self._activeDisplayState = activeDisplayState
-    self._scale = State(initialValue: doc.picdef.scale)
+    _doc = ObservedObject(initialValue: doc)
+    _activeDisplayState = activeDisplayState
+    _scale = State(initialValue: doc.picdef.scale)
     _scaleString = State(initialValue: String(format: "%.0f", doc.picdef.scale))
   }
 
@@ -48,7 +48,7 @@ struct TabFindScale: View {
   var body: some View {
     Section(
       header:
-        Text("Set Scale")
+      Text("Set Scale")
         .font(.headline)
         .fontWeight(.medium)
     ) {
@@ -80,7 +80,6 @@ struct TabFindScale: View {
       .padding(.horizontal)
 
       HStack {
-
         VStack {
           Text("Zoom By 2")
           HStack {
@@ -106,7 +105,7 @@ struct TabFindScale: View {
             )
             .textFieldStyle(.roundedBorder)
             .multilineTextAlignment(.trailing)
-            .frame(minWidth: 60, maxWidth: 80 )
+            .frame(minWidth: 60, maxWidth: 80)
             .onChange(of: doc.picdef.scale) { _ in
               print("TabFind: onChange scale")
               activeDisplayState = .MandArtFull
@@ -117,7 +116,6 @@ struct TabFindScale: View {
           }
         }
       }
-
     }
     Divider()
   }

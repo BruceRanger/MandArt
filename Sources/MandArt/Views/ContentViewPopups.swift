@@ -1,10 +1,10 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-/// `ContentViewPopups` is a SwiftUI `View` responsible for displaying specific popups based on the state of the `PopupManager`.
+/// `ContentViewPopups` is a SwiftUI `View` responsible for displaying specific popups based on the state of the
+/// `PopupManager`.
 @available(macOS 12.0, *)
 struct ContentViewPopups: View {
-
   /// An observed document object containing the necessary data and state for rendering the content.
   @ObservedObject var doc: MandArtDocument
 
@@ -19,12 +19,14 @@ struct ContentViewPopups: View {
   ///   - doc: The main document data source.
   ///   - popupManager: An object managing the popups' display state.
   ///   - activeDisplayState: A binding to control the active display type.
-  init(doc: MandArtDocument,
-       popupManager: PopupManager,
-       activeDisplayState: Binding<ActiveDisplayChoice>) {
+  init(
+    doc: MandArtDocument,
+    popupManager: PopupManager,
+    activeDisplayState: Binding<ActiveDisplayChoice>
+  ) {
     self.doc = doc
     self.popupManager = popupManager
-    self._activeDisplayState = activeDisplayState
+    _activeDisplayState = activeDisplayState
   }
 
   /// The main body of the `ContentViewPopups`.
@@ -39,22 +41,20 @@ struct ContentViewPopups: View {
   ///  The printables popup (if any)
   private var contentForPrintables: some View {
     switch popupManager.showingPrintables {
-      case .RGB, .RBG, .GBR, .GRB, .BGR, .BRG:
-        return AnyView(PopupPrintableColors(doc: doc, popupManager: popupManager, hues: doc.picdef.hues))
-      case .None:
-        return AnyView(EmptyView())
-
+    case .RGB, .RBG, .GBR, .GRB, .BGR, .BRG:
+      return AnyView(PopupPrintableColors(doc: doc, popupManager: popupManager, hues: doc.picdef.hues))
+    case .None:
+      return AnyView(EmptyView())
     }
   }
 
   /// The color cube popup (if any)
   private var contentForCube: some View {
     switch popupManager.showingCube {
-      case .APRed, .APGreen, .APBlue, .AllBlue, .AllRed, .AllGreen:
-        return AnyView(PopupColorCube(doc: doc, popupManager: popupManager, hues: doc.picdef.hues))
-      case .None:
-        return AnyView(EmptyView())
+    case .APRed, .APGreen, .APBlue, .AllBlue, .AllRed, .AllGreen:
+      return AnyView(PopupColorCube(doc: doc, popupManager: popupManager, hues: doc.picdef.hues))
+    case .None:
+      return AnyView(EmptyView())
     }
   }
-
 }

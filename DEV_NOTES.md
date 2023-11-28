@@ -13,9 +13,8 @@ brew upgrade periphery powershell swiftformat-for-xcode
 ## Formatting and Linting
 
 ```
+swiftformat Sources/MandArt --config .swiftformat
 swiftlint --fix --config .swiftlint.yml Sources/MandArt
-swiftformat Sources/MandArt --swiftversion 5 --config .swiftformat
-swiftlint lint --config .swiftlint.yml Sources/MandArt
 ```
 
 ## Periphery

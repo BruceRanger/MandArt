@@ -1,7 +1,6 @@
 import Foundation
 
-struct GradientGrid {
-
+enum GradientGrid {
   struct GradientGridInputs {
     let imageWidth: Int
     let imageHeight: Int
@@ -38,7 +37,8 @@ struct GradientGrid {
               channelValue = colorLeft[channel]
             } else {
               let colorDiff = colorRight[channel] - colorLeft[channel]
-              let diffFactor = (Double(column) - gradientThreshold * Double(imageWidth)) / (Double(imageWidth) - gradientThreshold * Double(imageWidth))
+              let diffFactor = (Double(column) - gradientThreshold * Double(imageWidth)) /
+                (Double(imageWidth) - gradientThreshold * Double(imageWidth))
               channelValue = colorLeft[channel] + colorDiff * diffFactor
             }
             // Ensure channel value is within the range [0, 255]

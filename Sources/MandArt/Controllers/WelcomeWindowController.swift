@@ -1,9 +1,8 @@
-import SwiftUI
 import AppKit
+import SwiftUI
 
 @available(macOS 12.0, *)
 class WelcomeWindowController: NSWindowController {
-
   var appState: AppState
 
   init(appState: AppState) {
@@ -22,7 +21,8 @@ class WelcomeWindowController: NSWindowController {
         height: height
       ),
       styleMask: [.titled, .closable, .resizable],
-      backing: .buffered, defer: false)
+      backing: .buffered, defer: false
+    )
 
     super.init(window: window)
 
@@ -34,7 +34,8 @@ class WelcomeWindowController: NSWindowController {
     window.contentView = NSHostingView(rootView: WelcomeView().environmentObject(self.appState))
   }
 
-  required init?(coder: NSCoder) {
+  @available(*, unavailable)
+  required init?(coder _: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 }

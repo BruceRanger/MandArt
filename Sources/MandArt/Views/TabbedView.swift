@@ -9,12 +9,14 @@ struct TabbedView: View {
   @Binding var activeDisplayState: ActiveDisplayChoice
   @State private var selectedTab = 0
 
-  init(doc: MandArtDocument,
-       popupManager: PopupManager,
-       activeDisplayState: Binding<ActiveDisplayChoice>) {
+  init(
+    doc: MandArtDocument,
+    popupManager: PopupManager,
+    activeDisplayState: Binding<ActiveDisplayChoice>
+  ) {
     self.doc = doc
     self.popupManager = popupManager
-    self._activeDisplayState = activeDisplayState
+    _activeDisplayState = activeDisplayState
   }
 
   var body: some View {
@@ -40,6 +42,5 @@ struct TabbedView: View {
         }.tag(3)
     } // end tabview
     .padding(2)
-
   }
 }

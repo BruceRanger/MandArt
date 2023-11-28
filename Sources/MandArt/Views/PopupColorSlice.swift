@@ -19,7 +19,7 @@ struct PopupColorSlice: View {
     end: Int
   ) {
     self.doc = doc
-    self._selectedColor = selectedColor
+    _selectedColor = selectedColor
     self.arrColors = arrColors
     self.start = start
     self.end = end
@@ -35,7 +35,6 @@ struct PopupColorSlice: View {
   }
 
   var body: some View {
-
     if arrColors.count != 512 {
       // Return an empty view or some indicator that there's an issue.
       return AnyView(Text("Invalid color data").foregroundColor(.red))
@@ -61,14 +60,13 @@ struct PopupColorSlice: View {
                     .padding(1)
                 } else {
                   Rectangle()
-                    .fill(Color.clear)  // Transparent Rectangle
+                    .fill(Color.clear) // Transparent Rectangle
                     .frame(width: 30, height: 30)
                     .cornerRadius(4)
                     .padding(1)
                 }
               }
               .buttonStyle(PlainButtonStyle())
-
             }
           }
         }

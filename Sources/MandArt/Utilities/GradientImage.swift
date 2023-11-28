@@ -1,8 +1,7 @@
-import Foundation
 import CoreGraphics
+import Foundation
 
-struct GradientImage {
-
+enum GradientImage {
   struct GradientImageInputs {
     let imageWidth: Int
     let imageHeight: Int
@@ -35,7 +34,6 @@ struct GradientImage {
   }
 
   static func createCGImage(using params: GradientImageInputs) -> CGImage? {
-
     let BITS_PER_COMPONENT = 8
     let COMPONENTS_PER_PIXEL = 4
     let BYTES_PER_PIXEL = (BITS_PER_COMPONENT * COMPONENTS_PER_PIXEL) / 8
@@ -67,5 +65,4 @@ struct GradientImage {
     context.data?.deallocate()
     return gradientImage
   }
-
 }

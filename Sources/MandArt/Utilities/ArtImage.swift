@@ -1,5 +1,5 @@
-import Foundation
 import CoreGraphics
+import Foundation
 
 struct ArtImageShapeInputs {
   let imageHeight: Int
@@ -25,12 +25,11 @@ var fIterGlobal = [[Double]]()
 
 @available(macOS 12.0, *)
 struct ArtImage {
-
   let shapeInputs: ArtImageShapeInputs
   let colorInputs: ArtImageColorInputs
 
   init(picdef: PictureDefinition) {
-    self.shapeInputs = ArtImageShapeInputs(
+    shapeInputs = ArtImageShapeInputs(
       imageHeight: picdef.imageHeight,
       imageWidth: picdef.imageWidth,
       iterationsMax: picdef.iterationsMax,
@@ -41,7 +40,7 @@ struct ArtImage {
       dFIterMin: picdef.dFIterMin,
       rSqLimit: picdef.rSqLimit
     )
-    self.colorInputs = ArtImageColorInputs(
+    colorInputs = ArtImageColorInputs(
       nBlocks: picdef.nBlocks,
       nColors: picdef.hues.count,
       spacingColorFar: picdef.spacingColorFar,
@@ -58,8 +57,7 @@ struct ArtImage {
 
    - Returns: optional CGImage with the bitmap or nil
    */
-  internal func getMandArtFullPictureImage(colors: inout [[Double]]) -> CGImage? {
-
+  func getMandArtFullPictureImage(colors: inout [[Double]]) -> CGImage? {
     print("Starting MandArt Full Picture Image calc")
 
     // print("fIterGlobal[0][0] picture begin", fIterGlobal[0][0])
@@ -71,7 +69,7 @@ struct ArtImage {
     if fIterGlobal.count < imageHeight {
       fIterGlobal = Array(repeating: Array(repeating: 0.0, count: imageWidth), count: imageHeight)
     } else {
-      for i in 0..<fIterGlobal.count {
+      for i in 0 ..< fIterGlobal.count {
         if fIterGlobal[i].count < imageWidth {
           fIterGlobal[i] = Array(repeating: 0.0, count: imageWidth)
         }
@@ -226,15 +224,15 @@ struct ArtImage {
 
     // Create CGBitmapContext for drawing and converting into image for display
     let context =
-    CGContext(
-      data: rasterBufferPtr,
-      width: imageWidth,
-      height: imageHeight,
-      bitsPerComponent: bitsPerComponent,
-      bytesPerRow: bytesPerRow,
-      space: CGColorSpace(name: CGColorSpace.sRGB)!,
-      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-    )!
+      CGContext(
+        data: rasterBufferPtr,
+        width: imageWidth,
+        height: imageHeight,
+        bitsPerComponent: bitsPerComponent,
+        bytesPerRow: bytesPerRow,
+        space: CGColorSpace(name: CGColorSpace.sRGB)!,
+        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+      )!
 
     // use CG to draw into the context
     // you can use any of the CG drawing routines for drawing into this context
@@ -294,8 +292,8 @@ struct ArtImage {
                 h = blockBound[block]
               } else {
                 h = blockBound[block] +
-                ((h - blockBound[block]) - yY * (blockBound[block + 1] - blockBound[block])) /
-                (1 - yY)
+                  ((h - blockBound[block]) - yY * (blockBound[block + 1] - blockBound[block])) /
+                  (1 - yY)
               }
 
               xX = (h - blockBound[block]) / (blockBound[block + 1] - blockBound[block])
@@ -349,8 +347,7 @@ struct ArtImage {
 
    - Returns: optional CGImage with the colored bitmap or nil
    */
-  internal func getNewlyColoredImage(colors: inout [[Double]]) -> CGImage? {
-
+  func getNewlyColoredImage(colors: inout [[Double]]) -> CGImage? {
     print("Starting Newly Colored Image calc")
 
     // print("fIterGlobal[0][0] color begin", fIterGlobal[0][0])
@@ -444,15 +441,15 @@ struct ArtImage {
 
     // Create CGBitmapContext for drawing and converting into image for display
     let context =
-    CGContext(
-      data: rasterBufferPtr,
-      width: imageWidth,
-      height: imageHeight,
-      bitsPerComponent: bitsPerComponent,
-      bytesPerRow: bytesPerRow,
-      space: CGColorSpace(name: CGColorSpace.sRGB)!,
-      bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-    )!
+      CGContext(
+        data: rasterBufferPtr,
+        width: imageWidth,
+        height: imageHeight,
+        bitsPerComponent: bitsPerComponent,
+        bytesPerRow: bytesPerRow,
+        space: CGColorSpace(name: CGColorSpace.sRGB)!,
+        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+      )!
 
     // use CG to draw into the context
     // use any CG drawing routines for drawing into this context
@@ -506,8 +503,8 @@ struct ArtImage {
                 h = blockBound[block]
               } else {
                 h = blockBound[block] +
-                ((h - blockBound[block]) - yY * (blockBound[block + 1] - blockBound[block])) /
-                (1 - yY)
+                  ((h - blockBound[block]) - yY * (blockBound[block + 1] - blockBound[block])) /
+                  (1 - yY)
               }
 
               xX = (h - blockBound[block]) / (blockBound[block + 1] - blockBound[block])
@@ -545,7 +542,7 @@ struct ArtImage {
     rasterBufferPtr.deallocate()
     contextImageGlobal = contextImage
 
- //   print("fIterGlobal[0][0] color end", fIterGlobal[0][0])
+    //   print("fIterGlobal[0][0] color end", fIterGlobal[0][0])
 
     return contextImage
   }
@@ -572,5 +569,4 @@ struct ArtImage {
 
     return context
   }
-
 }

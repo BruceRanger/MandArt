@@ -1,5 +1,5 @@
-import SwiftUI
 import AppKit
+import SwiftUI
 
 @available(macOS 11.0, *)
 struct WelcomeMainImageView: View {
@@ -31,5 +31,4 @@ struct WelcomeMainImageView: View {
         }
       }
   }
-
 }

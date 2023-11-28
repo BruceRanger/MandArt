@@ -9,13 +9,13 @@ struct TabColorListView: View {
   @State private var showingPrintablePopups = Array(repeating: false, count: 100)
 
   // Update hue nums after moviing or deleting
-  internal func updateHueNums() {
-    for (index, _) in self.$doc.picdef.hues.enumerated() {
-      self.doc.picdef.hues[index].num = index + 1
+  func updateHueNums() {
+    for (index, _) in $doc.picdef.hues.enumerated() {
+      doc.picdef.hues[index].num = index + 1
     }
   }
 
-  internal func getIsPrintable(color: Color, num: Int) -> Bool {
+  func getIsPrintable(color: Color, num: Int) -> Bool {
     if MandMath.isColorNearPrintableList(color: color.cgColor!, num: num) {
       return true
     } else {
@@ -24,7 +24,6 @@ struct TabColorListView: View {
   }
 
   var body: some View {
-
     // Wrap the list in a geometry reader so it will
     // shrink when items are deleted
     GeometryReader { geometry in
@@ -108,7 +107,6 @@ struct TabColorListView: View {
             }
             .onChange(of: hue.g) { newValue in
               doc.updateHueWithColorComponent(index: i, g: newValue)
-
             }
 
             // enter blue
@@ -140,9 +138,7 @@ struct TabColorListView: View {
         }
       } // end list
       .frame(height: geometry.size.height)
-
     } // end geometry reader
     .frame(maxHeight: .infinity)
-
   } // end body
 }

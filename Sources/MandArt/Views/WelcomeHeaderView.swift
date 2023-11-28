@@ -1,5 +1,5 @@
-import SwiftUI
 import AppKit
+import SwiftUI
 
 @available(macOS 11.0, *)
 struct WelcomeHeaderView: View {

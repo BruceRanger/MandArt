@@ -2,7 +2,6 @@ import SwiftUI
 
 @available(macOS 12.0, *)
 class DataSaver {
-
   private var picdef: PictureDefinition
 
   init(picdef: PictureDefinition) {
@@ -24,14 +23,13 @@ class DataSaver {
   }
 
   func saveToFile(withPanel savePanel: NSSavePanel, completionHandler: @escaping (Result<Void, Error>) -> Void) {
-
     do {
       guard let data = try saveData() else {
         completionHandler(.failure(MandArtError.encodingError))
         return
       }
 
-      savePanel.begin { (result) in
+      savePanel.begin { result in
         if result == .OK {
           do {
             try data.write(to: savePanel.url!)

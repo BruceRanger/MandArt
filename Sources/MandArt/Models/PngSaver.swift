@@ -2,7 +2,6 @@ import SwiftUI
 
 @available(macOS 12.0, *)
 class PngSaver {
-
   private var pngCommenter: PngCommenter
 
   init(pngCommenter: PngCommenter) {
@@ -13,7 +12,8 @@ class PngSaver {
     let fileName = url.deletingPathExtension().lastPathComponent
     if fileName.isEmpty || fileName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
       let newFileName = "MyArt"
-      let newURL = url.deletingLastPathComponent().appendingPathComponent(newFileName).appendingPathExtension(url.pathExtension)
+      let newURL = url.deletingLastPathComponent().appendingPathComponent(newFileName)
+        .appendingPathExtension(url.pathExtension)
       return newURL
     }
     return url
@@ -42,7 +42,7 @@ class PngSaver {
       try pngData.write(to: adjustedURL, options: .atomic)
       print("Saved image to: \(url)")
       try updateMetadataForImage(at: url, with: pngData)
-    } catch let error {
+    } catch {
       print("Error saving image: \(error)")
     }
   }
@@ -65,14 +65,13 @@ class PngSaver {
   private func updateMetadataForImage(at url: URL, with pngData: Data) throws {
     let comment = pngCommenter.getComment()
     let pngMetadata: [String: Any] = [
-      kCGImagePropertyPNGDescription as String: comment
+      kCGImagePropertyPNGDescription as String: comment,
     ]
 
     if let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil),
        let imageType = CGImageSourceGetType(imageSource),
        let mutableData = CFDataCreateMutableCopy(nil, 0, pngData as CFData),
        let destination = CGImageDestinationCreateWithData(mutableData, imageType, 1, nil) {
-
       CGImageDestinationAddImageFromSource(destination, imageSource, 0, pngMetadata as CFDictionary)
       if CGImageDestinationFinalize(destination) {
         try (mutableData as Data).write(to: url, options: .atomic)
@@ -82,5 +81,4 @@ class PngSaver {
       }
     }
   }
-
 }

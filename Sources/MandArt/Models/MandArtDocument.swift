@@ -13,7 +13,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
- /**
+/**
   A utility class to work with files for saving and sharing your art.
  Includes logic for adding, deleting, and reordering colors.
 
@@ -21,10 +21,9 @@ import UniformTypeIdentifiers
  https://developer.apple.com/documentation/swiftui/referencefiledocument
  )
  rather than FileDocument for a struct.
-*/
+ */
 @available(macOS 12.0, *)
 final class MandArtDocument: ReferenceFileDocument, ObservableObject {
-
   var docName: String = "unknown"
 
   // snapshot used to serialize and save current version
@@ -51,9 +50,9 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
       Hue(num: 5, r: 0.0, g: 0.0, b: 255.0),
       Hue(num: 6, r: 0.0, g: 255.0, b: 255.0),
     ]
-    self.picdef = PictureDefinition(hues: hues)
-    self.pngCommenter = PngCommenter(picdef: self.picdef)
-    self.pngSaver = PngSaver(pngCommenter: self.pngCommenter)
+    picdef = PictureDefinition(hues: hues)
+    pngCommenter = PngCommenter(picdef: picdef)
+    pngSaver = PngSaver(pngCommenter: pngCommenter)
   }
 
   /// Initializer to read a document from disk
@@ -61,11 +60,11 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     guard let data = configuration.file.regularFileContents else {
       throw CocoaError(.fileReadCorruptFile)
     }
-    self.docName = configuration.file.filename ?? "unknown"
-    self.picdef = try JSONDecoder().decode(PictureDefinition.self, from: data)
-    self.pngCommenter = PngCommenter(picdef: self.picdef)
-    self.pngSaver = PngSaver(pngCommenter: self.pngCommenter)
-    print("Opening data file = ", self.docName)
+    docName = configuration.file.filename ?? "unknown"
+    picdef = try JSONDecoder().decode(PictureDefinition.self, from: data)
+    pngCommenter = PngCommenter(picdef: picdef)
+    pngSaver = PngSaver(pngCommenter: pngCommenter)
+    print("Opening data file = ", docName)
   }
 
   // MARK: - Snapshot and Serialization
@@ -78,7 +77,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
    */
   @available(macOS 12.0, *)
   func snapshot(contentType _: UTType) throws -> PictureDefinition {
-    self.picdef // return the current state
+    picdef // return the current state
   }
 
   /**
@@ -96,5 +95,4 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     let fileWrapper = FileWrapper(regularFileWithContents: data)
     return fileWrapper
   }
-
 }

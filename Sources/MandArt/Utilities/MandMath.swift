@@ -4,13 +4,11 @@ import CoreGraphics // CG Color
 
  This is a Swift class that provides operations for MandArt.
 
-
  */
 import Foundation
 
 @available(macOS 10.15, *)
 enum MandMath {
-
   static func getMinimumDistance(color: CGColor, num _: Int) -> Int {
     guard let components = color.components else {
       return 100
@@ -49,7 +47,6 @@ enum MandMath {
    - A boolean value indicating if the color is in the printable color list or not.
    */
   static func isColorInPrintableList(color: CGColor, num _: Int) -> Bool {
-
     // Check if the components of the CGColor object can be accessed.
     guard let components = color.components else { return false }
 
@@ -109,51 +106,50 @@ enum MandMath {
   static func getPrintableCGColorListSorted(sortType: PopupManager.ShowingPrintables) -> [CGColor] {
     var lst: [CGColor] = []
     switch sortType {
-
         // SORT FOR PRINTABLES *********************************
 
-      case .RGB: // rgb
-        lst = MandMath.printableColorListRGB.map { colorValues in
-          let red = CGFloat(colorValues[0]) / 255.0
-          let green = CGFloat(colorValues[1]) / 255.0
-          let blue = CGFloat(colorValues[2]) / 255.0
-          return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-        }
-      case .RBG: // rbg
-        lst = MandMath.printableColorListRBG.map { colorValues in
-          let red = CGFloat(colorValues[0]) / 255.0
-          let green = CGFloat(colorValues[1]) / 255.0
-          let blue = CGFloat(colorValues[2]) / 255.0
-          return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-        }
-      case .GRB: // grb
-        lst = MandMath.printableColorListGRB.map { colorValues in
-          let red = CGFloat(colorValues[0]) / 255.0
-          let green = CGFloat(colorValues[1]) / 255.0
-          let blue = CGFloat(colorValues[2]) / 255.0
-          return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-        }
-      case .GBR: // gbr
-        lst = MandMath.printableColorListGBR.map { colorValues in
-          let red = CGFloat(colorValues[0]) / 255.0
-          let green = CGFloat(colorValues[1]) / 255.0
-          let blue = CGFloat(colorValues[2]) / 255.0
-          return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-        }
-      case .BRG: // brg
-        lst = MandMath.printableColorListBRG.map { colorValues in
-          let red = CGFloat(colorValues[0]) / 255.0
-          let green = CGFloat(colorValues[1]) / 255.0
-          let blue = CGFloat(colorValues[2]) / 255.0
-          return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-        }
-      default: // bgr
-        lst = MandMath.printableColorListBGR.map { colorValues in
-          let red = CGFloat(colorValues[0]) / 255.0
-          let green = CGFloat(colorValues[1]) / 255.0
-          let blue = CGFloat(colorValues[2]) / 255.0
-          return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-        }
+    case .RGB: // rgb
+      lst = MandMath.printableColorListRGB.map { colorValues in
+        let red = CGFloat(colorValues[0]) / 255.0
+        let green = CGFloat(colorValues[1]) / 255.0
+        let blue = CGFloat(colorValues[2]) / 255.0
+        return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+      }
+    case .RBG: // rbg
+      lst = MandMath.printableColorListRBG.map { colorValues in
+        let red = CGFloat(colorValues[0]) / 255.0
+        let green = CGFloat(colorValues[1]) / 255.0
+        let blue = CGFloat(colorValues[2]) / 255.0
+        return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+      }
+    case .GRB: // grb
+      lst = MandMath.printableColorListGRB.map { colorValues in
+        let red = CGFloat(colorValues[0]) / 255.0
+        let green = CGFloat(colorValues[1]) / 255.0
+        let blue = CGFloat(colorValues[2]) / 255.0
+        return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+      }
+    case .GBR: // gbr
+      lst = MandMath.printableColorListGBR.map { colorValues in
+        let red = CGFloat(colorValues[0]) / 255.0
+        let green = CGFloat(colorValues[1]) / 255.0
+        let blue = CGFloat(colorValues[2]) / 255.0
+        return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+      }
+    case .BRG: // brg
+      lst = MandMath.printableColorListBRG.map { colorValues in
+        let red = CGFloat(colorValues[0]) / 255.0
+        let green = CGFloat(colorValues[1]) / 255.0
+        let blue = CGFloat(colorValues[2]) / 255.0
+        return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+      }
+    default: // bgr
+      lst = MandMath.printableColorListBGR.map { colorValues in
+        let red = CGFloat(colorValues[0]) / 255.0
+        let green = CGFloat(colorValues[1]) / 255.0
+        let blue = CGFloat(colorValues[2]) / 255.0
+        return CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+      }
     }
     print(lst.count) // BHJ
     return lst
@@ -173,91 +169,11 @@ enum MandMath {
     // SORT FOR ALL (LEFT) *********************************
 
     switch iSort {
+    case 0: // rgb
 
-      case 0: // rgb
-
-        for r in self.colorInts {
-          for g in self.colorInts {
-            for b in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              allColors.append(color)
-            }
-          }
-        }
-      case 1: // rbg
-
-        for r in self.colorInts {
-          for b in self.colorInts {
-            for g in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              allColors.append(color)
-            }
-          }
-        }
-      case 2: // grb
-
-        for g in self.colorInts {
-          for r in self.colorInts {
-            for b in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              allColors.append(color)
-            }
-          }
-        }
-      case 3: // gbr
-
-        for g in self.colorInts {
-          for b in self.colorInts {
-            for r in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              allColors.append(color)
-            }
-          }
-        }
-      case 4: // brg
-
-        for b in self.colorInts {
-          for r in self.colorInts {
-            for g in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              allColors.append(color)
-            }
-          }
-        }
-      case 5: // bgr
-
-        for b in self.colorInts {
-          for g in self.colorInts {
-            for r in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              allColors.append(color)
-            }
-          }
-        }
-
-      case 6:
-
-        var g = self.colorInts[0]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for r in colorInts {
+        for g in colorInts {
+          for b in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -265,10 +181,12 @@ enum MandMath {
             allColors.append(color)
           }
         }
+      }
+    case 1: // rbg
 
-        g = self.colorInts[1]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for r in colorInts {
+        for b in colorInts {
+          for g in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -276,10 +194,12 @@ enum MandMath {
             allColors.append(color)
           }
         }
+      }
+    case 2: // grb
 
-        g = self.colorInts[2]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for g in colorInts {
+        for r in colorInts {
+          for b in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -287,10 +207,12 @@ enum MandMath {
             allColors.append(color)
           }
         }
+      }
+    case 3: // gbr
 
-        g = self.colorInts[3]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for g in colorInts {
+        for b in colorInts {
+          for r in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -298,10 +220,12 @@ enum MandMath {
             allColors.append(color)
           }
         }
+      }
+    case 4: // brg
 
-        g = self.colorInts[4]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for b in colorInts {
+        for r in colorInts {
+          for g in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -309,10 +233,12 @@ enum MandMath {
             allColors.append(color)
           }
         }
+      }
+    case 5: // bgr
 
-        g = self.colorInts[5]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for b in colorInts {
+        for g in colorInts {
+          for r in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -320,211 +246,280 @@ enum MandMath {
             allColors.append(color)
           }
         }
+      }
 
-        g = self.colorInts[6]
-        for b in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+    case 6:
+
+      var g = colorInts[0]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        g = self.colorInts[7]
-        for b in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      g = colorInts[1]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        case 7:
-
-        var b = self.colorInts[0]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      g = colorInts[2]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        b = self.colorInts[1]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      g = colorInts[3]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        b = self.colorInts[2]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      g = colorInts[4]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        b = self.colorInts[3]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      g = colorInts[5]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        b = self.colorInts[4]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      g = colorInts[6]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        b = self.colorInts[5]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      g = colorInts[7]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        b = self.colorInts[6]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+    case 7:
+
+      var b = colorInts[0]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        b = self.colorInts[7]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      b = colorInts[1]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        case 8:
-
-        var r = self.colorInts[0]
-        for b in self.colorInts {
-            for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      b = colorInts[2]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        r = self.colorInts[1]
-        for b in self.colorInts {
-            for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      b = colorInts[3]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        r = self.colorInts[2]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      b = colorInts[4]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        r = self.colorInts[3]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      b = colorInts[5]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        r = self.colorInts[4]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      b = colorInts[6]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        r = self.colorInts[5]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      b = colorInts[7]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        r = self.colorInts[6]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+    case 8:
+
+      var r = colorInts[0]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-        r = self.colorInts[7]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            allColors.append(color)
-          }
+      r = colorInts[1]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
         }
+      }
 
-      default:
-        print("Not a valid sort index")
+      r = colorInts[2]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
+        }
+      }
+
+      r = colorInts[3]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
+        }
+      }
+
+      r = colorInts[4]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
+        }
+      }
+
+      r = colorInts[5]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
+        }
+      }
+
+      r = colorInts[6]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
+        }
+      }
+
+      r = colorInts[7]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          allColors.append(color)
+        }
+      }
+
+    default:
+      print("Not a valid sort index")
     }
     return allColors
   }
@@ -546,114 +541,10 @@ enum MandMath {
     // SORT FOR ALL PRINTABLES (MIDDLE) *********************************
 
     switch iSort {
-
-      case 0: // rgb
-        for r in self.colorInts {
-          for g in self.colorInts {
-            for b in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              if MandMath.isColorInPrintableList(color: color, num: 1) {
-                allColors.append(color)
-              } else {
-                allColors.append(CGColor.white)
-              }
-            }
-          }
-        }
-      case 1: // rbg
-
-        for r in self.colorInts {
-          for b in self.colorInts {
-            for g in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              if MandMath.isColorInPrintableList(color: color, num: 1) {
-                allColors.append(color)
-              } else {
-                allColors.append(CGColor.white)
-              }
-            }
-          }
-        }
-      case 2: // grb
-
-        for g in self.colorInts {
-          for r in self.colorInts {
-            for b in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              if MandMath.isColorInPrintableList(color: color, num: 1) {
-                allColors.append(color)
-              } else {
-                allColors.append(CGColor.white)
-              }
-            }
-          }
-        }
-      case 3: // gbr
-
-        for g in self.colorInts {
-          for b in self.colorInts {
-            for r in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              if MandMath.isColorInPrintableList(color: color, num: 1) {
-                allColors.append(color)
-              } else {
-                allColors.append(CGColor.white)
-              }
-            }
-          }
-        }
-      case 4: // brg
-
-        for b in self.colorInts {
-          for r in self.colorInts {
-            for g in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              if MandMath.isColorInPrintableList(color: color, num: 1) {
-                allColors.append(color)
-              } else {
-                allColors.append(CGColor.white)
-              }
-            }
-          }
-        }
-      case 5: // bgr
-
-        for b in self.colorInts {
-          for g in self.colorInts {
-            for r in self.colorInts {
-              let red = round(CGFloat(r)) / 255.0
-              let green = round(CGFloat(g)) / 255.0
-              let blue = round(CGFloat(b)) / 255.0
-              let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-              if MandMath.isColorInPrintableList(color: color, num: 1) {
-                allColors.append(color)
-              } else {
-                allColors.append(CGColor.white)
-              }
-            }
-          }
-        }
-
-      case 6:
-
-        var g = self.colorInts[0]
-        for b in self.colorInts {
-          for r in self.colorInts {
+    case 0: // rgb
+      for r in colorInts {
+        for g in colorInts {
+          for b in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -665,10 +556,12 @@ enum MandMath {
             }
           }
         }
+      }
+    case 1: // rbg
 
-        g = self.colorInts[1]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for r in colorInts {
+        for b in colorInts {
+          for g in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -680,10 +573,12 @@ enum MandMath {
             }
           }
         }
+      }
+    case 2: // grb
 
-        g = self.colorInts[2]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for g in colorInts {
+        for r in colorInts {
+          for b in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -695,10 +590,12 @@ enum MandMath {
             }
           }
         }
+      }
+    case 3: // gbr
 
-        g = self.colorInts[3]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for g in colorInts {
+        for b in colorInts {
+          for r in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -710,10 +607,12 @@ enum MandMath {
             }
           }
         }
+      }
+    case 4: // brg
 
-        g = self.colorInts[4]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for b in colorInts {
+        for r in colorInts {
+          for g in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -725,10 +624,12 @@ enum MandMath {
             }
           }
         }
+      }
+    case 5: // bgr
 
-        g = self.colorInts[5]
-        for b in self.colorInts {
-          for r in self.colorInts {
+      for b in colorInts {
+        for g in colorInts {
+          for r in colorInts {
             let red = round(CGFloat(r)) / 255.0
             let green = round(CGFloat(g)) / 255.0
             let blue = round(CGFloat(b)) / 255.0
@@ -740,284 +641,376 @@ enum MandMath {
             }
           }
         }
+      }
 
-        g = self.colorInts[6]
-        for b in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+    case 6:
+
+      var g = colorInts[0]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        g = self.colorInts[7]
-        for b in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      g = colorInts[1]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        case 7:
-
-        var b = self.colorInts[0]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      g = colorInts[2]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        b = self.colorInts[1]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      g = colorInts[3]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        b = self.colorInts[2]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      g = colorInts[4]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        b = self.colorInts[3]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      g = colorInts[5]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        b = self.colorInts[4]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      g = colorInts[6]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        b = self.colorInts[5]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      g = colorInts[7]
+      for b in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        b = self.colorInts[6]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+    case 7:
+
+      var b = colorInts[0]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        b = self.colorInts[7]
-               for g in self.colorInts {
-          for r in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      b = colorInts[1]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        case 8:
-
-        var r = self.colorInts[0]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      b = colorInts[2]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        r = self.colorInts[1]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      b = colorInts[3]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        r = self.colorInts[2]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      b = colorInts[4]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        r = self.colorInts[3]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      b = colorInts[5]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        r = self.colorInts[4]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      b = colorInts[6]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        r = self.colorInts[5]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      b = colorInts[7]
+      for g in colorInts {
+        for r in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        r = self.colorInts[6]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+    case 8:
+
+      var r = colorInts[0]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-        r = self.colorInts[7]
-        for b in self.colorInts {
-               for g in self.colorInts {
-            let red = round(CGFloat(r)) / 255.0
-            let green = round(CGFloat(g)) / 255.0
-            let blue = round(CGFloat(b)) / 255.0
-            let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
-            if MandMath.isColorInPrintableList(color: color, num: 1) {
-              allColors.append(color)
-            } else {
-              allColors.append(CGColor.white)
-            }
+      r = colorInts[1]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
           }
         }
+      }
 
-      default:
-        print("Not a valid sort index")
+      r = colorInts[2]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
+          }
+        }
+      }
 
+      r = colorInts[3]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
+          }
+        }
+      }
+
+      r = colorInts[4]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
+          }
+        }
+      }
+
+      r = colorInts[5]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
+          }
+        }
+      }
+
+      r = colorInts[6]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
+          }
+        }
+      }
+
+      r = colorInts[7]
+      for b in colorInts {
+        for g in colorInts {
+          let red = round(CGFloat(r)) / 255.0
+          let green = round(CGFloat(g)) / 255.0
+          let blue = round(CGFloat(b)) / 255.0
+          let color = CGColor(red: red, green: green, blue: blue, alpha: 1.0)
+          if MandMath.isColorInPrintableList(color: color, num: 1) {
+            allColors.append(color)
+          } else {
+            allColors.append(CGColor.white)
+          }
+        }
+      }
+
+    default:
+      print("Not a valid sort index")
     }
     return allColors
   }

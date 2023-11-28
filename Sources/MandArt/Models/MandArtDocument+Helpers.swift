@@ -3,7 +3,6 @@ import SwiftUI
 
 @available(macOS 12.0, *)
 extension MandArtDocument {
-
   var currentWindowTitle: String {
     return NSApp.mainWindow?.title ?? ""
   }
@@ -39,5 +38,4 @@ extension MandArtDocument {
     NSApplication.shared.windows.forEach { $0.close() }
     NSApplication.shared.terminate(nil)
   }
-
 }

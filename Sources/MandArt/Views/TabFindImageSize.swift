@@ -15,13 +15,12 @@ struct TabFindImageSize: View {
   var body: some View {
     Section(
       header:
-        Text("Set Image Size")
+      Text("Set Image Size")
         .font(.headline)
         .fontWeight(.medium)
-       ) {
+    ) {
       HStack {
         VStack {
-
           Text("Width, px:")
           Text("(imageWidth)")
           DelayedTextFieldInt(
@@ -38,7 +37,6 @@ struct TabFindImageSize: View {
             print("TabFind: onChange width")
             activeDisplayState = .MandArtFull
           }
-
         } // end vstack
 
         VStack {
@@ -56,7 +54,6 @@ struct TabFindImageSize: View {
             print("TabFind: onChange height")
             activeDisplayState = .MandArtFull
           }
-
         } // end vstack
 
         VStack {

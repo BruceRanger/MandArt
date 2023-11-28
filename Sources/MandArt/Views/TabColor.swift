@@ -17,7 +17,8 @@ struct TabColor: View {
   var body: some View {
     ScrollView {
       VStack(alignment: .leading) {
-        Section(header:
+        Section(
+          header:
           Text("Choose Your Colors")
             .font(.headline)
             .fontWeight(.medium)
@@ -35,7 +36,8 @@ struct TabColor: View {
             .frame(height: 300)
         } // end section
 
-        Section(header:
+        Section(
+          header:
           Text("Test Gradient between Adjacent Colors")
             .font(.headline)
             .fontWeight(.medium)
@@ -74,7 +76,8 @@ struct TabColor: View {
 
         Divider()
 
-        Section(header:
+        Section(
+          header:
           Text("")
             .font(.headline)
             .fontWeight(.medium)
@@ -88,7 +91,6 @@ struct TabColor: View {
           }
 
           TabSavePopup(popupManager: popupManager)
-
         } // end section
 
         Spacer() // Pushes everything above it up

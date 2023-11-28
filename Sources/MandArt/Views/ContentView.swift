@@ -1,8 +1,8 @@
 import AppKit // keypress
+import CoreGraphics // for image scrollview?
 import Foundation // trig functions
 import SwiftUI // views
 import UniformTypeIdentifiers
-import CoreGraphics // for image scrollview?
 
 var contextImageGlobal: CGImage?
 
@@ -14,7 +14,6 @@ enum ActiveDisplayChoice {
 
 @available(macOS 12.0, *)
 struct ContentView: View {
-
   @EnvironmentObject var appState: AppState
   @ObservedObject var doc: MandArtDocument
   @StateObject var popupManager = PopupManager()
@@ -28,11 +27,9 @@ struct ContentView: View {
   private let widthOfInputPanel: CGFloat = 400
 
   var body: some View {
-
     GeometryReader { _ in
 
       HStack(spacing: 0) {
-
         PanelUI(doc: doc, popupManager: popupManager, activeDisplayState: $activeDisplayState)
           .frame(width: widthOfInputPanel)
           .fixedSize(horizontal: true, vertical: false)
@@ -46,7 +43,6 @@ struct ContentView: View {
       )
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .padding(.leading, 0)
-
     } // geo
     .frame(maxWidth: .infinity, maxHeight: .infinity)
   } // body

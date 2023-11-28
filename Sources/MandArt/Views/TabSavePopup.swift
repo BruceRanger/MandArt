@@ -3,24 +3,21 @@ import UniformTypeIdentifiers
 
 @available(macOS 12.0, *)
 struct TabSavePopup: View {
-
   @ObservedObject var popupManager = PopupManager()
 
   init(
-    popupManager: PopupManager) {
-      self.popupManager = popupManager
-    }
+    popupManager: PopupManager
+  ) {
+    self.popupManager = popupManager
+  }
 
   var body: some View {
-
     Divider()
 
     Text("These colors tend to print true, sorted by:")
 
     Group {
-
       HStack {
-
         Button("r, g, b") {
           popupManager.clear()
           popupManager.showingPrintables = .RGB
@@ -38,11 +35,9 @@ struct TabSavePopup: View {
           popupManager.showingPrintables = .GRB
         }
         .padding([.bottom], 2)
-
       } // end HStack
 
       HStack {
-
         Button("g, b, r") {
           popupManager.clear()
           popupManager.showingPrintables = .GBR
@@ -60,15 +55,12 @@ struct TabSavePopup: View {
           popupManager.showingPrintables = .BGR
         }
         .padding([.bottom], 2)
-
       } // end HStack
-
     } // end group
 
     Divider() // ================================
 
     Group {
-
       HStack(alignment: .top) {
         Text("Color cube with blue slices")
           .font(.headline)
@@ -76,7 +68,6 @@ struct TabSavePopup: View {
       }
 
       HStack {
-
         Button("All") {
           popupManager.clear()
           popupManager.showingCube = .AllBlue
@@ -89,18 +80,15 @@ struct TabSavePopup: View {
         }
         .padding([.bottom], 2)
       }
-
     } // end group
 
     Divider()
 
     Group {
-
       HStack(alignment: .top) {
         Text("Color cube with red slices")
           .font(.headline)
           .fontWeight(.medium)
-
       }
       HStack {
         Button("All") {
@@ -114,13 +102,10 @@ struct TabSavePopup: View {
           popupManager.showingCube = .APGreen
         }
         .padding([.bottom], 2)
-
       } // END HSTACK
-
     }
     Divider()
     Group {
-
       HStack(alignment: .top) {
         Text("Color cube with green slices")
           .font(.headline)
@@ -138,10 +123,7 @@ struct TabSavePopup: View {
           popupManager.showingCube = .APRed
         }
         .padding([.bottom], 2)
-
       } // END HSTACK
-
     }
-
   }
 }

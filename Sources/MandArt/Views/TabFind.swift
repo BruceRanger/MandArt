@@ -9,7 +9,6 @@ struct TabFind: View {
   var body: some View {
     ScrollView {
       VStack {
-
         TabFindImageSize(doc: doc, activeDisplayState: $activeDisplayState)
 
         TabFindImageCenter(doc: doc, activeDisplayState: $activeDisplayState)
@@ -19,7 +18,6 @@ struct TabFind: View {
         TabFindRotateAndMore(doc: doc, activeDisplayState: $activeDisplayState)
 
         Spacer()
-
       } //  vstack
     } // scrollview
   }

@@ -3,7 +3,6 @@ import SwiftUI
 // Provide operations on the MandArt document.
 @available(macOS 12.0, *)
 extension MandArtDocument {
-
   private var hueCount: Int {
     return picdef.hues.count
   }
@@ -30,7 +29,7 @@ extension MandArtDocument {
 
   // Deletes the hue at an index, and registers an undo action.
   func deleteHue(index: Int, undoManager: UndoManager? = nil) {
-    let oldHues = self.picdef.hues
+    let oldHues = picdef.hues
     withAnimation {
       _ = picdef.hues.remove(at: index)
     }
@@ -43,7 +42,7 @@ extension MandArtDocument {
 
   // Replaces the existing items with a new set of items.
   func replaceHues(with newHues: [Hue], undoManager: UndoManager? = nil, animation: Animation? = .default) {
-    let oldHues = self.picdef.hues
+    let oldHues = picdef.hues
 
     withAnimation(animation) {
       picdef.hues = newHues
@@ -57,7 +56,7 @@ extension MandArtDocument {
 
   // Relocates the specified items, and registers an undo action.
   func moveHuesAt(offsets: IndexSet, toOffset: Int, undoManager: UndoManager? = nil) {
-    let oldHues = self.picdef.hues
+    let oldHues = picdef.hues
     withAnimation {
       picdef.hues.move(fromOffsets: offsets, toOffset: toOffset)
     }
@@ -70,10 +69,10 @@ extension MandArtDocument {
 
   // Registers an undo action and a redo action for a hue change
   func registerUndoHueChange(for hue: Hue, oldHue: Hue, undoManager: UndoManager?) {
-    let index = self.picdef.hues.firstIndex(of: hue)!
+    let index = picdef.hues.firstIndex(of: hue)!
 
     // The change has already happened, so save the collection of new items.
-    let newHues = self.picdef.hues
+    let newHues = picdef.hues
 
     // Register the undo action.
     undoManager?.registerUndo(withTarget: self) { doc in
@@ -87,7 +86,13 @@ extension MandArtDocument {
     }
   }
 
-  func updateHueWithColorComponent(index: Int, r: Double? = nil, g: Double? = nil, b: Double? = nil, undoManager: UndoManager? = nil) {
+  func updateHueWithColorComponent(
+    index: Int,
+    r: Double? = nil,
+    g: Double? = nil,
+    b: Double? = nil,
+    undoManager: UndoManager? = nil
+  ) {
     guard let oldHue = picdef.hues[safe: index] else { return }
 
     let newHue = Hue(
@@ -111,8 +116,8 @@ extension MandArtDocument {
    - undoManager: undoManager
    */
   func updateHueWithColorPick(index: Int, newColorPick: Color, undoManager: UndoManager? = nil) {
-    let oldHues = self.picdef.hues
-    let oldHue = self.picdef.hues[index]
+    let oldHues = picdef.hues
+    let oldHue = picdef.hues[index]
     if let arr = newColorPick.cgColor {
       let newHue = Hue(
         num: oldHue.num,
@@ -120,7 +125,7 @@ extension MandArtDocument {
         g: arr.components![1] * 255.0,
         b: arr.components![2] * 255.0
       )
-      self.picdef.hues[index] = newHue
+      picdef.hues[index] = newHue
     }
     undoManager?.registerUndo(withTarget: self) { doc in
       // Use the replaceItems symmetric undoable-redoable function.

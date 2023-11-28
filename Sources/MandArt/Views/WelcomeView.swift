@@ -1,8 +1,8 @@
-import SwiftUI
 import AppKit
+import SwiftUI
 
 @available(macOS 11.0, *)
-struct Constants {
+enum Constants {
   static let windowHeight: CGFloat = 550
   static let windowWidth: CGFloat = 667
   static let imageHeightFactor: CGFloat = 0.6
@@ -11,7 +11,6 @@ struct Constants {
 
 @available(macOS 11.0, *)
 struct WelcomeView: View {
-
   @EnvironmentObject var appState: AppState
 
   var body: some View {
@@ -20,7 +19,7 @@ struct WelcomeView: View {
       WelcomeMainView()
       Spacer()
     }
-    .frame(maxWidth: .infinity)  // HStack-like for horizontal centering
+    .frame(maxWidth: .infinity) // HStack-like for horizontal centering
     .padding()
     .frame(minWidth: Constants.windowWidth, minHeight: Constants.windowHeight)
     .background(Color(.windowBackgroundColor))
@@ -34,10 +33,9 @@ struct WelcomeView: View {
     .onPreferenceChange(ViewSizeKey.self) { size in
       updateWindowFrame(with: size)
     }
-
   }
 
-  private func updateWindowFrame(with size: CGSize) {
+  private func updateWindowFrame(with _: CGSize) {
     // Code to update window frame based on size
   }
 
@@ -48,7 +46,6 @@ struct WelcomeView: View {
     }
     return screen.frame.size
   }
-
 }
 
 @available(macOS 11.0, *)

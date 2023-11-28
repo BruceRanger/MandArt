@@ -10,17 +10,12 @@ struct PanelDisplay: View {
   @State private var startTime: Date?
 
   var body: some View {
-
     VStack(alignment: .leading) {
-
       let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
 
       if self.activeDisplayState == .MandArtFull || self.activeDisplayState == .Colors {
-
         ZStack(alignment: .topLeading) {
-
           ScrollView([.horizontal, .vertical], showsIndicators: true) {
-
             if let cgImage = viewModel.getImage() {
               Image(decorative: cgImage, scale: 1.0)
                 .frame(width: CGFloat(cgImage.width), height: CGFloat(cgImage.height))
@@ -44,7 +39,6 @@ struct PanelDisplay: View {
             }
           } // scroll
         } // zstack
-
       }
     } // end VStack right side (picture space)
     .padding(2)
@@ -116,10 +110,10 @@ struct PanelDisplay: View {
     let movedY = endY - startY
     let thetaDegrees = Double(doc.picdef.theta)
     let thetaRadians = 3.14159 * thetaDegrees / 180
-    let diffX = movedX / self.doc.picdef.scale
-    let diffY = movedY / self.doc.picdef.scale
+    let diffX = movedX / doc.picdef.scale
+    let diffY = movedY / doc.picdef.scale
     let dCenterX = diffY * sin(thetaRadians) + diffX * cos(thetaRadians)
-    let newCenterX: Double = self.doc.picdef.xCenter + dCenterX
+    let newCenterX: Double = doc.picdef.xCenter + dCenterX
     return newCenterX
   }
 
@@ -139,10 +133,10 @@ struct PanelDisplay: View {
     let movedY = endY - startY
     let thetaDegrees = Double(doc.picdef.theta)
     let thetaRadians = 3.14159 * thetaDegrees / 180
-    let diffX = movedX / self.doc.picdef.scale
-    let diffY = movedY / self.doc.picdef.scale
+    let diffX = movedX / doc.picdef.scale
+    let diffY = movedY / doc.picdef.scale
     let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
-    let newCenterY: Double = self.doc.picdef.yCenter + dCenterY
+    let newCenterY: Double = doc.picdef.yCenter + dCenterY
     return newCenterY
   }
 
@@ -162,10 +156,10 @@ struct PanelDisplay: View {
     let movedY = ((h - startY) - h / 2.0)
     let thetaDegrees = Double(doc.picdef.theta)
     let thetaRadians = 3.14159 * thetaDegrees / 180
-    let diffX = movedX / self.doc.picdef.scale
-    let diffY = movedY / self.doc.picdef.scale
+    let diffX = movedX / doc.picdef.scale
+    let diffY = movedY / doc.picdef.scale
     let dCenterX = diffY * sin(thetaRadians) + diffX * cos(thetaRadians)
-    let newCenterX: Double = self.doc.picdef.xCenter + dCenterX
+    let newCenterX: Double = doc.picdef.xCenter + dCenterX
     return newCenterX
   }
 
@@ -185,10 +179,10 @@ struct PanelDisplay: View {
     let movedY = ((h - startY) - h / 2.0)
     let thetaDegrees = Double(doc.picdef.theta)
     let thetaRadians = 3.14159 * thetaDegrees / 180
-    let diffX = movedX / self.doc.picdef.scale
-    let diffY = movedY / self.doc.picdef.scale
+    let diffX = movedX / doc.picdef.scale
+    let diffY = movedY / doc.picdef.scale
     let dCenterY = diffY * cos(thetaRadians) - diffX * sin(thetaRadians)
-    let newCenterY: Double = self.doc.picdef.yCenter + dCenterY
+    let newCenterY: Double = doc.picdef.yCenter + dCenterY
     return newCenterY
   }
 }

@@ -64,7 +64,6 @@ import SwiftUI
  */
 @available(macOS 12.0, *)
 class Hue: Codable, Identifiable, ObservableObject {
-
   var id = UUID()
   var num: Int = 1
   var r: Double = 0.0
@@ -73,16 +72,16 @@ class Hue: Codable, Identifiable, ObservableObject {
   var color: Color
 
   /**
-   Initializes an instance of `Hue` with default values
+    Initializes an instance of `Hue` with default values
 
-  - Returns: A new instance of `Hue` with default values (white)
-  */
+   - Returns: A new instance of `Hue` with default values (white)
+   */
   init() {
-    self.num = 0
-    self.r = 255
-    self.g = 255
-    self.b = 255
-    self.color = Color(.sRGB, red: self.r / 255, green: self.g / 255, blue: self.b / 255)
+    num = 0
+    r = 255
+    g = 255
+    b = 255
+    color = Color(.sRGB, red: r / 255, green: g / 255, blue: b / 255)
   }
 
   /** Initializes an instance of the `Hue` structure with given values for `num`, `r`, `g` and `b`
@@ -98,12 +97,11 @@ class Hue: Codable, Identifiable, ObservableObject {
     self.r = r
     self.g = g
     self.b = b
-    self.color = Color(
+    color = Color(
       .sRGB,
       red: self.r / 255,
       green: self.g / 255,
       blue: self.b / 255
     )
   }
-
 }

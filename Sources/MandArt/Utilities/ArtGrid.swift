@@ -1,8 +1,7 @@
 import Foundation
 
 @available(macOS 12.0, *)
-struct ArtGrid {
-
+enum ArtGrid {
   struct ArtGridInputs {
     let xCenter: Double
     let yCenter: Double
@@ -20,5 +19,4 @@ struct ArtGrid {
     let dFIterMin: Double
     let hues: [Hue]
   }
-
 }

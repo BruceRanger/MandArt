@@ -10,13 +10,19 @@ struct DelayedTextFieldInt: View {
 
   @State private var stringValue: String
 
-  init(title: String? = nil, placeholder: String, value: Binding<Int>, formatter: NumberFormatter, onCommit: @escaping () -> Void = {}) {
+  init(
+    title: String? = nil,
+    placeholder: String,
+    value: Binding<Int>,
+    formatter: NumberFormatter,
+    onCommit: @escaping () -> Void = {}
+  ) {
     self.title = title
     self.placeholder = placeholder
-    self._value = value
+    _value = value
     self.formatter = formatter
     self.onCommit = onCommit
-    self._stringValue = State(initialValue: formatter.string(from: NSNumber(value: value.wrappedValue)) ?? "")
+    _stringValue = State(initialValue: formatter.string(from: NSNumber(value: value.wrappedValue)) ?? "")
   }
 
   var body: some View {
@@ -37,7 +43,7 @@ struct DelayedTextFieldInt: View {
         }
       })
       .onChange(of: value) { newValue in
-        // Update stringValue with formatted string 
+        // Update stringValue with formatted string
         // when the bound value changes
         let newStringValue = formatter.string(from: NSNumber(value: newValue)) ?? ""
         if newStringValue != stringValue {

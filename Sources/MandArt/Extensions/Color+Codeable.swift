@@ -18,7 +18,7 @@ extension Color: Codable {
   }
 
   public func encode(to encoder: Encoder) throws {
-    guard let components = self.colorComponents else {
+    guard let components = colorComponents else {
       return
     }
 

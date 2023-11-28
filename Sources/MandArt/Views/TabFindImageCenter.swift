@@ -9,7 +9,7 @@ struct TabFindImageCenter: View {
   var body: some View {
     Section(
       header:
-        Text("Set Image Center")
+      Text("Set Image Center")
         .font(.headline)
         .fontWeight(.medium)
     ) {
@@ -56,7 +56,6 @@ struct TabFindImageCenter: View {
           }
         }
       } // end HStack for XY
-
     }
     Divider()
   }

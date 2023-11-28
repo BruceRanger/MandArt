@@ -9,10 +9,10 @@
 extension Hue: Equatable {
   static func == (lhs: Hue, rhs: Hue) -> Bool {
     lhs.id == rhs.id &&
-    lhs.num == rhs.num &&
-    lhs.r == rhs.r &&
-    lhs.g == rhs.g &&
-    lhs.b == rhs.b &&
-    lhs.color == rhs.color
+      lhs.num == rhs.num &&
+      lhs.r == rhs.r &&
+      lhs.g == rhs.g &&
+      lhs.b == rhs.b &&
+      lhs.color == rhs.color
   }
 }

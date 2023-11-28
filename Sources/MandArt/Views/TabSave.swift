@@ -7,17 +7,15 @@ struct TabSave: View {
   @ObservedObject var popupManager = PopupManager()
 
   var body: some View {
-
     ScrollView {
       VStack {
-
-        Section(header:
-                  Text("Save Your Art")
-          .font(.headline)
-          .fontWeight(.medium)
-          .padding(.bottom)
+        Section(
+          header:
+          Text("Save Your Art")
+            .font(.headline)
+            .fontWeight(.medium)
+            .padding(.bottom)
         ) {
-
           Button("Save Image (as .png)") {
             doc.saveMandArtImage()
           }
@@ -27,20 +25,18 @@ struct TabSave: View {
             doc.saveMandArtImageInputs()
           }
           .help("Save MandArt image inputs as .mandart.")
-        }// end section
+        } // end section
 
-        Section(header:
-                  Text("Check Colors Before Printing")
-          .font(.headline)
-          .fontWeight(.medium)
-          .padding( .top)
+        Section(
+          header:
+          Text("Check Colors Before Printing")
+            .font(.headline)
+            .fontWeight(.medium)
+            .padding(.top)
         ) {
-
           TabSavePopup(popupManager: popupManager)
-
         } // end second section
         Spacer()
-
       } //  vstack
     } // scroll
   }

@@ -10,7 +10,7 @@ class ImageViewModel: ObservableObject {
 
   init(doc: MandArtDocument, activeDisplayState: Binding<ActiveDisplayChoice>) {
     self.doc = doc
-    self._activeDisplayState = activeDisplayState
+    _activeDisplayState = activeDisplayState
   }
 
   func getCalculatedRightNumber(leftGradientIsValid: Bool) -> Int {
@@ -35,14 +35,14 @@ class ImageViewModel: ObservableObject {
     }
 
     let hasChanged =
-    previousPicdef.imageWidth != doc.picdef.imageWidth ||
-    previousPicdef.imageHeight != doc.picdef.imageHeight ||
-    previousPicdef.xCenter != doc.picdef.xCenter ||
-    previousPicdef.yCenter != doc.picdef.yCenter ||
-    previousPicdef.theta != doc.picdef.theta ||
-    previousPicdef.scale != doc.picdef.scale ||
-    previousPicdef.iterationsMax != doc.picdef.iterationsMax ||
-    previousPicdef.rSqLimit != doc.picdef.rSqLimit
+      previousPicdef.imageWidth != doc.picdef.imageWidth ||
+      previousPicdef.imageHeight != doc.picdef.imageHeight ||
+      previousPicdef.xCenter != doc.picdef.xCenter ||
+      previousPicdef.yCenter != doc.picdef.yCenter ||
+      previousPicdef.theta != doc.picdef.theta ||
+      previousPicdef.scale != doc.picdef.scale ||
+      previousPicdef.iterationsMax != doc.picdef.iterationsMax ||
+      previousPicdef.rSqLimit != doc.picdef.rSqLimit
 
     if hasChanged {
       self.previousPicdef = doc.picdef
@@ -50,6 +50,7 @@ class ImageViewModel: ObservableObject {
 
     return hasChanged
   }
+
   func getImage() -> CGImage? {
     print("getImage() called with \(activeDisplayState)")
 
@@ -58,33 +59,31 @@ class ImageViewModel: ObservableObject {
     print("prepping for calcs")
 
     switch activeDisplayState {
-
-      case .MandArtFull:
+    case .MandArtFull:
       print("activeDisplayState is MandArtFull")
-      if  cachedArtImage == nil || keyVariablesChanged {
-          print("   YES Full calculation required")
-          print("       cachedArtImage nil: TRUE")
-          let art = ArtImage(picdef: doc.picdef)
-          cachedArtImage = art.getMandArtFullPictureImage(colors: &colors)
-          return cachedArtImage
-        } else {
-          print("  NO Full calculation required")
-          return cachedArtImage
-        }
-      case .Colors:
-        print("activeDisplayState is Colors")
+      if cachedArtImage == nil || keyVariablesChanged {
+        print("   YES Full calculation required")
+        print("       cachedArtImage nil: TRUE")
         let art = ArtImage(picdef: doc.picdef)
-        cachedArtImage = art.getNewlyColoredImage(colors: &colors)
+        cachedArtImage = art.getMandArtFullPictureImage(colors: &colors)
         return cachedArtImage
+      } else {
+        print("  NO Full calculation required")
+        return cachedArtImage
+      }
+    case .Colors:
+      print("activeDisplayState is Colors")
+      let art = ArtImage(picdef: doc.picdef)
+      cachedArtImage = art.getNewlyColoredImage(colors: &colors)
+      return cachedArtImage
 
-      case .Gradient:
-        print("Gradient")
-        if getLeftGradientIsValid() {
-          return getGradientImage()
-        }
+    case .Gradient:
+      print("Gradient")
+      if getLeftGradientIsValid() {
+        return getGradientImage()
+      }
     }
     return nil
-
   }
 
   /// Generates a gradient image based on the left and right color values.

@@ -3,7 +3,6 @@ import SwiftUI
 
 @available(macOS 12.0, *)
 struct PopupColorCube: View {
-
   @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager: PopupManager
   @State var selectedColor: (r: Int, g: Int, b: Int)?
@@ -34,7 +33,6 @@ struct PopupColorCube: View {
 
           if let selected = selectedColor {
             Text("Added: (\(selected.r), \(selected.g), \(selected.b))")
-
           }
         }
         colorCubeContent
@@ -59,9 +57,9 @@ struct PopupColorCube: View {
 
   private var colorCubeContent: some View {
     VStack(spacing: 10) {
-      ForEach(0..<2, id: \.self) { rowIndex in
+      ForEach(0 ..< 2, id: \.self) { rowIndex in
         HStack(spacing: 10) {
-          ForEach(0..<4, id: \.self) { columnIndex in
+          ForEach(0 ..< 4, id: \.self) { columnIndex in
             let sliceIndex = rowIndex * 4 + columnIndex
             let start = sliceIndex * 8 * 8
             // -1 to correctly end at the last index of the slice
@@ -80,20 +78,20 @@ struct PopupColorCube: View {
 
   private var currentColors: [Color] {
     switch popupManager.showingCube {
-      case .AllRed:
-        return getColors(from: MandMath.getAllCGColorsList(iSort: 6))
-      case .AllGreen:
-        return getColors(from: MandMath.getAllCGColorsList(iSort: 8))
-      case .AllBlue:
-        return getColors(from: MandMath.getAllCGColorsList(iSort: 7))
-      case .APRed:
-        return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 6))
-      case .APGreen:
-        return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 8))
-      case .APBlue:
-        return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 7))
-      case .None:
-        return []
+    case .AllRed:
+      return getColors(from: MandMath.getAllCGColorsList(iSort: 6))
+    case .AllGreen:
+      return getColors(from: MandMath.getAllCGColorsList(iSort: 8))
+    case .AllBlue:
+      return getColors(from: MandMath.getAllCGColorsList(iSort: 7))
+    case .APRed:
+      return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 6))
+    case .APGreen:
+      return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 8))
+    case .APBlue:
+      return getColors(from: MandMath.getAllPrintableCGColorsList(iSort: 7))
+    case .None:
+      return []
     }
   }
 }

@@ -1,0 +1,14 @@
+# Indent using 2 spaces
+--indent 2
+
+# Enable/disable specific rules
+--enable redundantSelf, trailingCommas
+--disable void
+
+# Line breaks and line lengths
+--maxwidth 120
+--wraparguments before-first
+--wrapelements before-first
+
+# Use Swift 5 syntax
+--swiftversion 5

@@ -1,7 +1,6 @@
 import Foundation
 
-struct MAFormatters {
-
+enum MAFormatters {
   // USER INPUT CUSTOM FORMATTERS - BASIC  .........................
 
   static var fmtScale: NumberFormatter {
@@ -143,5 +142,4 @@ struct MAFormatters {
     formatter.maximum = 255
     return formatter
   }
-
 }
