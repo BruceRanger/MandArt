@@ -33,6 +33,10 @@
 		88A271B22A97860700766654 /* WelcomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271B12A97860700766654 /* WelcomeMainView.swift */; };
 		88A271B52A9790DB00766654 /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271B42A9790DB00766654 /* WelcomeWindowController.swift */; };
 		88A271B72A979A0E00766654 /* MandArtApp+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271B62A979A0E00766654 /* MandArtApp+Menu.swift */; };
+		88C03C7C2B15568C00D4A79B /* TabFindImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C03C7B2B15568C00D4A79B /* TabFindImageSize.swift */; };
+		88C03C7E2B1556A700D4A79B /* TabFindScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C03C7D2B1556A700D4A79B /* TabFindScale.swift */; };
+		88C03C802B1556CF00D4A79B /* TabFindRotateAndMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C03C7F2B1556CF00D4A79B /* TabFindRotateAndMore.swift */; };
+		88C03C822B157E8D00D4A79B /* TabFindImageCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C03C812B157E8D00D4A79B /* TabFindImageCenter.swift */; };
 		88C357FB2A97BC13007E7A92 /* DelayedTextFieldInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C357FA2A97BC13007E7A92 /* DelayedTextFieldInt.swift */; };
 		88C357FD2A97C518007E7A92 /* DelayedTextFieldDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C357FC2A97C518007E7A92 /* DelayedTextFieldDouble.swift */; };
 		88C358012A97D675007E7A92 /* TabFind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358002A97D675007E7A92 /* TabFind.swift */; };
@@ -103,6 +107,10 @@
 		88A271B12A97860700766654 /* WelcomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeMainView.swift; sourceTree = "<group>"; };
 		88A271B42A9790DB00766654 /* WelcomeWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeWindowController.swift; sourceTree = "<group>"; };
 		88A271B62A979A0E00766654 /* MandArtApp+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MandArtApp+Menu.swift"; sourceTree = "<group>"; };
+		88C03C7B2B15568C00D4A79B /* TabFindImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFindImageSize.swift; sourceTree = "<group>"; };
+		88C03C7D2B1556A700D4A79B /* TabFindScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFindScale.swift; sourceTree = "<group>"; };
+		88C03C7F2B1556CF00D4A79B /* TabFindRotateAndMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFindRotateAndMore.swift; sourceTree = "<group>"; };
+		88C03C812B157E8D00D4A79B /* TabFindImageCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFindImageCenter.swift; sourceTree = "<group>"; };
 		88C357FA2A97BC13007E7A92 /* DelayedTextFieldInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedTextFieldInt.swift; sourceTree = "<group>"; };
 		88C357FC2A97C518007E7A92 /* DelayedTextFieldDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedTextFieldDouble.swift; sourceTree = "<group>"; };
 		88C358002A97D675007E7A92 /* TabFind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFind.swift; sourceTree = "<group>"; };
@@ -208,6 +216,10 @@
 				88C3580F2A980312007E7A92 /* SliderTextView.swift */,
 				88C358062A97D983007E7A92 /* TabbedView.swift */,
 				88C358002A97D675007E7A92 /* TabFind.swift */,
+				88C03C7B2B15568C00D4A79B /* TabFindImageSize.swift */,
+				88C03C812B157E8D00D4A79B /* TabFindImageCenter.swift */,
+				88C03C7D2B1556A700D4A79B /* TabFindScale.swift */,
+				88C03C7F2B1556CF00D4A79B /* TabFindRotateAndMore.swift */,
 				88C358112A98101F007E7A92 /* TabColor.swift */,
 				88C358082A97E38A007E7A92 /* TabColorListView.swift */,
 				88C358042A97D7A0007E7A92 /* TabTune.swift */,
@@ -392,6 +404,8 @@
 				88A133D02A96780C00A6E3CA /* GradientImage.swift in Sources */,
 				88A271B72A979A0E00766654 /* MandArtApp+Menu.swift in Sources */,
 				88C358122A98101F007E7A92 /* TabColor.swift in Sources */,
+				88C03C802B1556CF00D4A79B /* TabFindRotateAndMore.swift in Sources */,
+				88C03C7C2B15568C00D4A79B /* TabFindImageSize.swift in Sources */,
 				88A133CE2A9677C500A6E3CA /* GradientGrid.swift in Sources */,
 				88A2719E2A96871A00766654 /* ArtGrid.swift in Sources */,
 				88C358142A985CD1007E7A92 /* ImageViewModel.swift in Sources */,
@@ -412,6 +426,7 @@
 				88C358102A980312007E7A92 /* SliderTextView.swift in Sources */,
 				88EF98302AC0D858005A3ABC /* CGImage+PNGData.swift in Sources */,
 				8806E115293A5011005F5CB4 /* MandArtApp.swift in Sources */,
+				88C03C822B157E8D00D4A79B /* TabFindImageCenter.swift in Sources */,
 				88C358212A99A08D007E7A92 /* PopupManager.swift in Sources */,
 				88A271AC2A97843400766654 /* WelcomeHeaderView.swift in Sources */,
 				880250E12A9D21B00076E001 /* PopupColorCube.swift in Sources */,
@@ -432,6 +447,7 @@
 				88C358252A9A6941007E7A92 /* MACommaNumberFormatter.swift in Sources */,
 				88EF98282AC0D3DC005A3ABC /* Color+Components.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
+				88C03C7E2B1556A700D4A79B /* TabFindScale.swift in Sources */,
 				88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */,
 				88A271B02A97845300766654 /* WelcomeMainInformationView.swift in Sources */,
 				8806E116293A5011005F5CB4 /* MandArtDocument.swift in Sources */,
