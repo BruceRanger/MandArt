@@ -29,7 +29,7 @@ struct TabFindImageCenter: View {
             "Enter the x value in the Mandelbrot coordinate system for the center of the image."
           )
           .onChange(of: doc.picdef.xCenter) { _ in
-            print("TabFind: onChange x")
+            print("TabFind: onChange xCenter")
             activeDisplayState = .MandArtFull
           }
         } // end vstack
@@ -50,7 +50,7 @@ struct TabFindImageCenter: View {
             "Enter the Y value in the Mandelbrot coordinate system for the center of the image."
           )
           .onChange(of: doc.picdef.yCenter) { _ in
-            print("TabFind: onChange y")
+            print("TabFind: onChange yCenter")
             activeDisplayState = .MandArtFull
           }
         }

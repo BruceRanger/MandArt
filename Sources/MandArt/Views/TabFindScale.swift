@@ -78,7 +78,7 @@ struct TabFindScale: View {
       }
       .padding(.horizontal)
 
-      //  Show Row (HStack) of Rotate and Zoom Next
+      //  Show Row (HStack) of  Zoom Next
 
       HStack {
 
@@ -118,8 +118,6 @@ struct TabFindScale: View {
           }
         }
       }
-
-      //  Divider()
 
     }
     Divider()

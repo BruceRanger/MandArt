@@ -57,12 +57,25 @@ struct ArtImage {
 
    - Returns: optional CGImage with the bitmap or nil
    */
-  internal func getPictureImage(colors: inout [[Double]]) -> CGImage? {
+  internal func getMandArtFullPictureImage(colors: inout [[Double]]) -> CGImage? {
 
-//    print("fIterGlobal[0][0] picture begin", fIterGlobal[0][0])
+    // print("fIterGlobal[0][0] picture begin", fIterGlobal[0][0])
 
     let imageWidth = shapeInputs.imageWidth
     let imageHeight = shapeInputs.imageHeight
+
+    // Resize for both width and height
+    if fIterGlobal.count < imageHeight {
+      fIterGlobal = Array(repeating: Array(repeating: 0.0, count: imageWidth), count: imageHeight)
+    } else {
+      for i in 0..<fIterGlobal.count {
+        if fIterGlobal[i].count < imageWidth {
+          fIterGlobal[i] = Array(repeating: 0.0, count: imageWidth)
+        }
+      }
+    }
+    // print("fIterGlobal count after resize: \(fIterGlobal.count), Row width: \(fIterGlobal.first?.count ?? -1)")
+
     let iterationsMax = shapeInputs.iterationsMax
     let scale = shapeInputs.scale
     let xCenter = shapeInputs.xCenter
@@ -320,7 +333,7 @@ struct ArtImage {
     rasterBufferPtr.deallocate()
     contextImageGlobal = contextImage
 
- //   print("fIterGlobal[0][0] picture end", fIterGlobal[0][0])
+    // print("fIterGlobal[0][0] picture end", fIterGlobal[0][0])
 
     return contextImage
   }
@@ -333,9 +346,9 @@ struct ArtImage {
 
    - Returns: optional CGImage with the colored bitmap or nil
    */
-  internal func getColorImage(colors: inout [[Double]]) -> CGImage? {
+  internal func getNewlyColoredImage(colors: inout [[Double]]) -> CGImage? {
 
- //   print("fIterGlobal[0][0] color begin", fIterGlobal[0][0])
+    // print("fIterGlobal[0][0] color begin", fIterGlobal[0][0])
 
     if fIterGlobal.isEmpty {
       print("Error: fIterGlobal is empty")
@@ -352,6 +365,7 @@ struct ArtImage {
 
     let imageHeight: Int = shapeInputs.imageHeight
     let imageWidth: Int = shapeInputs.imageWidth
+
     let iterationsMax: Double = shapeInputs.iterationsMax
     let dFIterMin: Double = shapeInputs.dFIterMin
     let nBlocks: Int = colorInputs.nBlocks

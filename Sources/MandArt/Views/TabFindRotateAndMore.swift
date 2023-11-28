@@ -69,7 +69,5 @@ struct TabFindRotateAndMore: View {
         }
       } // end hstack smoothing
 
-    // } // section
-
-  } // body
-} // view
+  }
+}

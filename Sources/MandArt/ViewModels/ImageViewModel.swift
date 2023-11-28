@@ -70,7 +70,7 @@ class ImageViewModel: ObservableObject {
           print("   YES Full calculation required")
           print("       cachedArtImage nil: TRUE")
           let art = ArtImage(picdef: doc.picdef)
-          cachedArtImage = art.getPictureImage(colors: &colors)
+          cachedArtImage = art.getMandArtFullPictureImage(colors: &colors)
           return cachedArtImage
         } else {
           print("  NO Full calculation required")
@@ -79,7 +79,7 @@ class ImageViewModel: ObservableObject {
       case .Colors:
         print("Colors")
         let art = ArtImage(picdef: doc.picdef)
-        cachedArtImage = art.getColorImage(colors: &colors)
+        cachedArtImage = art.getNewlyColoredImage(colors: &colors)
         return cachedArtImage
 
       case .Gradient:

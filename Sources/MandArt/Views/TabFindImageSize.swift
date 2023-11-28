@@ -20,13 +20,13 @@ struct TabFindImageSize: View {
        ) {
       HStack {
         CustomIntInputField(title: "Width, px:", value: $doc.picdef.imageWidth, placeholder: "1100", onChangeAction: {
-          print("TabFind: onChange width")
-          activeDisplayState = .MandArtFull
+              print("TabFind: onChange width")
+              activeDisplayState = .MandArtFull
         })
 
         CustomIntInputField(title: "Height, px:", value: $doc.picdef.imageHeight, placeholder: "1000", onChangeAction: {
-          print("TabFind: onChange height")
-          activeDisplayState = .MandArtFull
+              print("TabFind: onChange height")
+              activeDisplayState = .MandArtFull
         })
 
         VStack {
@@ -61,12 +61,6 @@ struct CustomIntInputField: View {
       .frame(maxWidth: 80)
       .padding(10)
       .help("Enter \(title.lowercased()), in pixels, of the image.")
-      .onChange(of: value) { _ in
-        // update asynchronously
-        DispatchQueue.main.async {
-          onChangeAction()
-        }
-      }
     }
   }
 }
