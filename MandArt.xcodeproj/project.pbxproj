@@ -140,7 +140,7 @@
 		88EF983B2AC11DBD005A3ABC /* PngSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PngSaver.swift; sourceTree = "<group>"; };
 		88EF983D2AC13350005A3ABC /* DataSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSaver.swift; sourceTree = "<group>"; };
 		88EF983F2AC133D5005A3ABC /* MandArtError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandArtError.swift; sourceTree = "<group>"; };
-		C57920042A1673C900E0CD98 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C57920042A1673C900E0CD98 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MandArt.app; path = /Users/denisecase/Documents/MandArt/build/Debug/MandArt.app; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,7 +171,6 @@
 				889E3F22293A7733009944AC /* MandArtRelease.entitlements */,
 				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
 				88A1716629913A0800A85AED /* Sources */,
-				C57920042A1673C900E0CD98 /* MandArt.app */,
 			);
 			sourceTree = "<group>";
 		};
