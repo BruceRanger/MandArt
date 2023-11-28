@@ -19,7 +19,6 @@
 		8845506629AE3C8D008F202A /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 8845506529AE3C8D008F202A /* Resources */; };
 		884752A629AFE73400FBECC2 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884752A529AFE73400FBECC2 /* WelcomeView.swift */; };
 		88511CB32948B3FF009B5CF6 /* MandMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88511CB22948B3FF009B5CF6 /* MandMath.swift */; };
-		889E3F24293AE0B6009944AC /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 889E3F23293AE0B6009944AC /* Documentation.docc */; };
 		88A133CE2A9677C500A6E3CA /* GradientGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A133CD2A9677C500A6E3CA /* GradientGrid.swift */; };
 		88A133D02A96780C00A6E3CA /* GradientImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A133CF2A96780C00A6E3CA /* GradientImage.swift */; };
 		88A2719E2A96871A00766654 /* ArtGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A2719D2A96871A00766654 /* ArtGrid.swift */; };
@@ -70,16 +69,6 @@
 		88EF98402AC133D5005A3ABC /* MandArtError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF983F2AC133D5005A3ABC /* MandArtError.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		88EF98212AC0D203005A3ABC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6A3AEC0126F879E700D7E31A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6A3AEC0826F879E700D7E31A;
-			remoteInfo = MandArt;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		6A3AEC0E26F879E700D7E31A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6A3AEC1026F879F500D7E31A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,7 +84,6 @@
 		884752A529AFE73400FBECC2 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		88511CB22948B3FF009B5CF6 /* MandMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandMath.swift; sourceTree = "<group>"; };
 		889E3F22293A7733009944AC /* MandArtRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MandArtRelease.entitlements; sourceTree = "<group>"; };
-		889E3F23293AE0B6009944AC /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88A133CD2A9677C500A6E3CA /* GradientGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientGrid.swift; sourceTree = "<group>"; };
 		88A133CF2A96780C00A6E3CA /* GradientImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientImage.swift; sourceTree = "<group>"; };
 		88A21FA8289F557B004DFA34 /* MandArt.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MandArt.entitlements; sourceTree = "<group>"; };
@@ -111,10 +99,10 @@
 		88A271B42A9790DB00766654 /* WelcomeWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeWindowController.swift; sourceTree = "<group>"; };
 		88A271B62A979A0E00766654 /* MandArtApp+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MandArtApp+Menu.swift"; sourceTree = "<group>"; };
 		88BECC592B16228700770843 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		88BECC5A2B16228700770843 /* MandArtTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MandArtTests.xctest; path = /Users/denisecase/Documents/MandArt/build/Debug/MandArtTests.xctest; sourceTree = "<absolute>"; };
 		88BECC5B2B1647BA00770843 /* MandArtDocument+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MandArtDocument+Helpers.swift"; sourceTree = "<group>"; };
 		88BECC5C2B1647BA00770843 /* MandArtDocument+FileHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MandArtDocument+FileHandling.swift"; sourceTree = "<group>"; };
 		88BECC5D2B1647BA00770843 /* MandArtDocument+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MandArtDocument+Constants.swift"; sourceTree = "<group>"; };
+		88BECC622B16674300770843 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88C03C7B2B15568C00D4A79B /* TabFindImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFindImageSize.swift; sourceTree = "<group>"; };
 		88C03C7D2B1556A700D4A79B /* TabFindScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFindScale.swift; sourceTree = "<group>"; };
 		88C03C7F2B1556CF00D4A79B /* TabFindRotateAndMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFindRotateAndMore.swift; sourceTree = "<group>"; };
@@ -157,20 +145,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		88EF981A2AC0D203005A3ABC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
-				889E3F23293AE0B6009944AC /* Documentation.docc */,
+				88BECC622B16674300770843 /* Documentation.docc */,
 				8845506529AE3C8D008F202A /* Resources */,
 				6A3AEC1026F879F500D7E31A /* Assets.xcassets */,
 				6A3AEC1826F879F500D7E31A /* Info.plist */,
@@ -322,24 +303,6 @@
 			productReference = 88BECC592B16228700770843 /* MandArt.app */;
 			productType = "com.apple.product-type.application";
 		};
-		88EF981C2AC0D203005A3ABC /* MandArtTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 88EF98252AC0D203005A3ABC /* Build configuration list for PBXNativeTarget "MandArtTests" */;
-			buildPhases = (
-				88EF98192AC0D203005A3ABC /* Sources */,
-				88EF981A2AC0D203005A3ABC /* Frameworks */,
-				88EF981B2AC0D203005A3ABC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				88EF98222AC0D203005A3ABC /* PBXTargetDependency */,
-			);
-			name = MandArtTests;
-			productName = MandArtTests;
-			productReference = 88BECC5A2B16228700770843 /* MandArtTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -352,10 +315,6 @@
 				TargetAttributes = {
 					6A3AEC0826F879E700D7E31A = {
 						CreatedOnToolsVersion = 12.5.1;
-					};
-					88EF981C2AC0D203005A3ABC = {
-						CreatedOnToolsVersion = 15.0;
-						TestTargetID = 6A3AEC0826F879E700D7E31A;
 					};
 				};
 			};
@@ -375,7 +334,6 @@
 			projectRoot = "";
 			targets = (
 				6A3AEC0826F879E700D7E31A /* MandArt */,
-				88EF981C2AC0D203005A3ABC /* MandArtTests */,
 			);
 		};
 /* End PBXProject section */
@@ -387,13 +345,6 @@
 			files = (
 				8845506629AE3C8D008F202A /* Resources in Resources */,
 				6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88EF981B2AC0D203005A3ABC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,7 +369,6 @@
 				88A133CE2A9677C500A6E3CA /* GradientGrid.swift in Sources */,
 				88A2719E2A96871A00766654 /* ArtGrid.swift in Sources */,
 				88C358142A985CD1007E7A92 /* ImageViewModel.swift in Sources */,
-				889E3F24293AE0B6009944AC /* Documentation.docc in Sources */,
 				88C3580B2A97E9F9007E7A92 /* TabSavePopup.swift in Sources */,
 				88EF98402AC133D5005A3ABC /* MandArtError.swift in Sources */,
 				880250EB2AA2050A0076E001 /* PopupColorSlice.swift in Sources */,
@@ -466,22 +416,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		88EF98192AC0D203005A3ABC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		88EF98222AC0D203005A3ABC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6A3AEC0826F879E700D7E31A /* MandArt */;
-			targetProxy = 88EF98212AC0D203005A3ABC /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6A3AEC1A26F879F500D7E31A /* Debug */ = {
@@ -679,54 +614,6 @@
 			};
 			name = Release;
 		};
-		88EF98232AC0D203005A3ABC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L3C8KXQ7DP;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.6;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Bruce-Johnson.MandArtTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MandArt.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MandArt";
-			};
-			name = Debug;
-		};
-		88EF98242AC0D203005A3ABC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = L3C8KXQ7DP;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.6;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Bruce-Johnson.MandArtTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MandArt.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MandArt";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -744,15 +631,6 @@
 			buildConfigurations = (
 				6A3AEC1D26F879F500D7E31A /* Debug */,
 				6A3AEC1E26F879F500D7E31A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		88EF98252AC0D203005A3ABC /* Build configuration list for PBXNativeTarget "MandArtTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				88EF98232AC0D203005A3ABC /* Debug */,
-				88EF98242AC0D203005A3ABC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

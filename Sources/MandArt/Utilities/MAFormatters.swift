@@ -43,7 +43,10 @@ struct MAFormatters {
 
   static var fmtScaleMultiplier: NumberFormatter {
     let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
     formatter.maximumFractionDigits = 4
+    formatter.minimumFractionDigits = 0
+    formatter.roundingMode = .halfUp
     formatter.minimum = -99.9999
     formatter.maximum = 99.9999
     return formatter
