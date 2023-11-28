@@ -1,5 +1,6 @@
 import Foundation
 
+@available(macOS 12.0, *)
 struct ArtGrid {
 
   struct ArtGridInputs {
@@ -19,35 +20,5 @@ struct ArtGrid {
     let dFIterMin: Double
     let hues: [Hue]
   }
-
-  /* Not Used
-  static func calculate(using parameters: ArtGridInputs) {
-    let imageWidth = parameters.imageWidth
-    let imageHeight = parameters.imageHeight
-    let xCenter = parameters.xCenter
-    let yCenter = parameters.yCenter
-    let scale = parameters.scale
-    let iterationsMax = parameters.iterationsMax
-    let rSqLimit = parameters.rSqLimit
-    let nBlocks = parameters.nBlocks
-    let spacingColorFar = parameters.spacingColorFar
-    let spacingColorNear = parameters.spacingColorNear
-    let yY = parameters.yY
-    let theta = parameters.theta
-    let nImage = parameters.nImage
-    let dFIterMin = parameters.dFIterMin
-    let hues = parameters.hues
-
-    // Iterate over each row (vertical iteration)
-    for row in 0 ..< imageHeight {
-      // Iterate over each column (horizontal iteration)
-      for column in 0 ..< imageWidth {
-        // Calculate pixel index and perform calculations
-        // ...
-
-      }
-    }
-  }
-   */
 
 }

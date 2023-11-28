@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+@available(macOS 12.0, *)
 struct TabFindImageSize: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
@@ -42,6 +43,7 @@ struct TabFindImageSize: View {
   }
 }
 
+@available(macOS 11.0, *)
 struct CustomIntInputField: View {
   var title: String
   @Binding var value: Int

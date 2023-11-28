@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+@available(macOS 12.0, *)
 struct PanelUI: View {
 
   @ObservedObject var doc: MandArtDocument

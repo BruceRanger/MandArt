@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+@available(macOS 12.0, *)
 struct TabSavePopup: View {
 
   @ObservedObject var popupManager = PopupManager()

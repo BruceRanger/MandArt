@@ -2,6 +2,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 /// `ContentViewPopups` is a SwiftUI `View` responsible for displaying specific popups based on the state of the `PopupManager`.
+@available(macOS 12.0, *)
 struct ContentViewPopups: View {
 
   /// An observed document object containing the necessary data and state for rendering the content.

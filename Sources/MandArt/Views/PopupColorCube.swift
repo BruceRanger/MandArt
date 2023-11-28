@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 
+@available(macOS 12.0, *)
 struct PopupColorCube: View {
 
   @ObservedObject var doc: MandArtDocument

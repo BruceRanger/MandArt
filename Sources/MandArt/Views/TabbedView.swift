@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+@available(macOS 12.0, *)
 struct TabbedView: View {
   @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager = PopupManager()

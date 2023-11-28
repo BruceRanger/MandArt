@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+@available(macOS 12.0, *)
 struct TabColor: View {
   @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager = PopupManager()
@@ -39,7 +40,6 @@ struct TabColor: View {
             .font(.headline)
             .fontWeight(.medium)
             .frame(maxWidth: .infinity, alignment: .center)
-
         ) {
           HStack {
             Text("From:")
@@ -87,16 +87,11 @@ struct TabColor: View {
             Text("Some colors may not print true. See Tab 4.Save to explore options.")
           }
 
-  //     {
           TabSavePopup(popupManager: popupManager)
-   //     }   
 
         } // end section
-      // {
-  //        TabSavePopup(popupManager: popupManager)
-      // } 
 
-        Spacer() // Pushes everything above it to take as little space as possible
+        Spacer() // Pushes everything above it up
       } // end vstack
     } // end scrollview
   }

@@ -8,6 +8,7 @@ import CoreGraphics // CG Color
  */
 import Foundation
 
+@available(macOS 10.15, *)
 enum MandMath {
 
   static func getMinimumDistance(color: CGColor, num _: Int) -> Int {

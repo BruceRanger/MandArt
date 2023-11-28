@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(macOS 11.0, *)
 struct SliderTextView: View {
   let range: ClosedRange<Double>
   let step: Double

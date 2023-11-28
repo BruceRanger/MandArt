@@ -1,6 +1,7 @@
 import SwiftUI
 import AppKit
 
+@available(macOS 12.0, *)
 class WelcomeWindowController: NSWindowController {
 
   var appState: AppState

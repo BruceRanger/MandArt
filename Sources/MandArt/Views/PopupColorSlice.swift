@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(macOS 12.0, *)
 struct PopupColorSlice: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var selectedColor: (r: Int, g: Int, b: Int)?

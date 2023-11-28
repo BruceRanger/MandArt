@@ -23,6 +23,7 @@ struct ArtImageColorInputs {
 
 var fIterGlobal = [[Double]]()
 
+@available(macOS 12.0, *)
 struct ArtImage {
 
   let shapeInputs: ArtImageShapeInputs

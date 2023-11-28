@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 
 /** Extend CGImage to add pngData()
  */
-@available(macOS, introduced: 10.13)
+@available(macOS 11.0, *)
 extension CGImage {
   func pngData() -> Data? {
     let mutableData = CFDataCreateMutable(nil, 0)!

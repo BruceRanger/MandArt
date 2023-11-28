@@ -2,6 +2,7 @@ import Foundation
 import ImageIO
 import UniformTypeIdentifiers
 
+@available(macOS 12.0, *)
 public class PngCommenter {
 
   let picdef: PictureDefinition

@@ -3,6 +3,7 @@ import SwiftUI
 /// `PopupManager` is an observable object responsible for managing the display state of popups and other visual components.
 ///
 /// `ObservableObject` is a protocol from the SwiftUI framework. An object that conforms to the `ObservableObject` protocol can be used inside a View and when any of its `@Published` properties change, the UI will update to reflect those changes.
+@available(macOS 10.15, *)
 class PopupManager: ObservableObject {
   /// Enum representing the various states of the color cube popup shown.
   enum ShowingCube {

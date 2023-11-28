@@ -1,13 +1,12 @@
 import SwiftUI
 import AppKit
 
+@available(macOS 10.15, *)
 class AppState: ObservableObject {
   @Published var shouldShowWelcomeWhenStartingUp: Bool = UserDefaults.standard.object(forKey: "shouldShowWelcomeWhenStartingUp") as? Bool ?? true
-  @Published var iAP: Int?
-  @Published var iAll: Int?
-  @Published var iP: Int?
 }
 
+@available(macOS 10.15, *)
 struct WindowAccessor: NSViewRepresentable {
   var callback: (NSWindow?) -> Void
 

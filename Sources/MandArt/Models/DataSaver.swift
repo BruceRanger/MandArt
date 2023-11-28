@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(macOS 12.0, *)
 class DataSaver {
 
   private var picdef: PictureDefinition

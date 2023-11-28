@@ -3,7 +3,7 @@ import SwiftUI
 /**
  Extend `Color` class to conform to the `Codable` protocol, allowing encoding to and decoding from data representations.
  */
-@available(macOS 10.15, *)
+@available(macOS 12.0, *)
 extension Color: Codable {
   enum CodingKeys: String, CodingKey {
     case red, green, blue

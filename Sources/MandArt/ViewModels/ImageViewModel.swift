@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(macOS 12.0, *)
 class ImageViewModel: ObservableObject {
   @Published var doc: MandArtDocument
   @Binding var activeDisplayState: ActiveDisplayChoice
