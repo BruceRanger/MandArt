@@ -1,7 +1,9 @@
 import CoreGraphics
 import Foundation
 
+/// A utility enum for creating gradient images.
 enum GradientImage {
+  /// Holds input parameters required for creating a gradient image.
   struct GradientImageInputs {
     let imageWidth: Int
     let imageHeight: Int
@@ -10,6 +12,13 @@ enum GradientImage {
     let gradientThreshold: Double
   }
 
+  /// Creates a CGContext for image rendering.
+  /// - Parameters:
+  ///   - width: The width of the context.
+  ///   - height: The height of the context.
+  ///   - bitsPerComponent: The number of bits used for each color component of a pixel.
+  ///   - componentsPerPixel: The number of components (including alpha) for each pixel.
+  /// - Returns: An optional CGContext if successful.
   static func createCGContext(
     width: Int,
     height: Int,
@@ -33,6 +42,9 @@ enum GradientImage {
     return context
   }
 
+  /// Creates a CGImage representing a gradient using the provided parameters.
+  /// - Parameter params: `GradientImageInputs` struct containing parameters for the gradient.
+  /// - Returns: An optional CGImage representing the gradient.
   static func createCGImage(using params: GradientImageInputs) -> CGImage? {
     let BITS_PER_COMPONENT = 8
     let COMPONENTS_PER_PIXEL = 4

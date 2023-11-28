@@ -1,5 +1,8 @@
 import SwiftUI
 
+/// A ViewModel for managing and displaying images in a SwiftUI view.
+/// This class handles the logic for calculating images based on the provided document,
+/// and manages whether a full calculation is required or if a gradient should be shown.
 @available(macOS 12.0, *)
 class ImageViewModel: ObservableObject {
   @Published var doc: MandArtDocument
@@ -9,6 +12,8 @@ class ImageViewModel: ObservableObject {
   private var previousPicdef: PictureDefinition?
   private var _cachedArtImage: CGImage?
 
+  /// A computed property for managing a cached MandArt image.
+  /// It checks if a new image calculation is required based on the current document settings.
   var cachedArtImage: CGImage? {
     get {
       if _cachedArtImage == nil || keyVariablesChanged {
@@ -26,12 +31,20 @@ class ImageViewModel: ObservableObject {
     }
   }
 
+  /// Initializes a new instance of `ImageViewModel`.
+  /// - Parameters:
+  ///   - doc: A `MandArtDocument` instance containing the image details.
+  ///   - requiresFullCalc: A binding to a Boolean value indicating whether a full image calculation is required.
+  ///   - showGradient: A binding to a Boolean value indicating whether to show a gradient.
   init(doc: MandArtDocument, requiresFullCalc: Binding<Bool>, showGradient: Binding<Bool>) {
     self.doc = doc
     _requiresFullCalc = requiresFullCalc
     _showGradient = showGradient
   }
 
+  /// Calculates the right number for gradient display based on whether the left gradient number is valid.
+  /// - Parameter leftGradientIsValid: A Boolean indicating whether the left gradient number is valid.
+  /// - Returns: The calculated right number for the gradient.
   func getCalculatedRightNumber(leftGradientIsValid: Bool) -> Int {
     if leftGradientIsValid, doc.picdef.leftNumber < doc.picdef.hues.count {
       return doc.picdef.leftNumber + 1
@@ -39,6 +52,8 @@ class ImageViewModel: ObservableObject {
     return 1
   }
 
+  /// Determines whether the left gradient number is valid.
+  /// - Returns: A Boolean indicating whether the left gradient number is valid.
   func getLeftGradientIsValid() -> Bool {
     var isValid = false
     let leftNum = doc.picdef.leftNumber
@@ -47,6 +62,7 @@ class ImageViewModel: ObservableObject {
     return isValid
   }
 
+  /// A private computed property to check if key variables of the picture definition have changed.
   private var keyVariablesChanged: Bool {
     guard let previousPicdef = previousPicdef else {
       self.previousPicdef = doc.picdef
@@ -70,6 +86,10 @@ class ImageViewModel: ObservableObject {
     return hasChanged
   }
 
+  /// Retrieves the current image to be displayed.
+  /// This method decides whether to return a cached image, calculate a new image,
+  /// or show a gradient based on the current state.
+  /// - Returns: An optional `CGImage` representing the current image.
   func getImage() -> CGImage? {
     print("getImage() with full calc=\(requiresFullCalc)")
 
@@ -77,13 +97,10 @@ class ImageViewModel: ObservableObject {
       print("Showing Gradient")
       return getGradientImage()
     }
-
-    // Now use the computed property
     return cachedArtImage
   }
 
   /// Generates a gradient image based on the left and right color values.
-  ///
   /// - Returns: An optional `CGImage` representing the gradient.
   func getGradientImage() -> CGImage? {
     let leftNumber = doc.picdef.leftNumber
