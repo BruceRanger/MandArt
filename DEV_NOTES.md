@@ -1,5 +1,15 @@
 # Developer Notes
 
+## Keeping Tools Updated
+
+All at once with brew upgrade, or provide just the name or names of those you want to upgrade.
+
+```shell
+brew update
+brew upgrade
+brew upgrade periphery powershell swiftformat-for-xcode
+```
+
 ## Formatting and Linting
 
 ```
