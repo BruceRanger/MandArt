@@ -99,5 +99,5 @@ struct TabColor: View {
         Spacer() // Pushes everything above it to take as little space as possible
       } // end vstack
     } // end scrollview
-  } // end body
-} // end View
+  }
+}

@@ -73,5 +73,5 @@ struct PopupColorSlice: View {
         }
       } // vstack
     ) // any view
-  } // body
+  }
 }

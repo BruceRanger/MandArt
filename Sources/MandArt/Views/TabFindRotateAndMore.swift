@@ -68,6 +68,5 @@ struct TabFindRotateAndMore: View {
           activeDisplayState = .MandArtFull
         }
       } // end hstack smoothing
-
   }
 }

@@ -78,8 +78,6 @@ struct TabFindScale: View {
       }
       .padding(.horizontal)
 
-      //  Show Row (HStack) of  Zoom Next
-
       HStack {
 
         VStack {

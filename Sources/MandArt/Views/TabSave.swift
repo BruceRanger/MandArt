@@ -42,6 +42,5 @@ struct TabSave: View {
 
       } //  vstack
     } // scroll
-  } //  body
-
-} // end View
+  }
+}

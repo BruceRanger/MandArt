@@ -39,5 +39,6 @@ struct TabbedView: View {
         }.tag(3)
     } // end tabview
     .padding(2)
-  } // end body
+
+  }
 }

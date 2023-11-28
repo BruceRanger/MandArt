@@ -21,5 +21,5 @@ struct TabFind: View {
 
       } //  vstack
     } // scrollview
-  } //  body
+  }
 }
