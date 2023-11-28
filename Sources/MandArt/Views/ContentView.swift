@@ -6,18 +6,13 @@ import UniformTypeIdentifiers
 
 var contextImageGlobal: CGImage?
 
-enum ActiveDisplayChoice {
-  case MandArtFull
-  case Gradient
-  case Colors
-}
-
 @available(macOS 12.0, *)
 struct ContentView: View {
   @EnvironmentObject var appState: AppState
   @ObservedObject var doc: MandArtDocument
   @StateObject var popupManager = PopupManager()
-  @State var activeDisplayState: ActiveDisplayChoice = .MandArtFull
+  @State var requiresFullCalc = true
+  @State var showGradient: Bool = false
 
   @State private var moved: Double = 0.0
   @State private var startTime: Date?
@@ -30,16 +25,21 @@ struct ContentView: View {
     GeometryReader { _ in
 
       HStack(spacing: 0) {
-        PanelUI(doc: doc, popupManager: popupManager, activeDisplayState: $activeDisplayState)
-          .frame(width: widthOfInputPanel)
-          .fixedSize(horizontal: true, vertical: false)
+        PanelUI(
+          doc: doc,
+          popupManager: popupManager,
+          requiresFullCalc: $requiresFullCalc,
+          showGradient: $showGradient
+        )
+        .frame(width: widthOfInputPanel)
+        .fixedSize(horizontal: true, vertical: false)
 
-        PanelDisplay(doc: doc, activeDisplayState: $activeDisplayState)
+        PanelDisplay(doc: doc, requiresFullCalc: $requiresFullCalc, showGradient: $showGradient)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
       }
 
       .overlay(
-        ContentViewPopups(doc: doc, popupManager: popupManager, activeDisplayState: $activeDisplayState)
+        ContentViewPopups(doc: doc, popupManager: popupManager, requiresFullCalc: $requiresFullCalc)
       )
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .padding(.leading, 0)

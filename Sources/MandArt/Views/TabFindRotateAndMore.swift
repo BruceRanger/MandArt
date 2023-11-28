@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 @available(macOS 12.0, *)
 struct TabFindRotateAndMore: View {
   @ObservedObject var doc: MandArtDocument
-  @Binding var activeDisplayState: ActiveDisplayChoice
+  @Binding var requiresFullCalc: Bool
 
   var body: some View {
     HStack {
@@ -22,7 +22,7 @@ struct TabFindRotateAndMore: View {
       .help("Enter the angle to rotate the image counterclockwise, in degrees.")
       .onChange(of: doc.picdef.theta) { _ in
         print("TabFind: onChange theta")
-        activeDisplayState = .MandArtFull
+        requiresFullCalc = true
       }
     } // end hstack theta
 
@@ -42,7 +42,7 @@ struct TabFindRotateAndMore: View {
       .frame(maxWidth: 70)
       .onChange(of: doc.picdef.iterationsMax) { _ in
         print("TabFind: onChange iterationsMax")
-        activeDisplayState = .MandArtFull
+        requiresFullCalc = true
       }
     } // end hstack sharpening
     .padding(.horizontal)
@@ -63,7 +63,7 @@ struct TabFindRotateAndMore: View {
       )
       .onChange(of: doc.picdef.rSqLimit) { _ in
         print("TabFind: onChange rSqLimit")
-        activeDisplayState = .MandArtFull
+        requiresFullCalc = true
       }
     } // end hstack smoothing
   }

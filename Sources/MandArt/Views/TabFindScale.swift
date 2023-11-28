@@ -4,15 +4,15 @@ import UniformTypeIdentifiers
 @available(macOS 12.0, *)
 struct TabFindScale: View {
   @ObservedObject var doc: MandArtDocument
-  @Binding var activeDisplayState: ActiveDisplayChoice
+  @Binding var requiresFullCalc: Bool
   @State private var scale: Double
   @State private var scaleMultiplier: Double = 5.0000
   @State private var didChange: Bool = false
   @State private var scaleString: String = ""
 
-  init(doc: MandArtDocument, activeDisplayState: Binding<ActiveDisplayChoice>) {
+  init(doc: MandArtDocument, requiresFullCalc: Binding<Bool>) {
     _doc = ObservedObject(initialValue: doc)
-    _activeDisplayState = activeDisplayState
+    _requiresFullCalc = requiresFullCalc
     _scale = State(initialValue: doc.picdef.scale)
     _scaleString = State(initialValue: String(format: "%.0f", doc.picdef.scale))
   }
@@ -35,14 +35,16 @@ struct TabFindScale: View {
     scale *= scaleMultiplier
     scale = scale.rounded() // Round to the nearest integer
     doc.picdef.scale = scale
-    activeDisplayState = .MandArtFull
+    requiresFullCalc = true
+    didChange = !didChange // force redraw
   }
 
   func zoomOutCustom() {
     scale /= scaleMultiplier
     scale = scale.rounded() // Round to the nearest integer
     doc.picdef.scale = scale
-    activeDisplayState = .MandArtFull
+    requiresFullCalc = true
+    didChange = !didChange // force redraw
   }
 
   var body: some View {
@@ -74,7 +76,7 @@ struct TabFindScale: View {
             scaleString = newScaleString
           }
           didChange = !didChange
-          activeDisplayState = .MandArtFull
+          requiresFullCalc = true
         }
       }
       .padding(.horizontal)
@@ -108,7 +110,7 @@ struct TabFindScale: View {
             .frame(minWidth: 60, maxWidth: 80)
             .onChange(of: doc.picdef.scale) { _ in
               print("TabFind: onChange scale")
-              activeDisplayState = .MandArtFull
+              requiresFullCalc = true
             }
 
             Button("-") { zoomOutCustom() }

@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 @available(macOS 12.0, *)
 struct TabFindImageSize: View {
   @ObservedObject var doc: MandArtDocument
-  @Binding var activeDisplayState: ActiveDisplayChoice
+  @Binding var requiresFullCalc: Bool
 
   func aspectRatio() -> Double {
     let h = Double(doc.picdef.imageHeight)
@@ -35,7 +35,7 @@ struct TabFindImageSize: View {
           .help("Enter the width, in pixels, of the image.")
           .onChange(of: doc.picdef.imageWidth) { _ in
             print("TabFind: onChange width")
-            activeDisplayState = .MandArtFull
+            requiresFullCalc = true
           }
         } // end vstack
 
@@ -52,7 +52,7 @@ struct TabFindImageSize: View {
           .help("Enter the height, in pixels, of the image.")
           .onChange(of: doc.picdef.imageHeight) { _ in
             print("TabFind: onChange height")
-            activeDisplayState = .MandArtFull
+            requiresFullCalc = true
           }
         } // end vstack
 

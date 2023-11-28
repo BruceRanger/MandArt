@@ -3,14 +3,33 @@ import SwiftUI
 @available(macOS 12.0, *)
 class ImageViewModel: ObservableObject {
   @Published var doc: MandArtDocument
-  @Binding var activeDisplayState: ActiveDisplayChoice
+  @Binding var requiresFullCalc: Bool
+  @Binding var showGradient: Bool
 
   private var previousPicdef: PictureDefinition?
-  private var cachedArtImage: CGImage?
+  private var _cachedArtImage: CGImage?
 
-  init(doc: MandArtDocument, activeDisplayState: Binding<ActiveDisplayChoice>) {
+  var cachedArtImage: CGImage? {
+    get {
+      if _cachedArtImage == nil || keyVariablesChanged {
+        print("Calculating new image")
+        var colors: [[Double]] = doc.picdef.hues.map { [$0.r, $0.g, $0.b] }
+        let art = ArtImage(picdef: doc.picdef)
+        _cachedArtImage = requiresFullCalc ?
+          art.getMandArtFullPictureImage(colors: &colors) :
+          art.getNewlyColoredImage(colors: &colors)
+      }
+      return _cachedArtImage
+    }
+    set {
+      _cachedArtImage = newValue
+    }
+  }
+
+  init(doc: MandArtDocument, requiresFullCalc: Binding<Bool>, showGradient: Binding<Bool>) {
     self.doc = doc
-    _activeDisplayState = activeDisplayState
+    _requiresFullCalc = requiresFullCalc
+    _showGradient = showGradient
   }
 
   func getCalculatedRightNumber(leftGradientIsValid: Bool) -> Int {
@@ -52,38 +71,15 @@ class ImageViewModel: ObservableObject {
   }
 
   func getImage() -> CGImage? {
-    print("getImage() called with \(activeDisplayState)")
+    print("getImage() with full calc=\(requiresFullCalc)")
 
-    var colors: [[Double]] = doc.picdef.hues.map { [$0.r, $0.g, $0.b] }
-
-    print("prepping for calcs")
-
-    switch activeDisplayState {
-    case .MandArtFull:
-      print("activeDisplayState is MandArtFull")
-      if cachedArtImage == nil || keyVariablesChanged {
-        print("   YES Full calculation required")
-        print("       cachedArtImage nil: TRUE")
-        let art = ArtImage(picdef: doc.picdef)
-        cachedArtImage = art.getMandArtFullPictureImage(colors: &colors)
-        return cachedArtImage
-      } else {
-        print("  NO Full calculation required")
-        return cachedArtImage
-      }
-    case .Colors:
-      print("activeDisplayState is Colors")
-      let art = ArtImage(picdef: doc.picdef)
-      cachedArtImage = art.getNewlyColoredImage(colors: &colors)
-      return cachedArtImage
-
-    case .Gradient:
-      print("Gradient")
-      if getLeftGradientIsValid() {
-        return getGradientImage()
-      }
+    if showGradient && getLeftGradientIsValid() {
+      print("Showing Gradient")
+      return getGradientImage()
     }
-    return nil
+
+    // Now use the computed property
+    return cachedArtImage
   }
 
   /// Generates a gradient image based on the left and right color values.

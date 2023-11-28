@@ -4,7 +4,6 @@ import UniformTypeIdentifiers
 @available(macOS 12.0, *)
 struct TabTune: View {
   @ObservedObject var doc: MandArtDocument
-  @Binding var activeDisplayState: ActiveDisplayChoice
 
   var body: some View {
     ScrollView {
@@ -21,7 +20,6 @@ struct TabTune: View {
           )
           .onChange(of: doc.picdef.spacingColorFar) { _ in
             print("TabTune: onChange spacingColorFar")
-            activeDisplayState = .Colors
           }
         }
 
@@ -37,7 +35,6 @@ struct TabTune: View {
           )
           .onChange(of: doc.picdef.spacingColorNear) { _ in
             print("TabTune: onChange spacingColorNear")
-            activeDisplayState = .Colors
           }
         }
 
@@ -54,7 +51,6 @@ struct TabTune: View {
           )
           .onChange(of: doc.picdef.dFIterMin) { _ in
             print("TabTune: onChange dFIterMin")
-            activeDisplayState = .Colors
           }
         }
 
@@ -74,7 +70,6 @@ struct TabTune: View {
           )
           .onChange(of: doc.picdef.nBlocks) { _ in
             print("TabTune: onChange nBlocks")
-            activeDisplayState = .Colors
           }
         }
 
@@ -103,7 +98,6 @@ struct TabTune: View {
           )
           .onChange(of: doc.picdef.yY) { _ in
             print("TabTune: onChange yY")
-            activeDisplayState = .Colors
           }
         }
         .padding(.horizontal)

@@ -4,8 +4,8 @@ import UniformTypeIdentifiers
 @available(macOS 12.0, *)
 struct TabColorListView: View {
   @ObservedObject var doc: MandArtDocument
-  @Binding var activeDisplayState: ActiveDisplayChoice
-
+  @Binding var requiresFullCalc: Bool
+  @Binding var showGradient: Bool
   @State private var showingPrintablePopups = Array(repeating: false, count: 100)
 
   // Update hue nums after moviing or deleting
@@ -91,7 +91,7 @@ struct TabColorListView: View {
 
             TextField("255", value: $hue.r, formatter: MAFormatters.fmt0to255) { isStarted in
               if isStarted {
-                activeDisplayState = .Colors
+                showGradient = false
               }
             }
             .onChange(of: hue.r) { newValue in
@@ -102,7 +102,7 @@ struct TabColorListView: View {
 
             TextField("255", value: $hue.g, formatter: MAFormatters.fmt0to255) { isStarted in
               if isStarted {
-                activeDisplayState = .Colors
+                showGradient = false
               }
             }
             .onChange(of: hue.g) { newValue in
@@ -113,7 +113,7 @@ struct TabColorListView: View {
 
             TextField("255", value: $hue.b, formatter: MAFormatters.fmt0to255) { isStarted in
               if isStarted {
-                activeDisplayState = .Colors
+                showGradient = false
               }
             }
             .onChange(of: hue.b) { newValue in
@@ -139,6 +139,9 @@ struct TabColorListView: View {
       } // end list
       .frame(height: geometry.size.height)
     } // end geometry reader
+    .onAppear {
+      requiresFullCalc = false
+    }
     .frame(maxHeight: .infinity)
   } // end body
 }

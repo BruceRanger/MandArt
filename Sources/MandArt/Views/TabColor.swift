@@ -5,7 +5,8 @@ import UniformTypeIdentifiers
 struct TabColor: View {
   @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager = PopupManager()
-  @Binding var activeDisplayState: ActiveDisplayChoice
+  @Binding var requiresFullCalc: Bool
+  @Binding var showGradient: Bool
 
   var calculatedRightNumber: Int {
     if doc.picdef.leftNumber >= 1 && doc.picdef.leftNumber < doc.picdef.hues.count {
@@ -31,10 +32,10 @@ struct TabColor: View {
               .padding([.bottom], 2)
           }
 
-          TabColorListView(doc: doc, activeDisplayState: $activeDisplayState)
+          TabColorListView(doc: doc, requiresFullCalc: $requiresFullCalc, showGradient: $showGradient)
             .background(Color.red.opacity(0.5))
             .frame(height: 300)
-        } // end section
+        } //  section
 
         Section(
           header:
@@ -56,23 +57,23 @@ struct TabColor: View {
             .labelsHidden()
             .help("Select the color number for the left side of a gradient.")
             .onChange(of: doc.picdef.leftNumber) { _ in
-              activeDisplayState = .Gradient
+              showGradient = true
             }
 
             Text("to \(calculatedRightNumber)")
               .help("The color number for the right side of a gradient.")
 
             Button("Display Gradient") {
-              activeDisplayState = .Gradient
+              showGradient = true
             }
             .help("Display a gradient to review the transition between adjoining colors.")
 
             Button("Display Art") {
-              activeDisplayState = .Colors // BHJ after gradient, I think this is safe?
+              showGradient = false
             }
             .help("Display art again after checking gradients.")
-          } // end hstack
-        } // end section
+          } //  hstack
+        } //  section
 
         Divider()
 
@@ -91,10 +92,18 @@ struct TabColor: View {
           }
 
           TabSavePopup(popupManager: popupManager)
-        } // end section
+        } //  section
 
         Spacer() // Pushes everything above it up
-      } // end vstack
-    } // end scrollview
+      } //  vstack
+    } //  scrollview
+    .onAppear {
+      showGradient = false
+    }
+    .onDisappear {
+      if showGradient {
+        showGradient = false
+      }
+    }
   }
 }

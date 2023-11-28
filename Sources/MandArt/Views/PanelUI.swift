@@ -5,19 +5,20 @@ import UniformTypeIdentifiers
 struct PanelUI: View {
   @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager = PopupManager()
-
-  @Binding var activeDisplayState: ActiveDisplayChoice
-
+  @Binding var requiresFullCalc: Bool
+  @Binding var showGradient: Bool
   @State private var selectedTab = 0
 
   init(
     doc: MandArtDocument,
     popupManager: PopupManager,
-    activeDisplayState: Binding<ActiveDisplayChoice>
+    requiresFullCalc: Binding<Bool>,
+    showGradient: Binding<Bool>
   ) {
     self.doc = doc
     self.popupManager = popupManager
-    _activeDisplayState = activeDisplayState
+    _requiresFullCalc = requiresFullCalc
+    _showGradient = showGradient
   }
 
   var body: some View {
@@ -29,7 +30,8 @@ struct PanelUI: View {
       TabbedView(
         doc: doc,
         popupManager: popupManager,
-        activeDisplayState: $activeDisplayState
+        requiresFullCalc: $requiresFullCalc,
+        showGradient: $showGradient
       )
       Spacer()
     }

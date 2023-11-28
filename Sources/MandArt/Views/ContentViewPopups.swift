@@ -11,22 +11,22 @@ struct ContentViewPopups: View {
   /// An observed object responsible for managing the popups' display state.
   @ObservedObject var popupManager: PopupManager
 
-  /// A binding to the active display state that controls the type of visual content displayed.
-  @Binding var activeDisplayState: ActiveDisplayChoice
+  /// A binding to the state keeping track of whether a full calc (or just a recoloring) is required
+  @Binding var requiresFullCalc: Bool
 
   /// Initializes the `ContentViewPopups` with necessary dependencies.
   /// - Parameters:
   ///   - doc: The main document data source.
   ///   - popupManager: An object managing the popups' display state.
-  ///   - activeDisplayState: A binding to control the active display type.
+  ///   - requiresFullCalc: A binding to control the calc
   init(
     doc: MandArtDocument,
     popupManager: PopupManager,
-    activeDisplayState: Binding<ActiveDisplayChoice>
+    requiresFullCalc: Binding<Bool>
   ) {
     self.doc = doc
     self.popupManager = popupManager
-    _activeDisplayState = activeDisplayState
+    _requiresFullCalc = requiresFullCalc
   }
 
   /// The main body of the `ContentViewPopups`.

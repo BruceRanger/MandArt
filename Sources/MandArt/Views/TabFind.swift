@@ -4,18 +4,18 @@ import UniformTypeIdentifiers
 @available(macOS 12.0, *)
 struct TabFind: View {
   @ObservedObject var doc: MandArtDocument
-  @Binding var activeDisplayState: ActiveDisplayChoice
+  @Binding var requiresFullCalc: Bool
 
   var body: some View {
     ScrollView {
       VStack {
-        TabFindImageSize(doc: doc, activeDisplayState: $activeDisplayState)
+        TabFindImageSize(doc: doc, requiresFullCalc: $requiresFullCalc)
 
-        TabFindImageCenter(doc: doc, activeDisplayState: $activeDisplayState)
+        TabFindImageCenter(doc: doc, requiresFullCalc: $requiresFullCalc)
 
-        TabFindScale(doc: doc, activeDisplayState: $activeDisplayState)
+        TabFindScale(doc: doc, requiresFullCalc: $requiresFullCalc)
 
-        TabFindRotateAndMore(doc: doc, activeDisplayState: $activeDisplayState)
+        TabFindRotateAndMore(doc: doc, requiresFullCalc: $requiresFullCalc)
 
         Spacer()
       } //  vstack

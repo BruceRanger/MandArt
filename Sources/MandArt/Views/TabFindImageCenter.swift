@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 @available(macOS 12.0, *)
 struct TabFindImageCenter: View {
   @ObservedObject var doc: MandArtDocument
-  @Binding var activeDisplayState: ActiveDisplayChoice
+  @Binding var requiresFullCalc: Bool
 
   var body: some View {
     Section(
@@ -31,7 +31,7 @@ struct TabFindImageCenter: View {
           )
           .onChange(of: doc.picdef.xCenter) { _ in
             print("TabFind: onChange xCenter")
-            activeDisplayState = .MandArtFull
+            requiresFullCalc = true
           }
         } // end vstack
 
@@ -52,7 +52,7 @@ struct TabFindImageCenter: View {
           )
           .onChange(of: doc.picdef.yCenter) { _ in
             print("TabFind: onChange yCenter")
-            activeDisplayState = .MandArtFull
+            requiresFullCalc = true
           }
         }
       } // end HStack for XY

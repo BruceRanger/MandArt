@@ -4,16 +4,29 @@ import UniformTypeIdentifiers
 @available(macOS 12.0, *)
 struct PanelDisplay: View {
   @ObservedObject var doc: MandArtDocument
-  @Binding var activeDisplayState: ActiveDisplayChoice
+  @Binding var requiresFullCalc: Bool
+  @Binding var showGradient: Bool
   @State private var selectedTab = 0
   @State private var moved: Double = 0.0
   @State private var startTime: Date?
 
   var body: some View {
     VStack(alignment: .leading) {
-      let viewModel = ImageViewModel(doc: doc, activeDisplayState: $activeDisplayState)
+      let viewModel = ImageViewModel(doc: doc, requiresFullCalc: $requiresFullCalc, showGradient: $showGradient)
 
-      if self.activeDisplayState == .MandArtFull || self.activeDisplayState == .Colors {
+      if showGradient {
+        ZStack(alignment: .topLeading) {
+          ScrollView([.horizontal, .vertical], showsIndicators: true) {
+            if let cgImage = viewModel.getImage() {
+              Image(decorative: cgImage, scale: 1.0)
+                .frame(width: CGFloat(cgImage.width), alignment: .topLeading)
+            } else {
+              Text("No Image Available")
+                .foregroundColor(.gray)
+            }
+          } // scroll
+        } // zstack
+      } else {
         ZStack(alignment: .topLeading) {
           ScrollView([.horizontal, .vertical], showsIndicators: true) {
             if let cgImage = viewModel.getImage() {
@@ -26,20 +39,7 @@ struct PanelDisplay: View {
             }
           } // scrollview
         } // zstack
-
-      } else if self.activeDisplayState == .Gradient {
-        ZStack(alignment: .topLeading) {
-          ScrollView([.horizontal, .vertical], showsIndicators: true) {
-            if let cgImage = viewModel.getImage() {
-              Image(decorative: cgImage, scale: 1.0)
-                .frame(width: CGFloat(cgImage.width), alignment: .topLeading)
-            } else {
-              Text("No Image Available")
-                .foregroundColor(.gray)
-            }
-          } // scroll
-        } // zstack
-      }
+      } // else art
     } // end VStack right side (picture space)
     .padding(2)
   } // body
@@ -64,33 +64,31 @@ struct PanelDisplay: View {
   var tapGesture: some Gesture {
     DragGesture(minimumDistance: 0, coordinateSpace: .local)
       .onChanged { value in
-        if activeDisplayState == .MandArtFull || activeDisplayState == .Colors {
-          // store distance touch has moved as a sum of all movements
-          self.moved += value.translation.width + value.translation.height
-          // only set the start time if it's the first event
-          if self.startTime == nil {
-            self.startTime = value.time
-          }
+
+        // store distance touch has moved as a sum of all movements
+        self.moved += value.translation.width + value.translation.height
+        // only set the start time if it's the first event
+        if self.startTime == nil {
+          self.startTime = value.time
         }
       }
       .onEnded { tap in
-        if activeDisplayState == .MandArtFull || activeDisplayState == .Colors {
-          // if not moved much, treat it as a tap event
-          if self.moved < 2, self.moved > -2 {
-            self.doc.picdef.xCenter = self.getCenterXFromTap(tap)
-            self.doc.picdef.yCenter = self.getCenterYFromTap(tap)
-            print("onTapped xy")
-          }
-          // if we moved a lot, treat it as a drag event
-          else {
-            self.doc.picdef.xCenter = self.getCenterXFromDrag(tap)
-            self.doc.picdef.yCenter = self.getCenterYFromDrag(tap)
-            print("onDragged xy")
-          }
-          // reset tap event states
-          self.moved = 0
-          self.startTime = nil
+
+        // if not moved much, treat it as a tap event
+        if self.moved < 2, self.moved > -2 {
+          self.doc.picdef.xCenter = self.getCenterXFromTap(tap)
+          self.doc.picdef.yCenter = self.getCenterYFromTap(tap)
+          print("onTapped xy")
         }
+        // if we moved a lot, treat it as a drag event
+        else {
+          self.doc.picdef.xCenter = self.getCenterXFromDrag(tap)
+          self.doc.picdef.yCenter = self.getCenterYFromDrag(tap)
+          print("onDragged xy")
+        }
+        // reset tap event states
+        self.moved = 0
+        self.startTime = nil
       }
   }
 
