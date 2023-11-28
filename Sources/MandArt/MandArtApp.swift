@@ -104,9 +104,9 @@ struct MandArtApp: App {
               window.setFrameAutosaveName("Document Window \(uniqueIdentifier.uuidString)")
             }
           })
-          .onAppear {
-            NSWindow.allowsAutomaticWindowTabbing = false
-          }
+//          .onAppear {
+//            NSWindow.allowsAutomaticWindowTabbing = false
+//          }
       }
     }
 
@@ -119,9 +119,9 @@ struct MandArtApp: App {
             window.setFrameAutosaveName("Document Window \(uniqueIdentifier.uuidString)")
           }
         })
-        .onAppear {
-          NSWindow.allowsAutomaticWindowTabbing = false
-        }
+//        .onAppear {
+//          NSWindow.allowsAutomaticWindowTabbing = false
+//        }
     } // DG
 
     .commands {
