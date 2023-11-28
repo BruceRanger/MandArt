@@ -4,6 +4,7 @@ import UniformTypeIdentifiers
 
 @available(macOS 12.0, *)
 extension MandArtDocument {
+
   // Save the image inputs to a file.
   func saveMandArtImageInputs() {
     var data: Data

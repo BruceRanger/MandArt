@@ -60,6 +60,8 @@ struct ArtImage {
    */
   internal func getMandArtFullPictureImage(colors: inout [[Double]]) -> CGImage? {
 
+    print("Starting MandArt Full Picture Image calc")
+
     // print("fIterGlobal[0][0] picture begin", fIterGlobal[0][0])
 
     let imageWidth = shapeInputs.imageWidth
@@ -348,6 +350,8 @@ struct ArtImage {
    - Returns: optional CGImage with the colored bitmap or nil
    */
   internal func getNewlyColoredImage(colors: inout [[Double]]) -> CGImage? {
+
+    print("Starting Newly Colored Image calc")
 
     // print("fIterGlobal[0][0] color begin", fIterGlobal[0][0])
 

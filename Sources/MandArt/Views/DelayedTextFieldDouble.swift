@@ -26,7 +26,7 @@ struct DelayedTextFieldDouble: View {
       }
       TextField(placeholder, text: $stringValue, onEditingChanged: { isEditing in
         if !isEditing {
-          // Convert string to double only on editing completion
+          // Convert to double on editing completion
           if let num = formatter.number(from: stringValue) {
             let newValue = num.doubleValue
             if newValue != value {
@@ -37,7 +37,8 @@ struct DelayedTextFieldDouble: View {
         }
       })
       .onChange(of: value) { newValue in
-        // Update stringValue with formatted string when the bound value changes
+        // Update stringValue with formatted string 
+        // when the bound value changes
         let newStringValue = formatter.string(from: NSNumber(value: newValue)) ?? ""
         if newStringValue != stringValue {
           stringValue = newStringValue

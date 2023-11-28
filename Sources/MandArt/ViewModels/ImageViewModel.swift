@@ -6,15 +6,7 @@ class ImageViewModel: ObservableObject {
   @Binding var activeDisplayState: ActiveDisplayChoice
 
   private var previousPicdef: PictureDefinition?
-  private var cachedArtImage: CGImage? {
-        didSet {
-          if cachedArtImage != nil {
-            DispatchQueue.main.async {
-              self.activeDisplayState = .Colors
-            }
-          }
-        }
-      }
+  private var cachedArtImage: CGImage?
 
   init(doc: MandArtDocument, activeDisplayState: Binding<ActiveDisplayChoice>) {
     self.doc = doc
@@ -63,10 +55,12 @@ class ImageViewModel: ObservableObject {
 
     var colors: [[Double]] = doc.picdef.hues.map { [$0.r, $0.g, $0.b] }
 
+    print("prepping for calcs")
+
     switch activeDisplayState {
 
       case .MandArtFull:
-      print("MandArtFull")
+      print("activeDisplayState is MandArtFull")
       if  cachedArtImage == nil || keyVariablesChanged {
           print("   YES Full calculation required")
           print("       cachedArtImage nil: TRUE")
@@ -78,7 +72,7 @@ class ImageViewModel: ObservableObject {
           return cachedArtImage
         }
       case .Colors:
-        print("Colors")
+        print("activeDisplayState is Colors")
         let art = ArtImage(picdef: doc.picdef)
         cachedArtImage = art.getNewlyColoredImage(colors: &colors)
         return cachedArtImage

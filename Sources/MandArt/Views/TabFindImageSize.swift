@@ -20,15 +20,44 @@ struct TabFindImageSize: View {
         .fontWeight(.medium)
        ) {
       HStack {
-        CustomIntInputField(title: "Width, px:", value: $doc.picdef.imageWidth, placeholder: "1100", onChangeAction: {
-              print("TabFind: onChange width")
-              activeDisplayState = .MandArtFull
-        })
+        VStack {
 
-        CustomIntInputField(title: "Height, px:", value: $doc.picdef.imageHeight, placeholder: "1000", onChangeAction: {
-              print("TabFind: onChange height")
-              activeDisplayState = .MandArtFull
-        })
+          Text("Width, px:")
+          Text("(imageWidth)")
+          DelayedTextFieldInt(
+            placeholder: "1100",
+            value: $doc.picdef.imageWidth,
+            formatter: MAFormatters.fmtImageWidthHeight
+          )
+          .textFieldStyle(.roundedBorder)
+          .multilineTextAlignment(.trailing)
+          .frame(maxWidth: 80)
+          .padding(10)
+          .help("Enter the width, in pixels, of the image.")
+          .onChange(of: doc.picdef.imageWidth) { _ in
+            print("TabFind: onChange width")
+            activeDisplayState = .MandArtFull
+          }
+
+        } // end vstack
+
+        VStack {
+          Text("Height, px")
+          Text("(imageHeight)")
+          DelayedTextFieldInt(
+            placeholder: "1000",
+            value: $doc.picdef.imageHeight,
+            formatter: MAFormatters.fmtImageWidthHeight
+          )
+          .frame(maxWidth: 80)
+          .padding(10)
+          .help("Enter the height, in pixels, of the image.")
+          .onChange(of: doc.picdef.imageHeight) { _ in
+            print("TabFind: onChange height")
+            activeDisplayState = .MandArtFull
+          }
+
+        } // end vstack
 
         VStack {
           Text("Aspect Ratio:")
@@ -40,29 +69,5 @@ struct TabFindImageSize: View {
     }
 
     Divider()
-  }
-}
-
-@available(macOS 11.0, *)
-struct CustomIntInputField: View {
-  var title: String
-  @Binding var value: Int
-  var placeholder: String
-  var onChangeAction: () -> Void
-
-  var body: some View {
-    VStack {
-      Text(title)
-      DelayedTextFieldInt(
-        placeholder: placeholder,
-        value: $value,
-        formatter: MAFormatters.fmtImageWidthHeight
-      )
-      .textFieldStyle(.roundedBorder)
-      .multilineTextAlignment(.trailing)
-      .frame(maxWidth: 80)
-      .padding(10)
-      .help("Enter \(title.lowercased()), in pixels, of the image.")
-    }
   }
 }
