@@ -50,7 +50,7 @@ struct TabColorListView: View {
                 self.showingPrintablePopups[i] = true
               } label: {
                 Image(systemName: "exclamationmark.circle")
-                  .foregroundColor(.blue)
+                  .foregroundColor(.red)
               }
               .help("See printable options for " + "\(hue.num)")
             } else {
