@@ -22,7 +22,7 @@ struct TabFind: View {
       } //  vstack
     } // scrollview
     .onAppear {
-      requiresFullCalc = false
+      requiresFullCalc = true
       showGradient = false
     }
     .onDisappear {
