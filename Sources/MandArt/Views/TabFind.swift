@@ -20,5 +20,13 @@ struct TabFind: View {
         Spacer()
       } //  vstack
     } // scrollview
+    .onAppear {
+      requiresFullCalc = false
+    }
+//    .onDisappear {
+//      if requiresFullCalc {
+//        requiresFullCalc = false
+//      }
+//    }
   }
 }

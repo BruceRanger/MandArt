@@ -29,3 +29,6 @@ Read more in the articles below.
 
 - <doc:A04-MoreAboutTheMath>
 
+### API Reference 
+
+- <doc:A05-API>
