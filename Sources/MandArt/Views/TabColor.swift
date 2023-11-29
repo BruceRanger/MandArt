@@ -99,6 +99,7 @@ struct TabColor: View {
     } //  scrollview
     .onAppear {
       showGradient = false
+      requiresFullCalc = false
     }
     .onDisappear {
       if showGradient {

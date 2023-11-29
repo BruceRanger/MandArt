@@ -5,6 +5,7 @@ import UniformTypeIdentifiers
 struct TabFind: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var requiresFullCalc: Bool
+  @Binding var showGradient: Bool
 
   var body: some View {
     ScrollView {
@@ -22,11 +23,12 @@ struct TabFind: View {
     } // scrollview
     .onAppear {
       requiresFullCalc = false
+      showGradient = false
     }
-//    .onDisappear {
-//      if requiresFullCalc {
-//        requiresFullCalc = false
-//      }
-//    }
+    .onDisappear {
+      if requiresFullCalc {
+        requiresFullCalc = false
+      }
+    }
   }
 }

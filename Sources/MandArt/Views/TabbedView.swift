@@ -23,7 +23,7 @@ struct TabbedView: View {
 
   var body: some View {
     TabView(selection: $selectedTab) {
-      TabFind(doc: doc, requiresFullCalc: $requiresFullCalc)
+      TabFind(doc: doc, requiresFullCalc: $requiresFullCalc, showGradient: $showGradient)
         .tabItem {
           Label("1.Find", systemImage: "aspectratio")
         }.tag(0)
@@ -33,12 +33,12 @@ struct TabbedView: View {
           Label("2.Color", systemImage: "paintbrush")
         }.tag(1)
 
-      TabTune(doc: doc)
+      TabTune(doc: doc, requiresFullCalc: $requiresFullCalc, showGradient: $showGradient)
         .tabItem {
           Label("3.Tune", systemImage: "paintpalette")
         }.tag(2)
 
-      TabSave(doc: doc, popupManager: popupManager)
+      TabSave(doc: doc, popupManager: popupManager, requiresFullCalc: $requiresFullCalc, showGradient: $showGradient)
         .tabItem {
           Label("4.Save", systemImage: "circle")
         }.tag(3)

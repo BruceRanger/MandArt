@@ -5,6 +5,8 @@ import UniformTypeIdentifiers
 struct TabSave: View {
   @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager = PopupManager()
+  @Binding var requiresFullCalc: Bool
+  @Binding var showGradient: Bool
 
   var body: some View {
     ScrollView {
@@ -39,5 +41,14 @@ struct TabSave: View {
         Spacer()
       } //  vstack
     } // scroll
+    .onAppear {
+      requiresFullCalc = false
+      showGradient = false
+    }
+    .onDisappear {
+      if requiresFullCalc {
+        requiresFullCalc = false
+      }
+    }
   }
 }
