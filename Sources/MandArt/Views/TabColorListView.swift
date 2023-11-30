@@ -22,23 +22,10 @@ struct TabColorListView: View {
   /// This function iterates through the hues and assigns each hue a number
   /// corresponding to its position in the list.
   func updateHueNums() {
-    for (index, _) in doc.picdef.hues.enumerated() {
+    for (index, _) in $doc.picdef.hues.enumerated() {
       doc.picdef.hues[index].num = index + 1
     }
   }
-
-  /// Handles the drag-and-drop reordering operation of hues (ordered colors).
-  ///
-  /// - Parameters:
-  ///   - indices: The indices of the hues that are being moved.
-  ///   - newOffset: The new offset to which the hues are moved.
-  private func move(indices: IndexSet, newOffset: Int) {
-    print("Before move: \(doc.picdef.hues.map { $0.num })")
-    doc.picdef.hues.move(fromOffsets: indices, toOffset: newOffset)
-    updateHueNums()
-    print("After move: \(doc.picdef.hues.map { $0.num })")
-  }
-
 
   /// Determines if a color is near the printable list.
   ///
@@ -163,7 +150,13 @@ struct TabColorListView: View {
             .help("Delete " + "\(hue.num)")
           }
         } // foreach
-        .onMove(perform: move)
+        .onMove { indices, hue in
+          doc.picdef.hues.move(
+            fromOffsets: indices,
+            toOffset: hue
+          )
+          updateHueNums()
+        }
       } //  list
       .frame(height: geometry.size.height)
     } // georeader
