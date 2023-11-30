@@ -33,9 +33,12 @@ struct TabColorListView: View {
   ///   - indices: The indices of the hues that are being moved.
   ///   - newOffset: The new offset to which the hues are moved.
   private func move(indices: IndexSet, newOffset: Int) {
+    print("Before move: \(doc.picdef.hues.map { $0.num })")
     doc.picdef.hues.move(fromOffsets: indices, toOffset: newOffset)
     updateHueNums()
+    print("After move: \(doc.picdef.hues.map { $0.num })")
   }
+
 
   /// Determines if a color is near the printable list.
   ///
