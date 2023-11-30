@@ -54,7 +54,7 @@
 		88C358012A97D675007E7A92 /* TabFind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358002A97D675007E7A92 /* TabFind.swift */; };
 		88C358052A97D7A0007E7A92 /* TabTune.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358042A97D7A0007E7A92 /* TabTune.swift */; };
 		88C358072A97D983007E7A92 /* TabbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358062A97D983007E7A92 /* TabbedView.swift */; };
-		88C358092A97E38A007E7A92 /* TabColorListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358082A97E38A007E7A92 /* TabColorListView.swift */; };
+		88C358092A97E38A007E7A92 /* TabColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358082A97E38A007E7A92 /* TabColorList.swift */; };
 		88C3580B2A97E9F9007E7A92 /* TabSavePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3580A2A97E9F9007E7A92 /* TabSavePopup.swift */; };
 		88C358102A980312007E7A92 /* SliderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3580F2A980312007E7A92 /* SliderTextView.swift */; };
 		88C358122A98101F007E7A92 /* TabColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358112A98101F007E7A92 /* TabColor.swift */; };
@@ -63,6 +63,7 @@
 		88C3581C2A98EA45007E7A92 /* PanelUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3581B2A98EA45007E7A92 /* PanelUI.swift */; };
 		88C3581E2A98EA53007E7A92 /* PanelDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */; };
 		88C358212A99A08D007E7A92 /* PopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358202A99A08D007E7A92 /* PopupManager.swift */; };
+		88CA2C422B18EA6C000235EB /* TabColorListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CA2C412B18EA6B000235EB /* TabColorListRow.swift */; };
 		88EF98282AC0D3DC005A3ABC /* Color+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF98272AC0D3DC005A3ABC /* Color+Components.swift */; };
 		88EF982A2AC0D6EB005A3ABC /* Hue+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF98292AC0D6EB005A3ABC /* Hue+Equatable.swift */; };
 		88EF982C2AC0D78E005A3ABC /* String+Subscripting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF982B2AC0D78E005A3ABC /* String+Subscripting.swift */; };
@@ -129,7 +130,7 @@
 		88C358002A97D675007E7A92 /* TabFind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFind.swift; sourceTree = "<group>"; };
 		88C358042A97D7A0007E7A92 /* TabTune.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabTune.swift; sourceTree = "<group>"; };
 		88C358062A97D983007E7A92 /* TabbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedView.swift; sourceTree = "<group>"; };
-		88C358082A97E38A007E7A92 /* TabColorListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabColorListView.swift; sourceTree = "<group>"; };
+		88C358082A97E38A007E7A92 /* TabColorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabColorList.swift; sourceTree = "<group>"; };
 		88C3580A2A97E9F9007E7A92 /* TabSavePopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSavePopup.swift; sourceTree = "<group>"; };
 		88C3580F2A980312007E7A92 /* SliderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTextView.swift; sourceTree = "<group>"; };
 		88C358112A98101F007E7A92 /* TabColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabColor.swift; sourceTree = "<group>"; };
@@ -138,6 +139,7 @@
 		88C3581B2A98EA45007E7A92 /* PanelUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelUI.swift; sourceTree = "<group>"; };
 		88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelDisplay.swift; sourceTree = "<group>"; };
 		88C358202A99A08D007E7A92 /* PopupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupManager.swift; sourceTree = "<group>"; };
+		88CA2C412B18EA6B000235EB /* TabColorListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabColorListRow.swift; sourceTree = "<group>"; };
 		88EF98272AC0D3DC005A3ABC /* Color+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Components.swift"; sourceTree = "<group>"; };
 		88EF98292AC0D6EB005A3ABC /* Hue+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hue+Equatable.swift"; sourceTree = "<group>"; };
 		88EF982B2AC0D78E005A3ABC /* String+Subscripting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Subscripting.swift"; sourceTree = "<group>"; };
@@ -224,7 +226,8 @@
 				88C3580F2A980312007E7A92 /* SliderTextView.swift */,
 				88C358062A97D983007E7A92 /* TabbedView.swift */,
 				88C358112A98101F007E7A92 /* TabColor.swift */,
-				88C358082A97E38A007E7A92 /* TabColorListView.swift */,
+				88C358082A97E38A007E7A92 /* TabColorList.swift */,
+				88CA2C412B18EA6B000235EB /* TabColorListRow.swift */,
 				88C358002A97D675007E7A92 /* TabFind.swift */,
 				88C03C812B157E8D00D4A79B /* TabFindImageCenter.swift */,
 				88C03C7B2B15568C00D4A79B /* TabFindImageSize.swift */,
@@ -406,7 +409,8 @@
 				88EF982E2AC0D7F3005A3ABC /* UTType+mandart.swift in Sources */,
 				88A271A82A971C1C00766654 /* MAFormatters.swift in Sources */,
 				88C3581C2A98EA45007E7A92 /* PanelUI.swift in Sources */,
-				88C358092A97E38A007E7A92 /* TabColorListView.swift in Sources */,
+				88CA2C422B18EA6C000235EB /* TabColorListRow.swift in Sources */,
+				88C358092A97E38A007E7A92 /* TabColorList.swift in Sources */,
 				88EF98322AC0DB48005A3ABC /* Color+Codeable.swift in Sources */,
 				88EF983C2AC11DBD005A3ABC /* PngSaver.swift in Sources */,
 				88BECC602B1647BA00770843 /* MandArtDocument+Constants.swift in Sources */,

@@ -49,7 +49,8 @@ Explore the application programming interfaces (API) to understand the building 
 - <doc:PopupPrintableColors>: A pop-up view for displaying printable colors.
 - <doc:SliderTextView>: Integrates a slider with a text field for input.
 - <doc:TabColor>: View for the color tab in the application.
-- <doc:TabColorListView>: Displays a list of colors in the color tab.
+- <doc:TabColorList>: Displays a list of colors in the color tab.
+- <doc:TabColorListRow>: Displays one color in the color list.
 - <doc:TabFind>: View for the Find tab in the application.
 - <doc:TabFindImageCenter>: Manages the center point settings in the Find tab.
 - <doc:TabFindImageSize>: Manages image size settings in the Find tab.

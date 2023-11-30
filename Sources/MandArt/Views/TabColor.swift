@@ -32,7 +32,7 @@ struct TabColor: View {
               .padding([.bottom], 2)
           }
 
-          TabColorListView(doc: doc, requiresFullCalc: $requiresFullCalc, showGradient: $showGradient)
+          TabColorList(doc: doc, requiresFullCalc: $requiresFullCalc, showGradient: $showGradient)
             .background(Color.red.opacity(0.5))
             .frame(height: 300)
         } //  section
