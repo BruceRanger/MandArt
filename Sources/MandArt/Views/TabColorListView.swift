@@ -1,20 +1,50 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+/// A view that displays and manages a list of color hues.
+///
+/// This view is responsible for presenting a list of hues, each with options for modifying
+/// its properties and checking for printability. Users can reorder, delete, or modify the color properties.
+///
+/// - Requires:
+///   - macOS 12.0 or later.
 @available(macOS 12.0, *)
 struct TabColorListView: View {
+  /// The document object containing MandArt data.
+  /// This observable object is used to track and update the state of the MandArt.
   @ObservedObject var doc: MandArtDocument
   @Binding var requiresFullCalc: Bool
   @Binding var showGradient: Bool
   @State private var showingPrintablePopups = Array(repeating: false, count: 100)
 
-  // Update hue nums after moviing or deleting
+  /// Updates the numbering of hues after they have been moved or deleted.
+  ///
+  /// This function iterates through the hues and assigns each hue a number
+  /// corresponding to its position in the list.
   func updateHueNums() {
-    for (index, _) in $doc.picdef.hues.enumerated() {
+    for (index, _) in doc.picdef.hues.enumerated() {
       doc.picdef.hues[index].num = index + 1
     }
   }
 
+  /// Handles the drag-and-drop reordering operation of hues (ordered colors).
+  ///
+  /// - Parameters:
+  ///   - indices: The indices of the hues that are being moved.
+  ///   - newOffset: The new offset to which the hues are moved.
+  private func move(indices: IndexSet, newOffset: Int) {
+    doc.picdef.hues.move(fromOffsets: indices, toOffset: newOffset)
+    updateHueNums()
+  }
+
+  /// Determines if a color is near the printable list.
+  ///
+  /// This function checks whether a given color is close to a list of printable colors.
+  ///
+  /// - Parameters:
+  ///   - color: The color to be checked.
+  ///   - num: The number of the hue being checked.
+  /// - Returns: A boolean indicating whether the color is near the printable list.
   func getIsPrintable(color: Color, num: Int) -> Bool {
     if MandMath.isColorNearPrintableList(color: color.cgColor!, num: num) {
       return true
@@ -24,7 +54,8 @@ struct TabColorListView: View {
   }
 
   var body: some View {
-    // Wrap the list in a geometry reader so it will
+    // The main view body, containing a geometry reader and a list of hues.
+    // We wrap the list in a geometry reader so it will
     // shrink when items are deleted
     GeometryReader { geometry in
 
@@ -83,9 +114,9 @@ struct TabColorListView: View {
                 .background(Color.white)
                 .cornerRadius(8)
                 .shadow(radius: 10)
-              } // end ZStack for popup
+              } //  ZStack for popup
               .transition(.scale)
-            } // end if self.showingPrintablePopups[i]
+            } //  if self.showingPrintablePopups[i]
 
             // enter red
 
@@ -128,20 +159,14 @@ struct TabColorListView: View {
             }
             .help("Delete " + "\(hue.num)")
           }
-        } // end foreach
-        .onMove { indices, hue in
-          doc.picdef.hues.move(
-            fromOffsets: indices,
-            toOffset: hue
-          )
-          updateHueNums()
-        }
-      } // end list
+        } // foreach
+        .onMove(perform: move)
+      } //  list
       .frame(height: geometry.size.height)
-    } // end geometry reader
+    } // georeader
     .onAppear {
       requiresFullCalc = false
     }
     .frame(maxHeight: .infinity)
-  } // end body
+  }
 }
