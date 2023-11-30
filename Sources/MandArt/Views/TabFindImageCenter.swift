@@ -30,7 +30,6 @@ struct TabFindImageCenter: View {
             "Enter the x value in the Mandelbrot coordinate system for the center of the image."
           )
           .onChange(of: doc.picdef.xCenter) { _ in
-            print("TabFind: onChange xCenter")
             requiresFullCalc = true
           }
         } // end vstack
@@ -51,7 +50,6 @@ struct TabFindImageCenter: View {
             "Enter the Y value in the Mandelbrot coordinate system for the center of the image."
           )
           .onChange(of: doc.picdef.yCenter) { _ in
-            print("TabFind: onChange yCenter")
             requiresFullCalc = true
           }
         }

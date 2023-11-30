@@ -79,7 +79,6 @@ struct TabFindScale: View {
           scaleString = String(format: "%.0f", doc.picdef.scale)
         }
         .onChange(of: doc.picdef.scale) { _ in
-          print("TabFind: onChange scale")
           // Update scaleString whenever doc changes
           let newScaleString = String(format: "%.0f", doc.picdef.scale)
           if newScaleString != scaleString {
@@ -119,7 +118,6 @@ struct TabFindScale: View {
             .multilineTextAlignment(.trailing)
             .frame(minWidth: 60, maxWidth: 80)
             .onChange(of: doc.picdef.scale) { _ in
-              print("TabFind: onChange scale")
               requiresFullCalc = true
             }
 

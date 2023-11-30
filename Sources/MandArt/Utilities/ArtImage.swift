@@ -58,10 +58,6 @@ struct ArtImage {
    - Returns: optional CGImage with the bitmap or nil
    */
   func getMandArtFullPictureImage(colors: inout [[Double]]) -> CGImage? {
-    print("Starting MandArt Full Picture Image calc")
-
-    // print("fIterGlobal[0][0] picture begin", fIterGlobal[0][0])
-
     let imageWidth = shapeInputs.imageWidth
     let imageHeight = shapeInputs.imageHeight
 
@@ -75,7 +71,6 @@ struct ArtImage {
         }
       }
     }
-    // print("fIterGlobal count after resize: \(fIterGlobal.count), Row width: \(fIterGlobal.first?.count ?? -1)")
 
     let iterationsMax = shapeInputs.iterationsMax
     let scale = shapeInputs.scale
@@ -333,9 +328,6 @@ struct ArtImage {
     let contextImage = context.makeImage()!
     rasterBufferPtr.deallocate()
     contextImageGlobal = contextImage
-
-    // print("fIterGlobal[0][0] picture end", fIterGlobal[0][0])
-
     return contextImage
   }
 
@@ -348,10 +340,6 @@ struct ArtImage {
    - Returns: optional CGImage with the colored bitmap or nil
    */
   func getNewlyColoredImage(colors: inout [[Double]]) -> CGImage? {
-    print("Starting Newly Colored Image calc")
-
-    // print("fIterGlobal[0][0] color begin", fIterGlobal[0][0])
-
     if fIterGlobal.isEmpty {
       print("Error: fIterGlobal is empty")
       return nil
@@ -541,9 +529,6 @@ struct ArtImage {
     contextImage = context.makeImage()!
     rasterBufferPtr.deallocate()
     contextImageGlobal = contextImage
-
-    //   print("fIterGlobal[0][0] color end", fIterGlobal[0][0])
-
     return contextImage
   }
 

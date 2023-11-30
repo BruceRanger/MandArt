@@ -68,8 +68,6 @@ extension MandArtDocument {
   }
 
   func saveMandArtImage() {
-    print("calling saveMandArtImage")
-
     guard pngSaver.beforeSaveImage(for: picdef) else {
       print("Error preparing image for saving.")
       return

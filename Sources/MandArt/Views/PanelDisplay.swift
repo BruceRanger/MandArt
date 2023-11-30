@@ -78,13 +78,11 @@ struct PanelDisplay: View {
         if self.moved < 2, self.moved > -2 {
           self.doc.picdef.xCenter = self.getCenterXFromTap(tap)
           self.doc.picdef.yCenter = self.getCenterYFromTap(tap)
-          print("onTapped xy")
         }
         // if we moved a lot, treat it as a drag event
         else {
           self.doc.picdef.xCenter = self.getCenterXFromDrag(tap)
           self.doc.picdef.yCenter = self.getCenterYFromDrag(tap)
-          print("onDragged xy")
         }
         // reset tap event states
         self.moved = 0

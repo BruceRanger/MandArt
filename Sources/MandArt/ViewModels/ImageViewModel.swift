@@ -17,7 +17,6 @@ class ImageViewModel: ObservableObject {
   var cachedArtImage: CGImage? {
     get {
       if _cachedArtImage == nil || keyVariablesChanged {
-        print("Calculating new image")
         var colors: [[Double]] = doc.picdef.hues.map { [$0.r, $0.g, $0.b] }
         let art = ArtImage(picdef: doc.picdef)
         _cachedArtImage = requiresFullCalc ?
@@ -91,10 +90,7 @@ class ImageViewModel: ObservableObject {
   /// or show a gradient based on the current state.
   /// - Returns: An optional `CGImage` representing the current image.
   func getImage() -> CGImage? {
-    print("getImage() with full calc=\(requiresFullCalc)")
-
     if showGradient && getLeftGradientIsValid() {
-      print("Showing Gradient")
       return getGradientImage()
     }
     return cachedArtImage

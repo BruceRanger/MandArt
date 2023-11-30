@@ -1,12 +1,15 @@
 import AppKit
 import SwiftUI
 
+/// `AppState` is a class that holds the application's state.
+/// It observes changes and updates the UI accordingly.
 @available(macOS 10.15, *)
 class AppState: ObservableObject {
   @Published var shouldShowWelcomeWhenStartingUp: Bool = UserDefaults.standard
     .object(forKey: "shouldShowWelcomeWhenStartingUp") as? Bool ?? true
 }
 
+/// `WindowAccessor` is a SwiftUI view that allows access to the underlying NSWindow.
 @available(macOS 10.15, *)
 struct WindowAccessor: NSViewRepresentable {
   var callback: (NSWindow?) -> Void
@@ -22,6 +25,8 @@ struct WindowAccessor: NSViewRepresentable {
   func updateNSView(_: NSView, context _: Context) {}
 }
 
+/// `MandArtApp` is the main structure for the SwiftUI app.
+/// It defines the behavior and layout of the app.
 @available(macOS 12.0, *)
 @main
 struct MandArtApp: App {
@@ -35,6 +40,7 @@ struct MandArtApp: App {
     _shouldShowWelcomeWhenStartingUp = State(initialValue: initialState)
   }
 
+  /// Constants used across the app, such as dimensions and margins.
   enum AppConstants {
     static let defaultOpeningWidth: CGFloat = 800.0
     static let defaultOpeningHeight: CGFloat = 600.0
@@ -88,6 +94,7 @@ struct MandArtApp: App {
     }
   }
 
+  /// The main body of the app, defining the views and their behavior.
   var body: some Scene {
     WindowGroup {
       if shouldShowWelcomeWhenStartingUp {

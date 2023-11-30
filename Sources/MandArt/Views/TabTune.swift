@@ -20,9 +20,6 @@ struct TabTune: View {
             helpText: "Enter the value for the color spacing near the edges of the image, away from MiniMand.",
             value: $doc.picdef.spacingColorFar
           )
-          .onChange(of: doc.picdef.spacingColorFar) { _ in
-            print("TabTune: onChange spacingColorFar")
-          }
         }
 
         VStack(spacing: 10) {
@@ -35,9 +32,6 @@ struct TabTune: View {
             helpText: "Enter the value for the color spacing away from the edges of the image, near the MiniMand.",
             value: $doc.picdef.spacingColorNear
           )
-          .onChange(of: doc.picdef.spacingColorNear) { _ in
-            print("TabTune: onChange spacingColorNear")
-          }
         }
 
         // dFIterMin
@@ -51,9 +45,6 @@ struct TabTune: View {
             helpText: "Enter a value for the change in the minimum number of iterations in the image. This will change the coloring.",
             value: $doc.picdef.dFIterMin
           )
-          .onChange(of: doc.picdef.dFIterMin) { _ in
-            print("TabTune: onChange dFIterMin")
-          }
         }
 
         // nBlocks
@@ -70,9 +61,6 @@ struct TabTune: View {
               set: { doc.picdef.nBlocks = Int($0) }
             )
           )
-          .onChange(of: doc.picdef.nBlocks) { _ in
-            print("TabTune: onChange nBlocks")
-          }
         }
 
         // Hold fraction with Slider
@@ -98,9 +86,6 @@ struct TabTune: View {
           .help(
             "Enter a value for the fraction of a block of colors that will be a solid color before the rest is a gradient."
           )
-          .onChange(of: doc.picdef.yY) { _ in
-            print("TabTune: onChange yY")
-          }
         }
         .padding(.horizontal)
         // END Hold fraction with Slider

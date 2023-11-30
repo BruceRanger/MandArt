@@ -34,7 +34,6 @@ struct TabFindImageSize: View {
           .padding(10)
           .help("Enter the width, in pixels, of the image.")
           .onChange(of: doc.picdef.imageWidth) { _ in
-            print("TabFind: onChange width")
             requiresFullCalc = true
           }
         } // end vstack
@@ -51,7 +50,6 @@ struct TabFindImageSize: View {
           .padding(10)
           .help("Enter the height, in pixels, of the image.")
           .onChange(of: doc.picdef.imageHeight) { _ in
-            print("TabFind: onChange height")
             requiresFullCalc = true
           }
         } // end vstack

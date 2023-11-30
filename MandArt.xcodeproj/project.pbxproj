@@ -36,6 +36,15 @@
 		88BECC5F2B1647BA00770843 /* MandArtDocument+FileHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BECC5C2B1647BA00770843 /* MandArtDocument+FileHandling.swift */; };
 		88BECC602B1647BA00770843 /* MandArtDocument+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BECC5D2B1647BA00770843 /* MandArtDocument+Constants.swift */; };
 		88BECC642B17D1E700770843 /* PictureDefinition+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BECC632B17D1E700770843 /* PictureDefinition+Equatable.swift */; };
+		88BECC6A2B1821DF00770843 /* MandArt.docc in Sources */ = {isa = PBXBuildFile; fileRef = 88BECC692B1821DF00770843 /* MandArt.docc */; };
+		88BECC6C2B1824BC00770843 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 88BECC6B2B1824BC00770843 /* README.md */; };
+		88BECC6E2B1824C700770843 /* CARE_AND_FEEDING.md in Resources */ = {isa = PBXBuildFile; fileRef = 88BECC6D2B1824C700770843 /* CARE_AND_FEEDING.md */; };
+		88BECC702B1824DB00770843 /* PRIVACY_POLICY.md in Resources */ = {isa = PBXBuildFile; fileRef = 88BECC6F2B1824DB00770843 /* PRIVACY_POLICY.md */; };
+		88BECC722B1824F300770843 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 88BECC712B1824F300770843 /* LICENSE */; };
+		88BECC762B18261F00770843 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 88BECC732B18261F00770843 /* .gitignore */; };
+		88BECC772B18261F00770843 /* .periphery.yml in Resources */ = {isa = PBXBuildFile; fileRef = 88BECC742B18261F00770843 /* .periphery.yml */; };
+		88BECC782B18261F00770843 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 88BECC752B18261F00770843 /* .swiftlint.yml */; };
+		88BECC7A2B18264000770843 /* DEV_NOTES.md in Resources */ = {isa = PBXBuildFile; fileRef = 88BECC792B18264000770843 /* DEV_NOTES.md */; };
 		88C03C7C2B15568C00D4A79B /* TabFindImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C03C7B2B15568C00D4A79B /* TabFindImageSize.swift */; };
 		88C03C7E2B1556A700D4A79B /* TabFindScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C03C7D2B1556A700D4A79B /* TabFindScale.swift */; };
 		88C03C802B1556CF00D4A79B /* TabFindRotateAndMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C03C7F2B1556CF00D4A79B /* TabFindRotateAndMore.swift */; };
@@ -102,8 +111,16 @@
 		88BECC5B2B1647BA00770843 /* MandArtDocument+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MandArtDocument+Helpers.swift"; sourceTree = "<group>"; };
 		88BECC5C2B1647BA00770843 /* MandArtDocument+FileHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MandArtDocument+FileHandling.swift"; sourceTree = "<group>"; };
 		88BECC5D2B1647BA00770843 /* MandArtDocument+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MandArtDocument+Constants.swift"; sourceTree = "<group>"; };
-		88BECC622B16674300770843 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		88BECC632B17D1E700770843 /* PictureDefinition+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PictureDefinition+Equatable.swift"; sourceTree = "<group>"; };
+		88BECC692B1821DF00770843 /* MandArt.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = MandArt.docc; sourceTree = "<group>"; };
+		88BECC6B2B1824BC00770843 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		88BECC6D2B1824C700770843 /* CARE_AND_FEEDING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CARE_AND_FEEDING.md; sourceTree = "<group>"; };
+		88BECC6F2B1824DB00770843 /* PRIVACY_POLICY.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = PRIVACY_POLICY.md; sourceTree = "<group>"; };
+		88BECC712B1824F300770843 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		88BECC732B18261F00770843 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		88BECC742B18261F00770843 /* .periphery.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .periphery.yml; sourceTree = "<group>"; };
+		88BECC752B18261F00770843 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		88BECC792B18264000770843 /* DEV_NOTES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = DEV_NOTES.md; sourceTree = "<group>"; };
 		88C03C7B2B15568C00D4A79B /* TabFindImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFindImageSize.swift; sourceTree = "<group>"; };
 		88C03C7D2B1556A700D4A79B /* TabFindScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFindScale.swift; sourceTree = "<group>"; };
 		88C03C7F2B1556CF00D4A79B /* TabFindRotateAndMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFindRotateAndMore.swift; sourceTree = "<group>"; };
@@ -151,14 +168,22 @@
 		6A3AEC0026F879E700D7E31A = {
 			isa = PBXGroup;
 			children = (
-				88BECC622B16674300770843 /* Documentation.docc */,
-				8845506529AE3C8D008F202A /* Resources */,
+				88BECC732B18261F00770843 /* .gitignore */,
+				88BECC742B18261F00770843 /* .periphery.yml */,
+				88BECC752B18261F00770843 /* .swiftlint.yml */,
 				6A3AEC1026F879F500D7E31A /* Assets.xcassets */,
+				88BECC6D2B1824C700770843 /* CARE_AND_FEEDING.md */,
+				88BECC792B18264000770843 /* DEV_NOTES.md */,
 				6A3AEC1826F879F500D7E31A /* Info.plist */,
-				889E3F22293A7733009944AC /* MandArtRelease.entitlements */,
-				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
-				88A1716629913A0800A85AED /* Sources */,
+				88BECC712B1824F300770843 /* LICENSE */,
 				88BECC592B16228700770843 /* MandArt.app */,
+				88BECC692B1821DF00770843 /* MandArt.docc */,
+				88A21FA8289F557B004DFA34 /* MandArt.entitlements */,
+				889E3F22293A7733009944AC /* MandArtRelease.entitlements */,
+				88BECC6F2B1824DB00770843 /* PRIVACY_POLICY.md */,
+				88BECC6B2B1824BC00770843 /* README.md */,
+				8845506529AE3C8D008F202A /* Resources */,
+				88A1716629913A0800A85AED /* Sources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -343,7 +368,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88BECC782B18261F00770843 /* .swiftlint.yml in Resources */,
+				88BECC722B1824F300770843 /* LICENSE in Resources */,
+				88BECC7A2B18264000770843 /* DEV_NOTES.md in Resources */,
+				88BECC762B18261F00770843 /* .gitignore in Resources */,
+				88BECC6E2B1824C700770843 /* CARE_AND_FEEDING.md in Resources */,
+				88BECC6C2B1824BC00770843 /* README.md in Resources */,
+				88BECC772B18261F00770843 /* .periphery.yml in Resources */,
 				8845506629AE3C8D008F202A /* Resources in Resources */,
+				88BECC702B1824DB00770843 /* PRIVACY_POLICY.md in Resources */,
 				6A3AEC1126F879F500D7E31A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -395,6 +428,7 @@
 				88C358012A97D675007E7A92 /* TabFind.swift in Sources */,
 				88EF982A2AC0D6EB005A3ABC /* Hue+Equatable.swift in Sources */,
 				88C3581E2A98EA53007E7A92 /* PanelDisplay.swift in Sources */,
+				88BECC6A2B1821DF00770843 /* MandArt.docc in Sources */,
 				88C358072A97D983007E7A92 /* TabbedView.swift in Sources */,
 				88A271A22A97158200766654 /* TabSave.swift in Sources */,
 				88EF983E2AC13350005A3ABC /* DataSaver.swift in Sources */,
@@ -569,6 +603,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Bruce-Johnson.MandArt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUN_DOCUMENTATION_COMPILER = YES;
 				SWIFT_DISABLE_SAFETY_CHECKS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -607,6 +642,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Bruce-Johnson.MandArt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUN_DOCUMENTATION_COMPILER = YES;
 				SWIFT_DISABLE_SAFETY_CHECKS = YES;
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
