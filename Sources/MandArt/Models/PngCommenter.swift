@@ -2,16 +2,23 @@ import Foundation
 import ImageIO
 import UniformTypeIdentifiers
 
+/// `PngCommenter` is a class designed to manage comments within PNG files.
+/// It uses the PictureDefinition object to generate comments and embed them into PNG metadata.
 @available(macOS 12.0, *)
 public class PngCommenter {
   let picdef: PictureDefinition
   let fullDomain: String = "com.bhj.mandart"
 
+  /// Initializes a new instance of the PngCommenter class.
+  /// - Parameter picdef: The PictureDefinition instance to be used for generating comments.
   init(picdef: PictureDefinition) {
     self.picdef = picdef
   }
 
+  /// Generates a comment string from the PictureDefinition object.
+  /// - Returns: A multiline string containing key values from the PictureDefinition.
   func getComment() -> String {
+    // Multiline string containing various parameters from the PictureDefinition.
     let comment = """
     dFIterMin is \(picdef.dFIterMin)
     imageHeight is \(picdef.imageHeight)
@@ -32,6 +39,11 @@ public class PngCommenter {
     return comment
   }
 
+  /// Embeds a description into a PNG file's metadata.
+  /// - Parameters:
+  ///   - imageURL: The URL of the PNG file to be modified.
+  ///   - description: The description string to be embedded in the file's metadata.
+  /// - Throws: An error if the process of reading, modifying, or writing the image fails.
   func setPNGDescription(imageURL: URL, description: String) throws {
     // Get the image data
     guard let imageData = try? Data(contentsOf: imageURL) else {
@@ -87,6 +99,9 @@ public class PngCommenter {
     }
   }
 
+  /// Retrieves the description from a PNG file's metadata.
+  /// - Parameter imageURL: The URL of the PNG file to extract the description from.
+  /// - Returns: A string containing the description, if it exists.
   func getPNGDescription(from imageURL: URL) -> String? {
     guard let imageSource = CGImageSourceCreateWithURL(imageURL as CFURL, nil),
           let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any],

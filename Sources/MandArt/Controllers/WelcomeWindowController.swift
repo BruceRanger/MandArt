@@ -1,10 +1,15 @@
 import AppKit
 import SwiftUI
 
+/// `WelcomeWindowController` is a subclass of `NSWindowController` that manages the welcome window in the MandArt
+/// application.
 @available(macOS 12.0, *)
 class WelcomeWindowController: NSWindowController {
+  // The AppState instance managing the application's state.
   var appState: AppState
 
+  /// Initializes a new WelcomeWindowController with the given AppState.
+  /// - Parameter appState: The application state to be used.
   init(appState: AppState) {
     self.appState = appState
     let width = MandArtApp.AppConstants.defaultWidth()
@@ -34,6 +39,7 @@ class WelcomeWindowController: NSWindowController {
     window.contentView = NSHostingView(rootView: WelcomeView().environmentObject(self.appState))
   }
 
+  /// Required initializer for NSCoder, not implemented for this class.
   @available(*, unavailable)
   required init?(coder _: NSCoder) {
     fatalError("init(coder:) has not been implemented")

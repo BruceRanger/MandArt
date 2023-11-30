@@ -28,7 +28,6 @@ Explore the application programming interfaces (API) to understand the building 
 - <doc:ArtImage>: Handles image processing and rendering.
 - <doc:GradientGrid>: Generates gradient patterns for art.
 - <doc:GradientImage>: Creates images based on gradient calculations.
-- <doc:MACommaNumberFormatter>: Custom number formatter for MandArt.
 - <doc:MAFormatters>: Collection of formatters used in MandArt.
 - <doc:MandMath>: Mathematical utilities for MandArt calculations.
 

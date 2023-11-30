@@ -1,5 +1,8 @@
 import SwiftUI
 
+/// `DelayedTextFieldDouble` is a SwiftUI view struct designed for macOS 11.0 and later.
+/// It provides a text field specifically for handling Double values with delayed processing.
+/// This struct allows user inputs to be formatted as doubles and performs actions upon committing the input.
 @available(macOS 11.0, *)
 struct DelayedTextFieldDouble: View {
   var title: String?
@@ -10,6 +13,14 @@ struct DelayedTextFieldDouble: View {
 
   @State private var stringValue: String
 
+  /// Initializes a new `DelayedTextFieldDouble` view.
+  ///
+  /// - Parameters:
+  ///   - title: Optional title label.
+  ///   - placeholder: Placeholder text.
+  ///   - value: Binding to the double value this text field represents.
+  ///   - formatter: A `NumberFormatter` to format the double value as a string.
+  ///   - onCommit: Closure to execute when editing is committed.
   init(
     title: String? = nil,
     placeholder: String,
@@ -27,9 +38,12 @@ struct DelayedTextFieldDouble: View {
 
   var body: some View {
     VStack {
+      // Optional title for the text field
       if let title = title {
         Text(title)
       }
+
+      // The actual text field for input
       TextField(placeholder, text: $stringValue, onEditingChanged: { isEditing in
         if !isEditing {
           // Convert to double on editing completion

@@ -4,8 +4,11 @@ import Foundation // trig functions
 import SwiftUI // views
 import UniformTypeIdentifiers
 
+// Global variable to hold a reference to the CGImage used across the app
 var contextImageGlobal: CGImage?
 
+/// `ContentView` is the main view of the MandArt application, available on macOS 12.0 and later.
+/// It provides the user interface for interacting with the Mandelbrot set art generation features of the app.
 @available(macOS 12.0, *)
 struct ContentView: View {
   @EnvironmentObject var appState: AppState

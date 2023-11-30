@@ -29,32 +29,5 @@ periphery scan --skip-build --index-store-path 'DerivedData/MandArt/Index.noinde
 
 ## Create Documentation
 
-The following process is used to create documentatation and host it in the
+To update the hosted documents, follow the process described in the
 [MandArt-Docs](https://github.com/denisecase/MandArt-Docs) repo.
-
-1. Rename Package.txt to Package.swift in the root folder of MandArt repo. 
-2. Move Documentation.docc from root to Sources/MandArt with the .swift files. 
-3. Open Terminal, in the root MandArt repository folder.
-4. In Terminal, run
-
-```
-swift package --allow-writing-to-directory ./docs \
-    generate-documentation --target MandArt --output-path ./docs \
-    --disable-indexing \
-    --transform-for-static-hosting  \
-    --emit-digest \
-    --target MandArt \
-    --hosting-base-path 'MandArt-Docs'
-```
-
-
-After generating Docs
-
-1. Copy MandArt/docs to MandArt-Docs/docs 
-2. Commit and push MandArt-Docs to GitHub (using VS Code)
-
-In MandArt:
-
-1. Rename Package.swift to Package.txt.
-2. Move Documentation.docc back to root.
-3. Delete the /docs folder.

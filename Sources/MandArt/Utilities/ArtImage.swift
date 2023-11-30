@@ -1,6 +1,7 @@
 import CoreGraphics
 import Foundation
 
+/// Structure containing the inputs for shaping the Mandelbrot art image.
 struct ArtImageShapeInputs {
   let imageHeight: Int
   let imageWidth: Int
@@ -13,6 +14,7 @@ struct ArtImageShapeInputs {
   let rSqLimit: Double
 }
 
+/// Structure containing the inputs for coloring the Mandelbrot art image.
 struct ArtImageColorInputs {
   let nBlocks: Int
   let nColors: Int
@@ -21,8 +23,10 @@ struct ArtImageColorInputs {
   let yY_input: Double
 }
 
+/// Global array to hold iteration values for Mandelbrot calculations.
 var fIterGlobal = [[Double]]()
 
+/// `ArtImage` is a struct responsible for generating the Mandelbrot art images.
 @available(macOS 12.0, *)
 struct ArtImage {
   let shapeInputs: ArtImageShapeInputs
@@ -532,6 +536,13 @@ struct ArtImage {
     return contextImage
   }
 
+  /// Creates a `CGContext` for drawing and converting into an image for display.
+  /// - Parameters:
+  ///   - width: Width of the context.
+  ///   - height: Height of the context.
+  ///   - bitsPerComponent: The number of bits used for each component of a pixel.
+  ///   - componentsPerPixel: The number of components for each pixel.
+  /// - Returns: A `CGContext` instance for drawing.
   static func createCGContext(
     width: Int,
     height: Int,

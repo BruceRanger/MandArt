@@ -63,7 +63,6 @@
 		88C3581C2A98EA45007E7A92 /* PanelUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3581B2A98EA45007E7A92 /* PanelUI.swift */; };
 		88C3581E2A98EA53007E7A92 /* PanelDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */; };
 		88C358212A99A08D007E7A92 /* PopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358202A99A08D007E7A92 /* PopupManager.swift */; };
-		88C358252A9A6941007E7A92 /* MACommaNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C358242A9A6941007E7A92 /* MACommaNumberFormatter.swift */; };
 		88EF98282AC0D3DC005A3ABC /* Color+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF98272AC0D3DC005A3ABC /* Color+Components.swift */; };
 		88EF982A2AC0D6EB005A3ABC /* Hue+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF98292AC0D6EB005A3ABC /* Hue+Equatable.swift */; };
 		88EF982C2AC0D78E005A3ABC /* String+Subscripting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF982B2AC0D78E005A3ABC /* String+Subscripting.swift */; };
@@ -139,7 +138,6 @@
 		88C3581B2A98EA45007E7A92 /* PanelUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelUI.swift; sourceTree = "<group>"; };
 		88C3581D2A98EA53007E7A92 /* PanelDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelDisplay.swift; sourceTree = "<group>"; };
 		88C358202A99A08D007E7A92 /* PopupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupManager.swift; sourceTree = "<group>"; };
-		88C358242A9A6941007E7A92 /* MACommaNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACommaNumberFormatter.swift; sourceTree = "<group>"; };
 		88EF98272AC0D3DC005A3ABC /* Color+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Components.swift"; sourceTree = "<group>"; };
 		88EF98292AC0D6EB005A3ABC /* Hue+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hue+Equatable.swift"; sourceTree = "<group>"; };
 		88EF982B2AC0D78E005A3ABC /* String+Subscripting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Subscripting.swift"; sourceTree = "<group>"; };
@@ -251,7 +249,6 @@
 				88A2719F2A968A6900766654 /* ArtImage.swift */,
 				88A133CD2A9677C500A6E3CA /* GradientGrid.swift */,
 				88A133CF2A96780C00A6E3CA /* GradientImage.swift */,
-				88C358242A9A6941007E7A92 /* MACommaNumberFormatter.swift */,
 				88A271A72A971C1C00766654 /* MAFormatters.swift */,
 				88511CB22948B3FF009B5CF6 /* MandMath.swift */,
 			);
@@ -440,7 +437,6 @@
 				88EF98382AC0E1B5005A3ABC /* PngCommenter.swift in Sources */,
 				88A271B22A97860700766654 /* WelcomeMainView.swift in Sources */,
 				88A271AE2A97844200766654 /* WelcomeMainImageView.swift in Sources */,
-				88C358252A9A6941007E7A92 /* MACommaNumberFormatter.swift in Sources */,
 				88EF98282AC0D3DC005A3ABC /* Color+Components.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,
 				88C03C7E2B1556A700D4A79B /* TabFindScale.swift in Sources */,

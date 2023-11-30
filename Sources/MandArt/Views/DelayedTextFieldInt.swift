@@ -1,5 +1,8 @@
 import SwiftUI
 
+/// `DelayedTextFieldInt` is a SwiftUI view struct designed for macOS 11.0 and later.
+/// It offers a text field specifically for handling integer values with delayed processing.
+/// The struct enables users to input integer values, which are formatted and processed upon completion.
 @available(macOS 11.0, *)
 struct DelayedTextFieldInt: View {
   var title: String?
@@ -10,6 +13,14 @@ struct DelayedTextFieldInt: View {
 
   @State private var stringValue: String
 
+  /// Initializes a new `DelayedTextFieldInt` view.
+  ///
+  /// - Parameters:
+  ///   - title: Optional title label.
+  ///   - placeholder: Placeholder text.
+  ///   - value: Binding to the integer value this text field represents.
+  ///   - formatter: A `NumberFormatter` to format the integer value as a string.
+  ///   - onCommit: Closure to execute when editing is committed.
   init(
     title: String? = nil,
     placeholder: String,
