@@ -5,6 +5,8 @@ import UniformTypeIdentifiers
 ///
 /// This view provides a user interface for changing the image scale either through
 /// direct input, standard zooming (by a factor of 2), or custom zooming based on a multiplier.
+///
+/// - Requires: macOS 12.0 or later
 @available(macOS 12.0, *)
 struct TabFindScale: View {
   @ObservedObject var doc: MandArtDocument
@@ -13,6 +15,15 @@ struct TabFindScale: View {
   @State private var scaleMultiplier: Double = 5.0000
   @State private var didChange: Bool = false
   @State private var scaleString: String = ""
+  @State private var editedMultiplier: Double = 5.0 {
+    didSet {
+      if editedMultiplier <= 0 {
+        editedMultiplier = 0.0001
+      }
+      scaleMultiplier = editedMultiplier
+      didChange.toggle()
+    }
+  }
 
   /// Initializes the view with a document and a binding to determine if a full calculation is required.
   ///
@@ -84,7 +95,7 @@ struct TabFindScale: View {
           if newScaleString != scaleString {
             scaleString = newScaleString
           }
-          didChange = !didChange
+          didChange.toggle()
           requiresFullCalc = true
         }
       }
@@ -109,17 +120,35 @@ struct TabFindScale: View {
             Button("+") { zoomInCustom() }
               .help("Zoom in by multiplier (may take a while).")
 
-            DelayedTextFieldDouble(
-              placeholder: String(format: "%.4f", scaleMultiplier),
-              value: $scaleMultiplier,
-              formatter: MAFormatters.fmtScaleMultiplier
+            // MULTIPLIER
+
+            TextField(
+              "",
+              text: Binding(get: { "\(editedMultiplier)" }, set: { newValue in
+                if let newMultiplier = Double(newValue) {
+                  editedMultiplier = newMultiplier
+                }
+              }),
+              onCommit: {
+                if editedMultiplier <= 0 {
+                  editedMultiplier = 0.0001
+                }
+                scaleMultiplier = editedMultiplier
+                didChange.toggle()
+              }
             )
+            .onChange(of: scaleMultiplier) { newValue in
+              print("in onchange")
+              requiresFullCalc = true
+              if newValue <= 0 {
+                print("updating from zero")
+                scaleMultiplier = 0.0001
+                didChange.toggle()
+              }
+            }
             .textFieldStyle(.roundedBorder)
             .multilineTextAlignment(.trailing)
-            .frame(minWidth: 60, maxWidth: 80)
-            .onChange(of: doc.picdef.scale) { _ in
-              requiresFullCalc = true
-            }
+            .frame(minWidth: 70, maxWidth: 90)
 
             Button("-") { zoomOutCustom() }
               .help("Zoom out by multiplier (may take a while).")
