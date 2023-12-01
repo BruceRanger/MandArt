@@ -1,12 +1,14 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+/// A view representing a row in the color list.
 struct TabColorListRow: View {
   @ObservedObject var doc: MandArtDocument
   @Binding var hue: Hue
 
   @State private var showingPrintablePopups = false
 
+  /// Updates the hue numbers asynchronously.
   func updateHueNums() {
     DispatchQueue.main.async {
       for (index, _) in self.doc.picdef.hues.enumerated() {
@@ -15,6 +17,9 @@ struct TabColorListRow: View {
     }
   }
 
+  /// Estimates whether a color will print true based on its proximity to a printable color.
+  /// - Parameter color: The color to check for printability.
+  /// - Returns: `true` if the color is likely to print true, `false` otherwise.
   func getIsPrintable(color: Color) -> Bool {
     MandMath.isColorNearPrintableList(color: color.cgColor!, num: hue.num)
   }
@@ -42,7 +47,7 @@ struct TabColorListRow: View {
       .help("See printable options for " + "\(hue.num)")
 
       if showingPrintablePopups {
-        ZStack { // show non printable color popup message
+        ZStack { // popup message
           VStack {
             Button(action: {
               self.showingPrintablePopups = false
@@ -54,13 +59,14 @@ struct TabColorListRow: View {
               Text("This color may not print well.")
               Text("See the instructions for options.")
             }
-          } // end VStack
-          .frame(width: 150, height: 100)
-          .background(Color.secondary)
-          .cornerRadius(8)
-          .shadow(radius: 10)
+          } //  VStack
         } //  ZStack for popup information
-        .transition(.scale)
+        .frame(width: 150, height: 100)
+        .background(
+          RoundedRectangle(cornerRadius: 15)
+            .opacity(0.2)
+            .shadow(radius: 5, y: 5)
+        )
       }
 
       // Red, Green, Blue text fields

@@ -3,12 +3,13 @@ import SwiftUI
 
 @available(macOS 11.0, *)
 enum Constants {
-  static let windowHeight: CGFloat = 550
+  static let windowHeight: CGFloat = 460
   static let windowWidth: CGFloat = 667
-  static let imageHeightFactor: CGFloat = 0.6
-  static let descriptionHeightFactor: CGFloat = 0.4
+  static let imageHeightFactor: CGFloat = 0.5
+  static let descriptionHeightFactor: CGFloat = 0.3
 }
 
+/// View for the welcome screen.
 @available(macOS 11.0, *)
 struct WelcomeView: View {
   @EnvironmentObject var appState: AppState
@@ -17,12 +18,11 @@ struct WelcomeView: View {
     VStack(spacing: 0) {
       WelcomeHeaderView()
       WelcomeMainView()
-      Spacer()
+      // Spacer()
     }
-    .frame(maxWidth: .infinity) // HStack-like for horizontal centering
+    // .frame(maxWidth: .infinity) // horizontal centering
     .padding()
     .frame(minWidth: Constants.windowWidth, minHeight: Constants.windowHeight)
-    .background(Color(.windowBackgroundColor))
     .ignoresSafeArea()
     .overlay(
       GeometryReader { geometry in

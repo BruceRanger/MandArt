@@ -1,6 +1,7 @@
 import AppKit
 import SwiftUI
 
+/// View for the welcome screen image.
 @available(macOS 11.0, *)
 struct WelcomeMainImageView: View {
   @State private var scale: CGFloat = 1
