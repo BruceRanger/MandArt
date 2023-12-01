@@ -32,29 +32,18 @@ struct TabColorListRow: View {
           )
         }
 
-      if !getIsPrintable(color: hue.color) {
-        Button {
-          showingPrintablePopups = true
-        } label: {
-          Image(systemName: "exclamationmark.circle")
-            .foregroundColor(.red)
-        }
-        .help("See printable options for " + "\(hue.num)")
-      } else {
-        Button {
-          //
-        } label: {
-          Image(systemName: "exclamationmark.circle")
-            .hidden()
-            .disabled(true)
-        }
+      Button {
+        showingPrintablePopups = true
+      } label: {
+        Image(systemName: "exclamationmark.circle")
+          .opacity(getIsPrintable(color: hue.color) ? 0 : 1) // Set opacity
       }
+      .opacity(getIsPrintable(color: hue.color) ? 0 : 1) // Set opacity 
+      .help("See printable options for " + "\(hue.num)")
+
 
       if showingPrintablePopups {
-        ZStack {
-          Color.white
-            .opacity(0.5)
-
+        ZStack { // show non printable color popup message
           VStack {
             Button(action: {
               self.showingPrintablePopups = false
@@ -63,15 +52,15 @@ struct TabColorListRow: View {
             }
 
             VStack {
-              Text("This color may not print well.")
-              Text("See the instructions for options.")
-            } // end VStack of color options
+            Text("This color may not print well.")
+            Text("See the instructions for options.")
+            }
           } // end VStack
           .frame(width: 150, height: 100)
-          .background(Color.white)
+          .background(Color.secondary)
           .cornerRadius(8)
           .shadow(radius: 10)
-        } //  ZStack for popup
+        } //  ZStack for popup information
         .transition(.scale)
       }
 
