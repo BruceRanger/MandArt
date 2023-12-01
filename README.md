@@ -8,8 +8,8 @@
 
 [![swift-version](https://img.shields.io/badge/swift-5.7-brightgreen.svg)](https://github.com/apple/swift)
 [![swiftui-version](https://img.shields.io/badge/swiftui-3-brightgreen)](https://developer.apple.com/documentation/swiftui)
+[![xcode-version](https://img.shields.io/badge/xcode-15-blue)](https://developer.apple.com/xcode/)
 [![xcode-version](https://img.shields.io/badge/xcode-14-brightgreen)](https://developer.apple.com/xcode/)
-
 
 SwiftUI macOS app to create custom art using the Mandelbrot set.
 
