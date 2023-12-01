@@ -38,9 +38,8 @@ struct TabColorListRow: View {
         Image(systemName: "exclamationmark.circle")
           .opacity(getIsPrintable(color: hue.color) ? 0 : 1) // Set opacity
       }
-      .opacity(getIsPrintable(color: hue.color) ? 0 : 1) // Set opacity 
+      .opacity(getIsPrintable(color: hue.color) ? 0 : 1) // Set opacity
       .help("See printable options for " + "\(hue.num)")
-
 
       if showingPrintablePopups {
         ZStack { // show non printable color popup message
@@ -52,8 +51,8 @@ struct TabColorListRow: View {
             }
 
             VStack {
-            Text("This color may not print well.")
-            Text("See the instructions for options.")
+              Text("This color may not print well.")
+              Text("See the instructions for options.")
             }
           } // end VStack
           .frame(width: 150, height: 100)

@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 @available(macOS 12.0, *)
@@ -40,14 +41,14 @@ struct PopupPrintableColors: View {
 
   var body: some View {
     ZStack {
-      Color.white
-        .opacity(0.5)
+      Color(NSColor.windowBackgroundColor)
         .edgesIgnoringSafeArea(.all)
 
       VStack {
         HStack(alignment: .bottom) {
           closeButton
           Text("Click to add a color to your list. Showing Colors Likely To Print True Sorted by \(currentSort)")
+
           if let selected = selectedColor {
             Text("Added: (\(selected.r), \(selected.g), \(selected.b))")
           }
@@ -58,11 +59,11 @@ struct PopupPrintableColors: View {
         Spacer()
       } // vstack
       .padding()
-      .background(Color.white)
       .cornerRadius(8)
       .shadow(radius: 10)
       .padding()
     }
+    // .edgesIgnoringSafeArea(.all)
   } // end body
 
   private var closeButton: some View {
@@ -102,20 +103,17 @@ struct PopupPrintableColors: View {
                     .padding(1)
                   Text(colorValueR)
                     .font(.system(size: 10))
-                    .background(Color.white)
                   Text(colorValueG)
                     .font(.system(size: 10))
-                    .background(Color.white)
                   Text(colorValueB)
                     .font(.system(size: 10))
-                    .background(Color.white)
                 } // end vstack of rect, rgb values
               }
               .buttonStyle(PlainButtonStyle())
-            } // end for each column of colors
-          } // end HStack of colors
-        } // end for each color
-      } // end VStack of color options
-    } // end scrollview
-  } // end color content
+            } // column of colors
+          } //  HStack of colors
+        } //  each color
+      } //  VStack of color options
+    } //  scrollview
+  } //  color content
 }

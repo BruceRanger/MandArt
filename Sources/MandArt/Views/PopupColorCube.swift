@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import SwiftUI
 
@@ -21,8 +22,7 @@ struct PopupColorCube: View {
 
   var body: some View {
     ZStack(alignment: .top) {
-      Color.white
-        .opacity(0.5)
+      Color(NSColor.windowBackgroundColor)
         .edgesIgnoringSafeArea(.all)
 
       VStack {
@@ -38,7 +38,6 @@ struct PopupColorCube: View {
         colorCubeContent
       }
       .padding()
-      .background(Color.white)
       .cornerRadius(8)
       .shadow(radius: 10)
       .padding()
