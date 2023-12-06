@@ -11,23 +11,27 @@ Read more in the articles below.
 ## Topics
 
 
-### Getting Started
+### Background
 
-- <doc:A01-GettingStarted>
+- <doc:B0-Background>
 
-### Setting Inputs
+### Finding
 
-- <doc:A02-SettingInputs>
+- <doc:B1-Find>
 
-### Challenges
+### Adding colors
 
-- <doc:A03-Challenges>
+- <doc:B2-Color>
 
-### More About the Math
+### Tuning colors
 
-- <doc:A04-MoreAboutTheMath>
+- <doc:B3-Tune>
+
+### Saving and opening
+
+- <doc:B4-Save>
 
 ### API Reference 
 
-- <doc:A05-API>
+- <doc:B05-API>
 
