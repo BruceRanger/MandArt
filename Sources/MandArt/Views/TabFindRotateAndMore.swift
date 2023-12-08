@@ -8,8 +8,8 @@ struct TabFindRotateAndMore: View {
 
   var body: some View {
     HStack {
-      Text("Rotation,º (theta)")
-        .help("Enter degress to rotate (theta).")
+      Text("Rotation")
+        .help("Enter degress to rotate counter-clockwise.")
 
       DelayedTextFieldDouble(
         placeholder: "0",
@@ -19,14 +19,14 @@ struct TabFindRotateAndMore: View {
       .textFieldStyle(.roundedBorder)
       .multilineTextAlignment(.trailing)
       .frame(maxWidth: 60)
-      .help("Enter the angle to rotate the image counterclockwise, in degrees.")
+      .help("Enter the angle to rotate the image counter-clockwise, in degrees.")
       .onChange(of: doc.picdef.theta) { _ in
         requiresFullCalc = true
       }
     } // end hstack theta
 
     HStack {
-      Text("Sharpening (iterationsMax):")
+      Text("Maximum tries:")
 
       DelayedTextFieldDouble(
         placeholder: "10,000",
@@ -36,7 +36,7 @@ struct TabFindRotateAndMore: View {
       .textFieldStyle(.roundedBorder)
       .multilineTextAlignment(.trailing)
       .help(
-        "Enter the maximum number of iterations for a given point in the image. A larger value will increase the resolution, but slow down the calculation."
+        "Enter the maximum number of tries for a given point in the image. A larger value will increase the resolution, but slow down the calculation and make the coloring more difficult."
       )
       .frame(maxWidth: 70)
       .onChange(of: doc.picdef.iterationsMax) { _ in
@@ -46,7 +46,7 @@ struct TabFindRotateAndMore: View {
     .padding(.horizontal)
 
     HStack {
-      Text("Color smoothing (rSqLimit):")
+      Text("Color smoothing limit:")
 
       DelayedTextFieldDouble(
         placeholder: "400",
@@ -57,7 +57,7 @@ struct TabFindRotateAndMore: View {
       .multilineTextAlignment(.trailing)
       .frame(maxWidth: 60)
       .help(
-        "Enter min value for square of distance from origin. A larger value will smooth the color gradient, but slow down the calculation."
+        "Enter the minimum value for the square of the distance from origin before the number of tries is ended. A larger value will smooth the color gradient, but slow down the calculation. Must be greater than 4"
       )
       .onChange(of: doc.picdef.rSqLimit) { _ in
         requiresFullCalc = true

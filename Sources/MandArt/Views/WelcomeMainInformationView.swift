@@ -14,7 +14,7 @@ struct WelcomeMainInformationView: View {
         .fixedSize(horizontal: false, vertical: false) // wrap
 
       Text(
-        "Find an interesting location (e.g., where two black areas meet), zoom in and out, and customize the coloring. Nearby colors flow into one another, so check their gradients to see how the intermediate colors appear. If you'll print your art, choose from colors more likely to print true."
+        "Find an interesting location (for example, near where two black areas meet), zoom in and out, and customize the coloring. Nearby colors flow into one another, so check their gradients to see how the intermediate colors appear. If you'll print your art, choose from colors more likely to print true."
       )
       .fixedSize(horizontal: false, vertical: true) // wrap
 

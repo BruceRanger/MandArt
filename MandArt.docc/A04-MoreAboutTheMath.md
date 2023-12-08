@@ -39,7 +39,7 @@ c = x0 + iy0
 Since our computers don’t work with complex numbers, and they seem a little scary, 
 we use a little math to get to real numbers. Then we can use the real x and y values of geometry. 
 For each pixel location in the
-image, the program starts with that location and computes a new location. The new location is tested to see if it
+picture, the program starts with that location and computes a new location. The new location is tested to see if it
 exceeds some maximum value that we choose. If it does, the program records the number of iterations required to get there. If not, it checks
 to see if the number of iterations has reached the maximum allowable number of iterations. If it does, it records
 that number and goes on to the next pixel. If not, it computes a new location.
@@ -57,13 +57,13 @@ that number of iterations, we never will. We generally color that location black
 
 We use the variable, iterationsMax, for the maximum number of iterations to try. We start out with
 iterationsMax = 10,000. Any time you find a black shape that doesn’t look like a Mini-Mand, it means you need
-to increase iterationsMax. You define the RGB colors used in the image and their order. You also define the
+to increase iterationsMax. You define the RGB colors used in the picture and their order. You also define the
 numbers of blocks of color to be used, nBlocks. We start with six colors and 60 blocks. The colors we used are,
 in order: lime, yellow, red, magenta, blue, and cyan.These are six of the eight corners of the RGB color cube. The program finds the minimum number of iterations used
 at any location in the picture so that our coloring can start somewhere on the edge of our picture.
 
 Why would we ever choose a value for rSqLimit greater than 4? This has to do with color smoothing. We find
-the number of iterations required to exceed rSqLimit at each location in our image. We then assign a color to
+the number of iterations required to exceed rSqLimit at each location in our picture. We then assign a color to
 that location based on that number of iterations. However, there will be many locations nearby that have the
 same number of iterations. We would be left with bands of a uniform color, which may not look good.
 
@@ -86,7 +86,7 @@ fIter = iter - dIter.
 ```
 
 The program puts each value of fIter into a two-dimensional array of values covering the width and height of
-the image.
+the picture.
 
 A plot of fIter against location would show a very non-linear curve. That would not be good for smoothing out
 the colors, so an equation using logarithms of logarithms computes dIter from r^2 , rSqLimit, and, rSqMax.

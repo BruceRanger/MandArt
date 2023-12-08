@@ -56,16 +56,16 @@ so resize it by drawing the lower-right corner until it shows the whole picture.
 
 ![Centering, Dragging, and Zooming](CenteringDraggingZooming.png)
 
-We’ll use this image to explain centering, dragging, and zooming. 
+We’ll use this picture to explain centering, dragging, and zooming. 
 
 ### Centering
 
-If you click anywhere in the right-hand image, 
-the program will present a new image, centered on that location. 
+If you click anywhere in the right-hand picture, 
+the program will present a new picture, centered on that location. 
 
 ### Dragging
 
-If you press and hold the mouse button, you can drag the image. 
+If you press and hold the mouse button, you can drag the picture. 
 It may take a few seconds to recalculate and show it in the new location. 
 
 ### Zooming
@@ -74,7 +74,7 @@ You can zoom in or out by a factor of two by hitting the + or - buttons.
 You can also change the magnification by changing the **scale** value. 
 
 When you zoom in, it is like looking through a microscope. 
-You can also think of it as expanding the image. 
+You can also think of it as expanding the picture. 
 If you zoom in as far as the 15 significant places that the Swift variable will allow, 
 it is like moving a sheet of paper the size of your screen 
 around in an area the size of the solar system. 
@@ -88,17 +88,13 @@ your way back.
 
 A number of variables are listed in the green area. You can change any of those values and hit **tab**, **return**, or **enter** to use those new values. Sometime, you may have to hit return or enter twice.  You can avoid this by entering any commas in the input instead of letting the program do it.
 
-The screen goes blank when you start to enter certain values, 
-because otherwise the program would update the image after each digit is entered. 
-This is a problem that SwiftUI will solve, hopefully. 
-
-These values allow you to fine-tune the image or input a set of values that you found in another reference.
+These values allow you to fine-tune the picture or input a set of values that you found in another reference.
 
 
 ### Coloring MandArt
 
-The next set of variables relates to coloring the image. 
-Default values were chosen so that the initial image would be colored. 
+The next set of variables relates to coloring the picture. 
+Default values were chosen so that the initial picture would be colored. 
 To reduce the number of colors that need to be entered, 
 the program will cycle through the defined colors as many times as necessary. 
 
@@ -115,16 +111,16 @@ If a value near 1 is chosen, the blocks of colors will show up as solid bands.
 
 ![Finding Interesting Areas](FullWindowLimeSpots.png)
 
-This shows typical areas where you might look for interesting images. 
+This shows typical areas where you might look for interesting pictures. 
 They seem to be in areas that are near where two black areas come together. 
 
 ### Interesting Example 
 
 ![Interesting Spirals](FullWindowInterestingSpirals.png)
 
-Here we show an image that has been moved to a new center, rotated, and zoomed in by a factor of about 2,880,000/430 = 6,698. 
+Here we show an picture that has been moved to a new center, rotated, and zoomed in by a factor of about 2,880,000/430 = 6,698. 
 
-There are some obvious paths that seem to flow from the edge of the image into the interior. 
+There are some obvious paths that seem to flow from the edge of the picture into the interior. 
 
 These paths can only end on the Mandelbot figure or on one of the Mini-Mands. 
 However, the Mini-Mand may be so small that the we won’t be able to ever see it. 
@@ -133,18 +129,18 @@ If we keep zooming in, eventually the 15-digit significant places of a number in
 
 ### Iterations Before Converging - Minimum
 
-The locations with the fewest iterations occur outside of the image, so the program ignores them. 
+The locations with the fewest iterations occur outside of the picture, so the program ignores them. 
 
-If we want to move the initial color in the image into our MandArt, 
+If we want to move the initial color in the picture into our MandArt, 
 we can enter a value for **Change in minimum iteration**. 
-If we enter a negative value, we’ll get a white area in the image, indicating where that minimum value is.
+If we enter a negative value, we’ll get a white area in the picture, indicating where that minimum value is.
 
 ### Maximum Iterations And Blocks of Color
 
 We typically use a large value for the maximum number of iterations and 
 a small number for the number of blocks of color so we use an exponential relation between the two. 
 
-The spacing between colors near the edges of the image, 
+The spacing between colors near the edges of the picture, 
 which is far from the Mini-Mand destination, is set by one variable and that near the Mini-Mand destination by another. 
 
 Only trial and error and artistic preference will determine the best values. 

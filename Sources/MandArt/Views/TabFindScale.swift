@@ -71,13 +71,13 @@ struct TabFindScale: View {
   var body: some View {
     Section(
       header:
-      Text("Set Scale")
+      Text("Set Magnification")
         .font(.headline)
         .fontWeight(.medium)
     ) {
       HStack {
-        Text("Scale (scale)")
-        TextField("Scale", text: $scaleString, onCommit: {
+        Text("Magnification")
+        TextField("Magnification", text: $scaleString, onCommit: {
           if let newScale = Double(scaleString) {
             updateScale(newScale: newScale)
           }

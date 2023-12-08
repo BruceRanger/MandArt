@@ -1,5 +1,5 @@
 /**
- MandArtDocument is a reference file document that supports only reading and writing MandArt data files that generate MandArt images.
+ MandArtDocument is a reference file document that supports only reading and writing MandArt data files that generate MandArt pictures.
 
  Its snapshot is a PictureDefinition and it has a @Published picdef property that, when changed,
  triggers a reload of all views using the document. This document class also has a docName

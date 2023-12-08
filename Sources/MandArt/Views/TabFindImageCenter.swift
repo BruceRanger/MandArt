@@ -9,15 +9,14 @@ struct TabFindImageCenter: View {
   var body: some View {
     Section(
       header:
-      Text("Set Image Center")
+      Text("Set Picture Center")
         .font(.headline)
         .fontWeight(.medium)
     ) {
       HStack {
         VStack { // vertical container
-          Text("Enter center x")
+          Text("Enter horizontal center")
           Text("Between -2 and 2")
-          Text("(xCenter)")
           DelayedTextFieldDouble(
             placeholder: "-0.75",
             value: $doc.picdef.xCenter,
@@ -27,7 +26,7 @@ struct TabFindImageCenter: View {
           .multilineTextAlignment(.trailing)
           .frame(maxWidth: 170)
           .help(
-            "Enter the x value in the Mandelbrot coordinate system for the center of the image."
+            "Enter a value for the horizontal center of the picture."
           )
           .onChange(of: doc.picdef.xCenter) { _ in
             requiresFullCalc = true
@@ -35,9 +34,8 @@ struct TabFindImageCenter: View {
         } // end vstack
 
         VStack { //  vertical container
-          Text("Enter center y")
+          Text("Enter vertical center")
           Text("Between -2 and 2")
-          Text("(yCenter)")
           DelayedTextFieldDouble(
             placeholder: "0.0",
             value: $doc.picdef.yCenter,
@@ -47,7 +45,7 @@ struct TabFindImageCenter: View {
           .multilineTextAlignment(.trailing)
           .frame(maxWidth: 170)
           .help(
-            "Enter the Y value in the Mandelbrot coordinate system for the center of the image."
+            "Enter a value for the vertical center of the picture."
           )
           .onChange(of: doc.picdef.yCenter) { _ in
             requiresFullCalc = true

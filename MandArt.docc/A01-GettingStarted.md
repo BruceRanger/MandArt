@@ -5,7 +5,7 @@ How to get started using MandArt to generate custom art.
 
 ## Overview
 
-This article shows how to get started creating and saving a custom MandArt image.
+This article shows how to get started creating and saving a custom MandArt picture.
 
 ![Example](mandart_a01.png)
 
@@ -49,9 +49,9 @@ Saving a data file is actually a bit tricky because MandArt uses SwiftUI and App
 
 So, we have to work around the problem. When the file is originally saved, you get to tell it where to put the file. Since you may want to make changes and re-save the file, we have to go to the folder where the file is saved and copy or duplicate the file using a new name. MandArt doesn't know about this new file so it can't overwrite it.
 
-### Save a Printed Image
+### Save a Picture
 
-To save your generated image as a .png file, click Tab 4. Save and then on the **Save Image** button.
+To save your generated picture as a .png file, click Tab 4.Save and then on the **Save Picture** button.
 
 ### Open Saved MandArt
 

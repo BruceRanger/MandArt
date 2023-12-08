@@ -15,14 +15,13 @@ struct TabFindImageSize: View {
   var body: some View {
     Section(
       header:
-      Text("Set Image Size")
+      Text("Set Picture Size")
         .font(.headline)
         .fontWeight(.medium)
     ) {
       HStack {
         VStack {
           Text("Width, px:")
-          Text("(imageWidth)")
           DelayedTextFieldInt(
             placeholder: "1100",
             value: $doc.picdef.imageWidth,
@@ -32,7 +31,7 @@ struct TabFindImageSize: View {
           .multilineTextAlignment(.trailing)
           .frame(maxWidth: 80)
           .padding(10)
-          .help("Enter the width, in pixels, of the image.")
+          .help("Enter the width, in pixels, of the picture.")
           .onChange(of: doc.picdef.imageWidth) { _ in
             requiresFullCalc = true
           }
@@ -40,7 +39,6 @@ struct TabFindImageSize: View {
 
         VStack {
           Text("Height, px")
-          Text("(imageHeight)")
           DelayedTextFieldInt(
             placeholder: "1000",
             value: $doc.picdef.imageHeight,
@@ -48,7 +46,7 @@ struct TabFindImageSize: View {
           )
           .frame(maxWidth: 80)
           .padding(10)
-          .help("Enter the height, in pixels, of the image.")
+          .help("Enter the height, in pixels, of the picture.")
           .onChange(of: doc.picdef.imageHeight) { _ in
             requiresFullCalc = true
           }
@@ -57,8 +55,8 @@ struct TabFindImageSize: View {
         VStack {
           Text("Aspect Ratio:")
           Text(String(format: "%.1f", aspectRatio()))
-            .padding(1)
-            .help("Calculated value of image width over image height.")
+            .padding(10)
+            .help("Calculated value of picture width over picture height.")
         }
       }
     }
