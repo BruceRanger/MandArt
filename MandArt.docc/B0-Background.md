@@ -54,7 +54,13 @@ If we just used the recorded number of tries at each location to define a color,
 We would need another bit of information to adjust the integer number of tries to something like a fractional number of tries, but how?
 
 It has been proven that any time a location exceeds a distance of two from the center of the Mandelbrot universe, the following tries will rapidly move out to infinity.
-But there is a maximum distance that the next try can reach.
+
+Finding a distance requires calculating a square root, which slows down the app, so we work with the distance squared.
+So the distance squared limit is two squared, or four.
+
+But there is a maximum square of the distance that the next try can reach.
 We can use that information to define a fraction to tack onto the recorded value of number of tries.
+
 That allows us to vary the colors in the picture from pixel to pixel by such a small amount that we can't notice it.
+
 

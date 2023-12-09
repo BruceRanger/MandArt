@@ -1,4 +1,4 @@
-# Challenges
+# Finding a Picture to Color
 
 Working with colors presents some challenges.
 
@@ -10,44 +10,42 @@ This article covers some of the challenges printing custom MandArt.
 ![Example](mandart_a03.png)
 
 
-## Discussion
 
-### Printing Colors
+### Finding MandArt - Centering, Dragging, and Zooming
 
-This app was designed to make a frameable picture. 
-Unfortunately, printers can’t reproduce the range of colors available on the screen.
+![Centering, Dragging, and Zooming](CenteringDraggingZooming.png)
 
-So, a set of 292 colors that should print well is available by hitting Show Print Colors. 
-The format is the same as for the screen colors, so it is obvious that many of the best colors are missing.
+We’ll use this picture to explain centering, dragging, and zooming. 
 
+### Centering
 
-### Color Profile
+If you click anywhere in the right-hand picture, 
+the program will present a new picture, centered on that location. 
 
-To get the printable colors to work, you may need to adjust your Color Profile.
+### Dragging
 
-Open System Settings / Displays / Color Profile - and on the drop-down, 
-select the sRGB option as shown below. 
+If you press and hold the mouse button, you can drag the picture. 
+It may take a few seconds to recalculate and show it in the new location. 
 
-![Color Profile](SystemSettings-Displays-ColorProfile-sRGB.png)
+### Zooming
 
-### Visible Scroll Bars
+You can zoom in or out by a factor of two by hitting the + or - buttons. 
+You can also change the magnification by changing the **scale** value. 
 
-There's typically a scroll bar on the right side of the input area,
-unless your monitor is tall enough to see all the inputs without it. 
+When you zoom in, it is like looking through a microscope. 
+You can also think of it as expanding the picture. 
+If you zoom in as far as the 15 significant places that the Swift variable will allow, 
+it is like moving a sheet of paper the size of your screen 
+around in an area the size of the solar system. 
 
-If you'd like to make your scrollbar visible all the time 
-(rather than just when working in the input area), you'll use
-Mac settings again.
+You should have no trouble finding a picture that no one has ever seen. 
 
-Open System Settings / Appearance / Show Scroll Bars - and select always.
+In fact, if you don’t record that location, you’ll probably never be able to find
+your way back.
 
-![Show Scrollbars](SystemSettings-Appearance-Scrollbar.png)
+### Customizing MandArt
 
-### Exploration
+A number of variables are listed in the green area. You can change any of those values and hit **tab**, **return**, or **enter** to use those new values. Sometime, you may have to hit return or enter twice.  You can avoid this by entering any commas in the input instead of letting the program do it.
 
-For help getting started see <doc:A01-GettingStarted>.
-
-Learn about all the ways to explore custom MandArt at <doc:A02-SettingInputs>.
-
-Read more about the math and the Mandlebrot set at <doc:A04-MoreAboutTheMath>.
+These values allow you to fine-tune the picture or input a set of values that you found in another reference.
 
