@@ -7,24 +7,7 @@ struct TabFindRotateAndMore: View {
   @Binding var requiresFullCalc: Bool
 
   var body: some View {
-    HStack {
-      Text("Rotation")
-        .help("Enter degress to rotate counter-clockwise.")
-
-      DelayedTextFieldDouble(
-        placeholder: "0",
-        value: $doc.picdef.theta,
-        formatter: MAFormatters.fmtRotationTheta
-      )
-      .textFieldStyle(.roundedBorder)
-      .multilineTextAlignment(.trailing)
-      .frame(maxWidth: 60)
-      .help("Enter the angle to rotate the image counter-clockwise, in degrees.")
-      .onChange(of: doc.picdef.theta) { _ in
-        requiresFullCalc = true
-      }
-    } // end hstack theta
-
+  
     HStack {
       Text("Maximum tries:")
 
@@ -44,6 +27,26 @@ struct TabFindRotateAndMore: View {
       }
     } // end hstack sharpening
     .padding(.horizontal)
+  
+    HStack {
+      Text("Rotation")
+        .help("Enter degress to rotate counter-clockwise.")
+
+      DelayedTextFieldDouble(
+        placeholder: "0",
+        value: $doc.picdef.theta,
+        formatter: MAFormatters.fmtRotationTheta
+      )
+      .textFieldStyle(.roundedBorder)
+      .multilineTextAlignment(.trailing)
+      .frame(maxWidth: 60)
+      .help("Enter the angle to rotate the image counter-clockwise, in degrees.")
+      .onChange(of: doc.picdef.theta) { _ in
+        requiresFullCalc = true
+      }
+    } // end hstack theta
+
+
 
     HStack {
       Text("Color smoothing limit:")
@@ -57,7 +60,7 @@ struct TabFindRotateAndMore: View {
       .multilineTextAlignment(.trailing)
       .frame(maxWidth: 60)
       .help(
-        "Enter the minimum value for the square of the distance from origin before the number of tries is ended. A larger value will smooth the color gradient, but slow down the calculation. Must be greater than 4"
+        "Enter the minimum value for the square of the distance from origin before the number of tries is ended. A larger value will smooth the color gradient, but slow down the calculation. Must be greater than 4. Rarely needs changing."
       )
       .onChange(of: doc.picdef.rSqLimit) { _ in
         requiresFullCalc = true
