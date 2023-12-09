@@ -149,6 +149,7 @@ struct TabFindScale: View {
             .textFieldStyle(.roundedBorder)
             .multilineTextAlignment(.trailing)
             .frame(minWidth: 70, maxWidth: 90)
+            .help("Maximum value of 5.")
 
             Button("-") { zoomOutCustom() }
               .help("Zoom out by multiplier (may take a while).")

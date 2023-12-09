@@ -1,25 +1,26 @@
 # Finding a Picture to Color
 
-Working with colors presents some challenges.
-
+Doing some exploring.
 
 ## Overview
 
-This article covers some of the challenges printing custom MandArt.
+This article discusses all the inputs we need to set the stage for coloring.
 
-![Example](mandart_a03.png)
-
-
-
-### Finding MandArt - Centering, Dragging, and Zooming
+### Finding MandArt
 
 ![Centering, Dragging, and Zooming](CenteringDraggingZooming.png)
 
-We’ll use this picture to explain centering, dragging, and zooming. 
+We’ll use this picture to explain each of the inputs available in the section 1.Find, which comes up when the app gets started.
+
+### Picture Size
+
+The picture opens with a width of 1100 pixels and a height of 1000 pixels, for a calculated aspect ratio of 1.1.
+
+The values for the picture centering and magnification were chosen to put the whole Mandelbrot in the picture.
 
 ### Centering
 
-If you click anywhere in the right-hand picture, 
+To go exploring, you can click anywhere in the picture, and 
 the program will present a new picture, centered on that location. 
 
 ### Dragging
@@ -29,19 +30,29 @@ It may take a few seconds to recalculate and show it in the new location.
 
 ### Zooming
 
-You can zoom in or out by a factor of two by hitting the + or - buttons. 
-You can also change the magnification by changing the **scale** value. 
+You can zoom in or out by a factor of two by hitting that + or - buttons.
+
+You can also set a custom zoom by putting in a value and then entering it. Then you can zoom in or out by that factor by hitting that + or - buttons.
+
+You can also change the magnification by changing the **Magnification** value and then entering it. 
 
 When you zoom in, it is like looking through a microscope. 
-You can also think of it as expanding the picture. 
-If you zoom in as far as the 15 significant places that the Swift variable will allow, 
+If you zoom in as far as the computer can handle, 
 it is like moving a sheet of paper the size of your screen 
 around in an area the size of the solar system. 
 
 You should have no trouble finding a picture that no one has ever seen. 
 
 In fact, if you don’t record that location, you’ll probably never be able to find
-your way back.
+your way back to it.
+
+### Maximum Tries
+
+The value for maximum tries is originally set to 10,000, but it may have to be increased in order to sharpen the image.
+
+### Rotation
+
+The Rotation input causes a counter-clockwise rotation by the input value in degrees.
 
 ### Customizing MandArt
 
