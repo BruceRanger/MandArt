@@ -1,4 +1,4 @@
-# B5-Menu
+# Menu
 
 <!--@START_MENU_TOKEN@-->Summary<!--@END_MENU_TOKEN@-->
 
