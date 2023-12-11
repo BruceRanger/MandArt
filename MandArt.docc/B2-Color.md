@@ -1,4 +1,4 @@
-# Challenges
+# Choosing Colors
 
 Working with colors presents some challenges.
 

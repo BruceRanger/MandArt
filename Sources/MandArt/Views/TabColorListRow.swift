@@ -28,7 +28,7 @@ struct TabColorListRow: View {
     HStack {
       TextField("number", value: $hue.num, formatter: MAFormatters.fmtIntColorOrderNumber)
         .disabled(true)
-        .frame(maxWidth: 15)
+        .frame(maxWidth: 30)
 
       ColorPicker("", selection: $hue.color, supportsOpacity: false)
         .onChange(of: hue.color) { newColor in
