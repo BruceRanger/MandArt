@@ -33,12 +33,15 @@ struct TabColorListRow: View {
       TextField("number", value: $hue.num, formatter: MAFormatters.fmtIntColorOrderNumber)
         .disabled(true)
 
-      ColorPicker("", selection: $hue.color, supportsOpacity: false)
-        .onChange(of: hue.color) { newColor in
-          doc.updateHueWithColorPick(
-            index: hue.num - 1, newColorPick: newColor
-          )
-        }
+      ColorPicker("", 
+                  selection: $hue.color,
+                  supportsOpacity: false
+      )
+//        .onChange(of: hue.color) { newColor in
+//          doc.updateHueWithColorPick(
+//            index: hue.num - 1, newColorPick: newColor
+//          )
+//        }
 
       Button {
         showingPrintablePopups = true
@@ -72,19 +75,10 @@ struct TabColorListRow: View {
         )
       }
 
-      // Red, Green, Blue just text display all 3 char
-      Text(String(format: "%03d", Int(hue.r)))
-        .onChange(of: hue.r) { newValue in
-          doc.updateHueWithColorComponent(index: hue.num - 1, r: newValue)
-        }
-      Text(String(format: "%03d", Int(hue.g)))
-        .onChange(of: hue.g) { newValue in
-          doc.updateHueWithColorComponent(index: hue.num - 1, g: newValue)
-        }
-      Text(String(format: "%03d", Int(hue.b)))
-        .onChange(of: hue.b) { newValue in
-          doc.updateHueWithColorComponent(index: hue.num - 1, b: newValue)
-        }
+//      // Red, Green, Blue just text display all 3 char
+//      Text(String(format: "%03d", Int(hue.r)))
+//      Text(String(format: "%03d", Int(hue.g)))
+//      Text(String(format: "%03d", Int(hue.b)))
 
       Button(role: .destructive) {
         doc.deleteHue(index: hue.num - 1)
