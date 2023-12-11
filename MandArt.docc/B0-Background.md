@@ -48,7 +48,7 @@ If the new location is far enough from the center of the Mandelbrot universe, th
 
 If the number of tries reaches some maximum defined value without reaching the distance limit, it remembers that number of tries.
 
-The app uses those remembered of tries to help define a color for that location.
+The app uses those remembered number of tries to help define a color for that location.
 
 If we just used the recorded number of tries at each location to define a color, we'd get bands of color in the picture.
 We would need another bit of information to adjust the integer number of tries to something like a fractional number of tries, but how?
@@ -60,7 +60,9 @@ So the distance squared limit is two squared, or four.
 
 But there is a maximum square of the distance that the next try can reach.
 We can use that information to define a fraction to tack onto the recorded value of number of tries.
+That gives us our desired fractional number of tries.
 
 That allows us to vary the colors in the picture from pixel to pixel by such a small amount that we can't notice it.
+We call that color smoothing.
 
 
