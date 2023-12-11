@@ -1,24 +1,29 @@
 # Choosing Colors
 
-Working with colors presents some challenges.
-
+Choose a small, ordered, set of colors to work with
 
 ## Overview
 
-This article covers some of the challenges printing custom MandArt.
-
+You have to pick the the colors to be used in the picture and see if the gradient between adjoining colors looks good to you.
 ![Example](mandart_a03.png)
-
 
 ## Discussion
 
-### Printing Colors
+### Picking Colors
 
-This app was designed to make a frameable picture. 
-Unfortunately, printers can’t reproduce the range of colors available on the screen.
+This app uses the RBG color model, which uses red, green (actually lime), and blue componenents to define the color of a given pixel on the screen.
+Each component has a range of 0 to 255.
+The R, G, and B components can be thought of as forming a cube.
+The pre-selected six colors shown are the six corners of the color cube, without the black and white corners.
 
-So, a set of 292 colors that should print well is available by hitting Show Print Colors. 
-The format is the same as for the screen colors, so it is obvious that many of the best colors are missing.
+### Checking the gradient between adjacent colors
+
+The app makes a smooth gradient between adjacent colors.
+You can see what that gradient will look like by selecting a color number in the "From:" box.
+The app automatically chooses the next  higher color number and shows a picture of that color gradient.
+Depending on the colors chosen, the gradient may pass through a region of color that doesn't look good to you.
+In that case, you'll have to change one or both colors, or put in an intermediant color.
+
 
 
 ### Color Profile

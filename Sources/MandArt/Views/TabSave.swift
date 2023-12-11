@@ -28,17 +28,6 @@ struct TabSave: View {
           }
           .help("Save MandArt image inputs as .mandart.")
         } // end section
-
-        Section(
-          header:
-          Text("Check Colors Before Printing")
-            .font(.headline)
-            .fontWeight(.medium)
-            .padding(.top)
-        ) {
-          TabSavePopup(popupManager: popupManager)
-        } // end second section
-        Spacer()
       } //  vstack
     } // scroll
     .onAppear {

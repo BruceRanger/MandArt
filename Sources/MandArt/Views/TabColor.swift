@@ -85,10 +85,9 @@ struct TabColor: View {
             .frame(maxWidth: .infinity)
         ) {
           VStack(alignment: .leading) {
-            Text("Click and drag the color number to reorder.")
-            Text("Click on the color to modify.")
+            Text("Click and drag a color number to reorder.")
+            Text("Click on a color to modify.")
             Text("Click \(Image(systemName: "exclamationmark.circle")) to learn more.")
-            Text("Some colors may not print true. See Tab 4.Save to explore options.")
           }
 
           TabSavePopup(popupManager: popupManager)
