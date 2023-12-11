@@ -26,9 +26,30 @@ In that case, you'll have to change one or both colors, or put in an intermedian
 
 ### Changing Colors
 
-You can click on the "Add New Color" box
-As noted, you can click on and drag a color number to reorder the color.
+To change one of the existing colors, click in the colored box.
+A color picker will pop up and you have a number of ways to define the new color.
+To the right of a colored box, there might be a button with an exclamation point in a circle.
+If you click on that button, you'll get a warning that the color might not print very well.
+You can adjust the color to make the warning disappear or just ignore it.
+Predicting how true a given color will print is far beyong the scope of this app.
 
+As noted, you can click on and drag a color number to reorder the colors.
+
+You can click on the "Add New Color" box to get a new coloe.
+The color will be white and will go at the end of the color list.
+Then you can change the color and its place in the list.
+
+### Color popups
+
+An easy way to add a color is to select one of the 12 buttons that will bring up a popup with a array of colors to select from.
+
+The popups are based on a selection of 512 colors that look good on the screen. 
+These colors only use R, G, and B values of 0, 36, 73, 109, 146, 182, 219, and 255, 
+but it is difficult to distinguish between adjacent colors, so they may be adequate.
+
+And, of course, the colors can be changed to look better to the artist.
+
+### 
 
 ### Color Profile
 
