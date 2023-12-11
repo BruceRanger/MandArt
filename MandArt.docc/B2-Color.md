@@ -24,6 +24,10 @@ The app automatically chooses the next  higher color number and shows a picture 
 Depending on the colors chosen, the gradient may pass through a region of color that doesn't look good to you.
 In that case, you'll have to change one or both colors, or put in an intermediant color.
 
+### Changing Colors
+
+You can click on the "Add New Color" box
+As noted, you can click on and drag a color number to reorder the color.
 
 
 ### Color Profile
