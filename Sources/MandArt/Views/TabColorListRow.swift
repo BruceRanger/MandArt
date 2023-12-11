@@ -25,10 +25,13 @@ struct TabColorListRow: View {
   }
 
   var body: some View {
-    HStack {
+
+    HStack(spacing: 10) {
+      Image(systemName: "line.horizontal.3")
+        .foregroundColor(.secondary) // Set the color as needed
+
       TextField("number", value: $hue.num, formatter: MAFormatters.fmtIntColorOrderNumber)
         .disabled(true)
-        .frame(maxWidth: 30)
 
       ColorPicker("", selection: $hue.color, supportsOpacity: false)
         .onChange(of: hue.color) { newColor in
@@ -69,16 +72,16 @@ struct TabColorListRow: View {
         )
       }
 
-      // Red, Green, Blue text fields
-      TextField("255", value: $hue.r, formatter: MAFormatters.fmt0to255)
+      // Red, Green, Blue just text display all 3 char
+      Text(String(format: "%03d", Int(hue.r)))
         .onChange(of: hue.r) { newValue in
           doc.updateHueWithColorComponent(index: hue.num - 1, r: newValue)
         }
-      TextField("255", value: $hue.g, formatter: MAFormatters.fmt0to255)
+      Text(String(format: "%03d", Int(hue.g)))
         .onChange(of: hue.g) { newValue in
           doc.updateHueWithColorComponent(index: hue.num - 1, g: newValue)
         }
-      TextField("255", value: $hue.b, formatter: MAFormatters.fmt0to255)
+      Text(String(format: "%03d", Int(hue.b)))
         .onChange(of: hue.b) { newValue in
           doc.updateHueWithColorComponent(index: hue.num - 1, b: newValue)
         }
@@ -90,6 +93,10 @@ struct TabColorListRow: View {
         Image(systemName: "trash")
       }
       .help("Delete " + "\(hue.num)")
+
+
+      Spacer()
+
     }
   }
 }
