@@ -44,6 +44,11 @@ struct PanelUI: View {
       Text("MandArt Inputs")
         .font(.title)
         .padding(.top)
+        
+      Text("Use Help in menu to see documentation on using the app.")
+      .font(.system(size: 14))
+      .padding(.top, 1)
+
 
       TabbedView(
         doc: doc,

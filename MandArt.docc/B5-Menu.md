@@ -1,13 +1,23 @@
 # Menu
 
-<!--@START_MENU_TOKEN@-->Summary<!--@END_MENU_TOKEN@-->
+The menu is a pretty standard Mac menu. 
 
-## Overview
+## File
 
-<!--@START_MENU_TOKEN@-->Text<!--@END_MENU_TOKEN@-->
+Use File / New to make a new MandArt window, whether you select New Window or New Document.
 
-## Topics
+## View
 
-### <!--@START_MENU_TOKEN@-->Group<!--@END_MENU_TOKEN@-->
+You can use View to enter or exit full screen.
 
-- <!--@START_MENU_TOKEN@-->``Symbol``<!--@END_MENU_TOKEN@-->
+## Welcome
+
+You can use Welcome to get a new welcome screen.
+
+## Window
+
+You can use Window to minimize, zoom, or move window left or right.
+
+## Help
+
+Help brings up a help document for using the app.
