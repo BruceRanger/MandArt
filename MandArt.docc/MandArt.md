@@ -35,6 +35,10 @@ Read more in the articles below.
 
 - <doc:B5-Menu>
 
+### Input Limits
+
+- <doc:B6-InputLimits>
+
 ### API Reference 
 
 - <doc:C1-API>
