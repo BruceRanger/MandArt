@@ -12,7 +12,7 @@ enum MandArtError: LocalizedError {
     case .emptyData:
       return "Encoded data is empty."
     case .failedSaving:
-      return "Failed to save image inputs."
+      return "Failed to save picture inputs."
     }
   }
 }
