@@ -39,17 +39,23 @@ You can click on the "Add New Color" box to get a new coloe.
 The color will be white and will go at the end of the color list.
 Then you can change the color and its place in the list.
 
+### Eyedropper
+
+An interesting and useful feature of the color picker is the eyedropper.
+Its near the lower-left of the color picker popup and looks like an eyedropper.
+If you click on its icon, the pointer changes to a circle with a small square in the middle.
+As you move the pointer around, you see a greatly magnified view of what's under it, either within the app or outside it.
+When you click again, the color under the pointer is selected.
+
 ### Color popups
 
-An easy way to add a color is to select one of the 12 buttons that will bring up a popup with a array of colors to select from.
+An easy way to add a color is to select one of the 12 buttons that will bring up a popup with an array of colors to select from.
 
 The popups are based on a selection of 512 colors that look good on the screen. 
-These colors only use R, G, and B values of 0, 36, 73, 109, 146, 182, 219, and 255, 
-but it is difficult to distinguish between adjacent colors, so they may be adequate.
+These colors only use R, G, and B values of 0, 36, 73, 109, 146, 182, 219, and 255, giving a total of 512 colors.
+Thats a very small fraction of the 256 cubed = 16,777,216 colors available, but it is difficult to distinguish between adjacent colors, so they may be adequate.
 
 And, of course, the colors can be changed to look better to the artist.
-
-### 
 
 ### Color Profile
 
