@@ -1,4 +1,4 @@
-# Challenges
+# Save Your Art
 
 Working with colors presents some challenges.
 

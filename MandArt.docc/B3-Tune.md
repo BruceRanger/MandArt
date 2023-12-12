@@ -1,54 +1,47 @@
-# Challenges
+# Tuning the Coloring of the Picture
 
-Working with colors presents some challenges.
-
+Changing how the selected colors are applied.
 
 ## Overview
 
-This article covers some of the challenges printing custom MandArt.
-
+More ways to adjust the coloring of your picture.
 ![Example](mandart_a03.png)
 
 
 ## Discussion
 
-### Printing Colors
+### Using the color tuning sliders.
 
-This app was designed to make a frameable picture. 
-Unfortunately, printers can’t reproduce the range of colors available on the screen.
+Once you've selected the colors to be used in your picture, you might think you've run out of options, but the five sliders in section B3-Tune.md can greatly change the coloring of your picture.
 
-So, a set of 292 colors that should print well is available by hitting Show Print Colors. 
-The format is the same as for the screen colors, so it is obvious that many of the best colors are missing.
+In the picture shown, you can see what appear to be flow paths starting at an edge and ending at the Mini-Mand.
+Along a flow path, the fractional number of tries keeps increasing.
 
+The color at any pixel location is determined solely by the recorded fractional number of tries at that location.
+Near the edges, the number of tries increases slowly along a flow line, but increase very rapidly near the Mini-Mand.
+The app uses a math function with two inputs to relate the change in coloring to the change in number of tries.
+The first slider controls the color spacing near the edge of the picture.
+The second slider controls the color spacing near the Mini-Mand.
 
-### Color Profile
+These flow lines start well outside of the picture.
+So as not to waste some of your colors on areas outside of the picture, the app finds the minimum number of tries anywhere in picture and subtracts that number from  all of the recorded values.
 
-To get the printable colors to work, you may need to adjust your Color Profile.
+You can change the number subtracted with the third slider.
+If you enter a negative value, you can see where the minimum number of tries occurs by one or more white areas showing up in the picture.
+If you enter a positive value, you can change which of your chosen colors will start the coloring in the picture.
 
-Open System Settings / Displays / Color Profile - and on the drop-down, 
-select the sRGB option as shown below. 
+In order to color the picture with a few defined colors, the app treats the input colors as a block of colors.
+You get to define the number of those blocks with the fourth slider.
+When the last color of a block is used, the app goes on to the first color of the next block.
+This not only allows you to only pick a few input colors, but also hepls show the flow paths.
 
-![Color Profile](SystemSettings-Displays-ColorProfile-sRGB.png)
+With the color smoothing used by the app, none of the defined colors get seen in the picture.
+Every pixel will be show a color part way between the bracketing colors.
+In order to show regions of each of the defined colors, you can use the fifth slider to hold that color for a fraction of the distance between the two bracketing colors.
+If you move the slider up to 1.0, there won't be any color smoothing.
 
-### Visible Scroll Bars
-
-There's typically a scroll bar on the right side of the input area,
-unless your monitor is tall enough to see all the inputs without it. 
-
-If you'd like to make your scrollbar visible all the time 
-(rather than just when working in the input area), you'll use
-Mac settings again.
-
-Open System Settings / Appearance / Show Scroll Bars - and select always.
-
-![Show Scrollbars](SystemSettings-Appearance-Scrollbar.png)
-
-### Exploration
-
-For help getting started see <doc:A01-GettingStarted>.
-
-Learn about all the ways to explore custom MandArt at <doc:A02-SettingInputs>.
-
-Read more about the math and the Mandlebrot set at <doc:A04-MoreAboutTheMath>.
+Each slider covers a range with a minimum and a maximum value.
+In some cases, a number outside of that range can be entered.
+Limits on input values will be listed in Limits of Values article.
 
 

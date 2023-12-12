@@ -3,15 +3,6 @@ import Foundation
 enum MAFormatters {
   // USER INPUT CUSTOM FORMATTERS - BASIC  .........................
 
-  static var fmtScale: NumberFormatter {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal
-    formatter.isPartialStringValidationEnabled = true
-    formatter.maximumFractionDigits = 0
-    formatter.minimum = 1
-    formatter.maximum = 100_000_000_000_000_000
-    return formatter
-  }
 
   static var fmtImageWidthHeight: NumberFormatter {
     let formatter = NumberFormatter()
@@ -22,6 +13,17 @@ enum MAFormatters {
     formatter.maximum = 100_000
     return formatter
   }
+  
+    static var fmtScale: NumberFormatter {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.isPartialStringValidationEnabled = true
+    formatter.maximumFractionDigits = 0
+    formatter.minimum = 1
+    formatter.maximum = 100_000_000_000_000_000
+    return formatter
+  }
+
 
   static var fmtXY: NumberFormatter {
     let formatter = NumberFormatter()

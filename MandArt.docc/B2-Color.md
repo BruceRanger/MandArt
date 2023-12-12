@@ -4,7 +4,7 @@ Choose a small, ordered, set of colors to work with
 
 ## Overview
 
-You have to pick the the colors to be used in the picture and see if the gradient between adjoining colors looks good to you.
+In section 2.Color you get to pick the the colors to be used in the picture and see if the gradient between adjoining colors looks good to you.
 ![Example](mandart_a03.png)
 
 ## Discussion
@@ -42,7 +42,7 @@ Then you can change the color and its place in the list.
 ### Eyedropper
 
 An interesting and useful feature of the color picker is the eyedropper.
-Its near the lower-left of the color picker popup and looks like an eyedropper.
+It's near the lower-left of the color picker popup and looks like an eyedropper.
 If you click on its icon, the pointer changes to a circle with a small square in the middle.
 As you move the pointer around, you see a greatly magnified view of what's under it, either within the app or outside it.
 When you click again, the color under the pointer is selected.

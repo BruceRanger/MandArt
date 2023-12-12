@@ -11,32 +11,32 @@ struct TabTune: View {
     ScrollView {
       VStack(spacing: 20) {
         VStack(spacing: 10) {
-          Text("Spacing far from MiniMand (near to edge)")
+          Text("Color spacing far from Mini-Mand (near to edge)")
           SliderTextView(
             range: 1 ... 20,
             step: 1,
             placeholder: "5",
             formatter: MAFormatters.fmtSpacingNearEdge,
-            helpText: "Enter the value for the color spacing near the edges of the image, away from MiniMand.",
+            helpText: "Enter the value for the color spacing near the edges of the image, away from Mini-Mand.",
             value: $doc.picdef.spacingColorFar
           )
         }
 
         VStack(spacing: 10) {
-          Text("Spacing near to MiniMand (far from edge)")
+          Text("Color spacing near to Mini-Mand (far from edge)")
           SliderTextView(
             range: 5 ... 50,
             step: 5,
             placeholder: "15",
             formatter: MAFormatters.fmtSpacingFarFromEdge,
-            helpText: "Enter the value for the color spacing away from the edges of the image, near the MiniMand.",
+            helpText: "Enter the value for the color spacing away from the edges of the image, near the Mini-Mand.",
             value: $doc.picdef.spacingColorNear
           )
         }
 
         // dFIterMin
         VStack(spacing: 10) {
-          Text("Change in minimum iteration (dFIterMin)")
+          Text("Change in minimum number of tries")
           SliderTextView(
             range: -5 ... 20,
             step: 1,
@@ -49,7 +49,7 @@ struct TabTune: View {
 
         // nBlocks
         VStack(spacing: 10) {
-          Text("Number of Color Blocks (nBlocks)")
+          Text("Number of Color Blocks")
           SliderTextView(
             range: 10 ... 100,
             step: 10,
@@ -65,7 +65,7 @@ struct TabTune: View {
 
         // Hold fraction with Slider
         HStack {
-          Text("Hold fraction (yY)")
+          Text("Hold fraction")
         }
         HStack {
           Text("0")
