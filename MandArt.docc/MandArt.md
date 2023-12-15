@@ -6,7 +6,7 @@ MandArt is the ultimate app for creating custom art from the Mandelbrot set.
 
 Read more in the articles below.
 
-![Example](mandart.png)
+![Example](mandart2.jpg)
 
 ## Topics
 

@@ -6,7 +6,7 @@ A general idea of the Mandelbrot set.
 
 This article gives you an idea of what the Mandelbrot set is.
 
-![Example](mandart_a02.png)
+<!-- ![Example](mandart_a02.png) -->
 
 ## Discussion
 
@@ -21,7 +21,7 @@ The pictures can also display well on a TV screen.
 
 The app opens with the window shown below.
 
-![Welcome Screen](WindowWelcome.png)
+![Welcome Screen](WindowWelcome2.png)
 
 Click where indicated and a new window pops up as shown below.
 
