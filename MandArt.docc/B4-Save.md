@@ -1,6 +1,6 @@
 # Save Your Art
 
-Too precious to be lost>
+Too precious to be lost.
 
 ## Overview
 

@@ -68,3 +68,14 @@ To change any of the values, you can hit **tab**, **return**, or **enter**.
 
 These values allow you to fine-tune the picture or to input a set of values that you found in another reference.
 
+### Finding Interesting Areas 
+
+![Finding Interesting Areas](FullWindowLimeSpots.png)
+
+This picture shows some areas where you might look for interesting scenes. 
+They seem to be in areas that are near where two black areas are close together.
+
+Generally, the different sides look very different when you zoom in to see what's there.
+
+ 
+
