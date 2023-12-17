@@ -23,6 +23,14 @@ struct TabFindScale: View {
       scaleMultiplier = editedMultiplier
       didChange.toggle()
     }
+    
+ /*       didSet {
+      if editedMultiplier <= 1 {
+        editedMultiplier = 1
+      }
+      scaleMultiplier = editedMultiplier
+      didChange.toggle()
+    }*/
   }
 
   /// Initializes the view with a document and a binding to determine if a full calculation is required.
@@ -60,11 +68,13 @@ struct TabFindScale: View {
 
   /// Increases the scale by the custom scale multiplier.
   func zoomInCustom() {
+    requiresFullCalc = true
     updateScale(newScale: scale * scaleMultiplier)
   }
 
   /// Decreases the scale by the custom scale multiplier.
   func zoomOutCustom() {
+    requiresFullCalc = true
     updateScale(newScale: scale / scaleMultiplier)
   }
 
@@ -104,6 +114,7 @@ struct TabFindScale: View {
       HStack {
         VStack {
           Text("Zoom By 2")
+          Text("  ")
           HStack {
             Button("+") { zoomIn() }
               .help("Zoom in by factor of 2 (may take a while).")
@@ -115,12 +126,13 @@ struct TabFindScale: View {
         Divider()
 
         VStack {
-          Text("Custom Zoom")
+          Text("Custom Zoom ")
+          Text("(1.0001 to 9.9999)")
           HStack {
             Button("+") { zoomInCustom() }
               .help("Zoom in by multiplier (may take a while).")
 
-            // MULTIPLIER
+            // SCALE MULTIPLIER
 
             TextField(
               "",
@@ -130,8 +142,8 @@ struct TabFindScale: View {
                 }
               }),
               onCommit: {
-                if editedMultiplier <= 0 {
-                  editedMultiplier = 0.0001
+                if editedMultiplier < 1 {
+                  editedMultiplier = 1
                 }
                 scaleMultiplier = editedMultiplier
                 didChange.toggle()
@@ -139,17 +151,17 @@ struct TabFindScale: View {
             )
             .onChange(of: scaleMultiplier) { newValue in
               print("in onchange")
-              requiresFullCalc = true
-              if newValue <= 0 {
-                print("updating from zero")
-                scaleMultiplier = 0.0001
+              //requiresFullCalc = true
+              if newValue < 1 {
+                print("updating from one")
+                scaleMultiplier = 1
                 didChange.toggle()
               }
             }
             .textFieldStyle(.roundedBorder)
             .multilineTextAlignment(.trailing)
             .frame(minWidth: 70, maxWidth: 90)
-            .help("Maximum value of 5.")
+            //.help("Maximum value of 5.")
 
             Button("-") { zoomOutCustom() }
               .help("Zoom out by multiplier (may take a while).")
