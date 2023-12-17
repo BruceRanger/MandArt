@@ -32,6 +32,7 @@
 		88A271B22A97860700766654 /* WelcomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271B12A97860700766654 /* WelcomeMainView.swift */; };
 		88A271B52A9790DB00766654 /* WelcomeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271B42A9790DB00766654 /* WelcomeWindowController.swift */; };
 		88A271B72A979A0E00766654 /* MandArtApp+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A271B62A979A0E00766654 /* MandArtApp+Menu.swift */; };
+		88ADC6912B2FA7B1006CD099 /* Double+CustomDecimalFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88ADC6902B2FA7B1006CD099 /* Double+CustomDecimalFormat.swift */; };
 		88BECC5E2B1647BA00770843 /* MandArtDocument+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BECC5B2B1647BA00770843 /* MandArtDocument+Helpers.swift */; };
 		88BECC5F2B1647BA00770843 /* MandArtDocument+FileHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BECC5C2B1647BA00770843 /* MandArtDocument+FileHandling.swift */; };
 		88BECC602B1647BA00770843 /* MandArtDocument+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BECC5D2B1647BA00770843 /* MandArtDocument+Constants.swift */; };
@@ -107,6 +108,7 @@
 		88A271B12A97860700766654 /* WelcomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeMainView.swift; sourceTree = "<group>"; };
 		88A271B42A9790DB00766654 /* WelcomeWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeWindowController.swift; sourceTree = "<group>"; };
 		88A271B62A979A0E00766654 /* MandArtApp+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MandArtApp+Menu.swift"; sourceTree = "<group>"; };
+		88ADC6902B2FA7B1006CD099 /* Double+CustomDecimalFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+CustomDecimalFormat.swift"; sourceTree = "<group>"; };
 		88BECC592B16228700770843 /* MandArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88BECC5B2B1647BA00770843 /* MandArtDocument+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MandArtDocument+Helpers.swift"; sourceTree = "<group>"; };
 		88BECC5C2B1647BA00770843 /* MandArtDocument+FileHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MandArtDocument+FileHandling.swift"; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				88EF98272AC0D3DC005A3ABC /* Color+Components.swift */,
 				88EF982B2AC0D78E005A3ABC /* String+Subscripting.swift */,
 				88EF982D2AC0D7F3005A3ABC /* UTType+mandart.swift */,
+				88ADC6902B2FA7B1006CD099 /* Double+CustomDecimalFormat.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				88A271AA2A977AF300766654 /* ContentView+GestureCalculations.swift in Sources */,
 				88EF98382AC0E1B5005A3ABC /* PngCommenter.swift in Sources */,
 				88A271B22A97860700766654 /* WelcomeMainView.swift in Sources */,
+				88ADC6912B2FA7B1006CD099 /* Double+CustomDecimalFormat.swift in Sources */,
 				88A271AE2A97844200766654 /* WelcomeMainImageView.swift in Sources */,
 				88EF98282AC0D3DC005A3ABC /* Color+Components.swift in Sources */,
 				882BAED3293409FE003ACB0B /* PictureDefinition.swift in Sources */,

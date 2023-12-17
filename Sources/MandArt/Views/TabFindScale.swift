@@ -34,8 +34,7 @@ struct TabFindScale: View {
     _doc = ObservedObject(initialValue: doc)
     _requiresFullCalc = requiresFullCalc
     _scale = State(initialValue: doc.picdef.scale)
-   // _scaleString = State(initialValue: String(format: "%.0f", doc.picdef.scale))
-    _scaleString = State(initialValue: String(format: "%.15f", doc.picdef.scale))
+    _scaleString = State(initialValue: doc.picdef.scale.customFormattedString())
 
   }
 
@@ -43,10 +42,9 @@ struct TabFindScale: View {
   ///
   /// - Parameter newScale: The new scale value to be set.
   func updateScale(newScale: Double) {
-    scale = newScale.rounded()
+    scale = newScale
     doc.picdef.scale = scale
-   // scaleString = String(format: "%.0f", scale)
-    scaleString = String(format: "%.15f", scale)
+    scaleString = scale.customFormattedString()
     didChange = !didChange // Force redraw if needed
     requiresFullCalc = true
   }
@@ -82,11 +80,6 @@ struct TabFindScale: View {
     ) {
       HStack {
       //  Text("Magnification")
-//        DelayedTextFieldDouble(
-//          placeholder: "430",
-//          value: $doc.picdef.scale,
-//          formatter: MAFormatters.fmtScale
-//        )
         TextField("",
                   text: $scaleString,
                   onCommit: {
@@ -96,18 +89,16 @@ struct TabFindScale: View {
         })
         .textFieldStyle(.roundedBorder)
         .multilineTextAlignment(.trailing)
-        .frame(maxWidth: 280)
+        .frame(maxWidth: 180)
         .help("Enter the magnification (may take a while).")
         .onAppear {
-          //scaleString = String(format: "%.0f", doc.picdef.scale)
-          scaleString = String(format: "%.15f", doc.picdef.scale)
+          scaleString = doc.picdef.scale.customFormattedString()
 
         }
   
         .onChange(of: doc.picdef.scale) { _ in
           // Update scaleString whenever doc changes
-       //   let newScaleString = String(format: "%.0f", doc.picdef.scale)
-          let newScaleString = String(format: "%.15f", doc.picdef.scale)
+          let newScaleString = doc.picdef.scale.customFormattedString()
 
           if newScaleString != scaleString {
             scaleString = newScaleString
@@ -158,7 +149,6 @@ struct TabFindScale: View {
             )
             .onChange(of: scaleMultiplier) { newValue in
               print("in onchange")
-              //requiresFullCalc = true
               if newValue < 1 {
                 print("updating from one")
                 scaleMultiplier = 1
@@ -168,7 +158,7 @@ struct TabFindScale: View {
             .textFieldStyle(.roundedBorder)
             .multilineTextAlignment(.trailing)
             .frame(minWidth: 70, maxWidth: 90)
-            //.help("Maximum value of 5.")
+            .help("Maximum value of 10.")
 
             Button("-") { zoomOutCustom() }
               .help("Zoom out by multiplier (may take a while).")
