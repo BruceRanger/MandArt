@@ -17,7 +17,7 @@ enum MAFormatters {
     static var fmtScale: NumberFormatter {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
-    formatter.isPartialStringValidationEnabled = true
+    //formatter.isPartialStringValidationEnabled = true
     formatter.minimumFractionDigits = 0
     formatter.maximumFractionDigits = 15
     formatter.minimum = 1

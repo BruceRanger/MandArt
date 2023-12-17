@@ -17,20 +17,12 @@ struct TabFindScale: View {
   @State private var scaleString: String = ""
   @State private var editedMultiplier: Double = 5.0 {
     didSet {
-      if editedMultiplier <= 0 {
-        editedMultiplier = 0.0001
-      }
-      scaleMultiplier = editedMultiplier
-      didChange.toggle()
-    }
-    
- /*       didSet {
-      if editedMultiplier <= 1 {
+      if editedMultiplier < 1 {
         editedMultiplier = 1
       }
       scaleMultiplier = editedMultiplier
       didChange.toggle()
-    }*/
+    }
   }
 
   /// Initializes the view with a document and a binding to determine if a full calculation is required.
@@ -42,7 +34,9 @@ struct TabFindScale: View {
     _doc = ObservedObject(initialValue: doc)
     _requiresFullCalc = requiresFullCalc
     _scale = State(initialValue: doc.picdef.scale)
-    _scaleString = State(initialValue: String(format: "%.0f", doc.picdef.scale))
+   // _scaleString = State(initialValue: String(format: "%.0f", doc.picdef.scale))
+    _scaleString = State(initialValue: String(format: "%.15f", doc.picdef.scale))
+
   }
 
   /// Updates the scale value and synchronizes it across the document, the scale state, and the text field.
@@ -51,7 +45,8 @@ struct TabFindScale: View {
   func updateScale(newScale: Double) {
     scale = newScale.rounded()
     doc.picdef.scale = scale
-    scaleString = String(format: "%.0f", scale)
+   // scaleString = String(format: "%.0f", scale)
+    scaleString = String(format: "%.15f", scale)
     didChange = !didChange // Force redraw if needed
     requiresFullCalc = true
   }
@@ -86,22 +81,34 @@ struct TabFindScale: View {
         .fontWeight(.medium)
     ) {
       HStack {
-        Text("Magnification")
-        TextField("Magnification", text: $scaleString, onCommit: {
+      //  Text("Magnification")
+//        DelayedTextFieldDouble(
+//          placeholder: "430",
+//          value: $doc.picdef.scale,
+//          formatter: MAFormatters.fmtScale
+//        )
+        TextField("",
+                  text: $scaleString,
+                  onCommit: {
           if let newScale = Double(scaleString) {
             updateScale(newScale: newScale)
           }
         })
         .textFieldStyle(.roundedBorder)
         .multilineTextAlignment(.trailing)
-        .frame(maxWidth: 180)
+        .frame(maxWidth: 280)
         .help("Enter the magnification (may take a while).")
         .onAppear {
-          scaleString = String(format: "%.0f", doc.picdef.scale)
+          //scaleString = String(format: "%.0f", doc.picdef.scale)
+          scaleString = String(format: "%.15f", doc.picdef.scale)
+
         }
+  
         .onChange(of: doc.picdef.scale) { _ in
           // Update scaleString whenever doc changes
-          let newScaleString = String(format: "%.0f", doc.picdef.scale)
+       //   let newScaleString = String(format: "%.0f", doc.picdef.scale)
+          let newScaleString = String(format: "%.15f", doc.picdef.scale)
+
           if newScaleString != scaleString {
             scaleString = newScaleString
           }
@@ -127,7 +134,7 @@ struct TabFindScale: View {
 
         VStack {
           Text("Custom Zoom ")
-          Text("(1.0001 to 9.9999)")
+          Text("(1.0000 to 10.0000)")
           HStack {
             Button("+") { zoomInCustom() }
               .help("Zoom in by multiplier (may take a while).")
