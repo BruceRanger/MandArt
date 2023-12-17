@@ -18,7 +18,8 @@ enum MAFormatters {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.isPartialStringValidationEnabled = true
-    formatter.maximumFractionDigits = 0
+    formatter.minimumFractionDigits = 0
+    formatter.maximumFractionDigits = 15
     formatter.minimum = 1
     formatter.maximum = 100_000_000_000_000_000
     return formatter
