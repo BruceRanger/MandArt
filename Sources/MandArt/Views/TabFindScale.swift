@@ -17,9 +17,9 @@ struct TabFindScale: View {
   @State private var scaleString: String = ""
   @State private var editedMultiplier: Double = 5.0 {
     didSet {
-      if editedMultiplier < 1 {
+  /*    if editedMultiplier < 1 {
         editedMultiplier = 1
-      }
+      }*/
       scaleMultiplier = editedMultiplier
       didChange.toggle()
     }
@@ -125,7 +125,7 @@ struct TabFindScale: View {
 
         VStack {
           Text("Custom Zoom ")
-          Text("(1.0000 to 10.0000)")
+          Text("(1.0001 to 10.0000)")
           HStack {
             Button("+") { zoomInCustom() }
               .help("Zoom in by multiplier (may take a while).")
@@ -140,18 +140,23 @@ struct TabFindScale: View {
                 }
               }),
               onCommit: {
-                if editedMultiplier < 1 {
+        /*        if editedMultiplier < 1 {
                   editedMultiplier = 1
-                }
+                }*/
                 scaleMultiplier = editedMultiplier
                 didChange.toggle()
               }
             )
             .onChange(of: scaleMultiplier) { newValue in
               print("in onchange")
-              if newValue < 1 {
-                print("updating from one")
-                scaleMultiplier = 1
+              if newValue < 1.0001 {
+                print("updating from 1.0001")
+                scaleMultiplier = 1.0001
+                didChange.toggle()
+              }
+              if newValue > 10 {
+                print("updating from 10")
+                scaleMultiplier = 10
                 didChange.toggle()
               }
             }
