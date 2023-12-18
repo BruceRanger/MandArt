@@ -43,7 +43,7 @@ enum MAFormatters {
     return formatter
   }
 
-  static var fmtScaleMultiplier: NumberFormatter {
+/*  static var fmtScaleMultiplier: NumberFormatter {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.isPartialStringValidationEnabled = true
@@ -53,7 +53,7 @@ enum MAFormatters {
     formatter.minimum = 0.0001
     formatter.maximum = 99.9999
     return formatter
-  }
+  }*/
 
   // USER INPUT CUSTOM FORMATTERS - GRADIENT  ....................
 
