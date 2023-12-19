@@ -7,6 +7,7 @@ struct TabColor: View {
   @ObservedObject var popupManager = PopupManager()
   @Binding var requiresFullCalc: Bool
   @Binding var showGradient: Bool
+  @State private var didChange: Bool = false
 
   var calculatedRightNumber: Int {
     if doc.picdef.leftNumber >= 1 && doc.picdef.leftNumber < doc.picdef.hues.count {
@@ -22,6 +23,7 @@ struct TabColor: View {
         self.doc.picdef.hues[index].num = index + 1
       }
     }
+    self.didChange.toggle()
   }
 
   var body: some View {
