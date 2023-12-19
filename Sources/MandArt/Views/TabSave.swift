@@ -18,15 +18,17 @@ struct TabSave: View {
             .fontWeight(.medium)
             .padding(.bottom)
         ) {
-          Button("Save Picture (as .png)") {
-            doc.saveMandArtImage()
-          }
-          .help("Save MandArt picture as .png.")
-
+          
           Button("Save Picture Inputs (as data file)") {
             doc.saveMandArtImageInputs()
           }
           .help("Save MandArt picture inputs as .mandart.")
+          
+          Button("Save Picture (as .png)") {
+            doc.saveMandArtImage()
+          }
+          .help("Save MandArt picture as .png.")
+          
         } // end section
       } //  vstack
     } // scroll
