@@ -15,6 +15,15 @@ struct TabColor: View {
     return 1
   }
 
+  /// Updates the hue numbers asynchronously.
+  func updateHueNums() {
+    DispatchQueue.main.async {
+      for (index, _) in self.doc.picdef.hues.enumerated() {
+        self.doc.picdef.hues[index].num = index + 1
+      }
+    }
+  }
+
   var body: some View {
     ScrollView {
       VStack(alignment: .leading) {
@@ -27,7 +36,10 @@ struct TabColor: View {
 
         ) {
           HStack {
-            Button("Add New Color") { doc.addHue() }
+            Button("Add New Color") {
+              doc.addHue()
+              updateHueNums()
+            }
               .help("Add a new color.")
               .padding([.bottom], 2)
           }
