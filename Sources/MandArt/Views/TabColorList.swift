@@ -22,8 +22,8 @@ struct TabColorList: View {
   var body: some View {
     GeometryReader { geometry in
       List {
-        ForEach($doc.picdef.hues, id: \.id) { $hue in
-          TabColorListRow(doc: doc, hue: $hue)
+        ForEach(doc.picdef.hues.indices, id: \.self) { index in
+          TabColorListRow(doc: doc, index: index)
         }
         .onMove(perform: moveHues)
       }

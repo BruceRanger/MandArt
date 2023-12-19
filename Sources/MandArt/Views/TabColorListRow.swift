@@ -4,9 +4,30 @@ import UniformTypeIdentifiers
 /// A view representing a row in the color list.
 struct TabColorListRow: View {
   @ObservedObject var doc: MandArtDocument
-  @Binding var hue: Hue
-
   @State private var showingPrintablePopups = false
+  @State private var didChange = false
+
+  let index: Int
+
+  var hue: Hue {
+    doc.picdef.hues[index]
+  }
+
+  var rowNumber: Int {
+    index + 1
+  }
+
+  func updateArt() {
+    for (index, _) in doc.picdef.hues.enumerated() {
+      doc.picdef.hues[index].num = index + 1
+    }
+    self.didChange.toggle()
+  }
+
+  var isIndexValid: Bool {
+    doc.picdef.hues.indices.contains(index)
+  }
+
 
   /// Updates the hue numbers asynchronously.
   func updateHueNums() {
@@ -26,70 +47,68 @@ struct TabColorListRow: View {
 
   var body: some View {
 
-    HStack {
-      Image(systemName: "line.horizontal.3")
-        .foregroundColor(.secondary)
+    if isIndexValid {
+      HStack {
+        Image(systemName: "line.horizontal.3")
+          .foregroundColor(.secondary)
 
-      TextField("number", value: $hue.num, formatter: MAFormatters.fmtIntColorOrderNumber)
-        .disabled(true)
+        Text(String(rowNumber))
 
-      ColorPicker("", 
-                  selection: $hue.color,
-                  supportsOpacity: false
-      )
-        .onChange(of: hue.color) { newColor in
-          doc.updateHueWithColorPick(
-            index: hue.num - 1, newColorPick: newColor
+        ColorPicker("", selection: Binding<Color>(
+          get: { self.hue.color },
+          set: { newColor in
+            var updatedHue = self.hue
+            updatedHue.color = newColor
+            doc.updateHueWithColorPick(index: index, newColorPick: newColor, undoManager: nil)
+
+          }),          supportsOpacity: false
+        )
+
+        Button {
+          showingPrintablePopups = true
+        } label: {
+          Image(systemName: "exclamationmark.circle")
+            .opacity(getIsPrintable(color: hue.color) ? 0 : 1)
+        }
+        .opacity(getIsPrintable(color: hue.color) ? 0 : 1)
+        .help("See printable options for " + "\(rowNumber)")
+
+        if showingPrintablePopups {
+          // popup message
+          ZStack {
+            VStack {
+              Button(action: {
+                self.showingPrintablePopups = false
+              }) {
+                Image(systemName: "xmark.circle")
+              }
+              VStack {
+                Text("This color may not print well.")
+                Text("See the instructions for options.")
+              }
+            } //  VStack
+          } //  ZStack for popup information
+          .frame(width: 150, height: 100)
+          .background(
+            RoundedRectangle(cornerRadius: 15)
+              .opacity(0.2)
+              .shadow(radius: 5, y: 5)
           )
         }
+        Text(String(format: "%03d", Int(hue.r)))
+        Text(String(format: "%03d", Int(hue.g)))
+        Text(String(format: "%03d", Int(hue.b)))
 
-      Button {
-        showingPrintablePopups = true
-      } label: {
-        Image(systemName: "exclamationmark.circle")
-          .opacity(getIsPrintable(color: hue.color) ? 0 : 1) // Set opacity
+        Button(role: .destructive) {
+          doc.deleteHue(index: index)
+          updateArt()
+        } label: {
+          Image(systemName: "trash")
+        }
+        .help("Delete " + "\(rowNumber)")
+
+        Spacer()
       }
-      .opacity(getIsPrintable(color: hue.color) ? 0 : 1) // Set opacity
-      .help("See printable options for " + "\(hue.num)")
-
-      if showingPrintablePopups {
-        ZStack { // popup message
-          VStack {
-            Button(action: {
-              self.showingPrintablePopups = false
-            }) {
-              Image(systemName: "xmark.circle")
-            }
-
-            VStack {
-              Text("This color may not print well.")
-              Text("See the instructions for options.")
-            }
-          } //  VStack
-        } //  ZStack for popup information
-        .frame(width: 150, height: 100)
-        .background(
-          RoundedRectangle(cornerRadius: 15)
-            .opacity(0.2)
-            .shadow(radius: 5, y: 5)
-        )
-      }
-
-//      // Red, Green, Blue just text display all 3 char
-      Text(String(format: "%03d", Int(hue.r)))
-      Text(String(format: "%03d", Int(hue.g)))
-      Text(String(format: "%03d", Int(hue.b)))
-
-      Button(role: .destructive) {
-        doc.deleteHue(index: hue.num - 1)
-        updateHueNums()
-      } label: {
-        Image(systemName: "trash")
-      }
-      .help("Delete " + "\(hue.num)")
-
-      Spacer()
-
     }
   }
 }

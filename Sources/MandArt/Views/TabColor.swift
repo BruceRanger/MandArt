@@ -7,23 +7,20 @@ struct TabColor: View {
   @ObservedObject var popupManager = PopupManager()
   @Binding var requiresFullCalc: Bool
   @Binding var showGradient: Bool
-  @State private var didChange: Bool = false
+  @State private var didChange = false
+
+  func updateArt() {
+    for (index, _) in doc.picdef.hues.enumerated() {
+      doc.picdef.hues[index].num = index + 1
+    }
+    self.didChange.toggle()
+  }
 
   var calculatedRightNumber: Int {
     if doc.picdef.leftNumber >= 1 && doc.picdef.leftNumber < doc.picdef.hues.count {
       return doc.picdef.leftNumber + 1
     }
     return 1
-  }
-
-  /// Updates the hue numbers asynchronously.
-  func updateHueNums() {
-    DispatchQueue.main.async {
-      for (index, _) in self.doc.picdef.hues.enumerated() {
-        self.doc.picdef.hues[index].num = index + 1
-      }
-    }
-    self.didChange.toggle()
   }
 
   var body: some View {
@@ -40,7 +37,9 @@ struct TabColor: View {
           HStack {
             Button("Add New Color") {
               doc.addHue()
-              updateHueNums()
+              self.updateArt()
+
+
             }
               .help("Add a new color.")
               .padding([.bottom], 2)
