@@ -26,9 +26,9 @@ struct TabColorListRow: View {
 
   var body: some View {
 
-    HStack(spacing: 10) {
+    HStack {
       Image(systemName: "line.horizontal.3")
-        .foregroundColor(.secondary) // Set the color as needed
+        .foregroundColor(.secondary)
 
       TextField("number", value: $hue.num, formatter: MAFormatters.fmtIntColorOrderNumber)
         .disabled(true)
@@ -37,11 +37,11 @@ struct TabColorListRow: View {
                   selection: $hue.color,
                   supportsOpacity: false
       )
-//        .onChange(of: hue.color) { newColor in
-//          doc.updateHueWithColorPick(
-//            index: hue.num - 1, newColorPick: newColor
-//          )
-//        }
+        .onChange(of: hue.color) { newColor in
+          doc.updateHueWithColorPick(
+            index: hue.num - 1, newColorPick: newColor
+          )
+        }
 
       Button {
         showingPrintablePopups = true
@@ -76,9 +76,9 @@ struct TabColorListRow: View {
       }
 
 //      // Red, Green, Blue just text display all 3 char
-//      Text(String(format: "%03d", Int(hue.r)))
-//      Text(String(format: "%03d", Int(hue.g)))
-//      Text(String(format: "%03d", Int(hue.b)))
+      Text(String(format: "%03d", Int(hue.r)))
+      Text(String(format: "%03d", Int(hue.g)))
+      Text(String(format: "%03d", Int(hue.b)))
 
       Button(role: .destructive) {
         doc.deleteHue(index: hue.num - 1)
@@ -87,7 +87,6 @@ struct TabColorListRow: View {
         Image(systemName: "trash")
       }
       .help("Delete " + "\(hue.num)")
-
 
       Spacer()
 
