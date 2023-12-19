@@ -37,11 +37,11 @@ struct TabColorListRow: View {
                   selection: $hue.color,
                   supportsOpacity: false
       )
-        .onChange(of: hue.color) { newColor in
-          doc.updateHueWithColorPick(
-            index: hue.num - 1, newColorPick: newColor
-          )
-        }
+//        .onChange(of: hue.color) { newColor in
+//          doc.updateHueWithColorPick(
+//            index: hue.num - 1, newColorPick: newColor
+//          )
+//        }
 
       Button {
         showingPrintablePopups = true
