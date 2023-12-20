@@ -25,12 +25,16 @@ The app opens with the window shown below.
 
 Click where indicated and a new window pops up as shown below.
 
-![Mandelbrot](MandArtDefaultExample.png)
+![Initial Picture](Initial1.png)
 
 Only the upper-left part of the window shows up, so move the window up and left.
 Then, grab the lower-right corner of the window and move it down and right so you can see the whole picture.
 
+![Whole Picture](WholePicture1.png)
+
 ### Mandelbrot and Mini-Mands
+
+![Mandelbrot](Mandelbrot.png)
 
 This picture shows us the region where the action will take place. 
 The black area is the major part of the Mandelbrot set, 
