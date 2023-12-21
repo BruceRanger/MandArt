@@ -13,7 +13,7 @@ Centers: -2.0 to 2.0
 
 Rotation: -359.9 to 359.9
 
-Magnification multiplier: 0.0001 to 99.9999
+Magnification multiplier: 1.0001 to 10.0000
 
 Maximum tries: 1 to 100,000,000
 

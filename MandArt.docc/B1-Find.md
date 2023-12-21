@@ -70,10 +70,12 @@ These values allow you to fine-tune the picture or to input a set of values that
 
 ### Finding Interesting Areas 
 
-![Finding Interesting Areas](FullWindowLimeSpots.png)
+![Finding Interesting Areas](GoodSpots3.png)
 
-This picture shows some areas where you might look for interesting scenes. 
-They seem to be in areas that are near where two black areas are close together.
+This picture shows some regions where you might look for interesting scenes, indicated by gray dots.
+The white dot indicates the region where the first picture in this documentation was located.
+
+They seem to be in regions that are near where two black areas are close together.
 
 Generally, the different sides look very different when you zoom in to see what's there.
 
