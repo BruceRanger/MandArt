@@ -83,40 +83,80 @@ extension MandArtDocument {
     return imageFileName
   }
 
+//  Width and height: 0 to 100,000
+//  Magnification: 1 to 100,000,000,000,000,000
+//  Centers: -2.0 to 2.0
+
+
+
+//  Rotation: -359.9 to 359.9
+//  Maximum tries: 1 to 100,000,000
+//  Hold fraction: 0.00 to 1.00
+//  Color spacing near edge: 1 to 100
+//  Color spacing near Mini-Mand: 1 to 100
+//  Change in minimum tries: -1,000 to 1,000
+//  Number of color blocks: 1 to 100
+
+  //  R, G, B values: 0 to 255
+
+
   func getImageComment() -> String {
-    let a = String(picdef.dFIterMin)
-    let b = String(picdef.imageHeight)
-    let c = String(picdef.imageWidth)
-    let d = String(picdef.iterationsMax)
-    let e = String(picdef.leftNumber)
-    let f = String(picdef.nBlocks)
-    let g = String(picdef.rSqLimit)
-    let h = String(picdef.scale)
-    let i = String(picdef.spacingColorFar)
-    let j = String(picdef.spacingColorNear)
-    let k = String(picdef.theta)
-    let l = String(picdef.xCenter)
-    let m = String(picdef.yCenter)
-    let n = String(picdef.yY)
-
-    let comment = "dFIterMin is \(a) \n" +
-    "imageHeight is \(b) \n" +
-    "imageWidth is \(c) \n" +
-    "iterationsMax is \(d) \n" +
-    "leftNumber is \(e) \n" +
-    "nBlocks is \(f) \n" +
-    "rSqLimit is \(g) \n" +
-    "scale is \(h) \n" +
-    "spacingColorFar is \(i) \n" +
-    "spacingColorNear is \(j) \n" +
-    "theta is \(k) \n" +
-    "xCenter is \(l) \n" +
-    "yCenter is \(m) \n" +
-    "yY is \(n) \n" +
+    let comment = 
+    "FIND:\n" +
+    "imageWidth is \(String(picdef.imageWidth)) \n" +
+    "imageHeight is \(String(picdef.imageHeight)) \n" +
+    "xCenter is \(String(picdef.xCenter)) \n" +
+    "yCenter is \(String(picdef.yCenter)) \n" +
+    "scale_mag is \(String(picdef.scale)) \n" +
+    "iterationsMax_tries is \(String(picdef.iterationsMax)) \n" +
+    "theta_rotation is \(String(picdef.theta)) \n" +
+    "rSqLimit_smoothig is \(String(picdef.rSqLimit)) \n" +
+    "TUNE:\n" +
+    "spacingColorFar_fromMand is \(String(picdef.spacingColorFar)) \n" +
+    "spacingColorNear_toMand is \(String(picdef.spacingColorNear)) \n" +
+    "dFIterMin_change_in_tries is \(String(picdef.dFIterMin)) \n" +
+    "nBlocks is \(String(picdef.nBlocks)) \n" +
+    "yY_hold_fraction is \(String(picdef.yY)) \n" +
+    "COLOR:\n" +
+    "leftNumber is \(String(picdef.leftNumber)) \n" +
     " "
-
     return comment
   }
+
+//  func getImageComment() -> String {
+//    let a = String(picdef.dFIterMin)
+//    let b = String(picdef.imageHeight)
+//    let c = String(picdef.imageWidth)
+//    let d = String(picdef.iterationsMax)
+//    let e = String(picdef.leftNumber)
+//    let f = String(picdef.nBlocks)
+//    let g = String(picdef.rSqLimit)
+//    let h = String(picdef.scale)
+//    let i = String(picdef.spacingColorFar)
+//    let j = String(picdef.spacingColorNear)
+//    let k = String(picdef.theta)
+//    let l = String(picdef.xCenter)
+//    let m = String(picdef.yCenter)
+//    let n = String(picdef.yY)
+//
+//    let comment = "dFIterMin is \(a) \n" +
+//    "imageHeight is \(b) \n" +
+//    "imageWidth is \(c) \n" +
+//    "iterationsMax is \(d) \n" +
+//    "leftNumber is \(e) \n" +
+//    "nBlocks is \(f) \n" +
+//    "rSqLimit is \(g) \n" +
+//    "scale is \(h) \n" +
+//    "spacingColorFar is \(i) \n" +
+//    "spacingColorNear is \(j) \n" +
+//    "theta is \(k) \n" +
+//    "xCenter is \(l) \n" +
+//    "yCenter is \(m) \n" +
+//    "yY is \(n) \n" +
+//    " "
+//
+//    return comment
+//  }
 
   func beforeSaveImage() {
     var data: Data
