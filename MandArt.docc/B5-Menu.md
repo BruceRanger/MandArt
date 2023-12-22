@@ -24,4 +24,4 @@ You can use Window to minimize, zoom, or move window left or right.
 
 ## Help
 
-Help brings up this help document for using the app.
+Help brings up this help document for using the app. 
