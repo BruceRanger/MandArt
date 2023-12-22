@@ -8,6 +8,9 @@ Read more in the articles below.
 
 ![Example](mandart2.jpg)
 
+The picture shown is an example of what you can find.
+It has Mini-Mands, swirls, and regions that look like bull's-eyes.
+
 ## Topics
 
 

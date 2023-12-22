@@ -27,7 +27,7 @@ Click where indicated and a new window pops up as shown below.
 
 ![Initial Picture](Initial1.png)
 
-Only the upper-left part of the window shows up, so move the window up and left.
+Only the middle of the window shows up, so move the window up and left.
 Then, grab the lower-right corner of the window and move it down and right so you can see the whole picture.
 
 ![Whole Picture](WholePicture1.png)
@@ -54,7 +54,7 @@ If the number of tries reaches some maximum defined value without reaching the d
 
 The app uses those remembered number of tries to help define a color for that location.
 
-If we just used the recorded number of tries at each location to define a color, we'd get bands of color in the picture.
+If we just used the recorded number of tries at each location to define a color, we'd get bands of solid color in the picture.
 We would need another bit of information to adjust the integer number of tries to something like a fractional number of tries, but how?
 
 It has been proven that any time a location exceeds a distance of two from the center of the Mandelbrot universe, the following tries will rapidly move out to infinity.
