@@ -24,7 +24,6 @@ extension MandArtDocument {
     picdef.imageHeight += 1
     picdef.imageHeight -= 1
 
-    // var currImage = contextImageGlobal!
     let savePanel = NSSavePanel()
     savePanel.title = "Choose directory and name for image inputs file"
     savePanel.nameFieldStringValue = dataFileName
@@ -71,14 +70,17 @@ extension MandArtDocument {
 
   func getCurrentWindowTitle() -> String {
     guard let mainWindow = NSApp.mainWindow else {
-      return ""
+      return "MyArt"
     }
     return mainWindow.title
   }
 
   func getDefaultImageFileName() -> String {
     let winTitle = self.getCurrentWindowTitle()
-    let justname = winTitle.replacingOccurrences(of: ".mandart", with: "")
+    var justname = winTitle.replacingOccurrences(of: ".mandart", with: "")
+    if justname.isEmpty {
+      justname = "MyArt"
+    }
     let imageFileName = justname + ".png"
     return imageFileName
   }
@@ -90,7 +92,7 @@ extension MandArtDocument {
     "-----------\n" +
     "width is \(String(picdef.imageWidth)) \n" +
     "height is \(String(picdef.imageHeight)) \n" +
-    "horiz_xCenter is \(String(picdef.xCenter)) \n" +
+    "horizontal_xCenter is \(String(picdef.xCenter)) \n" +
     "vertical_yCenter is \(String(picdef.yCenter)) \n" +
     "magnification_scale is \(String(picdef.scale)) \n" +
     "iterationsMax_tries is \(String(picdef.iterationsMax)) \n" +
