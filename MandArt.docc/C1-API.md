@@ -19,8 +19,6 @@ Explore the application programming interfaces (API) to understand the building 
 - <doc:MandArtDocument>: The main document model for MandArt.
 - <doc:MandArtError>: Custom error types used in MandArt.
 - <doc:PictureDefinition>: Defines the properties of a picture in MandArt.
-- <doc:PngCommenter>: Manages commenting functionality for PNG files.
-- <doc:PngSaver>: Responsible for saving PNG files.
 
 ### Utilities 
 
