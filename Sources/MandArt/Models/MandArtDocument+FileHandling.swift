@@ -85,24 +85,30 @@ extension MandArtDocument {
 
   func getImageComment() -> String {
     var comment =
-    "FIND:\n" +
-    "imageWidth is \(String(picdef.imageWidth)) \n" +
-    "imageHeight is \(String(picdef.imageHeight)) \n" +
-    "xCenter is \(String(picdef.xCenter)) \n" +
-    "yCenter is \(String(picdef.yCenter)) \n" +
-    "scale_mag is \(String(picdef.scale)) \n" +
+    "-----------\n" +
+    "FIND TAB\n" +
+    "-----------\n" +
+    "width is \(String(picdef.imageWidth)) \n" +
+    "height is \(String(picdef.imageHeight)) \n" +
+    "horiz_xCenter is \(String(picdef.xCenter)) \n" +
+    "vertical_yCenter is \(String(picdef.yCenter)) \n" +
+    "magnification_scale is \(String(picdef.scale)) \n" +
     "iterationsMax_tries is \(String(picdef.iterationsMax)) \n" +
-    "theta_rotation is \(String(picdef.theta)) \n" +
-    "rSqLimit_smoothig is \(String(picdef.rSqLimit)) \n" +
-    "TUNE:\n" +
+    "rotation_theta is \(String(picdef.theta)) \n" +
+    "smoothing_rSqLimit is \(String(picdef.rSqLimit)) \n" +
+    "-----------\n" +
+    "TUNE TAB\n" +
+    "-----------\n" +
     "spacingColorFar_fromMand is \(String(picdef.spacingColorFar)) \n" +
     "spacingColorNear_toMand is \(String(picdef.spacingColorNear)) \n" +
-    "dFIterMin_change_in_tries is \(String(picdef.dFIterMin)) \n" +
+    "min_tries_dFIterMin is \(String(picdef.dFIterMin)) \n" +
     "nBlocks is \(String(picdef.nBlocks)) \n" +
-    "yY_hold_fraction is \(String(picdef.yY)) \n" +
-    "COLORS:\n" +
+    "hold_fraction_yY is \(String(picdef.yY)) \n" +
+    "-----------\n" +
+    "COLOR TAB\n" +
+    "-----------\n" +
     "leftNumber is \(String(picdef.leftNumber)) \n"
-    
+
     for hue in picdef.hues {
       comment += "\(hue.num): R=\(hue.r), G=\(hue.g), B=\(hue.b)\n"
     }
