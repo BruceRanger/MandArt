@@ -36,7 +36,7 @@ Predicting how true a given color will print is far beyong the scope of this app
 
 As noted, you can click on and drag a color number to reorder the colors.
 
-You can click on the "Add New Color" box to get a new coloe.
+You can click on the "Add New Color" box to get a new color.
 The color will be white and will go at the end of the color list.
 Then you can change the color and its place in the list.
 

@@ -10,7 +10,7 @@ More ways to adjust the coloring of your picture.
 
 ### Using the color tuning sliders.
 
-Once you've selected the colors to be used in your picture, you might think you've run out of options, but the five sliders in section B3-Tune.md can greatly change the coloring of your picture.
+Once you've selected the colors to be used in your picture, you might think you've run out of options, but the five sliders in section 3.Tune can greatly change the coloring of your picture.
 
 ![Example](mandart2.jpg)
 
@@ -36,7 +36,7 @@ When the last color of a block is used, the app goes on to the first color of th
 This not only allows you to only pick a few input colors, but also helps show the flow paths.
 
 With the color smoothing used by the app, none of the defined colors actually are seen in the picture.
-Every pixel will be show a color part way between the bracketing defined colors.
+Every pixel will show a color part way between the bracketing defined colors.
 In order to show regions of each of the defined colors, you can use the fifth slider to hold that color for a fraction of the distance between the two bracketing colors.
 If you move the slider up to 1.0, there won't be any color smoothing.
 
