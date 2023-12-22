@@ -37,9 +37,6 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
   // all views using that document will be reloaded
   @Published var picdef: PictureDefinition
 
-  var pngCommenter = PngCommenter(picdef: PictureDefinition(hues: []))
-  var pngSaver = PngSaver(pngCommenter: PngCommenter(picdef: PictureDefinition(hues: [])))
-
   /// Default initializer for a new demo picture
   init() {
     let hues = [
@@ -51,9 +48,7 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
       Hue(num: 6, r: 0.0, g: 255.0, b: 255.0),
     ]
     picdef = PictureDefinition(hues: hues)
-    pngCommenter = PngCommenter(picdef: picdef)
-    pngSaver = PngSaver(pngCommenter: pngCommenter)
-  }
+    }
 
   /// Initializer to read a document from disk
   init(configuration: ReadConfiguration) throws {
@@ -62,8 +57,6 @@ final class MandArtDocument: ReferenceFileDocument, ObservableObject {
     }
     docName = configuration.file.filename ?? "unknown"
     picdef = try JSONDecoder().decode(PictureDefinition.self, from: data)
-    pngCommenter = PngCommenter(picdef: picdef)
-    pngSaver = PngSaver(pngCommenter: pngCommenter)
     print("Opening data file = ", docName)
   }
 
