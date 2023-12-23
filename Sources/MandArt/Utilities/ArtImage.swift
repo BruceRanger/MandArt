@@ -458,6 +458,42 @@ struct ArtImage {
     let yStarting = 0
     let width: Int = imageWidth
     let height: Int = imageHeight
+    
+    
+
+    var fIterGlobal1 = [Double](arrayLiteral: 0.0, 0.0, 0.0, 0.0)
+    var dFIterGlobal = 0.0
+    var dFIterGlobalMax = 0.0
+    
+    
+    // find maximum difference between 4 fIterGlobal neighbors and center value not within 2 pixels of an edge.
+    for v in 2 ... (height - 3) {
+
+      for u in 2 ... (width - 3) {
+  
+        fIterGlobal1 = [fIterGlobal[u][v+1], fIterGlobal[u][v-1], fIterGlobal[u+1][v], fIterGlobal[u-1][v]]
+        
+        fIterGlobal1.sort(by: >)
+        
+         if fIterGlobal1[0] > 19000 && fIterGlobal1[0] < 20000 {
+         print ("fIterGlobal1", fIterGlobal1)
+         }
+        
+        dFIterGlobal = fIterGlobal1[0] - fIterGlobal[u][v]
+        
+        if dFIterGlobal > dFIterGlobalMax {
+          dFIterGlobalMax = dFIterGlobal
+        }
+      
+        
+
+      } // end for u
+    } // end for v
+    
+    print ("dFIterGlobalMax", dFIterGlobalMax)
+
+    
+    
 
     // iterate over all rows for the entire height of the square
     for v in 0 ... (height - 1) {
