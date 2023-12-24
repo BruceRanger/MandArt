@@ -459,27 +459,33 @@ struct ArtImage {
     let width: Int = imageWidth
     let height: Int = imageHeight
     
+/*   
     
+ // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   
 
-    var fIterGlobal1 = [Double](arrayLiteral: 0.0, 0.0, 0.0, 0.0)
+    var fIterGlobal1 = [Double]()
     var dFIterGlobal = 0.0
     var dFIterGlobalMax = 0.0
+    var u = 600
+    var v = 997
     
     
-    // find maximum difference between 4 fIterGlobal neighbors and center value not within 2 pixels of an edge.
-    for v in 2 ... (height - 3) {
+    // find maximum difference between 12 fIterGlobal neighbors and center value not within 3 pixels of an edge.
 
-      for u in 2 ... (width - 3) {
   
-        fIterGlobal1 = [fIterGlobal[u][v+1], fIterGlobal[u][v-1], fIterGlobal[u+1][v], fIterGlobal[u-1][v]]
+        fIterGlobal1 = [fIterGlobal[u][v+1], fIterGlobal[u][v-1], fIterGlobal[u+1][v], fIterGlobal[u-1][v], 
+        fIterGlobal[u][v-2], fIterGlobal[u][v+2], fIterGlobal[u][v-1], fIterGlobal[u][v-1], fIterGlobal[u][v-1], fIterGlobal[u][v-1], fIterGlobal[u][v-1], fIterGlobal[u][v-1]]
         
         fIterGlobal1.sort(by: >)
         
-         if fIterGlobal1[0] > 19000 && fIterGlobal1[0] < 20000 {
+         print("u, v", u, v)
          print ("fIterGlobal1", fIterGlobal1)
-         }
+         print("fIterGlobal[u][v]", fIterGlobal[u][v])      
         
         dFIterGlobal = fIterGlobal1[0] - fIterGlobal[u][v]
+        print("dFIterGlobal", dFIterGlobal)
+        print()
+        
         
         if dFIterGlobal > dFIterGlobalMax {
           dFIterGlobalMax = dFIterGlobal
@@ -487,13 +493,18 @@ struct ArtImage {
       
         
 
-      } // end for u
-    } // end for v
+
     
     print ("dFIterGlobalMax", dFIterGlobalMax)
 
     
     
+
+ 
+ 
+ // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ 
+ */
 
     // iterate over all rows for the entire height of the square
     for v in 0 ... (height - 1) {
