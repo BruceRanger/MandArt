@@ -88,7 +88,7 @@ enum MAFormatters {
     let formatter = NumberFormatter()
     formatter.maximumFractionDigits = 0
     formatter.minimum = 1
-    formatter.maximum = 100
+    formatter.maximum = 100_000_000
     return formatter
   }
 
