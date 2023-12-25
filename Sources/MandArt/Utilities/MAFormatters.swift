@@ -99,7 +99,7 @@ enum MAFormatters {
     formatter.numberStyle = .decimal
     formatter.maximumFractionDigits = 0
     formatter.minimum = 1
-    formatter.maximum = 100
+    formatter.maximum = 100_000_000
     return formatter
   }
 
@@ -108,7 +108,7 @@ enum MAFormatters {
     formatter.numberStyle = .decimal
     formatter.maximumFractionDigits = 0
     formatter.minimum = 1
-    formatter.maximum = 100
+    formatter.maximum = 100_000_000
     return formatter
   }
 
@@ -116,8 +116,8 @@ enum MAFormatters {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.maximumFractionDigits = 3
-    formatter.minimum = -1000
-    formatter.maximum = 1000
+    formatter.minimum = -100_000_000
+    formatter.maximum = 100_000_000
     return formatter
   }
 
@@ -125,7 +125,7 @@ enum MAFormatters {
     let formatter = NumberFormatter()
     formatter.maximumFractionDigits = 0
     formatter.minimum = 1
-    formatter.maximum = 100
+    formatter.maximum = 100_000_000
     return formatter
   }
 
