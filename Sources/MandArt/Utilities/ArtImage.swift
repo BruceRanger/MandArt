@@ -459,52 +459,92 @@ struct ArtImage {
     let width: Int = imageWidth
     let height: Int = imageHeight
     
-/*   
+   
     
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   
 
-    var fIterGlobal1 = [Double]()
+    var fIterGlobalNeighbors = [[Double]]()
+    var fIterGlobalNeighborsSorted = [[Double]]()
     var dFIterGlobal = 0.0
-    var dFIterGlobalMax = 0.0
     var u = 600
     var v = 997
-    
+    var nextRow = 0 
+    var nextCol = 0
     
     // find maximum difference between 12 fIterGlobal neighbors and center value not within 3 pixels of an edge.
+    
+    // Find the location of the neighbor with the max value of fIterGlobal.
 
-  
-        fIterGlobal1 = [fIterGlobal[u][v+1], fIterGlobal[u][v-1], fIterGlobal[u+1][v], fIterGlobal[u-1][v], 
-        fIterGlobal[u][v-2], fIterGlobal[u][v+2], fIterGlobal[u][v-1], fIterGlobal[u][v-1], fIterGlobal[u][v-1], fIterGlobal[u][v-1], fIterGlobal[u][v-1], fIterGlobal[u][v-1]]
+        fIterGlobalNeighbors = [
+        [Double(u), Double(v+1), fIterGlobal[u][v+1]], 
+        [Double(u), Double(v-1), fIterGlobal[u][v-1]], 
+        [Double(u+1), Double(v), fIterGlobal[u+1][v]], 
+        [Double(u-1), Double(v), fIterGlobal[u-1][v]], 
         
-        fIterGlobal1.sort(by: >)
+        [Double(u+1), Double(v+2), fIterGlobal[u+1][v+2]], 
+        [Double(u+1), Double(v-2), fIterGlobal[u+1][v-2]],
+        [Double(u-1), Double(v+2), fIterGlobal[u-1][v+2]], 
+        [Double(u-1), Double(v-2), fIterGlobal[u-1][v-2]], 
+        [Double(u+2), Double(v+1), fIterGlobal[u+2][v+1]], 
+        [Double(u+2), Double(v-1), fIterGlobal[u+2][v-1]],
+        [Double(u-2), Double(v+1), fIterGlobal[u-2][v+1]], 
+        [Double(u-2), Double(v-1), fIterGlobal[u-2][v-1]]
+        ]
         
-         print("u, v", u, v)
-         print ("fIterGlobal1", fIterGlobal1)
-         print("fIterGlobal[u][v]", fIterGlobal[u][v])      
+        fIterGlobalNeighborsSorted = fIterGlobalNeighbors.sorted { $0[2] > $1[2] }
         
-        dFIterGlobal = fIterGlobal1[0] - fIterGlobal[u][v]
-        print("dFIterGlobal", dFIterGlobal)
         print()
+        print(fIterGlobalNeighbors)
+        print()
+        print(fIterGlobalNeighborsSorted)
         
         
-        if dFIterGlobal > dFIterGlobalMax {
-          dFIterGlobalMax = dFIterGlobal
-        }
+        
+  //      dFIterGlobal = Double(u) + Double(v)
+        
+  //      fIterGlobalNeighborsSorted = fIterGlobalNeighbors.sorted(){$0 > $1}
+        
+ //       print()
+  //      print ("fIterGlobalNeighbors", fIterGlobalNeighbors)
+  //      print()
+ //       print ("fIterGlobalNeighborsSorted", fIterGlobalNeighborsSorted)
+                
+  //      print()
+  //       print("u, v", u, v)
+  //       print ("fIterGlobal1", fIterGlobal1)
+  //       print("fIterGlobal[u][v]", fIterGlobal[u][v])      
+        
+  //      dFIterGlobal = fIterGlobal1[0] - fIterGlobal[u][v]
+   //     print("dFIterGlobal", dFIterGlobal)
+   //     print()
       
-        
+      
+    // yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+      
+ /*     From ChatGPT:
+   let array1 = [1, 2, 2.7]
+let array2 = [3, 7, 42.1]
+let array3 = [5, 1, 21.2]
+let array4 = [3, 2, 18.6]
+
+// Create an array of arrays
+let arrayOfArrays = [array1, array2, array3, array4]
+
+// Sort the array of arrays in descending order based on the third element (index 2)
+let sortedArrayDescending = arrayOfArrays.sorted { $0[2] > $1[2] }
+
+// Print the sorted array in descending order
+print(sortedArrayDescending)
 
 
-    
-    print ("dFIterGlobalMax", dFIterGlobalMax)
+// yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 
-    
-    
+*/
 
- 
- 
+
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
  
- */
+ 
 
     // iterate over all rows for the entire height of the square
     for v in 0 ... (height - 1) {
