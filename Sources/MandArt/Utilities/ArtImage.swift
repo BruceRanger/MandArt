@@ -461,20 +461,19 @@ struct ArtImage {
     
    
     
- // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   
+ // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   Our code
 
+    var fIterGlobalPresent = [Double]()
+    var fIterGlobalNeighborsMax = [Double]()
     var fIterGlobalNeighbors = [[Double]]()
     var fIterGlobalNeighborsSorted = [[Double]]()
-    var dFIterGlobal = 0.0
     var u = 600
     var v = 997
-    var nextRow = 0 
-    var nextCol = 0
-    
-    // find maximum difference between 12 fIterGlobal neighbors and center value not within 3 pixels of an edge.
-    
+        
     // Find the location of the neighbor with the max value of fIterGlobal.
 
+        fIterGlobalPresent = [Double(u), Double(v), fIterGlobal[u][v]]
+        
         fIterGlobalNeighbors = [
         [Double(u), Double(v+1), fIterGlobal[u][v+1]], 
         [Double(u), Double(v-1), fIterGlobal[u][v-1]], 
@@ -493,33 +492,21 @@ struct ArtImage {
         
         fIterGlobalNeighborsSorted = fIterGlobalNeighbors.sorted { $0[2] > $1[2] }
         
+        fIterGlobalNeighborsMax = fIterGlobalNeighborsSorted[0]
+        
         print()
+        print("fIterGlobalPresent", fIterGlobalPresent)
         print(fIterGlobalNeighbors)
         print()
         print(fIterGlobalNeighborsSorted)
-        
-        
-        
-  //      dFIterGlobal = Double(u) + Double(v)
-        
-  //      fIterGlobalNeighborsSorted = fIterGlobalNeighbors.sorted(){$0 > $1}
-        
- //       print()
-  //      print ("fIterGlobalNeighbors", fIterGlobalNeighbors)
-  //      print()
- //       print ("fIterGlobalNeighborsSorted", fIterGlobalNeighborsSorted)
-                
-  //      print()
-  //       print("u, v", u, v)
-  //       print ("fIterGlobal1", fIterGlobal1)
-  //       print("fIterGlobal[u][v]", fIterGlobal[u][v])      
-        
-  //      dFIterGlobal = fIterGlobal1[0] - fIterGlobal[u][v]
-   //     print("dFIterGlobal", dFIterGlobal)
-   //     print()
+        print("fIterGlobalNeighborsSorted[0][2]", fIterGlobalNeighborsSorted[0][2])
+        print("fIterGlobalNeighborsMax", fIterGlobalNeighborsMax)
+   
+   
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Our code
+
       
-      
-    // yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+    // yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy ChatGPT
       
  /*     From ChatGPT:
    let array1 = [1, 2, 2.7]
@@ -537,12 +524,11 @@ let sortedArrayDescending = arrayOfArrays.sorted { $0[2] > $1[2] }
 print(sortedArrayDescending)
 
 
-// yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+// yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy  ChatGPT
 
 */
 
 
- // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
  
  
 
