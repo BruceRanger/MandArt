@@ -459,9 +459,70 @@ struct ArtImage {
     let width: Int = imageWidth
     let height: Int = imageHeight
     
-   
+//  zzzzzzzzzzzzzzzzzzzzzzzz  Our code for finding max slope   
+
+    var fIterGlobalCenter = [Double]()
+    var fIterGlobalNeighbors = [[Double]]()
+    var fIterGlobalNeighborsSorted = [[Double]]()
+    var fIterGlobalNeighborsMax = [Double]()
+    var dFIterGlobal = 0.0
+    var dFIterGlobalMax = 0.0
+    var u = 0
+    var v = 0
+        
+        
+ //       print()
+ //      print("fIterGlobalCenter", fIterGlobalCenter)
+        
+        for v in 1...(imageHeight - 1)  {
+          for u in 1...(imageHeight - 1) {
+        
+        fIterGlobalCenter = [Double(u), Double(v), fIterGlobal[u][v]]
+
+        fIterGlobalNeighbors = [
+        [Double(u), Double(v+1), fIterGlobal[u][v+1]], 
+        [Double(u), Double(v-1), fIterGlobal[u][v-1]], 
+        [Double(u+1), Double(v), fIterGlobal[u+1][v]], 
+        [Double(u-1), Double(v), fIterGlobal[u-1][v]], 
+        ]
+        
+        fIterGlobalNeighborsSorted = fIterGlobalNeighbors.sorted(){ $0[2] > $1[2] }
+        
+        if (fIterGlobalCenter[2] == iterationsMax) || (fIterGlobalNeighborsSorted[0][2] == iterationsMax){
+          break
+        }
+                
+        fIterGlobalNeighborsMax = fIterGlobalNeighborsSorted[0]
+        
+        if fIterGlobalNeighborsMax[2] > fIterGlobalCenter[2] {
+          dFIterGlobal = fIterGlobalNeighborsMax[2] - fIterGlobalCenter[2]
+          if dFIterGlobal > dFIterGlobalMax {
+            dFIterGlobalMax = dFIterGlobal
+          }
+          } 
+        
+  //      print()
+   //     print("fIterGlobalCenter", fIterGlobalCenter)
+  //      print("dFIterGlobal", dFIterGlobal)
+//        print(fIterGlobalNeighbors)
+//        print()
+//        print(fIterGlobalNeighborsSorted)
+//        print("fIterGlobalNeighborsSorted[0][2]", fIterGlobalNeighborsSorted[0][2])
+ //       print("fIterGlobalNeighborsMax", fIterGlobalNeighborsMax)
+        
+        } // end u
+        } // end v
+        
+        print()
+        print("dFIterGlobalMax", dFIterGlobalMax)
+        
+
+
+
+//  zzzzzzzzzzzzzzzzzzzzzzzz  Our code for finding max slope
+
 /*    
- // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   Our code
+ // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   Our code for finding flow path.
 
     var fIterGlobalPresent = [Double]()
     var fIterGlobalNeighborsMax = [Double]()
@@ -522,7 +583,7 @@ struct ArtImage {
         } while dFIterGlobal > 0.0
    
    
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Our code
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Our code for finding flow path
 */
       
     // yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy ChatGPT
