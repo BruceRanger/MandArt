@@ -467,40 +467,59 @@ struct ArtImage {
     var fIterGlobalNeighborsMax = [Double]()
     var fIterGlobalNeighbors = [[Double]]()
     var fIterGlobalNeighborsSorted = [[Double]]()
-    var u = 600
+    var dFIterGlobal = 0.0
+    var u = 436
     var v = 997
+    var distance = 0.0
         
-    // Find the location of the neighbor with the max value of fIterGlobal.
+        fIterGlobalPresent = [distance, Double(u), Double(v), fIterGlobal[u][v]]
+        print()
+        print("fIterGlobalPresent", fIterGlobalPresent)
+        
+        repeat  {
+        
+        // Find the location of the neighbor with the max value of fIterGlobal.
 
-        fIterGlobalPresent = [Double(u), Double(v), fIterGlobal[u][v]]
-        
         fIterGlobalNeighbors = [
-        [Double(u), Double(v+1), fIterGlobal[u][v+1]], 
-        [Double(u), Double(v-1), fIterGlobal[u][v-1]], 
-        [Double(u+1), Double(v), fIterGlobal[u+1][v]], 
-        [Double(u-1), Double(v), fIterGlobal[u-1][v]], 
+        [distance, Double(u), Double(v+1), fIterGlobal[u][v+1]], 
+        [distance, Double(u), Double(v-1), fIterGlobal[u][v-1]], 
+        [distance, Double(u+1), Double(v), fIterGlobal[u+1][v]], 
+        [distance, Double(u-1), Double(v), fIterGlobal[u-1][v]], 
         
-        [Double(u+1), Double(v+2), fIterGlobal[u+1][v+2]], 
-        [Double(u+1), Double(v-2), fIterGlobal[u+1][v-2]],
-        [Double(u-1), Double(v+2), fIterGlobal[u-1][v+2]], 
-        [Double(u-1), Double(v-2), fIterGlobal[u-1][v-2]], 
-        [Double(u+2), Double(v+1), fIterGlobal[u+2][v+1]], 
-        [Double(u+2), Double(v-1), fIterGlobal[u+2][v-1]],
-        [Double(u-2), Double(v+1), fIterGlobal[u-2][v+1]], 
-        [Double(u-2), Double(v-1), fIterGlobal[u-2][v-1]]
+        [distance, Double(u+1), Double(v+2), fIterGlobal[u+1][v+2]], 
+        [distance, Double(u+1), Double(v-2), fIterGlobal[u+1][v-2]],
+        [distance, Double(u-1), Double(v+2), fIterGlobal[u-1][v+2]], 
+        [distance, Double(u-1), Double(v-2), fIterGlobal[u-1][v-2]], 
+        [distance, Double(u+2), Double(v+1), fIterGlobal[u+2][v+1]], 
+        [distance, Double(u+2), Double(v-1), fIterGlobal[u+2][v-1]],
+        [distance, Double(u-2), Double(v+1), fIterGlobal[u-2][v+1]], 
+        [distance, Double(u-2), Double(v-1), fIterGlobal[u-2][v-1]]
         ]
         
-        fIterGlobalNeighborsSorted = fIterGlobalNeighbors.sorted { $0[2] > $1[2] }
+        fIterGlobalNeighborsSorted = fIterGlobalNeighbors.sorted { $0[3] > $1[3] }
         
         fIterGlobalNeighborsMax = fIterGlobalNeighborsSorted[0]
         
+        if fIterGlobalNeighborsMax[3] > fIterGlobalPresent[3] {
+          dFIterGlobal = fIterGlobalNeighborsMax[3] - fIterGlobalPresent[3]
+          distance = distance + 2
+          u = Int(fIterGlobalNeighborsMax[1])
+          v = Int(fIterGlobalNeighborsMax[2])
+          fIterGlobalPresent = fIterGlobalNeighborsMax 
+          } else {
+            break
+          }
+        
         print()
         print("fIterGlobalPresent", fIterGlobalPresent)
-        print(fIterGlobalNeighbors)
-        print()
-        print(fIterGlobalNeighborsSorted)
-        print("fIterGlobalNeighborsSorted[0][2]", fIterGlobalNeighborsSorted[0][2])
-        print("fIterGlobalNeighborsMax", fIterGlobalNeighborsMax)
+        print("dFIterGlobal", dFIterGlobal)
+//        print(fIterGlobalNeighbors)
+//        print()
+//        print(fIterGlobalNeighborsSorted)
+//        print("fIterGlobalNeighborsSorted[0][2]", fIterGlobalNeighborsSorted[0][2])
+ //       print("fIterGlobalNeighborsMax", fIterGlobalNeighborsMax)
+        
+        } while dFIterGlobal > 0.0
    
    
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Our code
