@@ -460,7 +460,7 @@ struct ArtImage {
     let height: Int = imageHeight
     
    
-    
+/*    
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   Our code
 
     var fIterGlobalPresent = [Double]()
@@ -468,7 +468,7 @@ struct ArtImage {
     var fIterGlobalNeighbors = [[Double]]()
     var fIterGlobalNeighborsSorted = [[Double]]()
     var dFIterGlobal = 0.0
-    var u = 436
+    var u = 417
     var v = 997
     var distance = 0.0
         
@@ -523,7 +523,7 @@ struct ArtImage {
    
    
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  Our code
-
+*/
       
     // yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy ChatGPT
       
