@@ -458,7 +458,7 @@ struct ArtImage {
     let yStarting = 0
     let width: Int = imageWidth
     let height: Int = imageHeight
-    
+ /*   
 //  zzzzzzzzzzzzzzzzzzzzzzzz  Our code for finding max slope   
 
     var fIterGlobalCenter = [Double]()
@@ -520,7 +520,7 @@ struct ArtImage {
 
 
 //  zzzzzzzzzzzzzzzzzzzzzzzz  Our code for finding max slope
-
+*/
 /*    
  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   Our code for finding flow path.
 
