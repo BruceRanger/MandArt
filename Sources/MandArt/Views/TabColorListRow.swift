@@ -57,7 +57,7 @@ struct TabColorListRow: View {
         ColorPicker("", selection: Binding<Color>(
           get: { self.hue.color },
           set: { newColor in
-            var updatedHue = self.hue
+            let updatedHue = self.hue
             updatedHue.color = newColor
             doc.updateHueWithColorPick(index: index, newColorPick: newColor, undoManager: nil)
 

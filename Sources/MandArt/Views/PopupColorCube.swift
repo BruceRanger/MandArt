@@ -9,6 +9,7 @@ struct PopupColorCube: View {
   @State var selectedColor: (r: Int, g: Int, b: Int)?
 
   var hues: [Hue]
+  let cubeCount: Int = 8
 
   init(
     doc: MandArtDocument,
@@ -21,6 +22,8 @@ struct PopupColorCube: View {
   }
 
   var body: some View {
+
+
     ZStack(alignment: .top) {
       Color(NSColor.windowBackgroundColor)
         .edgesIgnoringSafeArea(.all)
@@ -43,7 +46,7 @@ struct PopupColorCube: View {
       .padding()
     }
     .padding()
-  }
+  } // end body
 
   private var closeButton: some View {
     Button(action: {
@@ -56,20 +59,38 @@ struct PopupColorCube: View {
 
   private var colorCubeContent: some View {
     VStack(spacing: 10) {
-      ForEach(0 ..< 2, id: \.self) { rowIndex in
-        HStack(spacing: 10) {
-          ForEach(0 ..< 4, id: \.self) { columnIndex in
-            let sliceIndex = rowIndex * 4 + columnIndex
-            let start = sliceIndex * 8 * 8
-            // -1 to correctly end at the last index of the slice
-            let end = (sliceIndex + 1) * 8 * 8 - 1
-            PopupColorSlice(doc: doc, selectedColor: $selectedColor, arrColors: currentColors, start: start, end: end)
+
+      if currentColors.count == 512 {
+        ForEach(0 ..< 2, id: \.self) { rowIndex in
+          HStack(spacing: 10) {
+            ForEach(0 ..< 4, id: \.self) { columnIndex in
+              let sliceIndex = rowIndex * 4 + columnIndex
+              let start = sliceIndex * 8 * 8
+              // -1 to correctly end at the last index of the slice
+              let end = (sliceIndex + 1) * 8 * 8 - 1
+              PopupColorSlice(doc: doc, selectedColor: $selectedColor, arrColors: currentColors, start: start, end: end)
+            }
           }
         }
-      }
+      } // end if 8 x 8 x 8
+
+      else if currentColors.count == 729 {
+        ForEach(0 ..< 2, id: \.self) { rowIndex in
+          HStack(spacing: 10) {
+            ForEach(0 ..< 4, id: \.self) { columnIndex in
+              let sliceIndex = rowIndex * 4 + columnIndex
+              let start = sliceIndex * 9 * 9
+              // -1 to correctly end at the last index of the slice
+              let end = (sliceIndex + 1) * 9 * 9 - 1
+              PopupColorSlice(doc: doc, selectedColor: $selectedColor, arrColors: currentColors, start: start, end: end)
+            }
+          }
+        }
+      } // end else if 9
+
     }
     .padding(.top, 2)
-  }
+  }  // end color cube content
 
   private func getColors(from cgColors: [CGColor]) -> [Color] {
     return cgColors.map { Color($0) }

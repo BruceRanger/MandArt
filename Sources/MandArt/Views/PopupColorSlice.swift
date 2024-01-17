@@ -8,8 +8,8 @@ struct PopupColorSlice: View {
   let arrColors: [Color]
   let start: Int
   let end: Int
-  let nColumns: Int = 8
-  let nRows: Int = 8
+
+
 
   init(
     doc: MandArtDocument,
@@ -35,42 +35,91 @@ struct PopupColorSlice: View {
   }
 
   var body: some View {
-    if arrColors.count != 512 {
+
+    if arrColors.count == 512 {
+      var nColumns = 8
+      var nRows = 8
+
+      return AnyView(
+        VStack(spacing: 0) {
+          ForEach(0 ..< nRows, id: \.self) { row in
+            HStack(spacing: 0) {
+              ForEach(0 ..< nColumns, id: \.self) { col in
+                let index = start + row * nColumns + col
+
+                Button(action: {
+                  if index <= end {
+                    handleColorSelection(color: arrColors[index])
+                  }
+                }) {
+                  if index <= end {
+                    Rectangle()
+                      .fill(arrColors[index])
+                      .frame(width: 30, height: 30)
+                      .cornerRadius(4)
+                      .padding(1)
+                  } else {
+                    Rectangle()
+                      .fill(Color.clear) // Transparent Rectangle
+                      .frame(width: 30, height: 30)
+                      .cornerRadius(4)
+                      .padding(1)
+                  }
+                }
+                .buttonStyle(PlainButtonStyle())
+              }
+            }
+          }
+        } // vstack
+      ) // any view
+    } // end if 512 (8 x 8 x 8)
+
+
+    if arrColors.count == 729 {
+      var nColumns = 9
+      var nRows = 9
+
+      return AnyView(
+        VStack(spacing: 0) {
+          ForEach(0 ..< nRows, id: \.self) { row in
+            HStack(spacing: 0) {
+              ForEach(0 ..< nColumns, id: \.self) { col in
+                let index = start + row * nColumns + col
+
+                Button(action: {
+                  if index <= end {
+                    handleColorSelection(color: arrColors[index])
+                  }
+                }) {
+                  if index <= end {
+                    Rectangle()
+                      .fill(arrColors[index])
+                      .frame(width: 20, height: 20)
+                      .cornerRadius(4)
+                      .padding(1)
+                  } else {
+                    Rectangle()
+                      .fill(Color.clear) // Transparent Rectangle
+                      .frame(width: 20, height: 20)
+                      .cornerRadius(4)
+                      .padding(1)
+                  }
+                }
+                .buttonStyle(PlainButtonStyle())
+              }
+            }
+          }
+        } // vstack
+      ) // any view
+    } // if 729 (9 x 9 x 9)
+
+    else {
       // Return an empty view or some indicator that there's an issue.
+      print(arrColors.count)
+      print(arrColors)
       return AnyView(Text("Invalid color data").foregroundColor(.red))
     }
 
-    return AnyView(
-      VStack(spacing: 0) {
-        ForEach(0 ..< nRows, id: \.self) { row in
-          HStack(spacing: 0) {
-            ForEach(0 ..< nColumns, id: \.self) { col in
-              let index = start + row * nColumns + col
 
-              Button(action: {
-                if index <= end {
-                  handleColorSelection(color: arrColors[index])
-                }
-              }) {
-                if index <= end {
-                  Rectangle()
-                    .fill(arrColors[index])
-                    .frame(width: 30, height: 30)
-                    .cornerRadius(4)
-                    .padding(1)
-                } else {
-                  Rectangle()
-                    .fill(Color.clear) // Transparent Rectangle
-                    .frame(width: 30, height: 30)
-                    .cornerRadius(4)
-                    .padding(1)
-                }
-              }
-              .buttonStyle(PlainButtonStyle())
-            }
-          }
-        }
-      } // vstack
-    ) // any view
-  }
+  } // end body
 }

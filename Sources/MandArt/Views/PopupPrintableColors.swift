@@ -5,7 +5,6 @@ import SwiftUI
 struct PopupPrintableColors: View {
   @ObservedObject var doc: MandArtDocument
   @ObservedObject var popupManager: PopupManager
-
   @State private var selectedColor: (r: Int, g: Int, b: Int)?
 
   var hues: [Hue]
